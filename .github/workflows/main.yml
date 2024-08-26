@@ -1,11 +1,11 @@
 name: deploy-book
 
-# Only run this when the master branch changes
-on:
-  workflow_dispatch:
-  push:
-    branches:
-    - main
+# # Only run this when the master branch changes
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches:
+#     - main
 
 # This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
@@ -34,19 +34,31 @@ jobs:
       run: |
         jupyter-book build .
         
-    # Push to server
-    - name: rsync and ssh
+    # - name: Setup tmate session
+    #   uses: mxschmitt/action-tmate@v3
+
+    # Push to CS server
+    - name: rsync and ssh to CS
       env:
-        REMOTE_HOST: ${{ secrets.FIRAS_REMOTE_HOST }}
-        REMOTE_USER: ${{ secrets.FIRAS_REMOTE_USER }}
-        REMOTE_KEY: ${{ secrets.FIRAS_SERVER_SSH_KEY }}
-        REMOTE_DIR: ${{ secrets.FIRAS_REMOTE_TARGET }}
-        LOCAL_DIR: "_build/html/"
-        COURSE_NAME: "cpsc203"
-        TERM: "2023_WT2"
+        COURSE_REMOTE_HOST: kunghit.students.cs.ubc.ca
+        COURSE_REMOTE_USER: cs-221
+        CS_REMOTE_USER: cheeren
+        CS_TUNNEL: remote.cs.ubc.ca
+        REMOTE_KEY: ${{ secrets.FIRAS_SERVER_SSH_KEY }} # TODO
+        FIRAS_KEYBOARDMBP: ${{ secrets.FIRAS_KEYBOARDMBP }}# TODO
+        TERM: 2024_W1
+        LOCAL_DIR: _build/html/
       run: |
-        mkdir ~/.ssh
+        mkdir -p ~/.ssh
         echo "$REMOTE_KEY" > ~/.ssh/id_rsa
-        ssh-keyscan -H $REMOTE_HOST >> ~/.ssh/known_hosts
         chmod 600 ~/.ssh/id_rsa
-        rsync -avzr --delete $LOCAL_DIR $REMOTE_USER@$REMOTE_HOST:$REMOTE_DIR/$COURSE_NAME/$TERM
+        ssh-keyscan -H $CS_TUNNEL >> ~/.ssh/known_hosts
+
+        echo "$FIRAS_KEYBOARDMBP" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+
+        # Set up a tunnel in the background
+        ssh -fN -L 2222:$COURSE_REMOTE_HOST:22 cheeren@remote.cs.ubc.ca -p 22
+
+        # send files all in one shot
+        rsync -avzr -e 'ssh -p 22 -o StrictHostKeyChecking=no -J $CS_REMOTE_USER@$CS_TUNNEL' $LOCAL_DIR $COURSE_REMOTE_USER@$COURSE_REMOTE_HOST:public_html/$TERM
