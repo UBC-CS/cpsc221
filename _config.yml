@@ -1,5 +1,9 @@
 # Book settings
+<<<<<<< HEAD
+title: CPSC 221 
+=======
 title: CPSC 203 
+>>>>>>> 6d793b1 (initial commit)
 author: Cinda Heeren
 logo: images/logo.png
 copyright: ""
@@ -23,7 +27,7 @@ html:
   comments:
     hypothesis: false
     utterances:
-      repo: "UBC-CS/cpsc203"
+      repo: "UBC-CS/cpsc221"
     dokieli: false
   extra_footer : |
       <div>
@@ -37,7 +41,7 @@ html:
 #   thebe              : true
 
 repository: 
-  url          : https://github.com/UBC-CS/cpsc203
+  url          : https://github.com/UBC-CS/cpsc221
   path_to_book : ""
   branch       : main
 
@@ -60,25 +64,25 @@ sphinx:
 
     myst_substitutions:
       # Instructor information
-      INSTRUCTOR: "Dr. Firas Moosvi (he/his/him)"
-      PRONOUNCE: "Fur-az Moose-vee"
-      OFFICE: "ICCS 253"
+      INSTRUCTOR: "Cinda Heeren (she/her)"
+      PRONOUNCE: 
+      OFFICE: "ICCS 233"
       PHONE: "N/A"
 
       # Course Information
-      COURSE_CODE: "CPSC 203"
+      COURSE_CODE: "CPSC 221"
       SECTION: "201"
-      CREDITS: "3"
-      TITLE: "Programming, Problem Solving, and Algorithms"
-      PREREQS: "Pre-reqs: One of CPSC 103, CPSC 110, APSC 160, EOSC 211, MATH 210, PHYS 210, COMM 337."
+      CREDITS: "4"
+      TITLE: "Data Structures and Basic Algorithms"
+      PREREQS: "Pre-reqs: CPSC121 or MATH220, and CPSC210"
       COREQS: "N/A"
-      TERM: "2023 Winter Term 2"
-      ROOM: "AERL 120"
-      MEETING_TIMES: "Tuesday, Thursday from 11:00 -12:30"
+      TERM: "2024 Winter Term 1"
+      ROOM: "CHBE 101"
+      MEETING_TIMES: "MWF, 2-3p (section 101), 3-4p (section 102)"
       # FORMAT: "Lectures, Labs, Tutorials will all be running in-person."
 
       # Important Links
-      CANVAS_ID: "130127"
+      CANVAS_ID: "147001"
       CANVAS_LINK: "https://canvas.ubc.ca/courses/CANVAS_ID"
       ZOOM_LINK: "[Zoom](https://canvas.ubc.ca/courses/CANVAS_ID/external_tools/15408)"
       ANNOUNCEMENTS_LINK: "[Canvas Announcements](https://canvas.ubc.ca/courses/CANVAS_ID/announcements)"
@@ -91,18 +95,18 @@ sphinx:
 
       # Withdrawal Dates and Exam Period
       # https://vancouver.calendar.ubc.ca/dates-and-deadlines
-      W_DATE_1: "11:59 PDT on January 19, 2024"
-      W_DATE_2: "11:59 PDT on March 1, 2024"
-      W_DATE_3: "11:59 PDT on March 1, 2024"
-      EXAM_PERIOD: "Tuesday April 16th - Saturday, April 27"
+      W_DATE_1: "11:59 PDT on Monday, September 16, 2024"
+      W_DATE_2: "11:59 PDT on Friday, October 25, 2024"
+      # W_DATE_3: "11:59 PDT on March 1, 2024"
+      EXAM_PERIOD: "Tuesday, December 10th - Saturday, December 21"
 
       # Course Policies
       GRACE_PERIOD: "48 hour"
 
       # TA Names
-      TA1: "Braeden Fong"
-      TA1pronounce: "BRAY-DIN"
-      TA2: "Manushree Singhania"
-      TA2pronounce: "MA-NU-SHREE"
+      TA1: "Iris Wu"
+      TA1pronounce: ""
+      TA2: "Jenn Nguyen"
+      TA2pronounce: ""
       TA3: "Minh Anh Nguyen"
       TA3pronounce: "Ming Ang"
