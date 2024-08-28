@@ -67,7 +67,7 @@ sphinx:
 
       # Course Information
       COURSE_CODE: "CPSC 221"
-      SECTION: "201"
+      SECTION: "101 & 102"
       CREDITS: "4"
       TITLE: "Data Structures and Basic Algorithms"
       PREREQS: "Pre-reqs: CPSC121 or MATH220, and CPSC210"
@@ -93,7 +93,7 @@ sphinx:
       # https://vancouver.calendar.ubc.ca/dates-and-deadlines
       W_DATE_1: "11:59 PDT on Monday, September 16, 2024"
       W_DATE_2: "11:59 PDT on Friday, October 25, 2024"
-      # W_DATE_3: "11:59 PDT on March 1, 2024"
+      W_DATE_3: "11:59 PDT on Friday, October 25, 2024"
       EXAM_PERIOD: "Tuesday, December 10th - Saturday, December 21"
 
       # Course Policies
