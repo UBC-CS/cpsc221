@@ -1,6 +1,6 @@
 # Book settings
 title: CPSC 203 
-author: Firas Moosvi
+author: Cinda Heeren
 logo: images/logo.png
 copyright: ""
 exclude_patterns: ["LICENSE.md", "README.md"]
