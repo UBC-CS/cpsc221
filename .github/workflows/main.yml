@@ -1,64 +1,54 @@
-name: deploy-book
+name: deploy-website
 
-# # Only run this when the master branch changes
-# on:
-#   workflow_dispatch:
-#   push:
-#     branches:
-#     - main
+# Only run this when the main branch changes
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+  schedule:
+    - cron: '25 11 * * 1'
+    - cron: '25 11 * * 6'
 
-# This job installs dependencies, build the book, and pushes it to `gh-pages`
 jobs:
-  deploy-book:
+  build-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
-    # Install dependencies
-    - name: Set up Python 3.10
-      uses: actions/setup-python@v5
+    - name: Set up Quarto
+      uses: quarto-dev/quarto-actions/setup@v2
+
+    # GitHub caches Python versions with the runner thus likely faster than uv
+    - name: Set up Python
+      uses: actions/setup-python@v6
       with:
-        python-version: "3.10"
+        python-version-file: pyproject.toml
 
-    - name: cache installation
-      uses: actions/cache@v3
+    - name: Install uv
+      uses: astral-sh/setup-uv@v7
+
+    - name: Install R
+      uses: r-lib/actions/setup-r@v2
       with:
-        path: ${{ env.pythonLocation }}
-        key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+        r-version: renv
 
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-    # Build the book
-    - name: Build the book
-      run: |
-        jupyter-book build .
-        
-    # - name: Setup tmate session
-    #   uses: mxschmitt/action-tmate@v3
+    - name: Install R dependencies
+      uses: r-lib/actions/setup-renv@v2
 
-    # Push to CS server
-    - name: rsync and ssh to CS
+    - name: Render Quarto project profiles
+      run: |
+        for profile in student instructor; do
+          uv run quarto render --profile "$profile"
+        done
+
+    - name: Publish Quarto project
+      uses: quarto-dev/quarto-actions/publish@v2
+      with:
+        render: false
+        target: gh-pages
       env:
-        COURSE_REMOTE_HOST: kunghit.students.cs.ubc.ca
-        COURSE_REMOTE_USER: cs-221
-        CS_REMOTE_USER: cheeren
-        CS_TUNNEL: remote.cs.ubc.ca
-        REMOTE_KEY: ${{ secrets.FIRAS_SERVER_SSH_KEY }} # TODO
-        FIRAS_KEYBOARDMBP: ${{ secrets.FIRAS_KEYBOARDMBP }}# TODO
-        TERM: 2024_W1
-        LOCAL_DIR: _build/html/
-      run: |
-        mkdir -p ~/.ssh
-        echo "$REMOTE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H $CS_TUNNEL >> ~/.ssh/known_hosts
-
-        echo "$FIRAS_KEYBOARDMBP" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-
-        # Set up a tunnel in the background
-        ssh -fN -L 2222:$COURSE_REMOTE_HOST:22 cheeren@remote.cs.ubc.ca -p 22
-
-        # send files all in one shot
-        rsync -avzr -e 'ssh -p 22 -o StrictHostKeyChecking=no -J $CS_REMOTE_USER@$CS_TUNNEL' $LOCAL_DIR $COURSE_REMOTE_USER@$COURSE_REMOTE_HOST:public_html/$TERM
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

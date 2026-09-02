@@ -101,6 +101,8 @@ celerybeat.pid
 # Environments
 .env
 .venv
+result
+.direnv/
 env/
 venv/
 ENV/
@@ -124,3 +126,25 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Quarto project files
+/.quarto/
+
+# Jupyter Book and Quarto outputs
+/_build/
+/_site/
+/_freeze/
+
+/.luarc.json
+
+**/*.quarto_ipynb
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,16 @@
+title: editable
+author: Emil Hvitfeldt
+version: 8.0.0
+quarto-required: '>=1.6.0'
+source: emilhvitfeldt/quarto-revealjs-editable@v8.0.0
+source-type: registry
+contributes:
+  filters:
+    - editable.lua
+  revealjs-plugins:
+    - name: Revealeditable
+      script:
+        - editable.js
+      stylesheet:
+        - quill.css
+        - editable.css

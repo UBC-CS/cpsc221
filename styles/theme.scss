@@ -1,0 +1,93 @@
+/*-- scss:uses --*/
+
+/*-- scss:functions --*/
+
+/*-- scss:defaults --*/
+$highlight: color-mix(in srgb, var(--bs-warning) 15%, var(--bs-body-bg));
+// $warning-hover: color-mix(in srgb, var(--bs-warning) 80%, var(--bs-body-color));
+
+/*-- scss:mixins --*/
+
+/*-- scss:rules --*/
+table a {
+    color: $link-color;
+    font-weight: bolder;
+    text-decoration: none;
+
+    &:hover {
+        color: $link-hover-color;
+    }
+}
+
+tr:has(.current-week) {
+    background-color: $highlight;
+}
+
+.exam-button {
+    background-color: $warning;
+    font-size: smaller;
+    color: $body-bg;
+    padding: 2px 4px;
+    display: inline-block;
+    border-radius: 5px;
+
+    &:hover {
+        background-color: shift-color($warning, $link-shade-percentage) !important;
+        color: $body-bg !important;
+    }
+
+    .current-week & {
+        color: $highlight !important;
+
+        &:hover {
+            color: $highlight !important;
+        }
+    }
+}
+
+.spacer {
+    padding-left: 0.5em;
+}
+
+.half-spacer {
+    padding-left: 0.25em;
+}
+
+.inactive-link svg {
+    fill-opacity: 0.1;
+}
+
+.unit-subtitle,
+.start-date,
+.due-date,
+.day-of-week,
+.hidden-placeholder {
+    white-space: pre;
+    font-size: smaller;
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.hidden-placeholder {
+    color: transparent;
+    opacity: 0;
+}
+
+.day-and-date-due {
+    color: $danger;
+}
+
+.week-with-start-date,
+.exam-label,
+.month-and-day,
+.day-and-date {
+    white-space: pre;
+}
+
+.gt_row:has(.unit-id-title, .day-and-date) {
+    vertical-align: top !important;
+}
+
+.day-and-date {
+    padding-left: 1.5em !important;
+}
