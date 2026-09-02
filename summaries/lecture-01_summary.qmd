@@ -1,0 +1,27 @@
+---
+title: "Introduction"
+---
+
+## Readings
+
+- Carrano & Henry: Chapter 10
+- Epp: Chapter 11.2 - 11.3
+
+## Summary
+
+Welcome to {{< var course.code >}} — Data Structures and Algorithms! In this course we will learn to design and evaluate programmatic approaches to problem solving. The course has 3 main units. Though they overlap and influence one another, we will address the units in roughly this order:
+
+- reasoning about code
+- classic data structures
+- graph algorithms
+
+Today's lesson is an introduction to the context in which we evaluate our code, and the issues we consider when we do so.
+
+## Learning Outcomes
+
+Upon completion of this lesson, students will be able to:
+
+- give an overview of the course goals
+- motivate the tradeoff between order and chaos in data
+- discuss the metrics used to evaluate an algorithm
+- explain why running time functions are non-decreasing

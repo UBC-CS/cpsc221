@@ -5,7 +5,7 @@ course:
   term: "<TODO-term e.g. 2026W1>"
   monday-of-first-term-week: "<TODO-YYYY-MM-DD>"
   term-end-date: "<TODO-YYYY-MM-DD>"
-  time: "<TODO-days-and-times, e.g. Monday/Tuesday/Wednesday, matching dsci221's schedule pattern>"
+  time: "<TODO-times>, Monday/Wednesday/Friday; Mon+Wed in-person, Fri async video (most weeks; week 1 differs)"
   website: "<TODO-course-website-url>"
   repo: "https://github.com/UBC-CS/cpsc221"
   lms: "<TODO-canvas-url>"

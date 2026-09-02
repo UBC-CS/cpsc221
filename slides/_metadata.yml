@@ -1,0 +1,4 @@
+format:
+  revealjs:
+    slide-number: true
+    footer: "{{< var course.code >}}"
