@@ -52,14 +52,12 @@ website:
             text: "Getting started"
           - href: "<TODO-canvas-url>"
             text: "Canvas"
-          - href: "<TODO-ed-discussion-url>"
-            text: "Ed Discussion"
+          - href: "<TODO-piazza-url>"
+            text: "Piazza"
           - href: "<TODO-prairielearn-url>"
             text: "PrairieLearn"
-          - href: "<TODO-gradescope-url>"
-            text: "Gradescope"
-          - href: "<TODO-slido-url>"
-            text: "Slido"
+          - href: "https://orca.ubc.ca/students/"
+            text: "ORCA"
       - href: about.qmd
         text: About
       - href: faq.qmd
