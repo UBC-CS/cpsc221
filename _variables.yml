@@ -8,7 +8,7 @@ course:
   time: "<TODO-times>, Monday/Wednesday/Friday; Mon+Wed in-person, Fri async video (most weeks; week 1 differs)"
   website: "<TODO-course-website-url>"
   repo: "https://github.com/UBC-CS/cpsc221"
-  lms: "<TODO-canvas-url>"
+  lms: "https://canvas.ubc.ca/courses/190808"
   prairielearn: "<TODO-prairielearn-course-instance-url>"
 instructor:
   name: "Cinda Heeren"

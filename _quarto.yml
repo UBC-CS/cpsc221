@@ -50,7 +50,7 @@ website:
         contents:
           - href: getting-started.qmd
             text: "Getting started"
-          - href: "<TODO-canvas-url>"
+          - href: "https://canvas.ubc.ca/courses/190808"
             text: "Canvas"
           - href: "<TODO-piazza-url>"
             text: "Piazza"

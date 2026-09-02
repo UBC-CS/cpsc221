@@ -1,23 +1,23 @@
 ---
 title: "{{< var course.code >}}"
 subtitle: "Introduction to Data Structures and Algorithms"
+title-slide-attributes:
+  data-background-image: "images/lecture-01/wave.jpg"
+  data-background-size: "cover"
 ---
 
-## {background-image="images/lecture-01/wave.jpg" background-size="cover"}
-
-<!-- TODO: talking point -- discuss the photo before diving into logistics -->
+<!-- TODO: talking point -- "why did I choose that slide?" -- discuss the wave photo before diving into logistics -->
 
 ## Introductions
 
 **Us:**
 
-- Instructor: {{< var instructor.name >}} — {{< var instructor.email >}} · OH: <TODO-office-hours>
-- Lecture TA: <TODO>
+- Instructors: {{< var instructor.name >}} — {{< var instructor.email >}} · OH: <TODO-office-hours>
 - Course Coordinator: <TODO>
 
-**Course staff:** <TODO>
+**TAs:** <TODO>
 
-## All you need to know is on Canvas!
+## All you need to know is at https://ubc-cs.github.io/cpsc221/!
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -36,12 +36,12 @@ Info on:
 - PAs — Due Mon after 2wk
 - HWs — Due Mon after 1wk
 - Labs — once a week, av Sun-Sun
-- Exams — 50min in CBTF
-- Class Meetings — <TODO-days-and-times>
+- Exams — 50min in ORCA
+- Class Meetings — 101: MWF 2p, 102: MWF 3p.
 :::
 :::
 
-[<TODO-canvas-url>](<TODO-canvas-url>)
+[{{< var course.lms >}}]({{< var course.lms >}})
 
 ## Term Schedule
 
@@ -90,7 +90,8 @@ Legend:
 
 ## Today's announcements
 
-<TODO-current-announcements>
+1. Labs start next week
+2. Class meets **in person** this Friday
 
 **Today's Plan:**
 
@@ -99,7 +100,7 @@ Legend:
 
 # What's this course about?
 
-## Where's Iris? {background-image="images/lecture-01/hockey-stadium.jpg" background-size="contain" background-position="top"}
+## Where's Meghan? {background-image="images/lecture-01/world-cup-bc-place.jpg" background-size="contain" background-position="top"}
 
 Observations:
 
