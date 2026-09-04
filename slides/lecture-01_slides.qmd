@@ -58,7 +58,8 @@ Info on:
   .week-num{font-size:1.3em; font-weight:800; line-height:1;}
   .date-cell{font-size:1em; white-space:nowrap; color:#666;}
   #term-schedule table td, #term-schedule table th{vertical-align:middle; padding:0.05em 0.3em; line-height:1.1;}
-  #term-schedule table{font-size:0.48em; margin-top:0;}
+  #term-schedule table{font-size:0.48em; margin:0 auto; width:60%;}
+  #term-schedule p{font-size:0.48em; text-align:center;}
 </style>
 
 <div id="term-schedule">
@@ -80,8 +81,6 @@ Info on:
 | <span class="week-num">13</span> | <span class="date-cell">Nov 30</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--video" title="Video">📹</span> | <span class="pill pill--hw" title="HW3 due">🏎️</span> | <span class="pill pill--lab" title="Lab">🪄</span> | <span class="pill pill--exam" title="Examlet">🤩</span> |
 | <span class="week-num">14</span> | <span class="date-cell">Dec 7</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> |
 
-</div>
-
 Legend:
 <span class="pill pill--class" title="Lecture">🎉</span> in-person lecture &nbsp;
 <span class="pill pill--video" title="Video">📹</span> async video &nbsp;
@@ -90,6 +89,8 @@ Legend:
 <span class="pill pill--hw" title="HW due">🏎️</span> HW due &nbsp;
 <span class="pill pill--pa" title="PA due">🚀</span> PA due &nbsp;
 <span class="pill pill--off" title="No class / nothing due">&nbsp;</span> off / nothing due
+
+</div>
 
 <!-- TODO: mid-term break not yet confirmed against the official UBC 2026W1 academic calendar -->
 
