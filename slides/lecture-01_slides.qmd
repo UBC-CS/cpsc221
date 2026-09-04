@@ -108,15 +108,35 @@ Observations:
 
 ## Which closet...
 
-::: {.columns}
-::: {.column width="50%"}
-![](images/lecture-01/closet-messy.jpg)
-:::
+<div id="closet-compare" style="position:relative; height:480px; width:360px; margin:0 auto; aspect-ratio:3/4; overflow:hidden; border-radius:8px; box-shadow:0 12px 32px rgba(0,0,0,0.45);">
+<img src="images/lecture-01/closet-messy.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+<img id="closet-compare-top" src="images/lecture-01/closet-organized.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; clip-path: inset(0 50% 0 0);">
+<div id="closet-compare-handle" style="position:absolute; top:0; bottom:0; left:50%; width:4px; background:#fff; box-shadow:0 0 6px rgba(0,0,0,0.6); pointer-events:none;">
+<div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:36px; height:36px; border-radius:50%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; font-size:18px;">↔</div>
+</div>
+<input type="range" min="0" max="100" value="50" id="closet-compare-range" style="position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:ew-resize; -webkit-appearance:none; -moz-appearance:none; appearance:none; background:transparent;">
+</div>
 
-::: {.column width="50%"}
-![](images/lecture-01/closet-organized.jpg)
-:::
-:::
+<style>
+#closet-compare-range::-webkit-slider-runnable-track { background: transparent; }
+#closet-compare-range::-webkit-slider-thumb { -webkit-appearance: none; width: 0; height: 0; background: transparent; border: none; }
+#closet-compare-range::-moz-range-track { background: transparent; border: none; }
+#closet-compare-range::-moz-range-thumb { width: 0; height: 0; background: transparent; border: none; }
+#closet-compare-range::-moz-focus-outer { border: 0; }
+</style>
+
+<script>
+(function () {
+  const range = document.getElementById('closet-compare-range');
+  const top = document.getElementById('closet-compare-top');
+  const handle = document.getElementById('closet-compare-handle');
+  range.addEventListener('input', function () {
+    const v = range.value;
+    top.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+    handle.style.left = v + '%';
+  });
+})();
+</script>
 
 ## Course Goals
 
