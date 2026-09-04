@@ -47,7 +47,7 @@ Info on:
 
 <!-- CSS: include once -->
 <style>
-  .pill{display:inline-block; min-width:28px; padding:2px 6px; border-radius:4px; text-align:center; font-weight:600; line-height:1;}
+  .pill{display:inline-block; min-width:1.6em; padding:0.1em 0.35em; border-radius:0.3em; text-align:center; font-weight:600; line-height:1;}
   .pill--off{background:#ddd; color:#111;}
   .pill--class{background:purple; color:#fff;}
   .pill--video{background:#f97316; color:#fff;}
@@ -55,10 +55,13 @@ Info on:
   .pill--exam{background:seagreen; color:#fff;}
   .pill--hw{background:#facc15; color:#111;}
   .pill--pa{background:#ef4444; color:#fff;}
-  .week-num{font-size:1.9em; font-weight:800; line-height:1;}
+  .week-num{font-size:1.3em; font-weight:800; line-height:1;}
   .date-cell{font-size:1em; white-space:nowrap; color:#666;}
-  table td, table th{vertical-align:middle;}
+  #term-schedule table td, #term-schedule table th{vertical-align:middle; padding:0.05em 0.3em; line-height:1.1;}
+  #term-schedule table{font-size:0.48em; margin-top:0;}
 </style>
+
+<div id="term-schedule">
 
 | Week | Mon        | M                                                        | W                                                        | F                                                            | HW/PA                                                     | Lab                                                | EX                                                      |
 |:---:|------------|:---------------------------------------------------------:|:---------------------------------------------------------:|:---------------------------------------------------------:|:---------------------------------------------------------:|:-----------------------------------------------------:|:----------------------------------------------------------:|
@@ -76,6 +79,8 @@ Info on:
 | <span class="week-num">12</span> | <span class="date-cell">Nov 23</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--video" title="Video">📹</span> | <span class="pill pill--pa" title="PA3 due">🚀</span> | <span class="pill pill--lab" title="Lab">🪄</span> | <span class="pill pill--exam" title="Examlet">🤩</span> |
 | <span class="week-num">13</span> | <span class="date-cell">Nov 30</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--video" title="Video">📹</span> | <span class="pill pill--hw" title="HW3 due">🏎️</span> | <span class="pill pill--lab" title="Lab">🪄</span> | <span class="pill pill--exam" title="Examlet">🤩</span> |
 | <span class="week-num">14</span> | <span class="date-cell">Dec 7</span> | <span class="pill pill--class" title="Lecture">🎉</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> | <span class="pill pill--off" title="Term over">&nbsp;</span> |
+
+</div>
 
 Legend:
 <span class="pill pill--class" title="Lecture">🎉</span> in-person lecture &nbsp;
