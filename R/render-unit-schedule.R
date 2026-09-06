@@ -81,7 +81,7 @@ render_unit_schedule <- function() {
       names_from = type,
       values_from = resource
     ) |>
-    dplyr::select(!c(summary, prairielearn))
+    dplyr::select(!tidyselect::any_of(c("summary", "prairielearn")))
 
   unit_schedule <- units |>
     dplyr::left_join(
@@ -125,10 +125,7 @@ render_unit_schedule <- function() {
       date,
       title,
       tidyselect::ends_with("lesson_plan"),
-      pre_activity,
-      slides,
-      activity,
-      recording
+      tidyselect::any_of(c("pre_activity", "slides", "activity", "recording"))
     )
 
   unit_schedule |>

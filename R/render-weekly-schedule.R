@@ -29,12 +29,11 @@ render_weekly_schedule <- function() {
       )
     )
 
-  weeks <- schedule |>
-    dplyr::distinct(week, current_week, show_week, show_exam)
-
-  lectures_and_discussions <- schedule |>
+  # This course's "discussion" unit is the weekly Lab -- a single meeting per
+  # week (not two, as in the template this was adapted from), so it uses one
+  # "Lab" slot rather than a First/Second split.
+  lectures_and_labs <- schedule |>
     dplyr::filter(unit %in% c("lecture", "discussion")) |>
-    # Ensure the column order after pivoting follows day order
     dplyr::arrange(slot) |>
     dplyr::select(
       week_number = week,
@@ -59,7 +58,7 @@ render_weekly_schedule <- function() {
 
   # Units with only a single resource
   other_units <- schedule |>
-    dplyr::filter(unit %in% c("part", "week", "potw", "exam")) |>
+    dplyr::filter(unit %in% c("part", "week", "exam")) |>
     dplyr::select(week_number = week, unit, label) |>
     dplyr::summarize(
       label = stringr::str_flatten(label, "<div>&nbsp;</div>"),
@@ -69,22 +68,21 @@ render_weekly_schedule <- function() {
       names_from = unit,
       values_from = label
     ) |>
-    tidyr::fill(part)
+    tidyr::fill(tidyselect::any_of("part"))
 
-  weekly_schedule <- lectures_and_discussions |>
+  weekly_schedule <- lectures_and_labs |>
     dplyr::left_join(
       other_units,
       by = dplyr::join_by(week_number),
       relationship = "one-to-one"
     ) |>
     dplyr::mutate(
-      week = highlight_current_week(current_week, week)
+      week = highlight_current_week(current_week, as.character(week_number))
     ) |>
     dplyr::select(!c(week_number, current_week, show_week, show_exam)) |>
     dplyr::relocate(week)
 
   spacer <- '<span class="spacer"></span>'
-  half_spacer <- '<span class="half-spacer"></span>'
 
   weekly_schedule |>
     gt::gt(
@@ -96,27 +94,12 @@ render_weekly_schedule <- function() {
       after_week_spacer = spacer,
       .after = "week"
     ) |>
-    gt::cols_add(
-      lecture_half_spacer = half_spacer,
-      .after = "wed_lecture_recording"
-    ) |>
-    gt::cols_add(
-      between_spanners_spacer = half_spacer,
-      .after = "fri_lecture_recording"
-    ) |>
-    gt::cols_add(
-      discussion_half_spacer = half_spacer,
-      .after = "first_discussion_activity"
-    ) |>
-    gt::cols_add(
-      before_potw_spacer = half_spacer,
-      .before = "potw"
-    ) |>
-    gt::cols_add(
-      after_potw_spacer = half_spacer,
-      .after = "potw"
-    ) |>
     gt::cols_label(tidyselect::everything() ~ "") |>
+    gt::tab_spanner(
+      label = "Mon",
+      columns = tidyselect::starts_with("mon_lecture"),
+      id = "mon_lecture"
+    ) |>
     gt::tab_spanner(
       label = "Wed",
       columns = tidyselect::starts_with("wed_lecture"),
@@ -130,22 +113,12 @@ render_weekly_schedule <- function() {
     gt::tab_spanner(
       label = "Lectures",
       columns = tidyselect::contains("lecture"),
-      spanners = c("wed_lecture", "fri_lecture")
+      spanners = tidyselect::any_of(c("mon_lecture", "wed_lecture", "fri_lecture"))
     ) |>
     gt::tab_spanner(
-      label = gt::md("1^st^"),
-      columns = tidyselect::starts_with("first_discussion"),
-      id = "first_discussion"
-    ) |>
-    gt::tab_spanner(
-      label = gt::md("2^nd^"),
-      columns = tidyselect::starts_with("second_discussion"),
-      id = "second_discussion"
-    ) |>
-    gt::tab_spanner(
-      label = "Discussions",
-      columns = tidyselect::contains("discussion"),
-      spanners = c("first_discussion", "second_discussion")
+      label = "Lab",
+      columns = tidyselect::starts_with("lab_discussion"),
+      id = "lab"
     ) |>
     gt::tab_style(
       style = gt::cell_text(size = "small"),
@@ -153,7 +126,7 @@ render_weekly_schedule <- function() {
     ) |>
     gt::cols_align(
       align = "left",
-      columns = c(exam)
+      columns = tidyselect::any_of("exam")
     ) |>
     gt::cols_align(
       align = "right",

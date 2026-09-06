@@ -22,7 +22,8 @@ get_schedule <- function() {
     "Sun",
     "First",
     "Second",
-    "Third"
+    "Third",
+    "Lab"
   )
 
   monday_of_first_term_week <- yaml::read_yaml(

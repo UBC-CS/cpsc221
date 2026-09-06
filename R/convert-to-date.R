@@ -5,7 +5,7 @@ convert_to_date <- function(monday_of_first_term_week, week, slot) {
     \(week, slot) {
       slot <- dplyr::replace_when(
         slot,
-        slot %in% c("Week", "First", "Second", "Third") ~ "Mon"
+        slot %in% c("Week", "First", "Second", "Third", "Lab") ~ "Mon"
       )
 
       (lubridate::ymd(monday_of_first_term_week) +
