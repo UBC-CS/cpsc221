@@ -21,10 +21,10 @@ In this tutorial, we cover how C++ implements:
 
 ## Sessions
 
-| Session | Video | Blank slides | Annotated slides |
-|---|---|---|---|
-| Session 1 | [Recording](https://ubc.zoom.us/rec/share/nwRppLXCkivYPeuyOI0y1V7Neuj4ovahP46t_BP2d5O-V8RpvWRDUvA5A30DSONn.5nCceoYt0Q1tpTdJ) — Passcode: `q6jq#bWD` | [cppShortCourse1.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse1.pdf) | [cppShortCourse1-ann.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse1-ann.pdf) |
-| Session 2 | [Recording](https://ubc.zoom.us/rec/share/kAvxveW4Vh7spadP58yDFBGyl-FQzqIaV5dIn3oSeEfFEtwwQjBrJceBtdsrOWrI.pk6ieiR6wg1oA5uv) — Passcode: `6=w?=m3O` | [cppShortCourse1.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse1.pdf) | [cppShortCourse1-ann.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse1-ann.pdf) |
-| Session 3 (starts at 30 min) | [Recording](https://ubc.zoom.us/rec/share/BHqRJ42fJPKrJGL-jtMPbKuKW10I8p_7n5d_NNuqEagOlpg4-Vlui-wHueIJVu24.46HMNQAa1fo8fp4d) — Passcode: `C0xX^exd` | [cppShortCourse2.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse2.pdf) | [cppShortCourse2-ann.pdf](https://www.students.cs.ubc.ca/~cs-221/2019W2/resources/shortcourse/cppShortCourse2-ann.pdf) |
+| Session | Video | Slides |
+|---|---|---|
+| Session 1 | [Recording](https://ubc.zoom.us/rec/share/nwRppLXCkivYPeuyOI0y1V7Neuj4ovahP46t_BP2d5O-V8RpvWRDUvA5A30DSONn.5nCceoYt0Q1tpTdJ) — Passcode: `q6jq#bWD` | [cppShortCourse1.pdf](files/cpp-short-course/cppShortCourse1.pdf) |
+| Session 2 | [Recording](https://ubc.zoom.us/rec/share/kAvxveW4Vh7spadP58yDFBGyl-FQzqIaV5dIn3oSeEfFEtwwQjBrJceBtdsrOWrI.pk6ieiR6wg1oA5uv) — Passcode: `6=w?=m3O` | [cppShortCourse1.pdf](files/cpp-short-course/cppShortCourse1.pdf) |
+| Session 3 (starts at 30 min) | [Recording](https://ubc.zoom.us/rec/share/BHqRJ42fJPKrJGL-jtMPbKuKW10I8p_7n5d_NNuqEagOlpg4-Vlui-wHueIJVu24.46HMNQAa1fo8fp4d) — Passcode: `C0xX^exd` | [cppShortCourse2.pdf](files/cpp-short-course/cppShortCourse2.pdf) |
 
-<!-- TODO: passcodes transcribed from a screenshot -- double check them against the source before relying on them. Slide PDFs currently link to the live UBC students.cs.ubc.ca server; consider downloading and hosting them locally in this repo so they don't depend on that server staying up. -->
+<!-- TODO: passcodes transcribed from a screenshot -- double check them against the source before relying on them. -->
