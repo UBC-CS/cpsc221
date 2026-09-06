@@ -15,10 +15,10 @@ instructor:
   email: "cheeren@cs.ubc.ca"
   pronouns: "she, her"
 building:
-  name: "Chemical and Biological Engineering Building"
-  code: "CHBE"
-  room: "101"
-  ubc-wayfinding: "[UBC Learning Spaces](https://learningspaces.ubc.ca/classrooms/chbe-101/) <!-- TODO: verify this slug resolves -->"
+  name: "Forest Sciences Centre"
+  code: "FSC"
+  room: "1005"
+  ubc-wayfinding: "[UBC Learning Spaces](https://learningspaces.ubc.ca/classrooms/fsc-1005/) <!-- TODO: verify this slug resolves -->"
   google-maps: "<TODO-[Google Maps](https://maps.google.com)>"
 software:
   bash: "5.3.9(1)"
