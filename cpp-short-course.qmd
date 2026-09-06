@@ -1,0 +1,30 @@
+---
+title: "C++ Short Course (optional)"
+---
+
+All programming assignments in this course use C++. You'll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you'd like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical "gotchas" that trip people up. (Recommended playback speed: 1.5x.)
+
+In this tutorial, we cover how C++ implements:
+
+- Classes
+- Pointers
+- Arrays
+- Parameter passing
+- Return values
+- Constructors (reprise)
+- The Big 3
+  - Memory management
+  - Overloading operators
+- Inheritance (not included)
+- Templates (superficial)
+- Generic programming (not included)
+
+## Sessions
+
+| Session | Video | Blank slides | Annotated slides |
+|---|---|---|---|
+| Session 1 | [Recording](https://ubc.zoom.us/rec/share/nwRppLXCkivYPeuyOI0y1V7Neuj4ovahP46t_BP2d5O-V8RpvWRDUvA5A30DSONn.5nCceoYt0Q1tpTdJ) — Passcode: `q6jq#bWD` | <TODO-cppShortCourse1.pdf> | <TODO-cppShortCourse1-ann.pdf> |
+| Session 2 | [Recording](https://ubc.zoom.us/rec/share/kAvxveW4Vh7spadP58yDFBGyl-FQzqIaV5dIn3oSeEfFEtwwQjBrJceBtdsrOWrI.pk6ieiR6wg1oA5uv) — Passcode: `6=w?=m3O` | <TODO-cppShortCourse1.pdf> | <TODO-cppShortCourse1-ann.pdf> |
+| Session 3 (starts at 30 min) | [Recording](https://ubc.zoom.us/rec/share/BHqRJ42fJPKrJGL-jtMPbKuKW10I8p_7n5d_NNuqEagOlpg4-Vlui-wHueIJVu24.46HMNQAa1fo8fp4d) — Passcode: `C0xX^exd` | <TODO-cppShortCourse2.pdf> | <TODO-cppShortCourse2-ann.pdf> |
+
+<!-- TODO: passcodes transcribed from a screenshot -- double check them against the source before relying on them. The slide PDFs (cppShortCourse1.pdf, cppShortCourse1-ann.pdf, cppShortCourse2.pdf, cppShortCourse2-ann.pdf) weren't included in the Canvas export as files -- download them from Canvas and add them here (e.g. under a local /files/ or /images/ folder) so they don't depend on a live Canvas link. -->

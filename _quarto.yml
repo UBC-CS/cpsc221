@@ -50,6 +50,10 @@ website:
         contents:
           - href: getting-started.qmd
             text: "Getting started"
+          - href: setup.qmd
+            text: "Setup: Tech stack"
+          - href: cpp-short-course.qmd
+            text: "C++ Short Course"
           - href: "https://canvas.ubc.ca/courses/190808"
             text: "Canvas"
           - href: "https://piazza.com/ubc.ca/winterterm12026/cpsc221"
