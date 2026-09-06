@@ -15,11 +15,11 @@ There are 4 different components to the course, each with its own set of deliver
 
 ## What you can do now
 
-1. **Get a head start on C++.** Students consistently report that learning C++ is one of the biggest hurdles in this course. We don't expect prior C++ experience, but some self-study before the term starts will make the labs more comfortable. Ask on Piazza if you want pointers to resources.
+1. **Get a head start on C++.** Students consistently report that learning C++ is one of the biggest hurdles in this course. We don't expect prior C++ experience, but some self-study before the term starts will make the labs more comfortable — see the optional [C++ Short Course](cpp-short-course.qmd) recordings.
 2. **Block out your calendar.** Put all four course components above on your weekly schedule, and plan blocks of time for PA/HW work.
 3. **Check your setup.** A significant part of the course is delivered online, so you'll need a reliable internet connection capable of video. Live class meetings aren't mandatory, but past students have found them useful. Let us know if you have concerns about your technical setup or access to resources.
 4. **Start building study groups.** Feel free to use Piazza to coordinate with classmates now.
-5. **Do your machine setup early**, if you can — see the lab intro materials once released. Everyone's environment is a little different, so ask TAs for help if you get stuck.
+5. **Do your machine setup early**, if you can — see [Setup: Tech stack](setup.qmd) for the compiler/editor workflow, and the lab intro materials once released. Everyone's environment is a little different, so ask TAs for help if you get stuck.
 
 ## Support resources
 
