@@ -1,3 +1,33 @@
 ---
 title: "Getting started"
 ---
+
+## Welcome to {{< var course.code >}}!
+
+Your first class meeting is in {{< var building.name >}} ({{< var building.code >}} {{< var building.room >}}) — {{< var course.time >}}. This page collects a few resources you can look over before class starts, to help you scope the course and plan your schedule.
+
+There are 4 different components to the course, each with its own set of deliverables and deadlines:
+
+1. **Programming Assignments and Homework** — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)
+2. **Labs** — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You'll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)
+3. **Exams** — You'll complete nine (nearly) weekly *examlets*, self-scheduled, collectively worth a large share of your grade — see the [Grading Scheme](index.qmd#deliverables-and-grading-scheme). These will ask about the previous week's content, so treat them as motivation to stay connected with the material. There's also a self-scheduled final exam. (~3hr/wk total.)
+4. **Class Content** — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the [Schedule](schedule.qmd) for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)
+
+## What you can do now
+
+1. **Get a head start on C++.** Students consistently report that learning C++ is one of the biggest hurdles in this course. We don't expect prior C++ experience, but some self-study before the term starts will make the labs more comfortable. Ask on Piazza if you want pointers to resources.
+2. **Block out your calendar.** Put all four course components above on your weekly schedule, and plan blocks of time for PA/HW work.
+3. **Check your setup.** A significant part of the course is delivered online, so you'll need a reliable internet connection capable of video. Live class meetings aren't mandatory, but past students have found them useful. Let us know if you have concerns about your technical setup or access to resources.
+4. **Start building study groups.** Feel free to use Piazza to coordinate with classmates now.
+5. **Do your machine setup early**, if you can — see the lab intro materials once released. Everyone's environment is a little different, so ask TAs for help if you get stuck.
+
+## Support resources
+
+- **Canvas & tech support:** contact the [UBC IT Service Centre](https://web.it.ubc.ca/forms/isf/), or see [Canvas resources for students](https://students.canvas.ubc.ca/help/) and [basic tips for navigating Canvas](https://learningcommons.ubc.ca/tech-support/tech-help/canvas/).
+- **General tech/toolkit help:** [Chapman Learning Commons tech support](https://learningcommons.ubc.ca/tech-support/tech-help/).
+
+## In closing
+
+For topical/content questions, post to {{< var course.code >}}'s [Piazza](https://piazza.com/ubc.ca/winterterm12026/cpsc221) — if you think your question is a general one, ask it publicly (anonymously if you'd like). For administrative or logistical questions, email the Course Coordinator, Anca Barbu, at [ancuta.barbu@ubc.ca](mailto:ancuta.barbu@ubc.ca).
+
+See you soon!
