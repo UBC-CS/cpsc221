@@ -6,9 +6,9 @@ title-slide-attributes:
   data-background-size: "cover"
 ---
 
-<!-- TODO: talking point -- "why did I choose that slide?" -- discuss the wave photo before diving into logistics -->
-
 ## Introductions
+
+<!-- TODO: talking point -- "why did I choose that slide?" -- discuss the wave photo before diving into logistics -->
 
 **Us:**
 
