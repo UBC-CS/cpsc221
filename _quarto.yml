@@ -52,7 +52,7 @@ website:
             text: "Getting started"
           - href: "https://canvas.ubc.ca/courses/190808"
             text: "Canvas"
-          - href: "<TODO-piazza-url>"
+          - href: "https://piazza.com/ubc.ca/winterterm12026/cpsc221"
             text: "Piazza"
           - href: "<TODO-prairielearn-url>"
             text: "PrairieLearn"
