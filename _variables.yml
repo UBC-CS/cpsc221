@@ -9,7 +9,7 @@ course:
   website: "https://ubc-cs.github.io/cpsc221/"
   repo: "https://github.com/UBC-CS/cpsc221"
   lms: "https://canvas.ubc.ca/courses/190808"
-  prairielearn: "<TODO-prairielearn-course-instance-url — no 2026W1 course instance exists yet in pl-ubc-cpsc221>"
+  prairielearn: "https://us.prairielearn.com/pl/course_instance/231085/"
 instructor:
   name: "Cinda Heeren"
   email: "cheeren@cs.ubc.ca"

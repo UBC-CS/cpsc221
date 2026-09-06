@@ -54,7 +54,7 @@ website:
             text: "Canvas"
           - href: "https://piazza.com/ubc.ca/winterterm12026/cpsc221"
             text: "Piazza"
-          - href: "<TODO-prairielearn-url>"
+          - href: "https://us.prairielearn.com/pl/course_instance/231085/"
             text: "PrairieLearn"
           - href: "https://orca.ubc.ca/students/"
             text: "ORCA"
