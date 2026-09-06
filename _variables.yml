@@ -14,6 +14,12 @@ instructor:
   name: "Cinda Heeren"
   email: "cheeren@cs.ubc.ca"
   pronouns: "she, her"
+  section: "101"
+instructor2:
+  name: "Nathan Harms"
+  email: "nharms@cs.ubc.ca"
+  pronouns: "<TODO-pronouns>"
+  section: "102"
 building:
   name: "Forest Sciences Centre"
   code: "FSC"

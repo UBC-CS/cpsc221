@@ -17,7 +17,8 @@ title: "Syllabus"
 
 ## Teaching team
 
-- **Instructor:** {{< var instructor.name >}} — {{< var instructor.email >}}
+- **Instructor (Section {{< var instructor.section >}}):** {{< var instructor.name >}} — [{{< var instructor.email >}}](mailto:{{< var instructor.email >}})
+- **Instructor (Section {{< var instructor2.section >}}):** {{< var instructor2.name >}} — [{{< var instructor2.email >}}](mailto:{{< var instructor2.email >}})
 - **Course Coordinator:** Anca Barbu — [ancuta.barbu@ubc.ca](mailto:ancuta.barbu@ubc.ca)
 - **Teaching Assistants:** TBA (TA assignments may change during the first three weeks of classes)
 

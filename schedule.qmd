@@ -11,12 +11,13 @@ execute:
   freeze: false
 ---
 
-**Instructor:** {{< var instructor.name >}}  \
+**Instructors:** {{< var instructor.name >}} (Section {{< var instructor.section >}}) · {{< var instructor2.name >}} (Section {{< var instructor2.section >}})  \
 
 ::::: columns
 ::: {.column width="50%"}
 **Contact**\
-{{< var icon.mail >}} [{{< var instructor.email >}}](mailto:{{< var instructor.email >}})\
+{{< var icon.mail >}} [{{< var instructor.email >}}](mailto:{{< var instructor.email >}}) ({{< var instructor.name >}})\
+{{< var icon.mail >}} [{{< var instructor2.email >}}](mailto:{{< var instructor2.email >}}) ({{< var instructor2.name >}})\
 {{< var icon.time >}} Office hours: <!-- TODO --> \
 :::
 

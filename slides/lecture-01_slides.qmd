@@ -11,8 +11,8 @@ title-slide-attributes:
 
 **Us:**
 
-- Instructors: {{< var instructor.name >}} — {{< var instructor.email >}} · OH: <TODO-office-hours>
-- Course Coordinator: <TODO>
+- Instructors: {{< var instructor.name >}} (Sec {{< var instructor.section >}}) — {{< var instructor.email >}} · {{< var instructor2.name >}} (Sec {{< var instructor2.section >}}) — {{< var instructor2.email >}} · OH: <TODO-office-hours>
+- Course Coordinator: Anca Barbu — ancuta.barbu@ubc.ca
 
 **TAs:** <TODO>
 
