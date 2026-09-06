@@ -23,7 +23,8 @@ title: "Syllabus"
 
 ## Schedule
 
-Class meets {{< var course.time >}}. Most weeks have three meetings — Monday and Wednesday in-person, Friday as an async video — except week 1, which meets only once. See the full [Schedule](schedule.qmd) for the week-by-week breakdown.
+The general course calendar consists of class meetings, labs, examlets, and due dates for homework and programming assignments. You have registered for specific class and lab meeting times. Examlets will be self-scheduled in ORCA. Homework and programming assignments will be due on some Monday evenings.
+See the full [Schedule](schedule.qmd) for the week-by-week breakdown.
 
 ## Course Content
 
@@ -49,11 +50,11 @@ A rough list of topics covered, by week:
 
 | Assessment | Weight per assessment | Total weight |
 |---|:---:|:---:|
-| 3 Programming Assignments | 4% | 12% |
-| 3 Homeworks | 4% | 12% |
+| 3 Programming Assignments | 2% | 6% |
+| 3 Homeworks | 2% | 6% |
 | 8 of 10 Labs | 1% | 8% |
-| 9 Examlets | 5% | 45% |
-| Final Exam | 23% | 23% |
+| 9 Examlets | 6% | 54% |
+| Final Exam | 26% | 26% |
 
 You must pass an appropriately weighted average of the examlets and final exam in order to pass the course.
 
@@ -66,6 +67,16 @@ Some assignments allow groups of up to 2; others require independent work. For h
 The point of every assignment is to learn new things and develop skills. Copying a partner's work, or splitting an assignment in half so each of you only does part of it, means you gain nothing from it — and since assignments carry much less weight than the examlets and final, that lack of practice will show up on the exams that actually determine your grade.
 
 A better approach: do as much on your own as you can, and talk things over with others when you get stuck. Struggling through your own mistakes until you solve a problem teaches the material far better than being told the answer.
+
+### Generative AI policy
+
+You are free to use generative AI tools (ChatGPT, Copilot, Claude, etc.) on Programming Assignments, Homework, and Labs, without restriction — but please briefly cite their use in a code comment where you used them (e.g. `// used Claude to help debug this function`). If you're working with a coding agent, you can just ask it to add that disclosure comment for you.
+
+We take this approach because we do not want to spend valuable teaching and learning time trying to detect AI use on take-home work. We believe that you are curious and energetic, and this material is fun to master, so we leave it to you to decide how best to learn it.
+
+That said: the entire point of the PAs, HWs, and Labs is to build understanding you can draw upon independently and fluently. Your understanding, fluency, and expertise *will* be assessed under invigilated conditions (at ORCA) on the examlets and final exam, which together are worth 80% of your grade. AI will not be available on any CPSC221 assessment in ORCA.
+
+See also UBC's [10 things UBC students should know about generative AI](https://academic.ubc.ca/teaching-learning/10-things-ubc-students-should-know/generative-ai).
 
 ### Textbooks
 
