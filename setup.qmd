@@ -88,14 +88,6 @@ If `make` fails, read the error message — `clang` is generally good about poin
 
 A past offering of this course recorded an optional video series introducing C++ specifically for this course's needs (classes, pointers, arrays, parameter passing, the "Big 3," operator overloading). <!-- TODO: the original recordings are only linked via Zoom cloud share URLs, which have likely expired. Track down the source recordings (if they still exist in the department's Zoom account) and re-host them somewhere durable -- YouTube (unlisted) or UBC Panopto/Kaltura are both reasonable options -- then link them here. -->
 
-## Optional software
-
-{{< include /_includes/software/_git-and-github.qmd >}}
-
-{{< include /_includes/software/_zoom.qmd >}}
-
-{{< include /_includes/software/_web-browser.qmd >}}
-
 ### More tips and optional readings
 
 The older [Computing Environment](https://www.students.cs.ubc.ca/~cs-221/2019W2/info/environment/) page has additional background on the department's servers (it predates the current `remote.students.cs.ubc.ca` hostname, but the general concepts still apply).
