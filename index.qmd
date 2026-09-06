@@ -4,24 +4,77 @@ title: "Syllabus"
 
 ## Introduction
 
-<!-- TODO: course description -->
+{{< var course.code >}} teaches you to design, implement, and analyze the classic data structures and algorithms of computer science — and to reason rigorously about when and why to use them. You'll come away able to:
+
+1. **Define** and articulate the functionality of classic data structures such as stacks, queues, dictionaries, and priority queues by their Abstract Data Type (ADT).
+2. **Design** algorithms and structures to implement novel ADTs based on properties of the data and intended use.
+3. **Implement** classic and novel data structures in modern C++, including arrays, linked lists, AVL trees, and hash tables.
+4. **Analyze** the efficiency (time and space) of algorithms and data structures using asymptotic notation.
+5. **Justify** algorithmic choices using iterative and recursive proofs of correctness.
+6. **Evaluate** asymptotic time and space tradeoffs between implementation options.
+7. **Identify** the structures and algorithms necessary for solving complex problems.
+8. **Synthesize** and **apply** algorithmic and analytical design choices to form complete software solutions to classic problems.
 
 ## Teaching team
 
-{{< var instructor.name >}} (Instructor)
-Other team members TBA
+- **Instructor:** {{< var instructor.name >}} — {{< var instructor.email >}}
+- **Course Coordinator:** Anca Barbu — [ancuta.barbu@ubc.ca](mailto:ancuta.barbu@ubc.ca)
+- **Teaching Assistants:** TBA (TA assignments may change during the first three weeks of classes)
 
 ## Schedule
 
-<!-- TODO: lecture/lab/discussion meeting pattern -->
+Class meets {{< var course.time >}}. Most weeks have three meetings — Monday and Wednesday in-person, Friday as an async video — except week 1, which meets only once. See the full [Schedule](schedule.qmd) for the week-by-week breakdown.
 
 ## Course Content
 
-<!-- TODO: units / topics overview -->
+A rough list of topics covered, by week:
+
+| Week | Topic |
+|:---:|---|
+| 1 | Analysis and running time of linear algorithms |
+| 2 | Algorithm correctness and linear sorting |
+| 3 | Linked lists, stacks, and queues |
+| 4 | Analysis and correctness of recursive algorithms |
+| 5 | Recursive sorting and intro to trees |
+| 6 | Tree traversals |
+| 7 | Binary search trees |
+| 8 | B-trees |
+| 9 | Hashing |
+| 10 | Priority queues, heaps, heapsort |
+| 11 | Disjoint sets, graph definitions |
+| 12 | Graph implementation and traversal |
+| 13–14 | Minimum spanning trees, shortest path |
 
 ## Deliverables and Grading Scheme
 
-<!-- TODO: grading table -->
+| Assessment | Weight per assessment | Total weight |
+|---|:---:|:---:|
+| 3 Programming Assignments | 4% | 12% |
+| 3 Homeworks | 4% | 12% |
+| 8 of 10 Labs | 1% | 8% |
+| 9 Examlets | 5% | 45% |
+| Final Exam | 23% | 23% |
+
+You must pass an appropriately weighted average of the examlets and final exam in order to pass the course.
+
+Programming assignments and homework are project-like: you (and an optional partner) manage your own progress within a 1–2 week work window, and assignments may overlap. Labs are weekly coding exercises auto-graded on PrairieLearn; your 8 highest lab scores (of 10) count toward your grade. Examlets are (nearly) weekly, self-scheduled, and focus on the previous week's content — practice material includes old exams and PrairieLearn practice problems.
+
+### Collaboration policy
+
+Some assignments allow groups of up to 2; others require independent work. For homework and most programming assignments, you may work with at most one partner — but each student must submit their own copy, even if it's identical to their partner's.
+
+The point of every assignment is to learn new things and develop skills. Copying a partner's work, or splitting an assignment in half so each of you only does part of it, means you gain nothing from it — and since assignments carry much less weight than the examlets and final, that lack of practice will show up on the exams that actually determine your grade.
+
+A better approach: do as much on your own as you can, and talk things over with others when you get stuck. Struggling through your own mistakes until you solve a problem teaches the material far better than being told the answer.
+
+### Textbooks
+
+There is no required textbook. Lecture and practice material should be sufficient, but if you'd like a reference:
+
+- *Discrete Mathematics with Applications* (Epp)
+- *Data Abstraction & Problem Solving with C++: Walls and Mirrors* (Carrano)
+
+Earlier editions, or textbooks from different authors, work fine too — we'll be clear about the *topics* we're covering so you can find them in any resource. A good C++ reference is a necessity; [cppreference.com](http://en.cppreference.com/) and [learncpp.com](http://www.learncpp.com/) are both solid.
 
 ## Note on Course Environment
 
