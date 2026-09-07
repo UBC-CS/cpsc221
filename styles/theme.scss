@@ -91,3 +91,13 @@ tr:has(.current-week) {
 .day-and-date {
     padding-left: 1.5em !important;
 }
+
+.schedule-legend {
+    font-size: smaller;
+    opacity: 0.75;
+    margin-top: 0.75em;
+}
+
+.pending {
+    cursor: help;
+}

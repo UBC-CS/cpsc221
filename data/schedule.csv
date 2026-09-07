@@ -1,40 +1,15 @@
-week,slot,id
-1,Week,part-01
-1,Week,week-01
-1,Wed,lecture-01
-1,Fri,lecture-02
-2,Mon,lecture-03
-2,Wed,lecture-04
-2,Fri,lecture-05
-3,Week,part-02
-3,Mon,lecture-06
-3,Wed,lecture-07
-3,Fri,lecture-08
-4,Mon,lecture-09
-4,Fri,lecture-10
-5,Mon,lecture-11
-5,Wed,lecture-12
-5,Fri,lecture-13
-6,Wed,lecture-14
-6,Fri,lecture-15
-7,Mon,lecture-16
-7,Wed,lecture-17
-7,Fri,lecture-18
-8,Mon,lecture-19
-8,Wed,lecture-20
-8,Fri,lecture-21
-9,Mon,lecture-22
-9,Wed,lecture-23
-9,Fri,lecture-24
-10,Fri,lecture-25
-11,Week,part-03
-11,Mon,lecture-26
-11,Wed,lecture-27
-11,Fri,lecture-28
-12,Mon,lecture-29
-12,Wed,lecture-30
-12,Fri,lecture-31
-13,Mon,lecture-32
-13,Wed,lecture-33
-13,Fri,lecture-34
-14,Mon,lecture-35
+part,week,date,mon_id,wed_id,fri_id,hwpa,lab,exam
+Part 1: Reasoning About Code,1,2026-09-07,,lecture-01,lecture-02,,,
+Part 1: Reasoning About Code,2,2026-09-14,lecture-03,lecture-04,lecture-05,,lab-01,
+Part 2: Classic Data Structures,3,2026-09-21,lecture-06,lecture-07,lecture-08,HW1,lab-02,Examlet 1
+Part 2: Classic Data Structures,4,2026-09-28,lecture-09,,lecture-10,,lab-03,Examlet 2
+Part 2: Classic Data Structures,5,2026-10-05,lecture-11,lecture-12,lecture-13,PA1,lab-04,Examlet 3
+Part 2: Classic Data Structures,6,2026-10-12,,lecture-14,lecture-15,,,
+Part 2: Classic Data Structures,7,2026-10-19,lecture-16,lecture-17,lecture-18,HW2,lab-05,Examlet 4
+Part 2: Classic Data Structures,8,2026-10-26,lecture-19,lecture-20,lecture-21,,lab-06,Examlet 5
+Part 2: Classic Data Structures,9,2026-11-02,lecture-22,lecture-23,lecture-24,PA2,lab-07,Examlet 6
+Part 2: Classic Data Structures,10,2026-11-09,,,lecture-25,,,
+Part 3: Graph Algorithms,11,2026-11-16,lecture-26,lecture-27,lecture-28,,lab-08,Examlet 7
+Part 3: Graph Algorithms,12,2026-11-23,lecture-29,lecture-30,lecture-31,PA3,lab-09,Examlet 8
+Part 3: Graph Algorithms,13,2026-11-30,lecture-32,lecture-33,lecture-34,HW3,lab-10,Examlet 9
+Part 3: Graph Algorithms,14,2026-12-07,lecture-35,,,,,

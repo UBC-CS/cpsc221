@@ -38,12 +38,28 @@ dark_theme <- quarto::theme_brand_gt("dark-brand.yml")
 ```
 
 ::: {.panel-tabset}
+### By week
+
+```{r}
+#| label: weekly-schedule
+#| echo: false
+#| message: false
+#| warning: false
+#| renderings: [light, dark]
+source(here::here("R", "render-schedule.R"))
+weekly_schedule <- render_schedule()
+
+weekly_schedule |> light_theme()
+weekly_schedule |> dark_theme()
+```
+
 ### By unit
 
 ```{r}
 #| label: unit-schedule
 #| echo: false
 #| message: false
+#| warning: false
 #| renderings: [light, dark]
 source(here::here("R", "render-unit-schedule.R"))
 unit_schedule <- render_unit_schedule()
@@ -51,18 +67,14 @@ unit_schedule <- render_unit_schedule()
 unit_schedule |> light_theme()
 unit_schedule |> dark_theme()
 ```
+:::
 
-### By week
+::: {.schedule-legend}
+{{< iconify fa6-solid window-maximize >}} slides &nbsp;
+{{< iconify fa6-solid circle-play >}} recording &nbsp;
+{{< iconify fa6-solid calendar-week >}} lab (PrairieLearn) &nbsp;
+{{< iconify fa6-solid book >}} examlet review &nbsp;
+{{< iconify fa6-solid pen-to-square >}} examlet practice
 
-```{r}
-#| label: weekly-schedule
-#| echo: false
-#| message: false
-#| renderings: [light, dark]
-source(here::here("R", "render-weekly-schedule.R"))
-weekly_schedule <- render_weekly_schedule()
-
-weekly_schedule |> light_theme()
-weekly_schedule |> dark_theme()
-```
+Faded icons mark material that isn't posted yet.
 :::
