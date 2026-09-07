@@ -22,9 +22,9 @@ execute:
 :::
 
 ::: {.column width="50%"}
-**Lecture**\
-{{< var course.time >}}\
-{{< var building.name >}} ({{< var building.code >}}, {{< var building.ubc-wayfinding >}}, {{< var building.google-maps >}})\
+**Lectures**\
+{{< var instructor.section >}}: {{< var instructor.time >}}, [{{< var building.code >}} {{< var building.room >}}]({{< var building.ubc-wayfinding >}})\
+{{< var instructor2.section >}}: {{< var instructor2.time >}}, [{{< var building.code >}} {{< var building.room >}}]({{< var building.ubc-wayfinding >}})\
 :::
 :::::
 
