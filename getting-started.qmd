@@ -10,8 +10,8 @@ There are 4 different components to the course, each with its own set of deliver
 
 1. **Programming Assignments and Homework** — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)
 2. **Labs** — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You'll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)
-3. **Exams** — You'll complete nine (nearly) weekly *examlets*, self-scheduled, collectively worth a large share of your grade — see the [Grading Scheme](index.qmd#deliverables-and-grading-scheme). These will ask about the previous week's content, so treat them as motivation to stay connected with the material. There's also a self-scheduled final exam. (~3hr/wk total.)
-4. **Class Content** — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the [Schedule](schedule.qmd) for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)
+3. **Exams** — You'll complete nine (nearly) weekly *examlets*, self-scheduled, collectively worth a large share of your grade — see the [Grading Scheme](syllabus.qmd#deliverables-and-grading-scheme). These will ask about the previous week's content, so treat them as motivation to stay connected with the material. There's also a self-scheduled final exam. (~3hr/wk total.)
+4. **Class Content** — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the [Schedule](index.qmd) for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)
 
 ## What you can do now
 

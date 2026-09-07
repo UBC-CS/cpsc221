@@ -3,6 +3,7 @@ source(here::here("R", "fct-to-snake.R"))
 source(here::here("R", "format-exam-with-due-date.R"))
 source(here::here("R", "format-resource-as-label.R"))
 source(here::here("R", "format-week-with-start-day.R"))
+source(here::here("R", "get-id-title.R"))
 source(here::here("R", "get-schedule.R"))
 source(here::here("R", "highlight-current-week.R"))
 
@@ -25,6 +26,13 @@ render_weekly_schedule <- function() {
           show_exam,
           id,
           resource
+        ),
+        # Show the real lecture title (like the "By unit" view does) instead
+        # of just an icon -- slides are the anchor resource for a lecture day.
+        unit == "lecture" & type == "slides" ~ purrr::map_chr(
+          resource,
+          get_id_title,
+          as_link = TRUE
         )
       )
     )

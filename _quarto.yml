@@ -43,9 +43,9 @@ website:
           - href: announcements.qmd
             text: "Announcements"
           - href: index.qmd
-            text: "Syllabus"
-          - href: schedule.qmd
             text: "Schedule"
+          - href: syllabus.qmd
+            text: "Syllabus"
       - section: "Resources"
         contents:
           - href: getting-started.qmd
