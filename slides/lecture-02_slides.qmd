@@ -1,0 +1,382 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "What Does It Do?"
+---
+
+## On Wednesday, I asked you about this {.smaller}
+
+```cpp
+int ____________ (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+And I asked: **what does it do?**
+
+::: notes
+Pull up the actual slide from Wednesday if you can. The point is that they
+already answered this, out loud, quickly, and felt fine about it.
+:::
+
+## Somebody said: {.center}
+
+> "It finds the key."
+
+. . .
+
+<br>
+
+And we all nodded and moved on.
+
+. . .
+
+Today you are going to write that sentence down.
+
+# Write it down {background-color="#2C3E50"}
+
+## Your turn — on your own, in silence {.smaller}
+
+Describe what this function does.
+
+::: {.callout-note appearance="minimal"}
+## The rules
+
+- **Complete sentences.** No code, no pseudocode.
+- Someone who has **never seen this function** must be able to reimplement it
+  correctly from your words alone.
+- **Give it a name.** Fill in the blank.
+:::
+
+{{< countdown minutes=5 >}}
+
+::: notes
+Hold the silence. Five minutes feels long and some will finish in ninety
+seconds -- let them sit with it rather than moving on early. The students who
+finish fast are usually the ones about to discover they were imprecise.
+:::
+
+# Groups of three {background-color="#2C3E50"}
+
+## First: hold up fingers
+
+How many written statements can you see in your group?
+
+. . .
+
+<br>
+
+I am not asking whether they are any good.
+
+Only whether all three of you have one.
+
+::: notes
+Quick scan of the room. This is a compliance check that costs ten seconds and
+requires collecting nothing. Groups police themselves.
+:::
+
+## Now read it out loud — all of you, at once {.smaller}
+
+Not one at a time. **Everybody, simultaneously, right now.**
+
+Nobody is listening to you. That is the point.
+
+::: {.callout-important appearance="minimal"}
+## Read exactly what you wrote
+
+Do not fix it on the way out of your mouth.
+:::
+
+. . .
+
+You are going to want to. You will see the gap about half a second before you
+reach it, and your instinct will be to quietly patch it as you speak.
+
+**Resist that.** You are reading it so that *you* can hear it.
+
+::: notes
+Let the whole room read at once -- it takes about thirty seconds and the wall
+of sound is worth having. Two hundred people saying different sentences about
+the same four lines of code makes the point before anyone discusses anything.
+
+Reading simultaneously does three things a round-robin cannot: it removes all
+performance anxiety in week 1 among strangers, it guarantees every single
+student actually does it, and it means no confident voice anchors the group
+before the others have spoken.
+
+The instruction not to self-repair is the important one. Say it twice.
+Students patching their own sentences mid-read is automatic and it is exactly
+what destroys the effect.
+:::
+
+## Did it sound like you expected? {.center}
+
+. . .
+
+<br>
+
+Now share them with your group.
+
+::: notes
+Ask this and genuinely wait. A few laughs and groans here are the lesson
+landing -- that is the sound of people hearing their own vagueness.
+
+Do not let them revise before sharing. The group needs the original.
+:::
+
+## Then: whose is correct? {.smaller}
+
+::: {.callout-tip appearance="minimal"}
+## The test
+
+Could a stranger reimplement this function correctly, from these words alone?
+:::
+
+Whose passes?
+
+. . .
+
+Any of them?
+
+{{< countdown minutes=8 >}}
+
+::: notes
+Circulate. Listen for the argument -- the groups doing this properly get loud.
+Silent groups usually accepted the first statement without testing it.
+
+Useful nudge if a group is stuck agreeing: "read me the shortest one, and I'll
+tell you how I'd break it."
+:::
+
+# Let me try to break them {background-color="#2C3E50"}
+
+## I will take your words completely literally {.smaller}
+
+::: {.incremental}
+- *"It finds the key in the list."*
+  → I return `true`. I found it.
+- *"It returns the position of the key."*
+  → `[5, 3, 5]`, key `5`. I return `2`. Also a position.
+- *"It returns the index of the key."*
+  → Key isn't there. I return `0`. You didn't say otherwise.
+- *"It returns where the key is."*
+  → I return a 1-based index. You didn't say otherwise.
+- *"It searches for the key and returns it."*
+  → I return `5`. You said return *it*.
+:::
+
+::: notes
+Use real statements from the room wherever you can -- ask for volunteers to
+read theirs out, and break those instead of these. These are the fallback.
+
+Keep the tone playful. You are being a pedantic genie, not a judge.
+:::
+
+## And the one that catches the careful people {.smaller}
+
+> *"It returns the index of the key, or -1 if the key is not in the list."*
+
+. . .
+
+That is a good sentence. It handles absence. It says *index*.
+
+. . .
+
+`[5, 3, 5]`, key `5`. **I return `2`.**
+
+. . .
+
+You never said **first**.
+
+::: notes
+This is the one that gets the strong students, and it is worth landing
+carefully -- the room should feel that carefulness alone was not sufficient.
+:::
+
+# Now let's build one that survives {background-color="#2C3E50"}
+
+## Together {.center}
+
+*(on the board)*
+
+::: notes
+Build it live from the room's own words. Take pieces from different groups
+so the final sentence visibly belongs to everyone.
+
+A version that survives all the attacks above:
+
+> Given a vector of integers `arr` and an integer `q`, return the index of the
+> *first* element of `arr` equal to `q`, scanning from index 0 upward. If no
+> element equals `q`, return -1.
+
+Then the name falls out almost for free: `indexOfFirst`, `firstIndexOf`,
+`findFirstIndex`. Point out that "find" alone was never enough -- a function
+called `find` could return a bool, a value, or an iterator.
+
+If somebody has instead *transcribed* the code line by line ("it loops from 0
+to size, and if arr[i] equals q it returns i"), that technically passes the
+reimplementation test, which makes it a great 90 seconds: it tells you what
+the code says, never what it is for, and it is no shorter than just reading
+the code. The giveaway is that a transcription cannot name the function.
+:::
+
+## What just happened {.smaller}
+
+Twenty minutes ago, almost nobody in this room could write that sentence.
+
+. . .
+
+Now almost all of you can.
+
+. . .
+
+And notice: **I have not taught you anything about linear search today.** I
+have not said one word about how the function works.
+
+. . .
+
+::: {.callout-important appearance="minimal"}
+You got there by talking to each other.
+:::
+
+# One more thing {background-color="#2C3E50"}
+
+## Here is what I could have handed you at the start {.smaller}
+
+*(live, right now — watch)*
+
+. . .
+
+It will be correct. It will say *first*. It will handle absence. It will
+probably suggest a better name than mine.
+
+. . .
+
+And you are nodding, because it looks right.
+
+. . .
+
+You would have nodded twenty minutes ago too.
+
+::: notes
+Generate this live in front of them if you possibly can -- paste the function
+into whichever tool you like and let the room watch it produce a clean, correct
+description in about three seconds. Doing it live is far more honest and far
+more effective than a screenshot, and it removes any suspicion that you cherry-picked.
+
+Do not editorialize while it generates. Let them read it.
+:::
+
+## Recognizing is not producing {.smaller}
+
+Reading a correct answer and thinking *"yes, that's what I meant"* feels
+exactly like understanding.
+
+. . .
+
+It is not the same thing. And from the inside, the two are **indistinguishable**.
+
+. . .
+
+The only way to tell them apart is to try to produce the answer yourself,
+from nothing — which is what you just spent twenty minutes discovering.
+
+. . .
+
+An examlet only ever asks you to produce.
+
+## Use the tools {.smaller}
+
+You are allowed to use AI in this course, on homework, assignments, and labs.
+I mean that.
+
+. . .
+
+But what it hands you is a **hypothesis** until you can produce it yourself.
+
+::: {.callout-tip appearance="minimal"}
+## The check that costs you nothing
+
+Close the laptop. Write the sentence from scratch.
+
+If you can't, you were holding someone else's answer.
+:::
+
+## Before you leave: three words {.smaller}
+
+Your group got somewhere none of you got alone. That happened because
+somebody in your group refused to accept a vague sentence.
+
+. . .
+
+So here is the contract. The three of you agree that from now on, when one of
+you says something fuzzy, any of the others gets to say:
+
+::: {.callout-tip appearance="minimal"}
+## "Say that more precisely."
+
+No apology needed. It is not rude. It is the most useful thing you can say to
+someone who is trying to learn this material.
+:::
+
+. . .
+
+You will hear me say it all term.
+
+::: notes
+This is the durable takeaway -- a shared phrase costs nothing, requires no
+exchange of anything personal, and gives every student permission to push back
+on vagueness without it feeling like an attack.
+
+Then start using it yourself, constantly, from Monday on. If they hear it in
+week 1 and then hear it every week, it stops being an event and becomes how
+this course talks.
+:::
+
+## And if you want to keep going {.smaller}
+
+Entirely up to you: swap contact info with these two and keep working
+together.
+
+. . .
+
+Piazza, email, Discord, phone —
+
+. . .
+
+**or nothing at all.** No one is checking, and I will never ask.
+
+::: notes
+Say the "or nothing at all" line clearly and move on quickly. In a room this
+size there will be a few students with real reasons not to hand their number
+to two people they met twenty minutes ago -- and if the whole room is
+exchanging while you watch, declining becomes conspicuous. Naming the opt-out
+out loud is what makes it free.
+
+Do not collect anything, do not build a roster, and do not ask next week who
+is still meeting. The moment there is any follow-up, the opt-out becomes
+visible again.
+:::
+
+## Why be in this room {.center .smaller}
+
+A recording gives you information.
+
+**The room gives you feedback.**
+
+. . .
+
+<br>
+
+You just watched a room full of people arrive at an answer that almost none of
+them had on their own — in twenty minutes, with nothing at stake, and no
+grade attached.
+
+That is not available anywhere else.
+
+::: notes
+Stop here. Do not add an attendance pitch -- the people in the room just lived
+the argument, and saying it out loud a second time cheapens it.
+:::

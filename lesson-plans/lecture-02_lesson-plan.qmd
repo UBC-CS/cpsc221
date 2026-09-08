@@ -1,0 +1,189 @@
+---
+title: "Lesson plan — What Does It Do?"
+---
+
+## The sensation we are going for
+
+Students should feel, in their own mouths, that a sentence they were confident
+about does not survive being said out loud — and then watch the room build a
+correct one together in twenty minutes, from nothing but conversation.
+
+The lesson is **not** "you all failed" and it is **not** "AI will ruin you."
+The arc is generous on purpose:
+
+1. Individually, almost nobody writes a precise description.
+2. Through conversation, almost everybody gets there.
+3. Therefore: *the conversation was the thing that worked.*
+
+That last step is the argument for being in the room, and it is demonstrated
+rather than asserted — which matters, because attendance is not required in
+this course and the lesson must not quietly contradict that.
+
+## Why this slot
+
+Friday of week 1 is the only in-person Friday of the term. It follows
+Wednesday's lecture, where this exact function already appears with its name
+blanked out and the question "what does it do?" already asked and answered
+casually. Friday hands that answer back to them.
+
+It also lands before HW1 and Examlet 1 in week 3. Habits form in week 1.
+
+## The function
+
+The same one from lecture 1, name still blank:
+
+```cpp
+int ____________ (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+It is deliberately trivial. Nobody can hide behind complexity, so the only
+thing that can fail is the precision of their words.
+
+A description that survives everything below:
+
+> Given a vector of integers `arr` and an integer `q`, return the index of the
+> **first** element of `arr` equal to `q`, scanning from index 0 upward. If no
+> element equals `q`, return -1.
+
+## Timing (50 minutes)
+
+| Time | Phase | Notes |
+|---:|---|---|
+| 0:00–0:03 | Wednesday callback | "Somebody said: it finds the key" |
+| 0:03–0:08 | Write, silent, alone | Hold the silence |
+| 0:08–0:09 | Groups of 3, hold up fingers | Compliance check, collect nothing |
+| 0:09–0:10 | **Everyone reads aloud at once** | ~30s, whole room |
+| 0:10–0:18 | Share and adjudicate in groups | "Whose, if any, is correct?" |
+| 0:18–0:30 | I try to break them | Use real statements from the room |
+| 0:30–0:36 | Build one together on the board | From the room's own words |
+| 0:36–0:40 | "What just happened" | The convergence point — the real lesson |
+| 0:40–0:46 | Generate the AI description live | Recognizing ≠ producing |
+| 0:46–0:50 | The contract, and close | "Say that more precisely" |
+
+Protect the group phase and the board-building. If you are running long, cut
+the number of descriptions you break, not the time groups spend arguing.
+
+## The three moves that make this work
+
+### 1. Simultaneous reading, not round-robin
+
+Everybody reads their own statement aloud at the same time, whole room, about
+thirty seconds. This is better than taking turns for four reasons: no
+performance anxiety among strangers in week 1, every single student actually
+does it, no confident voice anchors the group before others have spoken, and
+it is fast.
+
+The purpose is **for the speaker to hear themselves**, not for anyone else to
+listen. Say that explicitly — "nobody is listening to you, that's the point."
+
+**Tell them twice not to fix the sentence as they read it.** Students patch
+their own wording mid-sentence automatically, half a second before they reach
+the gap, and it destroys the entire effect. Naming it is the only defence.
+
+Afterwards, ask "did it sound like you expected?" and wait. Laughter and
+groans here are the lesson landing.
+
+### 2. An adjudication test, not a vote
+
+"Whose is correct?" needs a criterion or groups just pick the one that sounds
+nicest:
+
+> Could a stranger reimplement this function correctly, from these words alone?
+
+### 3. You play the pedantic genie
+
+Take real statements from the room and satisfy them legally but wrongly.
+Playful, not punitive — you are a malicious implementer, not a judge.
+
+| Their words | What you hand back |
+|---|---|
+| "finds the key in the list" | Returns `true`. I found it. |
+| "returns the position of the key" | `[5,3,5]`, key 5 → returns `2`. Also a position. |
+| "returns the index of the key" | Key absent → returns `0`. You didn't say. |
+| "returns where the key is" | A 1-based index. You didn't say. |
+| "searches for the key and returns it" | Returns `5`. You said return *it*. |
+| "returns the index of the key, or -1" | Returns *any* matching index. You never said **first**. |
+
+That last row is the important one: it catches students who were *already
+being careful*, so nobody in the room gets to feel exempt.
+
+## Watch for: transcription
+
+Someone will narrate the code instead of describing it — *"it loops from 0 to
+size, and if arr[i] equals q it returns i."* That technically passes the
+reimplementation test, which makes it a good ninety seconds if it comes up
+naturally: it tells you what the code **says**, never what it is **for**, and
+it is no shorter than just reading the code.
+
+The giveaway is the blank in the function name. A transcription cannot name
+the function; a real description hands you the name almost for free.
+
+Keep this in your pocket rather than on a slide — take it only if a student
+raises it.
+
+## The naming payoff
+
+"Find" was never enough — a function called `find` could return a bool, a
+value, or an iterator. A precise description yields `indexOfFirst` /
+`firstIndexOf` almost automatically. Use this to close Wednesday's blank.
+
+## The AI moment — generate it live
+
+Paste the function into whichever tool you like, in front of them, and let the
+room watch it produce a clean, correct description in about three seconds.
+Live is far better than a screenshot: it is more honest, it removes any
+suspicion of cherry-picking, and the speed is the point.
+
+It will be correct. Do not pretend otherwise — the lesson does not depend on
+AI being wrong, and students will disengage instantly if you overstate it.
+
+The line that matters:
+
+> You are nodding, because it looks right. You would have nodded twenty
+> minutes ago too — before you knew what you were missing.
+
+Then: recognizing a correct answer and being able to produce one feel
+identical from the inside, and only one of them is what an examlet tests.
+
+## The closing contract
+
+Three people who just succeeded together agree on one shared phrase:
+
+> **"Say that more precisely."**
+
+Aimed at the *practice*, not the relationship — so it costs nothing personal,
+requires no exchange of contact details, and works on a partner, a TA, a
+future study group, or yourself.
+
+Then start using it from the front of the room constantly, all term. Heard in
+week 1 and then every week after, it stops being an event and becomes how this
+course talks.
+
+### On the optional contact swap
+
+Offer it, then say **"or nothing at all"** clearly and move on fast.
+
+In a room this size there will be a few students with real reasons not to hand
+their number to two people they met twenty minutes ago. If the whole room is
+exchanging while you watch, declining becomes conspicuous — naming the opt-out
+out loud is what makes it free.
+
+Collect nothing, build no roster, and do not ask next week who is still
+meeting. Any follow-up makes the opt-out visible again.
+
+## Known risks
+
+- **Some students finish writing in ninety seconds.** They are usually the ones
+  about to discover they were imprecise. Hold the full five minutes.
+- **A group agrees immediately and goes quiet.** They accepted the first
+  statement without testing it. Nudge: "read me the shortest one and I'll tell
+  you how I'd break it."
+- **Tone in the breaking phase.** Pedantic genie, not judge. If it reads as
+  mockery in week 1, you lose volunteers for the term.
+- **Do not add an attendance pitch at the end.** The students in the room just
+  lived the argument. Saying it out loud a second time cheapens it.
