@@ -118,6 +118,137 @@
     "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat does it do?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow long does it take?"
   },
   {
+    "objectID": "announcements.html",
+    "href": "announcements.html",
+    "title": "Announcements",
+    "section": "",
+    "text": "No matching items",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
+  },
+  {
+    "objectID": "cpp-short-course.html",
+    "href": "cpp-short-course.html",
+    "title": "C++ Short Course (optional)",
+    "section": "",
+    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+  },
+  {
+    "objectID": "cpp-short-course.html#sessions",
+    "href": "cpp-short-course.html#sessions",
+    "title": "C++ Short Course (optional)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html",
+    "href": "lesson-plans/lecture-02_lesson-plan.html",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "",
+    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "",
+    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Why this slot",
+    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term. It follows Wednesday’s lecture, where this exact function already appears with its name blanked out and the question “what does it do?” already asked and answered casually. Friday hands that answer back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-function",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The function",
+    "text": "The function\nThe same one from lecture 1, name still blank:\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIt is deliberately trivial. Nobody can hide behind complexity, so the only thing that can fail is the precision of their words.\nA description that survives everything below:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Timing (50 minutes)",
+    "text": "Timing (50 minutes)\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nWednesday callback\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The three moves that make this work",
+    "text": "The three moves that make this work\n\n1. Simultaneous reading, not round-robin\nEverybody reads their own statement aloud at the same time, whole room, about thirty seconds. This is better than taking turns for four reasons: no performance anxiety among strangers in week 1, every single student actually does it, no confident voice anchors the group before others have spoken, and it is fast.\nThe purpose is for the speaker to hear themselves, not for anyone else to listen. Say that explicitly — “nobody is listening to you, that’s the point.”\nTell them twice not to fix the sentence as they read it. Students patch their own wording mid-sentence automatically, half a second before they reach the gap, and it destroys the entire effect. Naming it is the only defence.\nAfterwards, ask “did it sound like you expected?” and wait. Laughter and groans here are the lesson landing.\n\n\n2. An adjudication test, not a vote\n“Whose is correct?” needs a criterion or groups just pick the one that sounds nicest:\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\n3. You play the pedantic genie\nTake real statements from the room and satisfy them legally but wrongly. Playful, not punitive — you are a malicious implementer, not a judge.\n\n\n\n\n\n\n\nTheir words\nWhat you hand back\n\n\n\n\n“finds the key in the list”\nReturns true. I found it.\n\n\n“returns the position of the key”\n[5,3,5], key 5 → returns 2. Also a position.\n\n\n“returns the index of the key”\nKey absent → returns 0. You didn’t say.\n\n\n“returns where the key is”\nA 1-based index. You didn’t say.\n\n\n“searches for the key and returns it”\nReturns 5. You said return it.\n\n\n“returns the index of the key, or -1”\nReturns any matching index. You never said first.\n\n\n\nThat last row is the important one: it catches students who were already being careful, so nobody in the room gets to feel exempt."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Watch for: transcription",
+    "text": "Watch for: transcription\nSomeone will narrate the code instead of describing it — “it loops from 0 to size, and if arr[i] equals q it returns i.” That technically passes the reimplementation test, which makes it a good ninety seconds if it comes up naturally: it tells you what the code says, never what it is for, and it is no shorter than just reading the code.\nThe giveaway is the blank in the function name. A transcription cannot name the function; a real description hands you the name almost for free.\nKeep this in your pocket rather than on a slide — take it only if a student raises it."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The naming payoff",
+    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to close Wednesday’s blank."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The AI moment — generate it live",
+    "text": "The AI moment — generate it live\nPaste the function into whichever tool you like, in front of them, and let the room watch it produce a clean, correct description in about three seconds. Live is far better than a screenshot: it is more honest, it removes any suspicion of cherry-picking, and the speed is the point.\nIt will be correct. Do not pretend otherwise — the lesson does not depend on AI being wrong, and students will disengage instantly if you overstate it.\nThe line that matters:\n\nYou are nodding, because it looks right. You would have nodded twenty minutes ago too — before you knew what you were missing.\n\nThen: recognizing a correct answer and being able to produce one feel identical from the inside, and only one of them is what an examlet tests."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The closing contract",
+    "text": "The closing contract\nThree people who just succeeded together agree on one shared phrase:\n\n“Say that more precisely.”\n\nAimed at the practice, not the relationship — so it costs nothing personal, requires no exchange of contact details, and works on a partner, a TA, a future study group, or yourself.\nThen start using it from the front of the room constantly, all term. Heard in week 1 and then every week after, it stops being an event and becomes how this course talks.\n\nOn the optional contact swap\nOffer it, then say “or nothing at all” clearly and move on fast.\nIn a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago. If the whole room is exchanging while you watch, declining becomes conspicuous — naming the opt-out out loud is what makes it free.\nCollect nothing, build no roster, and do not ask next week who is still meeting. Any follow-up makes the opt-out visible again."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Known risks",
+    "text": "Known risks\n\nSome students finish writing in ninety seconds. They are usually the ones about to discover they were imprecise. Hold the full five minutes.\nA group agrees immediately and goes quiet. They accepted the first statement without testing it. Nudge: “read me the shortest one and I’ll tell you how I’d break it.”\nTone in the breaking phase. Pedantic genie, not judge. If it reads as mockery in week 1, you lose volunteers for the term.\nDo not add an attendance pitch at the end. The students in the room just lived the argument. Saying it out loud a second time cheapens it."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "",
+    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "Schedule",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "formatting.html",
+    "href": "formatting.html",
+    "title": "Formatting",
+    "section": "",
+    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+  },
+  {
     "objectID": "setup.html",
     "href": "setup.html",
     "title": "Setup: Tech stack",
@@ -146,58 +277,123 @@
     "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
   },
   {
-    "objectID": "formatting.html",
-    "href": "formatting.html",
-    "title": "Formatting",
-    "section": "",
-    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+    "objectID": "slides/lecture-02_slides.html#on-wednesday-i-asked-you-about-this",
+    "href": "slides/lecture-02_slides.html#on-wednesday-i-asked-you-about-this",
+    "title": "CPSC 221",
+    "section": "On Wednesday, I asked you about this",
+    "text": "On Wednesday, I asked you about this\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nAnd I asked: what does it do?\n\nPull up the actual slide from Wednesday if you can. The point is that they already answered this, out loud, quickly, and felt fine about it."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "",
-    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
+    "objectID": "slides/lecture-02_slides.html#somebody-said",
+    "href": "slides/lecture-02_slides.html#somebody-said",
+    "title": "CPSC 221",
+    "section": "Somebody said:",
+    "text": "Somebody said:\n\n“It finds the key.”\n\n\n\nAnd we all nodded and moved on.\n\n\nToday you are going to write that sentence down."
   },
   {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nLecture 2\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nLecture 2\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
+    "objectID": "slides/lecture-02_slides.html#your-turn-on-your-own-in-silence",
+    "href": "slides/lecture-02_slides.html#your-turn-on-your-own-in-silence",
+    "title": "CPSC 221",
+    "section": "Your turn — on your own, in silence",
+    "text": "Your turn — on your own, in silence\nDescribe what this function does.\n\n\n\nThe rules\n\n\n\nComplete sentences. No code, no pseudocode.\nSomeone who has never seen this function must be able to reimplement it correctly from your words alone.\nGive it a name. Fill in the blank.\n\n\n\n\n\n \n\nHold the silence. Five minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise."
   },
   {
-    "objectID": "cpp-short-course.html",
-    "href": "cpp-short-course.html",
-    "title": "C++ Short Course (optional)",
-    "section": "",
-    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+    "objectID": "slides/lecture-02_slides.html#first-hold-up-fingers",
+    "href": "slides/lecture-02_slides.html#first-hold-up-fingers",
+    "title": "CPSC 221",
+    "section": "First: hold up fingers",
+    "text": "First: hold up fingers\nHow many written statements can you see in your group?\n\n\nI am not asking whether they are any good.\nOnly whether all three of you have one.\n\nQuick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves."
   },
   {
-    "objectID": "cpp-short-course.html#sessions",
-    "href": "cpp-short-course.html#sessions",
-    "title": "C++ Short Course (optional)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+    "objectID": "slides/lecture-02_slides.html#now-read-it-out-loud-all-of-you-at-once",
+    "href": "slides/lecture-02_slides.html#now-read-it-out-loud-all-of-you-at-once",
+    "title": "CPSC 221",
+    "section": "Now read it out loud — all of you, at once",
+    "text": "Now read it out loud — all of you, at once\nNot one at a time. Everybody, simultaneously, right now.\nNobody is listening to you. That is the point.\n\n\n\nRead exactly what you wrote\n\n\nDo not fix it on the way out of your mouth.\n\n\n\n\nYou are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.\nResist that. You are reading it so that you can hear it.\n\nLet the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.\nReading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.\nThe instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect."
   },
   {
-    "objectID": "announcements.html",
-    "href": "announcements.html",
-    "title": "Announcements",
-    "section": "",
-    "text": "No matching items",
-    "crumbs": [
-      "Course information",
-      "Announcements"
-    ]
+    "objectID": "slides/lecture-02_slides.html#did-it-sound-like-you-expected",
+    "href": "slides/lecture-02_slides.html#did-it-sound-like-you-expected",
+    "title": "CPSC 221",
+    "section": "Did it sound like you expected?",
+    "text": "Did it sound like you expected?\n\n\nNow share them with your group.\n\nAsk this and genuinely wait. A few laughs and groans here are the lesson landing – that is the sound of people hearing their own vagueness.\nDo not let them revise before sharing. The group needs the original."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#then-whose-is-correct",
+    "href": "slides/lecture-02_slides.html#then-whose-is-correct",
+    "title": "CPSC 221",
+    "section": "Then: whose is correct?",
+    "text": "Then: whose is correct?\n\n\n\nThe test\n\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\nWhose passes?\n\nAny of them?\n\n \n\nCirculate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.\nUseful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”"
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#i-will-take-your-words-completely-literally",
+    "href": "slides/lecture-02_slides.html#i-will-take-your-words-completely-literally",
+    "title": "CPSC 221",
+    "section": "I will take your words completely literally",
+    "text": "I will take your words completely literally\n\n“It finds the key in the list.” → I return true. I found it.\n“It returns the position of the key.” → [5, 3, 5], key 5. I return 2. Also a position.\n“It returns the index of the key.” → Key isn’t there. I return 0. You didn’t say otherwise.\n“It returns where the key is.” → I return a 1-based index. You didn’t say otherwise.\n“It searches for the key and returns it.” → I return 5. You said return it.\n\n\nUse real statements from the room wherever you can – ask for volunteers to read theirs out, and break those instead of these. These are the fallback.\nKeep the tone playful. You are being a pedantic genie, not a judge."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#and-the-one-that-catches-the-careful-people",
+    "href": "slides/lecture-02_slides.html#and-the-one-that-catches-the-careful-people",
+    "title": "CPSC 221",
+    "section": "And the one that catches the careful people",
+    "text": "And the one that catches the careful people\n\n“It returns the index of the key, or -1 if the key is not in the list.”\n\n\nThat is a good sentence. It handles absence. It says index.\n\n\n[5, 3, 5], key 5. I return 2.\n\n\nYou never said first.\n\nThis is the one that gets the strong students, and it is worth landing carefully – the room should feel that carefulness alone was not sufficient."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#together",
+    "href": "slides/lecture-02_slides.html#together",
+    "title": "CPSC 221",
+    "section": "Together",
+    "text": "Together\n(on the board)\n\nBuild it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.\nA version that survives all the attacks above:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1.\n\nThen the name falls out almost for free: indexOfFirst, firstIndexOf, findFirstIndex. Point out that “find” alone was never enough – a function called find could return a bool, a value, or an iterator.\nIf somebody has instead transcribed the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#what-just-happened",
+    "href": "slides/lecture-02_slides.html#what-just-happened",
+    "title": "CPSC 221",
+    "section": "What just happened",
+    "text": "What just happened\nTwenty minutes ago, almost nobody in this room could write that sentence.\n\nNow almost all of you can.\n\n\nAnd notice: I have not taught you anything about linear search today. I have not said one word about how the function works.\n\n\n\n\n\nYou got there by talking to each other."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#here-is-what-i-could-have-handed-you-at-the-start",
+    "href": "slides/lecture-02_slides.html#here-is-what-i-could-have-handed-you-at-the-start",
+    "title": "CPSC 221",
+    "section": "Here is what I could have handed you at the start",
+    "text": "Here is what I could have handed you at the start\n(live, right now — watch)\n\nIt will be correct. It will say first. It will handle absence. It will probably suggest a better name than mine.\n\n\nAnd you are nodding, because it looks right.\n\n\nYou would have nodded twenty minutes ago too.\n\nGenerate this live in front of them if you possibly can – paste the function into whichever tool you like and let the room watch it produce a clean, correct description in about three seconds. Doing it live is far more honest and far more effective than a screenshot, and it removes any suspicion that you cherry-picked.\nDo not editorialize while it generates. Let them read it."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#recognizing-is-not-producing",
+    "href": "slides/lecture-02_slides.html#recognizing-is-not-producing",
+    "title": "CPSC 221",
+    "section": "Recognizing is not producing",
+    "text": "Recognizing is not producing\nReading a correct answer and thinking “yes, that’s what I meant” feels exactly like understanding.\n\nIt is not the same thing. And from the inside, the two are indistinguishable.\n\n\nThe only way to tell them apart is to try to produce the answer yourself, from nothing — which is what you just spent twenty minutes discovering.\n\n\nAn examlet only ever asks you to produce."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#use-the-tools",
+    "href": "slides/lecture-02_slides.html#use-the-tools",
+    "title": "CPSC 221",
+    "section": "Use the tools",
+    "text": "Use the tools\nYou are allowed to use AI in this course, on homework, assignments, and labs. I mean that.\n\nBut what it hands you is a hypothesis until you can produce it yourself.\n\n\n\nThe check that costs you nothing\n\n\nClose the laptop. Write the sentence from scratch.\nIf you can’t, you were holding someone else’s answer."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#before-you-leave-three-words",
+    "href": "slides/lecture-02_slides.html#before-you-leave-three-words",
+    "title": "CPSC 221",
+    "section": "Before you leave: three words",
+    "text": "Before you leave: three words\nYour group got somewhere none of you got alone. That happened because somebody in your group refused to accept a vague sentence.\n\nSo here is the contract. The three of you agree that from now on, when one of you says something fuzzy, any of the others gets to say:\n\n\n\n“Say that more precisely.”\n\n\nNo apology needed. It is not rude. It is the most useful thing you can say to someone who is trying to learn this material.\n\n\n\n\n\nYou will hear me say it all term.\n\nThis is the durable takeaway – a shared phrase costs nothing, requires no exchange of anything personal, and gives every student permission to push back on vagueness without it feeling like an attack.\nThen start using it yourself, constantly, from Monday on. If they hear it in week 1 and then hear it every week, it stops being an event and becomes how this course talks."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#and-if-you-want-to-keep-going",
+    "href": "slides/lecture-02_slides.html#and-if-you-want-to-keep-going",
+    "title": "CPSC 221",
+    "section": "And if you want to keep going",
+    "text": "And if you want to keep going\nEntirely up to you: swap contact info with these two and keep working together.\n\nPiazza, email, Discord, phone —\n\n\nor nothing at all. No one is checking, and I will never ask.\n\nSay the “or nothing at all” line clearly and move on quickly. In a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago – and if the whole room is exchanging while you watch, declining becomes conspicuous. Naming the opt-out out loud is what makes it free.\nDo not collect anything, do not build a roster, and do not ask next week who is still meeting. The moment there is any follow-up, the opt-out becomes visible again."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#why-be-in-this-room",
+    "href": "slides/lecture-02_slides.html#why-be-in-this-room",
+    "title": "CPSC 221",
+    "section": "Why be in this room",
+    "text": "Why be in this room\nA recording gives you information.\nThe room gives you feedback.\n\n\nYou just watched a room full of people arrive at an answer that almost none of them had on their own — in twenty minutes, with nothing at stake, and no grade attached.\nThat is not available anywhere else.\n\nStop here. Do not add an attendance pitch – the people in the room just lived the argument, and saying it out loud a second time cheapens it."
   },
   {
     "objectID": "syllabus.html",
