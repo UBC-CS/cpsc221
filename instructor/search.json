@@ -52,7 +52,7 @@
     "href": "slides/lecture-01_slides.html#introductions",
     "title": "CPSC 221",
     "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nInstructors: Cinda Heeren (Sec 101) — cheeren@cs.ubc.ca · Nathan Harms (Sec 102) — nharms@cs.ubc.ca · OH: \nCourse Coordinator: Anca Barbu — ancuta.barbu@ubc.ca\n\nTAs:"
+    "text": "Introductions\n\nUs:\n\nInstructors: Cinda Heeren (Sec 101) — cheeren@cs.ubc.ca · Nathan Harms (Sec 102) — nharms@cs.ubc.ca · OH: \nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
   },
   {
     "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at-httpsubc-cs.github.iocpsc221",
@@ -226,7 +226,7 @@
     "href": "syllabus.html#teaching-team",
     "title": "Syllabus",
     "section": "Teaching team",
-    "text": "Teaching team\n\nInstructor (Section 101): Cinda Heeren — cheeren@cs.ubc.ca\nInstructor (Section 102): Nathan Harms — nharms@cs.ubc.ca\nCourse Coordinator: Anca Barbu — ancuta.barbu@ubc.ca\nTeaching Assistants: TBA (TA assignments may change during the first three weeks of classes)",
+    "text": "Teaching team\n\nInstructor (Section 101): Cinda Heeren — cheeren@cs.ubc.ca\nInstructor (Section 102): Nathan Harms — nharms@cs.ubc.ca\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca Use this address for administrative matters: illness, academic concessions, accommodations, and other logistics.\nTeaching Assistants: TBA (TA assignments may change during the first three weeks of classes)",
     "crumbs": [
       "Course information",
       "Syllabus"
@@ -358,7 +358,7 @@
     "href": "getting-started.html#in-closing",
     "title": "Getting started",
     "section": "In closing",
-    "text": "In closing\nFor topical/content questions, post to CPSC 221’s Piazza — if you think your question is a general one, ask it publicly (anonymously if you’d like). For administrative or logistical questions, email the Course Coordinator, Anca Barbu, at ancuta.barbu@ubc.ca.\nSee you soon!",
+    "text": "In closing\nFor topical/content questions, post to CPSC 221’s Piazza — if you think your question is a general one, ask it publicly (anonymously if you’d like). For administrative matters — illness, academic concessions, accommodations, and other logistics — email the Course Coordinator, Anca Barbu, at cpsc221-admin@cs.ubc.ca.\nSee you soon!",
     "crumbs": [
       "Resources",
       "Getting started"
