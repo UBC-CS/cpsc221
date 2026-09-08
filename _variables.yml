@@ -22,6 +22,12 @@ instructor2:
   pronouns: "<TODO-pronouns>"
   section: "102"
   time: "MWF 3:00 PM"
+coordinator:
+  name: "Anca Barbu"
+  # Role alias rather than a personal address: it routes to whoever is
+  # coordinating the course, and is what students should use for admin
+  # matters (illness, accommodations, logistics).
+  email: "cpsc221-admin@cs.ubc.ca"
 building:
   name: "Forest Sciences Centre"
   code: "FSC"

@@ -28,6 +28,6 @@ There are 4 different components to the course, each with its own set of deliver
 
 ## In closing
 
-For topical/content questions, post to {{< var course.code >}}'s [Piazza](https://piazza.com/ubc.ca/winterterm12026/cpsc221) — if you think your question is a general one, ask it publicly (anonymously if you'd like). For administrative or logistical questions, email the Course Coordinator, Anca Barbu, at [ancuta.barbu@ubc.ca](mailto:ancuta.barbu@ubc.ca).
+For topical/content questions, post to {{< var course.code >}}'s [Piazza](https://piazza.com/ubc.ca/winterterm12026/cpsc221) — if you think your question is a general one, ask it publicly (anonymously if you'd like). For administrative matters — illness, academic concessions, accommodations, and other logistics — email the Course Coordinator, {{< var coordinator.name >}}, at [{{< var coordinator.email >}}](mailto:{{< var coordinator.email >}}).
 
 See you soon!
