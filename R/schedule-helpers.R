@@ -46,17 +46,22 @@ lookup_url <- function(id, type) {
 }
 
 # Slides are authored in this repo, so derive the link from the file itself.
+# A deck with `draft: true` in its front matter is treated as not yet posted:
+# it still renders and can be previewed directly, but the schedule shows the
+# faded "coming later" icon instead of a live link.
 slides_url <- function(id) {
   purrr::map_chr(id, \(this_id) {
     if (is.na(this_id)) {
       return(NA_character_)
     }
     source_file <- here::here("slides", paste0(this_id, "_slides.qmd"))
-    if (fs::file_exists(source_file)) {
-      paste0("slides/", this_id, "_slides.html")
-    } else {
-      NA_character_
+    if (!fs::file_exists(source_file)) {
+      return(NA_character_)
     }
+    if (isTRUE(rmarkdown::yaml_front_matter(source_file)$draft)) {
+      return(NA_character_)
+    }
+    paste0("slides/", this_id, "_slides.html")
   })
 }
 

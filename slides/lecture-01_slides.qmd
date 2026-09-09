@@ -5,19 +5,24 @@ title-slide-attributes:
   data-background-image: "images/lecture-01/wave.jpg"
   data-background-size: "cover"
 ---
-## Introductions
+## Introductions {.smaller}
 
 <!-- TODO: talking point -- "why did I choose that slide?" -- discuss the wave photo before diving into logistics -->
 
 **Us:**
 
-- {{< var instructor.name >}} (Sec {{< var instructor.section >}}) — {{< var instructor.email >}} · OH {{< var instructor.office-hours >}}
-- {{< var instructor2.name >}} (Sec {{< var instructor2.section >}}) — {{< var instructor2.email >}} · OH {{< var instructor2.office-hours >}}
+- {{< var instructor.name >}} (Sec {{< var instructor.section >}}/{{< var instructor2.section >}}): {{< var instructor.email >}} · OH {{< var instructor.office-hours >}} in ICCS 233
+- {{< var instructor2.name >}} (Sec {{< var instructor2.section >}}): {{< var instructor2.email >}} · OH {{< var instructor2.office-hours >}} in ICCS X465
 - Course Coordinator: {{< var coordinator.name >}} — {{< var coordinator.email >}}
 
-**TAs:** <TODO>
+**TAs:** 
+![](images/lecture-01/mpv-shot0044.jpg)
 
-## All you need to know is at https://ubc-cs.github.io/cpsc221/!
+
+
+## All you need to know is at... {.smaller}
+
+[https://ubc-cs.github.io/cpsc221/]()
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -37,7 +42,9 @@ Info on:
 - HWs — Due Mon after 1wk
 - Labs — once a week, av Sun-Sun
 - Exams — 50min in ORCA
-- Class Meetings — 101: MWF 2p, 102: MWF 3p.
+- Class Meetings in FSC 1005
+  - 101: MWF 2p, 
+  - 102: MWF 3p.
 :::
 :::
 
@@ -102,7 +109,6 @@ Legend:
 **Today's Plan:**
 
 1. intro to algorithm analysis — code!
-2. clearing the cobwebs on asymptotics
 
 # What's this course about? {background-image="images/lecture-01/wave.jpg" background-size="cover"}
 
@@ -144,7 +150,7 @@ Observations:
 })();
 </script>
 
-## Course Goals
+## Course Goals {.smaller}
 
 - Become familiar with some of the fundamental [data structures]{style="color: #e74c3c;"} and [algorithms]{style="color: #e74c3c;"} in computer science
   - Learn when to use them

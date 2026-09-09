@@ -1,6 +1,7 @@
 ---
 title: "{{< var course.code >}}"
 subtitle: "What Does It Do?"
+draft: true          # not linked from the schedule while in development
 ---
 
 ## On Wednesday, I asked you about this {.smaller}
