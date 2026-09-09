@@ -1,293 +1,5 @@
 [
   {
-    "objectID": "summaries/lecture-01_summary.html",
-    "href": "summaries/lecture-01_summary.html",
-    "title": "Introduction",
-    "section": "",
-    "text": "Carrano & Henry: Chapter 10\nEpp: Chapter 11.2 - 11.3"
-  },
-  {
-    "objectID": "summaries/lecture-01_summary.html#readings",
-    "href": "summaries/lecture-01_summary.html#readings",
-    "title": "Introduction",
-    "section": "",
-    "text": "Carrano & Henry: Chapter 10\nEpp: Chapter 11.2 - 11.3"
-  },
-  {
-    "objectID": "summaries/lecture-01_summary.html#summary",
-    "href": "summaries/lecture-01_summary.html#summary",
-    "title": "Introduction",
-    "section": "Summary",
-    "text": "Summary\nWelcome to CPSC 221 — Data Structures and Algorithms! In this course we will learn to design and evaluate programmatic approaches to problem solving. The course has 3 main units. Though they overlap and influence one another, we will address the units in roughly this order:\n\nreasoning about code\nclassic data structures\ngraph algorithms\n\nToday’s lesson is an introduction to the context in which we evaluate our code, and the issues we consider when we do so."
-  },
-  {
-    "objectID": "summaries/lecture-01_summary.html#learning-outcomes",
-    "href": "summaries/lecture-01_summary.html#learning-outcomes",
-    "title": "Introduction",
-    "section": "Learning Outcomes",
-    "text": "Learning Outcomes\nUpon completion of this lesson, students will be able to:\n\ngive an overview of the course goals\nmotivate the tradeoff between order and chaos in data\ndiscuss the metrics used to evaluate an algorithm\nexplain why running time functions are non-decreasing"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "about.html#contributors",
-    "href": "about.html#contributors",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#introductions",
-    "href": "slides/lecture-01_slides.html#introductions",
-    "title": "CPSC 221",
-    "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Tuesday 2:00–4:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
-    "href": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
-    "title": "CPSC 221",
-    "section": "All you need to know is at…",
-    "text": "All you need to know is at…\nhttps://ubc-cs.github.io/cpsc221/\n\n\nInfo on:\n\nStaff\nCommunications\nLab sections\nPAs\nExams\nMarking\nAcademic Integrity\n\n\n\nPAs — Due Mon after 2wk\nHWs — Due Mon after 1wk\nLabs — once a week, av Sun-Sun\nExams — 50min in ORCA\nClass Meetings in FSC 1005\n\n101: MWF 2p,\n102: MWF 3p.\n\n\n\nhttps://canvas.ubc.ca/courses/190808"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#term-schedule",
-    "href": "slides/lecture-01_slides.html#term-schedule",
-    "title": "CPSC 221",
-    "section": "Term Schedule",
-    "text": "Term Schedule\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nMon\nM\nW\nF\nHW/PA\nLab\nEX\n\n\n\n\n1\nSep 7\n \n🎉\n🎉\n \n \n \n\n\n2\nSep 14\n🎉\n🎉\n📹\n \n🪄\n \n\n\n3\nSep 21\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n4\nSep 28\n🎉\n \n📹\n \n🪄\n🤩\n\n\n5\nOct 5\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n6\nOct 12\n \n📹\n📹\n \n \n \n\n\n7\nOct 19\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n8\nOct 26\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n9\nNov 2\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n10\nNov 9\n \n \n📹\n \n \n \n\n\n11\nNov 16\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n12\nNov 23\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n13\nNov 30\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n14\nDec 7\n🎉\n \n \n \n \n \n\n\n\nLegend: 🎉 in-person lecture   📹 async video   🪄 lab   🤩 examlet   🏎️ HW due   🚀 PA due     off / nothing due"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#todays-announcements",
-    "href": "slides/lecture-01_slides.html#todays-announcements",
-    "title": "CPSC 221",
-    "section": "Today’s announcements",
-    "text": "Today’s announcements\n\nLabs start next week\nClass meets in person this Friday\n\nToday’s Plan:\n\nintro to algorithm analysis — code!"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#wheres-meghan",
-    "href": "slides/lecture-01_slides.html#wheres-meghan",
-    "title": "CPSC 221",
-    "section": "Where’s Meghan?",
-    "text": "Where’s Meghan?\nObservations:"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#which-closet",
-    "href": "slides/lecture-01_slides.html#which-closet",
-    "title": "CPSC 221",
-    "section": "Which closet…",
-    "text": "Which closet…\n\n \n\n\n↔︎"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#course-goals",
-    "href": "slides/lecture-01_slides.html#course-goals",
-    "title": "CPSC 221",
-    "section": "Course Goals",
-    "text": "Course Goals\n\nBecome familiar with some of the fundamental data structures and algorithms in computer science\n\nLearn when to use them\n\nImprove your ability to solve problems abstractly\n\nData structures and algorithms are the building blocks\n\nImprove your ability to analyze algorithms\n\nProve correctness\nGauge, compare, and improve time and space complexity\n\nBecome modestly skilled with C++ and UNIX"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
-    "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
-    "title": "CPSC 221",
-    "section": "Measuring the value of algorithms",
-    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#running-times",
-    "href": "slides/lecture-01_slides.html#running-times",
-    "title": "CPSC 221",
-    "section": "Running times",
-    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
-    "href": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
-    "title": "CPSC 221",
-    "section": "Algorithmic Analysis — example 1",
-    "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat does it do?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow long does it take?"
-  },
-  {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Setup: Tech stack",
-    "section": "",
-    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
-  },
-  {
-    "objectID": "setup.html#hardware",
-    "href": "setup.html#hardware",
-    "title": "Setup: Tech stack",
-    "section": "Hardware",
-    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
-  },
-  {
-    "objectID": "setup.html#computing-environment",
-    "href": "setup.html#computing-environment",
-    "title": "Setup: Tech stack",
-    "section": "Computing environment",
-    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
-  },
-  {
-    "objectID": "setup.html#attribution",
-    "href": "setup.html#attribution",
-    "title": "Setup: Tech stack",
-    "section": "Attribution",
-    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
-  },
-  {
-    "objectID": "formatting.html",
-    "href": "formatting.html",
-    "title": "Formatting",
-    "section": "",
-    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "",
-    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html",
-    "href": "lesson-plans/lecture-02_lesson-plan.html",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "",
-    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "",
-    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Why this slot",
-    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term. It follows Wednesday’s lecture, where this exact function already appears with its name blanked out and the question “what does it do?” already asked and answered casually. Friday hands that answer back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-function",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The function",
-    "text": "The function\nThe same one from lecture 1, name still blank:\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIt is deliberately trivial. Nobody can hide behind complexity, so the only thing that can fail is the precision of their words.\nA description that survives everything below:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Timing (50 minutes)",
-    "text": "Timing (50 minutes)\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nWednesday callback\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The three moves that make this work",
-    "text": "The three moves that make this work\n\n1. Simultaneous reading, not round-robin\nEverybody reads their own statement aloud at the same time, whole room, about thirty seconds. This is better than taking turns for four reasons: no performance anxiety among strangers in week 1, every single student actually does it, no confident voice anchors the group before others have spoken, and it is fast.\nThe purpose is for the speaker to hear themselves, not for anyone else to listen. Say that explicitly — “nobody is listening to you, that’s the point.”\nTell them twice not to fix the sentence as they read it. Students patch their own wording mid-sentence automatically, half a second before they reach the gap, and it destroys the entire effect. Naming it is the only defence.\nAfterwards, ask “did it sound like you expected?” and wait. Laughter and groans here are the lesson landing.\n\n\n2. An adjudication test, not a vote\n“Whose is correct?” needs a criterion or groups just pick the one that sounds nicest:\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\n3. You play the pedantic genie\nTake real statements from the room and satisfy them legally but wrongly. Playful, not punitive — you are a malicious implementer, not a judge.\n\n\n\n\n\n\n\nTheir words\nWhat you hand back\n\n\n\n\n“finds the key in the list”\nReturns true. I found it.\n\n\n“returns the position of the key”\n[5,3,5], key 5 → returns 2. Also a position.\n\n\n“returns the index of the key”\nKey absent → returns 0. You didn’t say.\n\n\n“returns where the key is”\nA 1-based index. You didn’t say.\n\n\n“searches for the key and returns it”\nReturns 5. You said return it.\n\n\n“returns the index of the key, or -1”\nReturns any matching index. You never said first.\n\n\n\nThat last row is the important one: it catches students who were already being careful, so nobody in the room gets to feel exempt."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Watch for: transcription",
-    "text": "Watch for: transcription\nSomeone will narrate the code instead of describing it — “it loops from 0 to size, and if arr[i] equals q it returns i.” That technically passes the reimplementation test, which makes it a good ninety seconds if it comes up naturally: it tells you what the code says, never what it is for, and it is no shorter than just reading the code.\nThe giveaway is the blank in the function name. A transcription cannot name the function; a real description hands you the name almost for free.\nKeep this in your pocket rather than on a slide — take it only if a student raises it."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The naming payoff",
-    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to close Wednesday’s blank."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The AI moment — generate it live",
-    "text": "The AI moment — generate it live\nPaste the function into whichever tool you like, in front of them, and let the room watch it produce a clean, correct description in about three seconds. Live is far better than a screenshot: it is more honest, it removes any suspicion of cherry-picking, and the speed is the point.\nIt will be correct. Do not pretend otherwise — the lesson does not depend on AI being wrong, and students will disengage instantly if you overstate it.\nThe line that matters:\n\nYou are nodding, because it looks right. You would have nodded twenty minutes ago too — before you knew what you were missing.\n\nThen: recognizing a correct answer and being able to produce one feel identical from the inside, and only one of them is what an examlet tests."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The closing contract",
-    "text": "The closing contract\nThree people who just succeeded together agree on one shared phrase:\n\n“Say that more precisely.”\n\nAimed at the practice, not the relationship — so it costs nothing personal, requires no exchange of contact details, and works on a partner, a TA, a future study group, or yourself.\nThen start using it from the front of the room constantly, all term. Heard in week 1 and then every week after, it stops being an event and becomes how this course talks.\n\nOn the optional contact swap\nOffer it, then say “or nothing at all” clearly and move on fast.\nIn a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago. If the whole room is exchanging while you watch, declining becomes conspicuous — naming the opt-out out loud is what makes it free.\nCollect nothing, build no roster, and do not ask next week who is still meeting. Any follow-up makes the opt-out visible again."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Known risks",
-    "text": "Known risks\n\nSome students finish writing in ninety seconds. They are usually the ones about to discover they were imprecise. Hold the full five minutes.\nA group agrees immediately and goes quiet. They accepted the first statement without testing it. Nudge: “read me the shortest one and I’ll tell you how I’d break it.”\nTone in the breaking phase. Pedantic genie, not judge. If it reads as mockery in week 1, you lose volunteers for the term.\nDo not add an attendance pitch at the end. The students in the room just lived the argument. Saying it out loud a second time cheapens it."
-  },
-  {
-    "objectID": "cpp-short-course.html",
-    "href": "cpp-short-course.html",
-    "title": "C++ Short Course (optional)",
-    "section": "",
-    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
-  },
-  {
-    "objectID": "cpp-short-course.html#sessions",
-    "href": "cpp-short-course.html#sessions",
-    "title": "C++ Short Course (optional)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
-  },
-  {
-    "objectID": "announcements.html",
-    "href": "announcements.html",
-    "title": "Announcements",
-    "section": "",
-    "text": "Weekly announcements are emailed on Sunday evenings and collected here, newest first.",
-    "crumbs": [
-      "Course information",
-      "Announcements"
-    ]
-  },
-  {
-    "objectID": "announcements.html#week-1-tuesday-september-8",
-    "href": "announcements.html#week-1-tuesday-september-8",
-    "title": "Announcements",
-    "section": "Week 1 — Tuesday, September 8",
-    "text": "Week 1 — Tuesday, September 8",
-    "crumbs": [
-      "Course information",
-      "Announcements"
-    ]
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -398,6 +110,161 @@
     ]
   },
   {
+    "objectID": "slides/lecture-01_slides.html#introductions",
+    "href": "slides/lecture-01_slides.html#introductions",
+    "title": "CPSC 221",
+    "section": "Introductions",
+    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Tuesday 2:00–4:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
+    "href": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
+    "title": "CPSC 221",
+    "section": "All you need to know is at…",
+    "text": "All you need to know is at…\nhttps://ubc-cs.github.io/cpsc221/\n\n\nInfo on:\n\nStaff\nCommunications\nLab sections\nPAs\nExams\nMarking\nAcademic Integrity\n\n\n\nPAs — Due Mon after 2wk\nHWs — Due Mon after 1wk\nLabs — once a week, av Sun-Sun\nExams — 50min in ORCA\nClass Meetings in FSC 1005\n\n101: MWF 2p,\n102: MWF 3p.\n\n\n\nhttps://canvas.ubc.ca/courses/190808"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#term-schedule",
+    "href": "slides/lecture-01_slides.html#term-schedule",
+    "title": "CPSC 221",
+    "section": "Term Schedule",
+    "text": "Term Schedule\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nMon\nM\nW\nF\nHW/PA\nLab\nEX\n\n\n\n\n1\nSep 7\n \n🎉\n🎉\n \n \n \n\n\n2\nSep 14\n🎉\n🎉\n📹\n \n🪄\n \n\n\n3\nSep 21\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n4\nSep 28\n🎉\n \n📹\n \n🪄\n🤩\n\n\n5\nOct 5\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n6\nOct 12\n \n📹\n📹\n \n \n \n\n\n7\nOct 19\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n8\nOct 26\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n9\nNov 2\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n10\nNov 9\n \n \n📹\n \n \n \n\n\n11\nNov 16\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n12\nNov 23\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n13\nNov 30\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n14\nDec 7\n🎉\n \n \n \n \n \n\n\n\nLegend: 🎉 in-person lecture   📹 async video   🪄 lab   🤩 examlet   🏎️ HW due   🚀 PA due     off / nothing due"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#todays-announcements",
+    "href": "slides/lecture-01_slides.html#todays-announcements",
+    "title": "CPSC 221",
+    "section": "Today’s announcements",
+    "text": "Today’s announcements\n\nLabs start next week\nClass meets in person this Friday\n\nToday’s Plan:\n\nintro to algorithm analysis — code!"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#wheres-meghan",
+    "href": "slides/lecture-01_slides.html#wheres-meghan",
+    "title": "CPSC 221",
+    "section": "Where’s Meghan?",
+    "text": "Where’s Meghan?\nObservations:"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#which-closet",
+    "href": "slides/lecture-01_slides.html#which-closet",
+    "title": "CPSC 221",
+    "section": "Which closet…",
+    "text": "Which closet…\n\n \n\n\n↔︎"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#course-goals",
+    "href": "slides/lecture-01_slides.html#course-goals",
+    "title": "CPSC 221",
+    "section": "Course Goals",
+    "text": "Course Goals\n\nBecome familiar with some of the fundamental data structures and algorithms in computer science\n\nLearn when to use them\n\nImprove your ability to solve problems abstractly\n\nData structures and algorithms are the building blocks\n\nImprove your ability to analyze algorithms\n\nProve correctness\nGauge, compare, and improve time and space complexity\n\nBecome modestly skilled with C++ and UNIX"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
+    "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
+    "title": "CPSC 221",
+    "section": "Measuring the value of algorithms",
+    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#running-times",
+    "href": "slides/lecture-01_slides.html#running-times",
+    "title": "CPSC 221",
+    "section": "Running times",
+    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
+    "href": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic Analysis — example 1",
+    "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat questions do you have about the code?"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "",
+    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "Schedule",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nWhat Does It Do?\n\n\n    Mon Sep 14\nLecture 3\n\n\n    Wed Sep 16\nLecture 4\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "formatting.html",
+    "href": "formatting.html",
+    "title": "Formatting",
+    "section": "",
+    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+  },
+  {
+    "objectID": "cpp-short-course.html",
+    "href": "cpp-short-course.html",
+    "title": "C++ Short Course (optional)",
+    "section": "",
+    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+  },
+  {
+    "objectID": "cpp-short-course.html#sessions",
+    "href": "cpp-short-course.html#sessions",
+    "title": "C++ Short Course (optional)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "about.html#contributors",
+    "href": "about.html#contributors",
+    "title": "About",
+    "section": "",
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "announcements.html",
+    "href": "announcements.html",
+    "title": "Announcements",
+    "section": "",
+    "text": "Weekly announcements are emailed on Sunday evenings and collected here, newest first.",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
+  },
+  {
+    "objectID": "announcements.html#week-1-tuesday-september-8",
+    "href": "announcements.html#week-1-tuesday-september-8",
+    "title": "Announcements",
+    "section": "Week 1 — Tuesday, September 8",
+    "text": "Week 1 — Tuesday, September 8",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
+  },
+  {
     "objectID": "getting-started.html",
     "href": "getting-started.html",
     "title": "Getting started",
@@ -451,5 +318,61 @@
       "Resources",
       "Getting started"
     ]
+  },
+  {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Setup: Tech stack",
+    "section": "",
+    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
+  },
+  {
+    "objectID": "setup.html#hardware",
+    "href": "setup.html#hardware",
+    "title": "Setup: Tech stack",
+    "section": "Hardware",
+    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
+  },
+  {
+    "objectID": "setup.html#computing-environment",
+    "href": "setup.html#computing-environment",
+    "title": "Setup: Tech stack",
+    "section": "Computing environment",
+    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
+  },
+  {
+    "objectID": "setup.html#attribution",
+    "href": "setup.html#attribution",
+    "title": "Setup: Tech stack",
+    "section": "Attribution",
+    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
+  },
+  {
+    "objectID": "summaries/lecture-01_summary.html",
+    "href": "summaries/lecture-01_summary.html",
+    "title": "Introduction",
+    "section": "",
+    "text": "Carrano & Henry: Chapter 10\nEpp: Chapter 11.2 - 11.3"
+  },
+  {
+    "objectID": "summaries/lecture-01_summary.html#readings",
+    "href": "summaries/lecture-01_summary.html#readings",
+    "title": "Introduction",
+    "section": "",
+    "text": "Carrano & Henry: Chapter 10\nEpp: Chapter 11.2 - 11.3"
+  },
+  {
+    "objectID": "summaries/lecture-01_summary.html#summary",
+    "href": "summaries/lecture-01_summary.html#summary",
+    "title": "Introduction",
+    "section": "Summary",
+    "text": "Summary\nWelcome to CPSC 221 — Data Structures and Algorithms! In this course we will learn to design and evaluate programmatic approaches to problem solving. The course has 3 main units. Though they overlap and influence one another, we will address the units in roughly this order:\n\nreasoning about code\nclassic data structures\ngraph algorithms\n\nToday’s lesson is an introduction to the context in which we evaluate our code, and the issues we consider when we do so."
+  },
+  {
+    "objectID": "summaries/lecture-01_summary.html#learning-outcomes",
+    "href": "summaries/lecture-01_summary.html#learning-outcomes",
+    "title": "Introduction",
+    "section": "Learning Outcomes",
+    "text": "Learning Outcomes\nUpon completion of this lesson, students will be able to:\n\ngive an overview of the course goals\nmotivate the tradeoff between order and chaos in data\ndiscuss the metrics used to evaluate an algorithm\nexplain why running time functions are non-decreasing"
   }
 ]
