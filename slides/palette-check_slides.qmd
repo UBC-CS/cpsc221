@@ -1,0 +1,63 @@
+---
+title: "Palette"
+draft: true
+---
+
+## Inline colours {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+<red>**red** quick brown fox</red>
+
+<crimson>**crimson** quick brown fox</crimson>
+
+<coral>**coral** quick brown fox</coral>
+
+<orange>**orange** quick brown fox</orange>
+
+<tangerine>**tangerine** quick brown fox</tangerine>
+
+<amber>**amber** quick brown fox</amber>
+
+<yellow>**yellow** quick brown fox</yellow>
+
+<lime>**lime** quick brown fox</lime>
+
+<green>**green** quick brown fox</green>
+
+<seagreen>**seagreen** quick brown fox</seagreen>
+
+<teal>**teal** quick brown fox</teal>
+
+<cyan>**cyan** quick brown fox</cyan>
+
+<skyblue>**skyblue** quick brown fox</skyblue>
+:::
+::: {.column width="50%"}
+<blue>**blue** quick brown fox</blue>
+
+<steel>**steel** quick brown fox</steel>
+
+<dodger>**dodger** quick brown fox</dodger>
+
+<navy>**navy** quick brown fox</navy>
+
+<indigo>**indigo** quick brown fox</indigo>
+
+<violet>**violet** quick brown fox</violet>
+
+<purple>**purple** quick brown fox</purple>
+
+<magenta>**magenta** quick brown fox</magenta>
+
+<pink>**pink** quick brown fox</pink>
+
+<brown>**brown** quick brown fox</brown>
+
+<grey>**grey** quick brown fox</grey>
+
+<black>**black** quick brown fox</black>
+
+<mark>highlighted</mark> · [bracketed]{.magenta}
+:::
+:::

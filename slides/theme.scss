@@ -116,3 +116,51 @@ $code-font-size:     0.78em;   // bump for a bigger lecture hall
     padding: 0.05em 0.3em;
   }
 }
+
+// ---- inline text colours ---------------------------------------------
+// Two equivalent spellings, use whichever reads better in the source:
+//     <blue>text</blue>      — terse; nested markdown still works
+//     [text]{.blue}          — Quarto's own span syntax
+//
+// Rainbow, warm -> cool -> neutral, plus the exact colours already in use
+// elsewhere in these decks.
+$text-colours: (
+  "red":        #e74c3c,   // already used: "data structures and algorithms"
+  "crimson":    #c00000,   // code-block numeric literals
+  "coral":      #ef4444,   // schedule PA pill
+  "orange":     #f39c12,
+  "tangerine":  #f97316,   // schedule video pill
+  "amber":      #facc15,   // schedule HW pill
+  "yellow":     #f1c40f,
+  "lime":       #7ac943,
+  "green":      #18bc9c,   // already used: "solve problems abstractly"
+  "seagreen":   #2e8b57,   // schedule examlet pill
+  "teal":       #20c997,
+  "cyan":       #17a2b8,
+  "skyblue":    #5dade2,
+  "blue":       #3498db,   // already used: "analyze algorithms"
+  "steel":      #2e75b6,   // code-block keywords
+  "dodger":     #1e90ff,   // schedule lab pill
+  "navy":       #2c3e50,   // lecture 2 section backgrounds
+  "indigo":     #6610f2,
+  "violet":     #8e44ad,
+  "purple":     #9b59b6,
+  "magenta":    #e83e8c,
+  "pink":       #ff6b9d,
+  "brown":      #b5651d,
+  "grey":       #7b8a8b,
+  "gray":       #7b8a8b,
+  "black":      #1a1a1a,
+);
+
+@each $name, $colour in $text-colours {
+  #{$name}, .#{$name} { color: $colour; }
+}
+
+// Highlighter, for when colour alone isn't enough
+mark, .hl {
+  background: #fff3a3;
+  color: inherit;
+  padding: 0.05em 0.2em;
+  border-radius: 3px;
+}
