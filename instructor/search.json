@@ -193,7 +193,7 @@
     "href": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
     "title": "Lesson plan — What Does It Do?",
     "section": "Why this slot",
-    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term. It follows Wednesday’s lecture, where this exact function already appears with its name blanked out and the question “what does it do?” already asked and answered casually. Friday hands that answer back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
+    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term, and it follows the introduction to running-time analysis. The same function appears in lecture 1 with its name blanked out; here the question is asked live, answered casually, and then handed straight back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
   },
   {
     "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
@@ -207,7 +207,7 @@
     "href": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
     "title": "Lesson plan — What Does It Do?",
     "section": "Timing (50 minutes)",
-    "text": "Timing (50 minutes)\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nWednesday callback\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
+    "text": "Timing (50 minutes)\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nAsk it live, take answers\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
   },
   {
     "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
@@ -228,7 +228,7 @@
     "href": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
     "title": "Lesson plan — What Does It Do?",
     "section": "The naming payoff",
-    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to close Wednesday’s blank."
+    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to fill in the blanked-out name."
   },
   {
     "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
