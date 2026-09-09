@@ -52,7 +52,7 @@
     "href": "slides/lecture-01_slides.html#introductions",
     "title": "CPSC 221",
     "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nInstructors: Cinda Heeren (Sec 101) — cheeren@cs.ubc.ca · Nathan Harms (Sec 102) — nharms@cs.ubc.ca · OH: \nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
+    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101) — cheeren@cs.ubc.ca · OH Tuesday 2:00–4:00 PM\nNathan Harms (Sec 102) — nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
   },
   {
     "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at-httpsubc-cs.github.iocpsc221",
@@ -122,7 +122,18 @@
     "href": "announcements.html",
     "title": "Announcements",
     "section": "",
-    "text": "No matching items",
+    "text": "Weekly announcements are emailed on Sunday evenings and collected here, newest first.",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
+  },
+  {
+    "objectID": "announcements.html#week-1-tuesday-september-8",
+    "href": "announcements.html#week-1-tuesday-september-8",
+    "title": "Announcements",
+    "section": "Week 1 — Tuesday, September 8",
+    "text": "Week 1 — Tuesday, September 8",
     "crumbs": [
       "Course information",
       "Announcements"
