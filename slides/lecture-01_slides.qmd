@@ -104,7 +104,7 @@ Legend:
 1. intro to algorithm analysis — code!
 2. clearing the cobwebs on asymptotics
 
-# What's this course about?
+# What's this course about? {background-image="images/lecture-01/wave.jpg" background-size="cover"}
 
 ## Where's Meghan? {background-image="images/lecture-01/world-cup-bc-place.jpg" background-size="contain" background-position="top"}
 

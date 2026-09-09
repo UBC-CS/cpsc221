@@ -1,0 +1,118 @@
+/*-- scss:defaults --*/
+
+// Code block palette, taken from the CPSC 221 PowerPoint slides:
+// pale blue panel, blue keywords, red literals, black identifiers.
+$code-panel-bg:      #c9e2e9;
+$code-panel-border:  #1a1a1a;
+$code-gutter-bg:     #ffffff;
+$code-keyword:       #2e75b6;   // int, for, if, return, vector
+$code-literal:       #c00000;   // numeric literals
+$code-plain:         #1a1a1a;   // identifiers, operators, punctuation
+$code-comment:       #5b7c86;
+
+$code-line-height:   1.45;
+$code-gutter-width:  2.4em;
+$code-font-size:     0.78em;   // bump for a bigger lecture hall
+
+/*-- scss:rules --*/
+
+.reveal {
+
+  div.sourceCode {
+    background: $code-panel-bg;
+    border: 2px solid $code-panel-border;
+    border-radius: 10px;
+    margin: 0.5em 0;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.18);
+  }
+
+  pre.sourceCode {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  div.sourceCode code.sourceCode {
+    display: block;
+    background: transparent;
+    padding: 0;
+    font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    font-size: $code-font-size;
+    line-height: 0;        // collapses the newline text nodes between line spans
+    color: $code-plain;
+    max-height: none;
+  }
+
+  // ---- line-number gutter --------------------------------------------
+  // Pandoc ships an inline <style> block for .numberSource that offsets each
+  // line by -4em and draws its own grey number via the anchor's ::before.
+  // That block can't be removed, so: cancel the offset, suppress its number,
+  // and draw our own gutter from a counter on the line spans.
+  pre.numberSource code.sourceCode > span > a:first-child::before {
+    content: none !important;                  // kill Pandoc's grey number
+  }
+
+  div.sourceCode code.sourceCode {
+    counter-reset: source-line 0;
+  }
+
+  div.sourceCode code.sourceCode > span {
+    counter-increment: source-line;
+    display: block;
+    line-height: $code-line-height;            // restore (see line-height: 0 above)
+    position: relative;
+    left: 0 !important;                        // cancel Pandoc's -4em shift
+    padding-left: calc(#{$code-gutter-width} + 0.85em);
+  }
+
+  div.sourceCode code.sourceCode > span::before {
+    content: counter(source-line);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;                                 // fill the line: no gaps
+    width: $code-gutter-width;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $code-plain;
+    background: $code-gutter-bg;
+    border-right: 2px solid $code-panel-border;
+  }
+
+  pre.numberSource {
+    margin-left: 0 !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  // ---- token colours -------------------------------------------------
+  code span.dt,                       // data types: int, vector
+  code span.kw,                       // keywords
+  code span.cf,                       // control flow: for, if, return
+  code span.bu { color: $code-keyword; font-weight: 600; }
+
+  code span.dv,                       // decimal literals
+  code span.fl,
+  code span.bn { color: $code-literal; font-weight: 600; }
+
+  code span.st { color: #b5651d; }    // strings
+  code span.co { color: $code-comment; font-style: italic; }
+
+  code span.op,                       // operators and punctuation
+  code span.va,
+  code span.fu,
+  code span.cn { color: $code-plain; }
+
+  // Inline code keeps the panel colour but stays compact
+  code:not(.sourceCode) {
+    background: $code-panel-bg;
+    color: $code-plain;
+    border-radius: 4px;
+    padding: 0.05em 0.3em;
+  }
+}

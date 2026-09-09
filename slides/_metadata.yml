@@ -1,4 +1,6 @@
 format:
   revealjs:
+    theme: [default, theme.scss]
     slide-number: true
     footer: "{{< var course.code >}}"
+    code-line-numbers: false
