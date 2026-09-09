@@ -4,7 +4,7 @@ subtitle: "What Does It Do?"
 draft: true          # not linked from the schedule while in development
 ---
 
-## On Wednesday, I asked you about this {.smaller}
+## What does this function do? {.smaller}
 
 ```cpp
 int ____________ (vector<int> arr, int q) {
@@ -15,11 +15,10 @@ int ____________ (vector<int> arr, int q) {
 }
 ```
 
-And I asked: **what does it do?**
-
 ::: notes
-Pull up the actual slide from Wednesday if you can. The point is that they
-already answered this, out loud, quickly, and felt fine about it.
+Ask it out loud and take two or three answers. You are fishing for something
+casual and confident -- "it finds the key", "it searches the array". Do not
+correct anything; just accept them and move on. The looseness is the setup.
 :::
 
 ## Somebody said: {.center}
@@ -30,11 +29,11 @@ already answered this, out loud, quickly, and felt fine about it.
 
 <br>
 
-And we all nodded and moved on.
+And we all nodded.
 
 . . .
 
-Today you are going to write that sentence down.
+Now you are going to write that sentence down.
 
 # Write it down {background-color="#2C3E50"}
 

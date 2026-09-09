@@ -21,10 +21,10 @@ this course and the lesson must not quietly contradict that.
 
 ## Why this slot
 
-Friday of week 1 is the only in-person Friday of the term. It follows
-Wednesday's lecture, where this exact function already appears with its name
-blanked out and the question "what does it do?" already asked and answered
-casually. Friday hands that answer back to them.
+Friday of week 1 is the only in-person Friday of the term, and it follows the
+introduction to running-time analysis. The same function appears in lecture 1
+with its name blanked out; here the question is asked live, answered casually,
+and then handed straight back to them.
 
 It also lands before HW1 and Examlet 1 in week 3. Habits form in week 1.
 
@@ -54,7 +54,7 @@ A description that survives everything below:
 
 | Time | Phase | Notes |
 |---:|---|---|
-| 0:00–0:03 | Wednesday callback | "Somebody said: it finds the key" |
+| 0:00–0:03 | Ask it live, take answers | "Somebody said: it finds the key" |
 | 0:03–0:08 | Write, silent, alone | Hold the silence |
 | 0:08–0:09 | Groups of 3, hold up fingers | Compliance check, collect nothing |
 | 0:09–0:10 | **Everyone reads aloud at once** | ~30s, whole room |
@@ -130,7 +130,7 @@ raises it.
 
 "Find" was never enough — a function called `find` could return a bool, a
 value, or an iterator. A precise description yields `indexOfFirst` /
-`firstIndexOf` almost automatically. Use this to close Wednesday's blank.
+`firstIndexOf` almost automatically. Use this to fill in the blanked-out name.
 
 ## The AI moment — generate it live
 
