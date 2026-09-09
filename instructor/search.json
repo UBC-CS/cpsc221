@@ -101,7 +101,7 @@
     "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
     "title": "CPSC 221",
     "section": "Measuring the value of algorithms",
-    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\nForm of function depends on structure of the algorithm:"
+    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
   },
   {
     "objectID": "slides/lecture-01_slides.html#running-times",
