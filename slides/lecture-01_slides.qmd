@@ -11,7 +11,8 @@ title-slide-attributes:
 
 **Us:**
 
-- Instructors: {{< var instructor.name >}} (Sec {{< var instructor.section >}}) — {{< var instructor.email >}} · {{< var instructor2.name >}} (Sec {{< var instructor2.section >}}) — {{< var instructor2.email >}} · OH: <TODO-office-hours>
+- {{< var instructor.name >}} (Sec {{< var instructor.section >}}) — {{< var instructor.email >}} · OH {{< var instructor.office-hours >}}
+- {{< var instructor2.name >}} (Sec {{< var instructor2.section >}}) — {{< var instructor2.email >}} · OH {{< var instructor2.office-hours >}}
 - Course Coordinator: {{< var coordinator.name >}} — {{< var coordinator.email >}}
 
 **TAs:** <TODO>

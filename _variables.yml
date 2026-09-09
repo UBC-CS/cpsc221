@@ -16,12 +16,14 @@ instructor:
   pronouns: "she, her"
   section: "101"
   time: "MWF 2:00 PM"
+  office-hours: "Tuesday 2:00–4:00 PM"
 instructor2:
   name: "Nathan Harms"
   email: "nharms@cs.ubc.ca"
   pronouns: "<TODO-pronouns>"
   section: "102"
   time: "MWF 3:00 PM"
+  office-hours: "Monday 4:00–5:00 PM"
 coordinator:
   name: "Anca Barbu"
   # Role alias rather than a personal address: it routes to whoever is

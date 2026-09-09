@@ -1,11 +1,25 @@
 ---
 title: "Announcements"
-listing:
-  contents: posts
-  sort: "date desc"
-  type: default
-  feed: true
-  categories: true
-  fields: [title, subtitle, description, date, image, reading-time]
 comments: false
 ---
+
+<!--
+HOW TO ADD A WEEK
+-----------------
+Paste the new week at the TOP of the list below, directly under this comment,
+using the same shape as the entries that follow:
+
+## Week N — Sunday, Month D          <- heading: week number, then the date sent
+Body of the email.
+
+Newest first, so students always land on the current week.
+-->
+
+::: {.callout-note appearance="simple"}
+Weekly announcements are emailed on Sunday evenings and collected here, newest
+first.
+:::
+
+## Week 1 — Tuesday, September 8
+
+<!-- TODO: paste tonight's email here -->
