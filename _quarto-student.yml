@@ -1,0 +1,7 @@
+# Lesson plans are instructor-only. The schedule already hides them from the
+# student view, but without this they would still be rendered and published --
+# unlinked, yet reachable by anyone who guessed the URL.
+project:
+  render:
+    - "**/*.qmd"
+    - "!lesson-plans/**"

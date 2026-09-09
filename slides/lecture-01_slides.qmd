@@ -190,7 +190,7 @@ Suppose a computer executes $10^{12}$ operations per sec.
 | $n^3$ | $10^{-9}$ s | $10^{-6}$ s | $10^{-3}$ s | 1 s | $10^{24}$ s |
 | $2^n$ | $10^{-9}$ s | $10^{18}$ s | $10^{289}$ s | | |
 
-## Algorithmic Analysis — example 1
+## Algorithmic Analysis — example 1 {.smaller}
 
 ```cpp
 int ____________ (vector<int> arr, int q) {
@@ -201,10 +201,5 @@ int ____________ (vector<int> arr, int q) {
 }
 ```
 
-What does it do?
+What questions do you have about the code?
 
-| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 | 7 | 45 |
-
-How long does it take?
