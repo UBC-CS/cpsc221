@@ -165,12 +165,20 @@ Observations:
 
 - If an algorithm is not [correct]{style="color: #3498db;"}, is its value 0?
 
+
+\
+
+
 - Use different metrics — [time]{style="color: #3498db;"}, [space]{style="color: #3498db;"} most common
 - Express [running times]{style="color: #e74c3c;"} as a (positive) [function]{style="color: #e74c3c;"}:
 
-- Form of function depends on structure of the algorithm:
 
-## Running times
+\
+
+
+- Form of function depends on structure of the algorithm...
+
+## Running times {.smaller}
 
 Suppose a computer executes $10^{12}$ operations per sec.
 
