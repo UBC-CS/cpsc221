@@ -101,6 +101,50 @@ Legend:
 
 <!-- TODO: mid-term break not yet confirmed against the official UBC 2026W1 academic calendar -->
 
+## Grading
+
+<!-- Same pill colours and emoji as the term schedule above, so a row here maps
+     straight onto a column there. -->
+<style>
+  /* Pandoc emits a <colgroup> with percentage widths that stretch the table to
+     the full slide; dropping it lets the columns size to their content. */
+  #grading table colgroup{display:none;}
+  #grading table{font-size:0.62em; margin:0.3em auto 0 auto; width:auto;}
+  #grading table td, #grading table th{vertical-align:middle; padding:0.18em 1.1em;}
+  #grading .wt{font-weight:800; white-space:nowrap;}
+  #grading .each{color:#666; font-size:0.85em; white-space:nowrap;}
+  /* Markdown table rows can't carry a class, so the total is addressed by position. */
+  #grading tbody tr:last-child td{border-top:2px solid #1a1a1a;}
+</style>
+
+<div id="grading">
+
+| Component | | Weight |
+|---|---|---|
+| <span class="pill pill--class" title="Lecture">🎉</span> Class meetings | <span class="each">attendance not required</span> | <span class="wt">0%</span> |
+| <span class="pill pill--lab" title="Lab">🪄</span> Labs | <span class="each">best 8 of 10 &times; 1%</span> | <span class="wt">8%</span> |
+| <span class="pill pill--hw" title="HW">🏎️</span> Homework | <span class="each">3 &times; 2%</span> | <span class="wt">6%</span> |
+| <span class="pill pill--pa" title="PA">🚀</span> Programming assignments | <span class="each">3 &times; 2%</span> | <span class="wt">6%</span> |
+| <span class="pill pill--exam" title="Examlet">🤩</span> Examlets | <span class="each">9 &times; 6%</span> | <span class="wt">54%</span> |
+| <span class="pill" style="background:gold; color:#111;" title="Final">🏆</span> Final exam | <span class="each">cumulative</span> | <span class="wt">26%</span> |
+| | | <span class="wt">100%</span> |
+
+</div>
+
+::: {.fragment}
+**80% of your grade is written under invigilation.**
+:::
+
+::: notes
+The point of this slide is the last line, not the table. Labs/HW/PAs are where
+you *learn* the material — they are worth 20% precisely so you can afford to
+struggle on them. The examlets and final are where you *show* it, and there is
+nothing to lean on there but what you actually know.
+
+Ties directly to the GenAI policy: use whatever you like on the 20%, but the
+same material comes back at you on the 80%.
+:::
+
 ## Today's announcements
 
 1. Labs start next week
@@ -168,6 +212,9 @@ Observations:
 
 \
 
+
+<!-- ===== Wed Sep 9 2026: class ended HERE — the "is its value 0?" question was
+     the last thing covered. Everything below is still owed on Friday. ===== -->
 
 - Use different metrics — [time]{style="color: #3498db;"}, [space]{style="color: #3498db;"} most common
 - Express [running times]{style="color: #e74c3c;"} as a (positive) [function]{style="color: #e74c3c;"}:

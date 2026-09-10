@@ -1,6 +1,20 @@
 format:
   revealjs:
     theme: [default, theme.scss]
-    slide-number: true
+
+    # 16:9 to match projectors and cpsc203. Quarto's default is 1050x700 (3:2),
+    # which pillarboxes on a widescreen projector and wastes horizontal space.
+    width: 1280
+    height: 720
+
+    slide-number: c/t
     footer: "{{< var course.code >}}"
     code-line-numbers: false
+
+    # Annotation in class. B = chalkboard (blank board), C = draw on the
+    # current slide, DEL = erase this slide, D = download drawings.
+    chalkboard:
+      buttons: true
+
+    # On-screen navigation arrows, for presenting without the keyboard.
+    controls: true

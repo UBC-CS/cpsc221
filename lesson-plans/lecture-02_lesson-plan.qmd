@@ -28,6 +28,25 @@ and then handed straight back to them.
 
 It also lands before HW1 and Examlet 1 in week 3. Habits form in week 1.
 
+## Carryover from Wednesday
+
+Wednesday (Sep 9) ended on **"Measuring the value of algorithms"**, right after
+the opening question *"if an algorithm is not correct, is its value 0?"*. Still
+owed from lecture 1:
+
+- the metrics bullet (time, space) and running times as a positive function
+- the **Running times** table ($n$ through $2^n$ against the clock)
+- **Algorithmic Analysis — example 1**
+
+The good news is that the third of those *is this activity's function*, verbatim
+and already name-blanked. So don't run it twice — finish the first two (about
+twelve minutes, and keep it moving), then let the example 1 slide **be** the
+activity's opening move. The 0:00–0:03 "ask it live, take answers" phase below
+happens on that slide, and nothing is duplicated.
+
+That leaves the activity roughly its full length. If it still runs tight, cut
+from the breaking phase, not from the group argument.
+
 ## The function
 
 The same one from lecture 1, name still blank:
