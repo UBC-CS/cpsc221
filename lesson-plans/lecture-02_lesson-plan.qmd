@@ -31,21 +31,36 @@ It also lands before HW1 and Examlet 1 in week 3. Habits form in week 1.
 ## Carryover from Wednesday
 
 Wednesday (Sep 9) ended on **"Measuring the value of algorithms"**, right after
-the opening question *"if an algorithm is not correct, is its value 0?"*. Still
-owed from lecture 1:
+the opening question *"if an algorithm is not correct, is its value 0?"*.
 
-- the metrics bullet (time, space) and running times as a positive function
-- the **Running times** table ($n$ through $2^n$ against the clock)
-- **Algorithmic Analysis — example 1**
+That turns out to be exactly where the 2024W1 deck's Lesson 1.2 begins
+(`oldslides/lec090624-reasoning.pdf`), so the carryover has been folded into
+**the front of Friday's deck** rather than left in lecture 1. Slides 1–6:
 
-The good news is that the third of those *is this activity's function*, verbatim
-and already name-blanked. So don't run it twice — finish the first two (about
-twelve minutes, and keep it moving), then let the example 1 slide **be** the
-activity's opening move. The 0:00–0:03 "ask it live, take answers" phase below
-happens on that slide, and nothing is duplicated.
+| | |
+|---|---|
+| Today | announcements, where we're going |
+| Algorithm analysis | correct / time / space — 30 seconds, framing only |
+| Where we stopped | lands the answer to Wednesday's question, doesn't re-run it |
+| Measuring the value | which is better? metrics, $T(n)$ as a positive function |
+| Running times | the orders-of-magnitude table |
+| **Example 1** | **the activity starts here** |
 
-That leaves the activity roughly its full length. If it still runs tight, cut
-from the breaking phase, not from the group argument.
+Budget **twelve minutes** to reach example 1 and keep it moving — none of it is
+new material except the last line of the running-times slide, which is the
+hinge: *before we can say how long an algorithm takes, we have to say what it
+does.*
+
+Example 1 is this activity's function, verbatim and already name-blanked, so it
+does double duty: it is the last lecture slide and the activity's opening "ask
+it live, take answers" move. Nothing runs twice.
+
+**Do not ask "how long does it take?" on that slide.** The 2024 deck does, but
+it is Monday's opening — asking it Friday telegraphs that the description is
+the hard part.
+
+That leaves the activity about 38 of its 50 minutes. If it runs tight, cut from
+the breaking phase, not from the group argument.
 
 ## The function
 
@@ -70,6 +85,8 @@ A description that survives everything below:
 > element equals `q`, return -1.
 
 ## Timing (50 minutes)
+
+Starting from example 1, i.e. twelve minutes into the class:
 
 | Time | Phase | Notes |
 |---:|---|---|

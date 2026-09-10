@@ -1,10 +1,116 @@
 ---
 title: "{{< var course.code >}}"
-subtitle: "What Does It Do?"
-draft: true          # not linked from the schedule while in development
+subtitle: "Reasoning About Algorithms"
+draft: true          # keep unlinked until AFTER Friday -- the activity is spoiled
+                     # for anyone who reads ahead
 ---
 
-## What does this function do? {.smaller}
+<!-- The opening five slides carry the motivation forward from Wednesday and
+     deliberately overlap the tail of lecture 1, which was never reached. They
+     follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
+     begins at exactly the question Wednesday ended on.
+
+     Slide 5 -- example 1 -- is where the deck stops being a lecture and becomes
+     the activity. Budget about twelve minutes to get there. -->
+
+## Today {.smaller}
+
+**Announcements**
+
+- Labs start next week
+- HW1 available Monday Sep 14, due Sep 21
+
+\
+
+**Where we're going**
+
+- The value of an algorithm
+- The abstraction of *running time*
+- What it takes to describe an algorithm precisely
+
+## Algorithm analysis {.smaller}
+
+Analysis of an algorithm gives insight into
+
+::: {.incremental}
+- whether it is **correct**
+- how long it runs — *time complexity*
+- how much memory it uses — *space complexity*
+:::
+
+. . .
+
+\
+
+And it lets us compare two algorithms that solve the **same problem** without
+running either one.
+
+::: notes
+Thirty seconds. This is a framing slide, not a content slide.
+:::
+
+## Where we stopped {.smaller}
+
+> If an algorithm is not [correct]{style="color: #3498db;"}, is its value 0?
+
+. . .
+
+\
+
+No — and the exceptions are a whole field each:
+
+::: {.incremental}
+- **approximation** — provably close, much faster
+- **heuristics** — usually good, no promise
+- **randomized** — correct with high probability
+- **restricted inputs** — correct on the data you actually have
+:::
+
+::: notes
+We spent Wednesday on this. Land the answer and move -- do not re-run the
+discussion, it already happened.
+:::
+
+## Measuring the value of algorithms {.smaller}
+
+Two algorithms solve the same problem. Which is better?
+
+. . .
+
+- Use different metrics — [time]{style="color: #3498db;"}, [space]{style="color: #3498db;"} most common
+- Express [running time]{style="color: #e74c3c;"} as a (positive) [function]{style="color: #e74c3c;"} of input size:
+
+. . .
+
+$$T(n) = \text{time to complete the operations on data of size } n$$
+
+. . .
+
+- The **form** of that function depends on the structure of the algorithm
+
+## Running times {.smaller}
+
+Suppose a computer executes $10^{12}$ operations per sec.
+
+| operations | n=10 | n=100 | n=1000 | n=10,000 | n=$10^{12}$ |
+|---|---|---|---|---|---|
+| $n$ | $10^{-11}$ s | $10^{-10}$ s | $10^{-9}$ s | $10^{-8}$ s | 1 s |
+| $n \log n$ | $10^{-11}$ s | $10^{-9}$ s | $10^{-8}$ s | $10^{-7}$ s | 40 s |
+| $n^2$ | $10^{-10}$ s | $10^{-8}$ s | $10^{-6}$ s | $10^{-4}$ s | $10^{12}$ s |
+| $n^3$ | $10^{-9}$ s | $10^{-6}$ s | $10^{-3}$ s | 1 s | $10^{24}$ s |
+| $2^n$ | $10^{-9}$ s | $10^{18}$ s | $10^{289}$ s | | |
+
+. . .
+
+So before we can say how long an algorithm takes, we have to be able to say
+**what it does** — precisely enough that the question even has an answer.
+
+::: notes
+The last line is the hinge. It is the only sentence connecting the lecture to
+the activity, so do not rush it.
+:::
+
+## Algorithmic analysis — example 1 {.smaller}
 
 ```cpp
 int ____________ (vector<int> arr, int q) {
@@ -15,10 +121,22 @@ int ____________ (vector<int> arr, int q) {
 }
 ```
 
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+**What does it do?**
+
 ::: notes
-Ask it out loud and take two or three answers. You are fishing for something
-casual and confident -- "it finds the key", "it searches the array". Do not
-correct anything; just accept them and move on. The looseness is the setup.
+THIS IS THE START OF THE ACTIVITY. Ask it out loud and take two or three
+answers. You are fishing for something casual and confident -- "it finds the
+key", "it searches the array". Do not correct anything; just accept them and
+move on. The looseness is the setup.
+
+Any C++ mysteries in the code, clear them here -- but keep it short.
+
+Do NOT ask "how long does it take?" today. That is Monday's opening, and asking
+it now gives away that the description is the hard part.
 :::
 
 ## Somebody said: {.center}
