@@ -52,6 +52,8 @@ website:
             text: "Getting started"
           - href: "https://canvas.ubc.ca/courses/190808"
             text: "Canvas"
+          - href: "https://canvas.ubc.ca/courses/190808/external_tools/66459"
+            text: "Recordings"
           - href: "https://piazza.com/ubc.ca/winterterm12026/cpsc221"
             text: "Piazza"
           - href: "https://us.prairielearn.com/pl/course_instance/231085/"
