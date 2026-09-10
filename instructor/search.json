@@ -125,6 +125,160 @@
     "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat questions do you have about the code?"
   },
   {
+    "objectID": "slides/draft-02_slides.html#today",
+    "href": "slides/draft-02_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\nAnnouncements\n\nLabs start next week\nHW1 available Monday Sep 14, due Sep 21\n\n\n\nWhere we’re going\n\nThe value of an algorithm\nThe abstraction of running time\nWhat it takes to describe an algorithm precisely"
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#algorithm-analysis",
+    "href": "slides/draft-02_slides.html#algorithm-analysis",
+    "title": "CPSC 221",
+    "section": "Algorithm analysis",
+    "text": "Algorithm analysis\nAnalysis of an algorithm gives insight into\n\nwhether it is correct\nhow long it runs — time complexity\nhow much memory it uses — space complexity\n\n\n\n\nAnd it lets us compare two algorithms that solve the same problem without running either one.\n\nThirty seconds. This is a framing slide, not a content slide."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#where-we-stopped",
+    "href": "slides/draft-02_slides.html#where-we-stopped",
+    "title": "CPSC 221",
+    "section": "Where we stopped",
+    "text": "Where we stopped\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\nNo — and the exceptions are a whole field each:\n\napproximation — provably close, much faster\nheuristics — usually good, no promise\nrandomized — correct with high probability\nrestricted inputs — correct on the data you actually have\n\n\nWe spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#measuring-the-value-of-algorithms",
+    "href": "slides/draft-02_slides.html#measuring-the-value-of-algorithms",
+    "title": "CPSC 221",
+    "section": "Measuring the value of algorithms",
+    "text": "Measuring the value of algorithms\nTwo algorithms solve the same problem. Which is better?\n\n\nUse different metrics — time, space most common\nExpress running time as a (positive) function of input size:\n\n\n\n\\[T(n) = \\text{time to complete the operations on data of size } n\\]\n\n\n\nThe form of that function depends on the structure of the algorithm"
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#running-times",
+    "href": "slides/draft-02_slides.html#running-times",
+    "title": "CPSC 221",
+    "section": "Running times",
+    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s\n\n\n\n\n\n\nSo before we can say how long an algorithm takes, we have to be able to say what it does — precisely enough that the question even has an answer.\n\nThe last line is the hinge. It is the only sentence connecting the lecture to the activity, so do not rush it."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-example-1",
+    "href": "slides/draft-02_slides.html#algorithmic-analysis-example-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — example 1",
+    "text": "Algorithmic analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat does it do?\n\nTHIS IS THE START OF THE ACTIVITY. Ask it out loud and take two or three answers. You are fishing for something casual and confident – “it finds the key”, “it searches the array”. Do not correct anything; just accept them and move on. The looseness is the setup.\nAny C++ mysteries in the code, clear them here – but keep it short.\nDo NOT ask “how long does it take?” today. That is Monday’s opening, and asking it now gives away that the description is the hard part."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#somebody-said",
+    "href": "slides/draft-02_slides.html#somebody-said",
+    "title": "CPSC 221",
+    "section": "Somebody said:",
+    "text": "Somebody said:\n\n“It finds the key.”\n\n\n\nAnd we all nodded.\n\n\nNow you are going to write that sentence down."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#your-turn-on-your-own-in-silence",
+    "href": "slides/draft-02_slides.html#your-turn-on-your-own-in-silence",
+    "title": "CPSC 221",
+    "section": "Your turn — on your own, in silence",
+    "text": "Your turn — on your own, in silence\nDescribe what this function does.\n\n\n\nThe rules\n\n\n\nComplete sentences. No code, no pseudocode.\nSomeone who has never seen this function must be able to reimplement it correctly from your words alone.\nGive it a name. Fill in the blank.\n\n\n\n\n\n \n\nHold the silence. Five minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#first-hold-up-fingers",
+    "href": "slides/draft-02_slides.html#first-hold-up-fingers",
+    "title": "CPSC 221",
+    "section": "First: hold up fingers",
+    "text": "First: hold up fingers\nHow many written statements can you see in your group?\n\n\nI am not asking whether they are any good.\nOnly whether all three of you have one.\n\nQuick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#now-read-it-out-loud-all-of-you-at-once",
+    "href": "slides/draft-02_slides.html#now-read-it-out-loud-all-of-you-at-once",
+    "title": "CPSC 221",
+    "section": "Now read it out loud — all of you, at once",
+    "text": "Now read it out loud — all of you, at once\nNot one at a time. Everybody, simultaneously, right now.\nNobody is listening to you. That is the point.\n\n\n\nRead exactly what you wrote\n\n\nDo not fix it on the way out of your mouth.\n\n\n\n\nYou are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.\nResist that. You are reading it so that you can hear it.\n\nLet the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.\nReading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.\nThe instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#did-it-sound-like-you-expected",
+    "href": "slides/draft-02_slides.html#did-it-sound-like-you-expected",
+    "title": "CPSC 221",
+    "section": "Did it sound like you expected?",
+    "text": "Did it sound like you expected?\n\n\nNow share them with your group.\n\nAsk this and genuinely wait. A few laughs and groans here are the lesson landing – that is the sound of people hearing their own vagueness.\nDo not let them revise before sharing. The group needs the original."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#then-whose-is-correct",
+    "href": "slides/draft-02_slides.html#then-whose-is-correct",
+    "title": "CPSC 221",
+    "section": "Then: whose is correct?",
+    "text": "Then: whose is correct?\n\n\n\nThe test\n\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\nWhose passes?\n\nAny of them?\n\n \n\nCirculate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.\nUseful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”"
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#i-will-take-your-words-completely-literally",
+    "href": "slides/draft-02_slides.html#i-will-take-your-words-completely-literally",
+    "title": "CPSC 221",
+    "section": "I will take your words completely literally",
+    "text": "I will take your words completely literally\n\n“It finds the key in the list.” → I return true. I found it.\n“It returns the position of the key.” → [5, 3, 5], key 5. I return 2. Also a position.\n“It returns the index of the key.” → Key isn’t there. I return 0. You didn’t say otherwise.\n“It returns where the key is.” → I return a 1-based index. You didn’t say otherwise.\n“It searches for the key and returns it.” → I return 5. You said return it.\n\n\nUse real statements from the room wherever you can – ask for volunteers to read theirs out, and break those instead of these. These are the fallback.\nKeep the tone playful. You are being a pedantic genie, not a judge."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#and-the-one-that-catches-the-careful-people",
+    "href": "slides/draft-02_slides.html#and-the-one-that-catches-the-careful-people",
+    "title": "CPSC 221",
+    "section": "And the one that catches the careful people",
+    "text": "And the one that catches the careful people\n\n“It returns the index of the key, or -1 if the key is not in the list.”\n\n\nThat is a good sentence. It handles absence. It says index.\n\n\n[5, 3, 5], key 5. I return 2.\n\n\nYou never said first.\n\nThis is the one that gets the strong students, and it is worth landing carefully – the room should feel that carefulness alone was not sufficient."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#together",
+    "href": "slides/draft-02_slides.html#together",
+    "title": "CPSC 221",
+    "section": "Together",
+    "text": "Together\n(on the board)\n\nBuild it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.\nA version that survives all the attacks above:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1.\n\nThen the name falls out almost for free: indexOfFirst, firstIndexOf, findFirstIndex. Point out that “find” alone was never enough – a function called find could return a bool, a value, or an iterator.\nIf somebody has instead transcribed the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#what-just-happened",
+    "href": "slides/draft-02_slides.html#what-just-happened",
+    "title": "CPSC 221",
+    "section": "What just happened",
+    "text": "What just happened\nTwenty minutes ago, almost nobody in this room could write that sentence.\n\nNow almost all of you can.\n\n\nAnd notice: I have not taught you anything about linear search today. I have not said one word about how the function works.\n\n\n\n\n\nYou got there by talking to each other."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#here-is-what-i-could-have-handed-you-at-the-start",
+    "href": "slides/draft-02_slides.html#here-is-what-i-could-have-handed-you-at-the-start",
+    "title": "CPSC 221",
+    "section": "Here is what I could have handed you at the start",
+    "text": "Here is what I could have handed you at the start\n(live, right now — watch)\n\nIt will be correct. It will say first. It will handle absence. It will probably suggest a better name than mine.\n\n\nAnd you are nodding, because it looks right.\n\n\nYou would have nodded twenty minutes ago too.\n\nGenerate this live in front of them if you possibly can – paste the function into whichever tool you like and let the room watch it produce a clean, correct description in about three seconds. Doing it live is far more honest and far more effective than a screenshot, and it removes any suspicion that you cherry-picked.\nDo not editorialize while it generates. Let them read it."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#recognizing-is-not-producing",
+    "href": "slides/draft-02_slides.html#recognizing-is-not-producing",
+    "title": "CPSC 221",
+    "section": "Recognizing is not producing",
+    "text": "Recognizing is not producing\nReading a correct answer and thinking “yes, that’s what I meant” feels exactly like understanding.\n\nIt is not the same thing. And from the inside, the two are indistinguishable.\n\n\nThe only way to tell them apart is to try to produce the answer yourself, from nothing — which is what you just spent twenty minutes discovering.\n\n\nAn examlet only ever asks you to produce."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#use-the-tools",
+    "href": "slides/draft-02_slides.html#use-the-tools",
+    "title": "CPSC 221",
+    "section": "Use the tools",
+    "text": "Use the tools\nYou are allowed to use AI in this course, on homework, assignments, and labs. I mean that.\n\nBut what it hands you is a hypothesis until you can produce it yourself.\n\n\n\nThe check that costs you nothing\n\n\nClose the laptop. Write the sentence from scratch.\nIf you can’t, you were holding someone else’s answer."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#before-you-leave-three-words",
+    "href": "slides/draft-02_slides.html#before-you-leave-three-words",
+    "title": "CPSC 221",
+    "section": "Before you leave: three words",
+    "text": "Before you leave: three words\nYour group got somewhere none of you got alone. That happened because somebody in your group refused to accept a vague sentence.\n\nSo here is the contract. The three of you agree that from now on, when one of you says something fuzzy, any of the others gets to say:\n\n\n\n“Say that more precisely.”\n\n\nNo apology needed. It is not rude. It is the most useful thing you can say to someone who is trying to learn this material.\n\n\n\n\n\nYou will hear me say it all term.\n\nThis is the durable takeaway – a shared phrase costs nothing, requires no exchange of anything personal, and gives every student permission to push back on vagueness without it feeling like an attack.\nThen start using it yourself, constantly, from Monday on. If they hear it in week 1 and then hear it every week, it stops being an event and becomes how this course talks."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#and-if-you-want-to-keep-going",
+    "href": "slides/draft-02_slides.html#and-if-you-want-to-keep-going",
+    "title": "CPSC 221",
+    "section": "And if you want to keep going",
+    "text": "And if you want to keep going\nEntirely up to you: swap contact info with these two and keep working together.\n\nPiazza, email, Discord, phone —\n\n\nor nothing at all. No one is checking, and I will never ask.\n\nSay the “or nothing at all” line clearly and move on quickly. In a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago – and if the whole room is exchanging while you watch, declining becomes conspicuous. Naming the opt-out out loud is what makes it free.\nDo not collect anything, do not build a roster, and do not ask next week who is still meeting. The moment there is any follow-up, the opt-out becomes visible again."
+  },
+  {
+    "objectID": "slides/draft-02_slides.html#why-be-in-this-room",
+    "href": "slides/draft-02_slides.html#why-be-in-this-room",
+    "title": "CPSC 221",
+    "section": "Why be in this room",
+    "text": "Why be in this room\nA recording gives you information.\nThe room gives you feedback.\n\n\nYou just watched a room full of people arrive at an answer that almost none of them had on their own — in twenty minutes, with nothing at stake, and no grade attached.\nThat is not available anywhere else.\n\nStop here. Do not add an attendance pitch – the people in the room just lived the argument, and saying it out loud a second time cheapens it."
+  },
+  {
     "objectID": "setup.html",
     "href": "setup.html",
     "title": "Setup: Tech stack",
