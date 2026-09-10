@@ -198,10 +198,10 @@
     }
   </style>
 <meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta property="og:description" content="What Does It Do?">
+<meta property="og:description" content="Reasoning About Algorithms">
 <meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:description" content="What Does It Do?">
+<meta name="twitter:description" content="Reasoning About Algorithms">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -210,22 +210,268 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">What Does It Do?</p>
+  <p class="subtitle">Reasoning About Algorithms</p>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section id="what-does-this-function-do" class="slide level2 smaller">
-<h2>What does this function do?</h2>
+<section class="slide level2">
+
+<!-- The opening five slides carry the motivation forward from Wednesday and
+     deliberately overlap the tail of lecture 1, which was never reached. They
+     follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
+     begins at exactly the question Wednesday ended on.
+
+     Slide 5 -- example 1 -- is where the deck stops being a lecture and becomes
+     the activity. Budget about twelve minutes to get there. -->
+</section>
+<section id="today" class="slide level2 smaller">
+<h2>Today</h2>
+<p><strong>Announcements</strong></p>
+<ul>
+<li>Labs start next week</li>
+<li>HW1 available Monday Sep 14, due Sep 21</li>
+</ul>
+<p><br>
+</p>
+<p><strong>Where we’re going</strong></p>
+<ul>
+<li>The value of an algorithm</li>
+<li>The abstraction of <em>running time</em></li>
+<li>What it takes to describe an algorithm precisely</li>
+</ul>
+</section>
+<section id="algorithm-analysis" class="slide level2 smaller">
+<h2>Algorithm analysis</h2>
+<p>Analysis of an algorithm gives insight into</p>
+<ul>
+<li class="fragment">whether it is <strong>correct</strong></li>
+<li class="fragment">how long it runs — <em>time complexity</em></li>
+<li class="fragment">how much memory it uses — <em>space complexity</em></li>
+</ul>
+<div class="fragment">
+<p><br>
+</p>
+<p>And it lets us compare two algorithms that solve the <strong>same problem</strong> without running either one.</p>
+<aside class="notes">
+<p>Thirty seconds. This is a framing slide, not a content slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="where-we-stopped" class="slide level2 smaller">
+<h2>Where we stopped</h2>
+<blockquote>
+<p>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</p>
+</blockquote>
+<div class="fragment">
+<p><br>
+</p>
+<p>No — and the exceptions are a whole field each:</p>
+<ul>
+<li class="fragment"><strong>approximation</strong> — provably close, much faster</li>
+<li class="fragment"><strong>heuristics</strong> — usually good, no promise</li>
+<li class="fragment"><strong>randomized</strong> — correct with high probability</li>
+<li class="fragment"><strong>restricted inputs</strong> — correct on the data you actually have</li>
+</ul>
+<aside class="notes">
+<p>We spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="measuring-the-value-of-algorithms" class="slide level2 smaller">
+<h2>Measuring the value of algorithms</h2>
+<p>Two algorithms solve the same problem. Which is better?</p>
+<div class="fragment">
+<ul>
+<li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
+<li>Express <span style="color: #e74c3c;">running time</span> as a (positive) <span style="color: #e74c3c;">function</span> of input size:</li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="math display">\[T(n) = \text{time to complete the operations on data of size } n\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li>The <strong>form</strong> of that function depends on the structure of the algorithm</li>
+</ul>
+</div>
+</section>
+<section id="running-times" class="slide level2 smaller">
+<h2>Running times</h2>
+<p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>operations</th>
+<th>n=10</th>
+<th>n=100</th>
+<th>n=1000</th>
+<th>n=10,000</th>
+<th>n=<span class="math inline">\(10^{12}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\(10^{-11}\)</span> s</td>
+<td><span class="math inline">\(10^{-10}\)</span> s</td>
+<td><span class="math inline">\(10^{-9}\)</span> s</td>
+<td><span class="math inline">\(10^{-8}\)</span> s</td>
+<td>1 s</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n \log n\)</span></td>
+<td><span class="math inline">\(10^{-11}\)</span> s</td>
+<td><span class="math inline">\(10^{-9}\)</span> s</td>
+<td><span class="math inline">\(10^{-8}\)</span> s</td>
+<td><span class="math inline">\(10^{-7}\)</span> s</td>
+<td>40 s</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(n^2\)</span></td>
+<td><span class="math inline">\(10^{-10}\)</span> s</td>
+<td><span class="math inline">\(10^{-8}\)</span> s</td>
+<td><span class="math inline">\(10^{-6}\)</span> s</td>
+<td><span class="math inline">\(10^{-4}\)</span> s</td>
+<td><span class="math inline">\(10^{12}\)</span> s</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n^3\)</span></td>
+<td><span class="math inline">\(10^{-9}\)</span> s</td>
+<td><span class="math inline">\(10^{-6}\)</span> s</td>
+<td><span class="math inline">\(10^{-3}\)</span> s</td>
+<td>1 s</td>
+<td><span class="math inline">\(10^{24}\)</span> s</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(2^n\)</span></td>
+<td><span class="math inline">\(10^{-9}\)</span> s</td>
+<td><span class="math inline">\(10^{18}\)</span> s</td>
+<td><span class="math inline">\(10^{289}\)</span> s</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<p>So before we can say how long an algorithm takes, we have to be able to say <strong>what it does</strong> — precisely enough that the question even has an answer.</p>
+<aside class="notes">
+<p>The last line is the hinge. It is the only sentence connecting the lecture to the activity, so do not rush it.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="algorithmic-analysis-example-1" class="slide level2 smaller">
+<h2>Algorithmic analysis — example 1</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+<th style="text-align: right;">8</th>
+<th style="text-align: right;">9</th>
+<th style="text-align: right;">10</th>
+<th style="text-align: right;">11</th>
+<th style="text-align: right;">12</th>
+<th style="text-align: right;">13</th>
+<th style="text-align: right;">14</th>
+<th style="text-align: right;">15</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">45</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What does it do?</strong></p>
 <aside class="notes">
-<p>Ask it out loud and take two or three answers. You are fishing for something casual and confident – “it finds the key”, “it searches the array”. Do not correct anything; just accept them and move on. The looseness is the setup.</p>
+<p>THIS IS THE START OF THE ACTIVITY. Ask it out loud and take two or three answers. You are fishing for something casual and confident – “it finds the key”, “it searches the array”. Do not correct anything; just accept them and move on. The looseness is the setup.</p>
+<p>Any C++ mysteries in the code, clear them here – but keep it short.</p>
+<p>Do NOT ask “how long does it take?” today. That is Monday’s opening, and asking it now gives away that the description is the hard part.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -273,7 +519,7 @@
 </div>
 </div>
 </div>
-<countdown-timer id="timer_af4227d3f405b48e22d06017e7d2a9db284c045a" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_b72f99a5ca76151714523d51ffc4980006934ad1" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>Hold the silence. Five minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise.</p>
@@ -386,7 +632,7 @@
 <p>Whose passes?</p>
 <div class="fragment">
 <p>Any of them?</p>
-<countdown-timer id="timer_af4227d3f405b48e22d06017e7d2a9db284c045a" minutes="08" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_b72f99a5ca76151714523d51ffc4980006934ad1" minutes="08" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>Circulate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.</p>
