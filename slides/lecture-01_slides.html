@@ -105,6 +105,8 @@
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
@@ -442,6 +444,92 @@
 </div>
 <!-- TODO: mid-term break not yet confirmed against the official UBC 2026W1 academic calendar -->
 </section>
+<section id="grading" class="slide level2">
+<h2>Grading</h2>
+<!-- Same pill colours and emoji as the term schedule above, so a row here maps
+     straight onto a column there. -->
+<style>
+  /* Pandoc emits a <colgroup> with percentage widths that stretch the table to
+     the full slide; dropping it lets the columns size to their content. */
+  #grading table colgroup{display:none;}
+  #grading table{font-size:0.62em; margin:0.3em auto 0 auto; width:auto;}
+  #grading table td, #grading table th{vertical-align:middle; padding:0.18em 1.1em;}
+  #grading .wt{font-weight:800; white-space:nowrap;}
+  #grading .each{color:#666; font-size:0.85em; white-space:nowrap;}
+  /* Markdown table rows can't carry a class, so the total is addressed by position. */
+  #grading tbody tr:last-child td{border-top:2px solid #1a1a1a;}
+</style>
+<div id="grading">
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th></th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="pill pill--class" title="Lecture">🎉</span> Class meetings</td>
+<td><span class="each">attendance not required</span></td>
+<td><span class="wt">0%</span></td>
+</tr>
+<tr class="even">
+<td><span class="pill pill--lab" title="Lab">🪄</span> Labs</td>
+<td><span class="each">best 8 of 10 × 1%</span></td>
+<td><span class="wt">8%</span></td>
+</tr>
+<tr class="odd">
+<td><span class="pill pill--hw" title="HW">🏎️</span> Homework</td>
+<td><span class="each">3 × 2%</span></td>
+<td><span class="wt">6%</span></td>
+</tr>
+<tr class="even">
+<td><span class="pill pill--pa" title="PA">🚀</span> Programming assignments</td>
+<td><span class="each">3 × 2%</span></td>
+<td><span class="wt">6%</span></td>
+</tr>
+<tr class="odd">
+<td><span class="pill pill--exam" title="Examlet">🤩</span> Examlets</td>
+<td><span class="each">9 × 6%</span></td>
+<td><span class="wt">54%</span></td>
+</tr>
+<tr class="even">
+<td><span class="pill" style="background:gold; color:#111;" title="Final">🏆</span> Final exam</td>
+<td><span class="each">cumulative</span></td>
+<td><span class="wt">26%</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><span class="wt">100%</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="fragment">
+<p><strong>80% of your grade is written under invigilation.</strong></p>
+</div>
+<aside class="notes">
+<p>The point of this slide is the last line, not the table. Labs/HW/PAs are where you <em>learn</em> the material — they are worth 20% precisely so you can afford to struggle on them. The examlets and final are where you <em>show</em> it, and there is nothing to lean on there but what you actually know.</p>
+<p>Ties directly to the GenAI policy: use whatever you like on the 20%, but the same material comes back at you on the 80%.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="todays-announcements" class="slide level2">
 <h2>Today’s announcements</h2>
 <ol type="1">
@@ -520,6 +608,8 @@
 </ul>
 <p><br>
 </p>
+<!-- ===== Wed Sep 9 2026: class ended HERE — the "is its value 0?" question was
+     the last thing covered. Everything below is still owed on Friday. ===== -->
 <ul>
 <li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
 <li>Express <span style="color: #e74c3c;">running times</span> as a (positive) <span style="color: #e74c3c;">function</span>:</li>
@@ -622,6 +712,7 @@
   <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -636,18 +727,19 @@
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
+'controlsAuto': false,
 'previewLinksAuto': false,
 'pdfSeparateFragments': false,
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
 'jumpToSlide': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
-        controls: false,
+        controls: true,
 
         // Help the user learn the controls by providing hints, for example by
         // bouncing the down arrow when they first encounter a vertical slide
@@ -789,9 +881,9 @@
         // The "normal" size of the presentation, aspect ratio will be preserved
         // when the presentation is scaled to fit different resolutions. Can be
         // specified using percentage units.
-        width: 1050,
+        width: 1280,
 
-        height: 700,
+        height: 720,
 
         // Factor of the display size that should remain empty around the content
         margin: 0.1,
@@ -814,7 +906,7 @@
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,

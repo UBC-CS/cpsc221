@@ -113,6 +113,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles/styles.css">
 <meta property="og:title" content="Lesson plan — What Does It Do? – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
@@ -425,6 +454,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#the-sensation-we-are-going-for" id="toc-the-sensation-we-are-going-for" class="nav-link active" data-scroll-target="#the-sensation-we-are-going-for">The sensation we are going for</a></li>
   <li><a href="#why-this-slot" id="toc-why-this-slot" class="nav-link" data-scroll-target="#why-this-slot">Why this slot</a></li>
+  <li><a href="#carryover-from-wednesday" id="toc-carryover-from-wednesday" class="nav-link" data-scroll-target="#carryover-from-wednesday">Carryover from Wednesday</a></li>
   <li><a href="#the-function" id="toc-the-function" class="nav-link" data-scroll-target="#the-function">The function</a></li>
   <li><a href="#timing-50-minutes" id="toc-timing-50-minutes" class="nav-link" data-scroll-target="#timing-50-minutes">Timing (50 minutes)</a></li>
   <li><a href="#the-three-moves-that-make-this-work" id="toc-the-three-moves-that-make-this-work" class="nav-link" data-scroll-target="#the-three-moves-that-make-this-work">The three moves that make this work</a>
@@ -482,6 +512,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="why-this-slot">Why this slot</h2>
 <p>Friday of week 1 is the only in-person Friday of the term, and it follows the introduction to running-time analysis. The same function appears in lecture 1 with its name blanked out; here the question is asked live, answered casually, and then handed straight back to them.</p>
 <p>It also lands before HW1 and Examlet 1 in week 3. Habits form in week 1.</p>
+</section>
+<section id="carryover-from-wednesday" class="level2">
+<h2 class="anchored" data-anchor-id="carryover-from-wednesday">Carryover from Wednesday</h2>
+<p>Wednesday (Sep 9) ended on <strong>“Measuring the value of algorithms”</strong>, right after the opening question <em>“if an algorithm is not correct, is its value 0?”</em>. Still owed from lecture 1:</p>
+<ul>
+<li>the metrics bullet (time, space) and running times as a positive function</li>
+<li>the <strong>Running times</strong> table (<span class="math inline">\(n\)</span> through <span class="math inline">\(2^n\)</span> against the clock)</li>
+<li><strong>Algorithmic Analysis — example 1</strong></li>
+</ul>
+<p>The good news is that the third of those <em>is this activity’s function</em>, verbatim and already name-blanked. So don’t run it twice — finish the first two (about twelve minutes, and keep it moving), then let the example 1 slide <strong>be</strong> the activity’s opening move. The 0:00–0:03 “ask it live, take answers” phase below happens on that slide, and nothing is duplicated.</p>
+<p>That leaves the activity roughly its full length. If it still runs tight, cut from the breaking phase, not from the group argument.</p>
 </section>
 <section id="the-function" class="level2">
 <h2 class="anchored" data-anchor-id="the-function">The function</h2>

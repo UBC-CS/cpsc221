@@ -69,6 +69,13 @@
     "text": "Term Schedule\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nMon\nM\nW\nF\nHW/PA\nLab\nEX\n\n\n\n\n1\nSep 7\n \n🎉\n🎉\n \n \n \n\n\n2\nSep 14\n🎉\n🎉\n📹\n \n🪄\n \n\n\n3\nSep 21\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n4\nSep 28\n🎉\n \n📹\n \n🪄\n🤩\n\n\n5\nOct 5\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n6\nOct 12\n \n📹\n📹\n \n \n \n\n\n7\nOct 19\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n8\nOct 26\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n9\nNov 2\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n10\nNov 9\n \n \n📹\n \n \n \n\n\n11\nNov 16\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n12\nNov 23\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n13\nNov 30\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n14\nDec 7\n🎉\n \n \n \n \n \n\n\n\nLegend: 🎉 in-person lecture   📹 async video   🪄 lab   🤩 examlet   🏎️ HW due   🚀 PA due     off / nothing due"
   },
   {
+    "objectID": "slides/lecture-01_slides.html#grading",
+    "href": "slides/lecture-01_slides.html#grading",
+    "title": "CPSC 221",
+    "section": "Grading",
+    "text": "Grading\n\n\n\n\n\n\n\n\n\n\n\nComponent\n\nWeight\n\n\n\n\n🎉 Class meetings\nattendance not required\n0%\n\n\n🪄 Labs\nbest 8 of 10 × 1%\n8%\n\n\n🏎️ Homework\n3 × 2%\n6%\n\n\n🚀 Programming assignments\n3 × 2%\n6%\n\n\n🤩 Examlets\n9 × 6%\n54%\n\n\n🏆 Final exam\ncumulative\n26%\n\n\n\n\n100%\n\n\n\n\n\n80% of your grade is written under invigilation.\n\n\nThe point of this slide is the last line, not the table. Labs/HW/PAs are where you learn the material — they are worth 20% precisely so you can afford to struggle on them. The examlets and final are where you show it, and there is nothing to lean on there but what you actually know.\nTies directly to the GenAI policy: use whatever you like on the 20%, but the same material comes back at you on the 80%."
+  },
+  {
     "objectID": "slides/lecture-01_slides.html#todays-announcements",
     "href": "slides/lecture-01_slides.html#todays-announcements",
     "title": "CPSC 221",
@@ -101,7 +108,7 @@
     "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
     "title": "CPSC 221",
     "section": "Measuring the value of algorithms",
-    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
+    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
   },
   {
     "objectID": "slides/lecture-01_slides.html#running-times",
@@ -194,6 +201,13 @@
     "title": "Lesson plan — What Does It Do?",
     "section": "Why this slot",
     "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term, and it follows the introduction to running-time analysis. The same function appears in lecture 1 with its name blanked out; here the question is asked live, answered casually, and then handed straight back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Carryover from Wednesday",
+    "text": "Carryover from Wednesday\nWednesday (Sep 9) ended on “Measuring the value of algorithms”, right after the opening question “if an algorithm is not correct, is its value 0?”. Still owed from lecture 1:\n\nthe metrics bullet (time, space) and running times as a positive function\nthe Running times table (\\(n\\) through \\(2^n\\) against the clock)\nAlgorithmic Analysis — example 1\n\nThe good news is that the third of those is this activity’s function, verbatim and already name-blanked. So don’t run it twice — finish the first two (about twelve minutes, and keep it moving), then let the example 1 slide be the activity’s opening move. The 0:00–0:03 “ask it live, take answers” phase below happens on that slide, and nothing is duplicated.\nThat leaves the activity roughly its full length. If it still runs tight, cut from the breaking phase, not from the group argument."
   },
   {
     "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
