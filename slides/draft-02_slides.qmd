@@ -1,9 +1,11 @@
 ---
 title: "{{< var course.code >}}"
 subtitle: "Reasoning About Algorithms"
-draft: true          # keep unlinked until AFTER Friday -- the activity is spoiled
-                     # for anyone who reads ahead
 ---
+
+<!-- Named draft-02 rather than lecture-02, so the schedule shows a faded icon
+     instead of a link. Rename to lecture-02_slides.qmd to publish it. -->
+
 
 <!-- The opening five slides carry the motivation forward from Wednesday and
      deliberately overlap the tail of lecture 1, which was never reached. They

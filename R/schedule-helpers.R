@@ -79,10 +79,13 @@ recording_url <- function(id, class_date) {
   )
 }
 
-# Slides are authored in this repo, so derive the link from the file itself.
-# A deck with `draft: true` in its front matter is treated as not yet posted:
-# it still renders and can be previewed directly, but the schedule shows the
-# faded "coming later" icon instead of a live link.
+# Slides are authored in this repo, so derive the link from the file itself:
+# the schedule links `lecture-07` to slides/lecture-07_slides.qmd when that
+# file exists, and shows the faded "coming later" icon when it doesn't.
+#
+# A deck in progress is named draft-07_slides.qmd instead. It renders and is
+# reachable at its own URL, but no schedule row points at it. Renaming it to
+# lecture-07_slides.qmd is what publishes it.
 slides_url <- function(id) {
   purrr::map_chr(id, \(this_id) {
     if (is.na(this_id)) {
@@ -90,9 +93,6 @@ slides_url <- function(id) {
     }
     source_file <- here::here("slides", paste0(this_id, "_slides.qmd"))
     if (!fs::file_exists(source_file)) {
-      return(NA_character_)
-    }
-    if (isTRUE(rmarkdown::yaml_front_matter(source_file)$draft)) {
       return(NA_character_)
     }
     paste0("slides/", this_id, "_slides.html")
@@ -139,11 +139,21 @@ lecture_title <- function(id) {
       }
     }
 
-    slides_file <- here::here("slides", paste0(this_id, "_slides.qmd"))
-    if (fs::file_exists(slides_file)) {
-      subtitle <- rmarkdown::yaml_front_matter(slides_file)$subtitle
-      if (!is.null(subtitle)) {
-        return(subtitle)
+    # Check the draft deck too, so an unpublished lecture still shows its real
+    # topic in the schedule -- only the *link* waits for the rename.
+    candidates <- c(
+      here::here("slides", paste0(this_id, "_slides.qmd")),
+      here::here(
+        "slides",
+        paste0(stringr::str_replace(this_id, "^lecture-", "draft-"), "_slides.qmd")
+      )
+    )
+    for (slides_file in candidates) {
+      if (fs::file_exists(slides_file)) {
+        subtitle <- rmarkdown::yaml_front_matter(slides_file)$subtitle
+        if (!is.null(subtitle)) {
+          return(subtitle)
+        }
       }
     }
 
