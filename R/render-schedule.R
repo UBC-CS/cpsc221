@@ -15,7 +15,7 @@ render_schedule <- function() {
       ),
       mon_recording = resource_cell(
         mon_id,
-        lookup_url(mon_id, "recording"),
+        recording_url(mon_id, date + 0),
         "circle-play",
         "Recording"
       ),
@@ -27,7 +27,7 @@ render_schedule <- function() {
       ),
       wed_recording = resource_cell(
         wed_id,
-        lookup_url(wed_id, "recording"),
+        recording_url(wed_id, date + 2),
         "circle-play",
         "Recording"
       ),
@@ -39,7 +39,7 @@ render_schedule <- function() {
       ),
       fri_recording = resource_cell(
         fri_id,
-        lookup_url(fri_id, "recording"),
+        recording_url(fri_id, date + 4),
         "circle-play",
         "Recording"
       ),

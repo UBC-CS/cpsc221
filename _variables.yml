@@ -10,6 +10,11 @@ course:
   repo: "https://github.com/UBC-CS/cpsc221"
   lms: "https://canvas.ubc.ca/courses/190808"
   prairielearn: "https://us.prairielearn.com/pl/course_instance/231085/"
+  # Every class day is recorded twice, once per section, so the schedule links
+  # to the gallery rather than to a single video -- students pick the section
+  # they want. Point this at the Canvas media gallery once it exists; the
+  # course page is a safe stand-in until then.
+  recordings: "https://canvas.ubc.ca/courses/190808"
 instructor:
   name: "Cinda Heeren"
   email: "cheeren@cs.ubc.ca"

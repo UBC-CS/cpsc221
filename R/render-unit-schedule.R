@@ -35,7 +35,7 @@ render_unit_schedule <- function() {
       ),
       resource_2 = resource_cell(
         id,
-        lookup_url(id, "recording"),
+        recording_url(id, date),
         "circle-play",
         "Recording"
       )

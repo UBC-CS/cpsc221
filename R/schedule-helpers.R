@@ -45,6 +45,40 @@ lookup_url <- function(id, type) {
   })
 }
 
+course_variables <- function() {
+  yaml::read_yaml(here::here("_variables.yml"))
+}
+
+# Recordings are the one resource with two of everything: each class day is
+# taught and recorded twice, once per section. Rather than splitting every
+# lecture cell in two, all of them point at the same gallery and students pick
+# the section they want.
+#
+# The faded/live distinction is kept by asking the calendar instead of the CSV:
+# a class that has happened has a recording, so its icon goes live on its own.
+# A per-lecture row in additional-resources.csv still wins, for the occasional
+# day worth linking directly.
+recording_url <- function(id, class_date) {
+  gallery <- course_variables()$course$recordings
+  override <- lookup_url(id, "recording")
+
+  purrr::pmap_chr(
+    list(id, class_date, override),
+    \(this_id, this_date, this_override) {
+      if (is.na(this_id)) {
+        return(NA_character_)
+      }
+      if (!is.na(this_override)) {
+        return(this_override)
+      }
+      if (is.na(this_date) || this_date > lubridate::today()) {
+        return(NA_character_)
+      }
+      gallery
+    }
+  )
+}
+
 # Slides are authored in this repo, so derive the link from the file itself.
 # A deck with `draft: true` in its front matter is treated as not yet posted:
 # it still renders and can be previewed directly, but the schedule shows the
