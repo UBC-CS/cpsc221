@@ -1,19 +1,19 @@
 ---
 title: "{{< var course.code >}}"
 subtitle: "Reasoning About Algorithms"
+
+# Named draft-02 rather than lecture-02, so the schedule shows a faded icon
+# instead of a link. Rename to lecture-02_slides.qmd to publish it.
+#
+# The opening slides carry the motivation forward from Wednesday and
+# deliberately overlap the tail of lecture 1, which was never reached. They
+# follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
+# begins at exactly the question Wednesday ended on.
+#
+# These notes live inside the front matter on purpose: anything between the
+# closing --- and the first ## becomes its own slide, and an HTML comment
+# there renders as a blank one.
 ---
-
-<!-- Named draft-02 rather than lecture-02, so the schedule shows a faded icon
-     instead of a link. Rename to lecture-02_slides.qmd to publish it. -->
-
-<!-- The opening five slides carry the motivation forward from Wednesday and
-     deliberately overlap the tail of lecture 1, which was never reached. They
-     follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
-     begins at exactly the question Wednesday ended on.
-
-     Slide 5 -- example 1 -- is where the deck stops being a lecture and becomes
-     the activity. Budget about twelve minutes to get there. -->
-
 ## Today {.smaller}
 
 **Announcements**
@@ -281,7 +281,7 @@ Do not add an attendance pitch. They just lived the argument; saying it a
 second time cheapens it.
 :::
 
-## Algorithmic analysis — running time {.smaller}
+## Algorithmic analysis — running time
 
 ```cpp
 int idxFirst (vector<int> arr, int q) {
@@ -292,7 +292,7 @@ int idxFirst (vector<int> arr, int q) {
 }
 ```
 
-**How long does it take?**
+How long does it take?
 
 ::: notes
 The blank is filled in now, with a name the room earned -- worth a beat.
@@ -302,7 +302,7 @@ or an iterator. A precise description hands you `idxFirst` almost for free.
 Take answers. Somebody will say "it depends" -- that is the slide after this.
 :::
 
-## How long does it take? *It depends!* {.smaller}
+## Algorithmic analysis — running time 
 
 ```cpp
 int idxFirst (vector<int> arr, int q) {
@@ -313,11 +313,15 @@ int idxFirst (vector<int> arr, int q) {
 }
 ```
 
+How long does it take? <blue>*It depends!* </blue>
+
 What does it depend on?
 
 -
 -
 -
+
+What should we count?
 
 ::: notes
 Blanks are for the pen. What the room should land on:
@@ -331,7 +335,7 @@ has to go. That is what forces us to count operations instead of seconds --
 and the first two are what force us into cases.
 :::
 
-## What should we count? {.smaller}
+## Algorithmic analysis — running time {.smaller}
 
 ```cpp
 int idxFirst (vector<int> arr, int q) {
