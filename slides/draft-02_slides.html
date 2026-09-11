@@ -103,7 +103,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-d4105e54f65d16be314200677e8b9e80.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-51bfbd0cebb8fda7f0cfa53ff5765c52.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -234,6 +234,7 @@
 <ul>
 <li>Labs start next week</li>
 <li>HW1 available Monday Sep 14, due Sep 21</li>
+<li>Registration for EX1 will be soon!</li>
 </ul>
 <p><br>
 </p>
@@ -248,14 +249,11 @@
 <h2>Algorithm analysis</h2>
 <p>Analysis of an algorithm gives insight into</p>
 <ul>
-<li class="fragment">whether it is <strong>correct</strong></li>
-<li class="fragment">how long it runs — <em>time complexity</em></li>
-<li class="fragment">how much memory it uses — <em>space complexity</em></li>
+<li>whether it is <strong>correct</strong></li>
+<li>how long it runs — <em>time complexity</em></li>
+<li>how much memory it uses — <em>space complexity</em></li>
 </ul>
-<div class="fragment">
-<p><br>
-</p>
-<p>And it lets us compare two algorithms that solve the <strong>same problem</strong> without running either one.</p>
+<p>All with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.</p>
 <aside class="notes">
 <p>Thirty seconds. This is a framing slide, not a content slide.</p>
 <style type="text/css">
@@ -269,22 +267,20 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="where-we-stopped" class="slide level2 smaller">
 <h2>Where we stopped</h2>
 <blockquote>
 <p>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</p>
 </blockquote>
-<div class="fragment">
 <p><br>
 </p>
-<p>No — and the exceptions are a whole field each:</p>
+<p>No — and the exceptions are important and worth considering:</p>
 <ul>
-<li class="fragment"><strong>approximation</strong> — provably close, much faster</li>
-<li class="fragment"><strong>heuristics</strong> — usually good, no promise</li>
-<li class="fragment"><strong>randomized</strong> — correct with high probability</li>
-<li class="fragment"><strong>restricted inputs</strong> — correct on the data you actually have</li>
+<li><strong>approximation</strong> — provably close, much faster</li>
+<li><strong>heuristics</strong> — usually good, no promise</li>
+<li><strong>randomized</strong> — correct with high probability</li>
+<li><strong>restricted inputs</strong> — correct on the data you actually have</li>
 </ul>
 <aside class="notes">
 <p>We spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened.</p>
@@ -299,29 +295,25 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="measuring-the-value-of-algorithms" class="slide level2 smaller">
 <h2>Measuring the value of algorithms</h2>
 <p>Two algorithms solve the same problem. Which is better?</p>
-<div class="fragment">
 <ul>
 <li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
 <li>Express <span style="color: #e74c3c;">running time</span> as a (positive) <span style="color: #e74c3c;">function</span> of input size:</li>
 </ul>
-</div>
-<div class="fragment">
-<p><span class="math display">\[T(n) = \text{time to complete the operations on data of size } n\]</span></p>
-</div>
-<div class="fragment">
+<p><span class="math display">\[T(n): \text{time to complete the operations on data of size } n\]</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 <ul>
 <li>The <strong>form</strong> of that function depends on the structure of the algorithm</li>
 </ul>
-</div>
 </section>
 <section id="running-times" class="slide level2 smaller">
 <h2>Running times</h2>
 <p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
+<div class="shaded-table">
 <table class="caption-top" style="width:100%;">
 <colgroup>
 <col style="width: 16%">
@@ -384,10 +376,23 @@
 </tr>
 </tbody>
 </table>
-<div class="fragment">
-<p>So before we can say how long an algorithm takes, we have to be able to say <strong>what it does</strong> — precisely enough that the question even has an answer.</p>
+</div>
+<p>Which of these are you willing to wait for?</p>
 <aside class="notes">
-<p>The last line is the hinge. It is the only sentence connecting the lecture to the activity, so do not rush it.</p>
+<p><strong>Anchor: the universe is about 4.4 x 10^17 seconds old.</strong></p>
+<ul>
+<li><strong>10^12 s</strong> (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.</li>
+<li><strong>10^18 s</strong> (2^n at n=100) — ~32 billion years. <strong>2.3x the age of the universe.</strong></li>
+<li><strong>10^24 s</strong> (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.</li>
+<li><strong>10^289 s</strong> (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.</li>
+</ul>
+<p>If you only use one line: <strong>2^n at n=100 already outruns the universe.</strong> Not a million. A hundred.</p>
+<p>Small end: 10^-9 s is one nanosecond, and light travels <strong>30 cm</strong> in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.</p>
+<p>Two framings if there is time:</p>
+<ul>
+<li><strong>The n^3 row is the scary one.</strong> 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.</li>
+<li><strong>Faster hardware does not save you.</strong> A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -399,7 +404,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="algorithmic-analysis-example-1" class="slide level2 smaller">
 <h2>Algorithmic analysis — example 1</h2>
@@ -409,6 +413,21 @@
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>C++ mysteries?</p>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+</section>
+<section id="algorithmic-analysis-example-1-1" class="slide level2 smaller">
+<h2>Algorithmic analysis — example 1</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <colgroup>
 <col style="width: 6%">
@@ -491,13 +510,9 @@
 <blockquote>
 <p>“It finds the key.”</p>
 </blockquote>
-<div class="fragment">
 <p><br></p>
 <p>And we all nodded.</p>
-</div>
-<div class="fragment">
 <p>Now you are going to write that sentence down.</p>
-</div>
 </section>
 <section>
 <section id="write-it-down" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -521,7 +536,7 @@
 </div>
 </div>
 </div>
-<countdown-timer id="timer_a63c96c1d3fbf30b0afbb04bfbb825e7ae7e4fc7" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_3180efd45061e64add639c2e8c97c4e9dfd4f064" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>Hold the silence. Five minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise.</p>
@@ -545,7 +560,6 @@
 <section id="first-hold-up-fingers" class="slide level2">
 <h2>First: hold up fingers</h2>
 <p>How many written statements can you see in your group?</p>
-<div class="fragment">
 <p><br></p>
 <p>I am not asking whether they are any good.</p>
 <p>Only whether all three of you have one.</p>
@@ -562,7 +576,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="now-read-it-out-loud-all-of-you-at-once" class="slide level2 smaller">
 <h2>Now read it out loud — all of you, at once</h2>
@@ -578,7 +591,6 @@
 </div>
 </div>
 </div>
-<div class="fragment">
 <p>You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.</p>
 <p><strong>Resist that.</strong> You are reading it so that <em>you</em> can hear it.</p>
 <aside class="notes">
@@ -596,11 +608,9 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="did-it-sound-like-you-expected" class="slide level2 center">
 <h2>Did it sound like you expected?</h2>
-<div class="fragment">
 <p><br></p>
 <p>Now share them with your group.</p>
 <aside class="notes">
@@ -617,7 +627,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="then-whose-is-correct" class="slide level2 smaller">
 <h2>Then: whose is correct?</h2>
@@ -632,9 +641,8 @@
 </div>
 </div>
 <p>Whose passes?</p>
-<div class="fragment">
 <p>Any of them?</p>
-<countdown-timer id="timer_a63c96c1d3fbf30b0afbb04bfbb825e7ae7e4fc7" minutes="08" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_3180efd45061e64add639c2e8c97c4e9dfd4f064" minutes="08" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>Circulate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.</p>
@@ -650,7 +658,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section></section>
 <section>
 <section id="let-me-try-to-break-them" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -660,11 +667,11 @@
 <section id="i-will-take-your-words-completely-literally" class="slide level2 smaller">
 <h2>I will take your words completely literally</h2>
 <ul>
-<li class="fragment"><em>“It finds the key in the list.”</em> → I return <code>true</code>. I found it.</li>
-<li class="fragment"><em>“It returns the position of the key.”</em> → <code>[5, 3, 5]</code>, key <code>5</code>. I return <code>2</code>. Also a position.</li>
-<li class="fragment"><em>“It returns the index of the key.”</em> → Key isn’t there. I return <code>0</code>. You didn’t say otherwise.</li>
-<li class="fragment"><em>“It returns where the key is.”</em> → I return a 1-based index. You didn’t say otherwise.</li>
-<li class="fragment"><em>“It searches for the key and returns it.”</em> → I return <code>5</code>. You said return <em>it</em>.</li>
+<li><em>“It finds the key in the list.”</em> → I return <code>true</code>. I found it.</li>
+<li><em>“It returns the position of the key.”</em> → <code>[5, 3, 5]</code>, key <code>5</code>. I return <code>2</code>. Also a position.</li>
+<li><em>“It returns the index of the key.”</em> → Key isn’t there. I return <code>0</code>. You didn’t say otherwise.</li>
+<li><em>“It returns where the key is.”</em> → I return a 1-based index. You didn’t say otherwise.</li>
+<li><em>“It searches for the key and returns it.”</em> → I return <code>5</code>. You said return <em>it</em>.</li>
 </ul>
 <aside class="notes">
 <p>Use real statements from the room wherever you can – ask for volunteers to read theirs out, and break those instead of these. These are the fallback.</p>
@@ -686,13 +693,33 @@
 <blockquote>
 <p><em>“It returns the index of the key, or -1 if the key is not in the list.”</em></p>
 </blockquote>
-<div class="fragment">
+<p><br>
+</p>
 <p>That is a good sentence. It handles absence. It says <em>index</em>.</p>
-</div>
-<div class="fragment">
+<aside class="notes">
+<p>Let this sit for a beat. Agree with it – genuinely. The room should think this one survived.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="and-the-one-that-catches-the-careful-people-1" class="slide level2 smaller">
+<h2>And the one that catches the careful people</h2>
+<blockquote>
+<p><em>“It returns the index of the key, or -1 if the key is not in the list.”</em></p>
+</blockquote>
+<p><br>
+</p>
 <p><code>[5, 3, 5]</code>, key <code>5</code>. <strong>I return <code>2</code>.</strong></p>
-</div>
-<div class="fragment">
+<p><br>
+</p>
 <p>You never said <strong>first</strong>.</p>
 <aside class="notes">
 <p>This is the one that gets the strong students, and it is worth landing carefully – the room should feel that carefulness alone was not sufficient.</p>
@@ -707,7 +734,6 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section></section>
 <section>
 <section id="now-lets-build-one-that-survives" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -740,18 +766,12 @@
 <section id="what-just-happened" class="slide level2 smaller">
 <h2>What just happened</h2>
 <p>Twenty minutes ago, almost nobody in this room could write that sentence.</p>
-<div class="fragment">
 <p>Now almost all of you can.</p>
-</div>
-<div class="fragment">
 <p>And notice: <strong>I have not taught you anything about linear search today.</strong> I have not said one word about how the function works.</p>
-</div>
-<div class="fragment">
 <div class="callout callout-important no-icon callout-style-simple">
 <div class="callout-body">
 <div class="callout-content">
 <p>You got there by talking to each other.</p>
-</div>
 </div>
 </div>
 </div>
@@ -764,13 +784,14 @@
 <section id="here-is-what-i-could-have-handed-you-at-the-start" class="slide level2 smaller">
 <h2>Here is what I could have handed you at the start</h2>
 <p><em>(live, right now — watch)</em></p>
-<div class="fragment">
+<p><br>
+</p>
 <p>It will be correct. It will say <em>first</em>. It will handle absence. It will probably suggest a better name than mine.</p>
-</div>
-<div class="fragment">
-<p>And you are nodding, because it looks right.</p>
-</div>
-<div class="fragment">
+</section>
+<section id="and-you-are-nodding-because-it-looks-right" class="slide level2 center smaller">
+<h2>And you are nodding, because it looks right</h2>
+<p><br>
+</p>
 <p>You would have nodded twenty minutes ago too.</p>
 <aside class="notes">
 <p>Generate this live in front of them if you possibly can – paste the function into whichever tool you like and let the room watch it produce a clean, correct description in about three seconds. Doing it live is far more honest and far more effective than a screenshot, and it removes any suspicion that you cherry-picked.</p>
@@ -786,25 +807,17 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="recognizing-is-not-producing" class="slide level2 smaller">
 <h2>Recognizing is not producing</h2>
 <p>Reading a correct answer and thinking <em>“yes, that’s what I meant”</em> feels exactly like understanding.</p>
-<div class="fragment">
 <p>It is not the same thing. And from the inside, the two are <strong>indistinguishable</strong>.</p>
-</div>
-<div class="fragment">
 <p>The only way to tell them apart is to try to produce the answer yourself, from nothing — which is what you just spent twenty minutes discovering.</p>
-</div>
-<div class="fragment">
 <p>An examlet only ever asks you to produce.</p>
-</div>
 </section>
 <section id="use-the-tools" class="slide level2 smaller">
 <h2>Use the tools</h2>
 <p>You are allowed to use AI in this course, on homework, assignments, and labs. I mean that.</p>
-<div class="fragment">
 <p>But what it hands you is a <strong>hypothesis</strong> until you can produce it yourself.</p>
 <div class="callout callout-tip no-icon callout-titled callout-style-simple">
 <div class="callout-body">
@@ -817,12 +830,10 @@
 </div>
 </div>
 </div>
-</div>
 </section>
 <section id="before-you-leave-three-words" class="slide level2 smaller">
 <h2>Before you leave: three words</h2>
 <p>Your group got somewhere none of you got alone. That happened because somebody in your group refused to accept a vague sentence.</p>
-<div class="fragment">
 <p>So here is the contract. The three of you agree that from now on, when one of you says something fuzzy, any of the others gets to say:</p>
 <div class="callout callout-tip no-icon callout-titled callout-style-simple">
 <div class="callout-body">
@@ -834,8 +845,6 @@
 </div>
 </div>
 </div>
-</div>
-<div class="fragment">
 <p>You will hear me say it all term.</p>
 <aside class="notes">
 <p>This is the durable takeaway – a shared phrase costs nothing, requires no exchange of anything personal, and gives every student permission to push back on vagueness without it feeling like an attack.</p>
@@ -851,15 +860,11 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="and-if-you-want-to-keep-going" class="slide level2 smaller">
 <h2>And if you want to keep going</h2>
 <p>Entirely up to you: swap contact info with these two and keep working together.</p>
-<div class="fragment">
 <p>Piazza, email, Discord, phone —</p>
-</div>
-<div class="fragment">
 <p><strong>or nothing at all.</strong> No one is checking, and I will never ask.</p>
 <aside class="notes">
 <p>Say the “or nothing at all” line clearly and move on quickly. In a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago – and if the whole room is exchanging while you watch, declining becomes conspicuous. Naming the opt-out out loud is what makes it free.</p>
@@ -875,13 +880,11 @@
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-</div>
 </section>
 <section id="why-be-in-this-room" class="slide level2 center smaller">
 <h2>Why be in this room</h2>
 <p>A recording gives you information.</p>
 <p><strong>The room gives you feedback.</strong></p>
-<div class="fragment">
 <p><br></p>
 <p>You just watched a room full of people arrive at an answer that almost none of them had on their own — in twenty minutes, with nothing at stake, and no grade attached.</p>
 <p>That is not available anywhere else.</p>
@@ -900,7 +903,6 @@
       }</style></aside>
 
 
-</div>
 </section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
