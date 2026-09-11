@@ -378,6 +378,13 @@
     "text": "Known risks\n\nSome students finish writing in ninety seconds. They are usually the ones about to discover they were imprecise. Hold the full five minutes.\nA group agrees immediately and goes quiet. They accepted the first statement without testing it. Nudge: “read me the shortest one and I’ll tell you how I’d break it.”\nTone in the breaking phase. Pedantic genie, not judge. If it reads as mockery in week 1, you lose volunteers for the term.\nDo not add an attendance pitch at the end. The students in the room just lived the argument. Saying it out loud a second time cheapens it."
   },
   {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "For later: the AI comparison",
+    "text": "For later: the AI comparison\nCut from this lesson deliberately — a tool producing the sentence in three seconds argues against the point, which is that they needed each other. It belongs in a lecture where assessment is the subject.\nWorth keeping when that lecture happens (tested 2026-09-11): asked what the function does, Gemini omitted “first”; ChatGPT got it right. That is the demonstration in one line — the word the whole room fights over is the word a widely-used tool drops, and you cannot tell which you got without already knowing the answer.\nA local chat window for doing this live, driven by the claude CLI so no API key is involved, is in tools/aidemo/server.py at the root of the superproject."
+  },
+  {
     "objectID": "cpp-short-course.html",
     "href": "cpp-short-course.html",
     "title": "C++ Short Course (optional)",
