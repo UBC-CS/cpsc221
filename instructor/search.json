@@ -125,118 +125,6 @@
     "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat questions do you have about the code?"
   },
   {
-    "objectID": "slides/draft-02_slides.html#today",
-    "href": "slides/draft-02_slides.html#today",
-    "title": "CPSC 221",
-    "section": "Today",
-    "text": "Today\nAnnouncements\n\nLabs start next week\nHW1 available Monday Sep 14, due Sep 21\nRegistration for EX1 will be soon!\n\n\n\nWhere we’re going\n\nThe value of an algorithm\nThe abstraction of running time\nWhat it takes to describe an algorithm precisely"
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithm-analysis",
-    "href": "slides/draft-02_slides.html#algorithm-analysis",
-    "title": "CPSC 221",
-    "section": "Algorithm analysis",
-    "text": "Algorithm analysis\nAnalysis of an algorithm gives insight into\n\nwhether it is correct\nhow long it runs — time complexity\nhow much memory it uses — space complexity\n\nAll with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.\n\nThirty seconds. This is a framing slide, not a content slide."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#where-we-stopped",
-    "href": "slides/draft-02_slides.html#where-we-stopped",
-    "title": "CPSC 221",
-    "section": "Where we stopped",
-    "text": "Where we stopped\n\nIf an algorithm is not correct, is its value 0?\n\n\n\nNo — and the exceptions are important and worth considering:\n\napproximation — provably close, much faster\nheuristics — usually good, no promise\nrandomized — correct with high probability\nrestricted inputs — correct on the data you actually have\n\n\nWe spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#measuring-the-value-of-algorithms",
-    "href": "slides/draft-02_slides.html#measuring-the-value-of-algorithms",
-    "title": "CPSC 221",
-    "section": "Measuring the value of algorithms",
-    "text": "Measuring the value of algorithms\nTwo algorithms solve the same problem. Which is better?\n\nUse different metrics — time, space most common\nExpress running time as a (positive) function of input size:\n\n\\[T(n): \\text{time to complete the operations on data of size } n\\]\n \n \n\nThe form of that function depends on the structure of the algorithm"
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#running-times",
-    "href": "slides/draft-02_slides.html#running-times",
-    "title": "CPSC 221",
-    "section": "Running times",
-    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s\n\n\n\n\n\n\nWhich of these are you willing to wait for?\n\nAnchor: the universe is about 4.4 x 10^17 seconds old.\n\n10^12 s (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.\n10^18 s (2^n at n=100) — ~32 billion years. 2.3x the age of the universe.\n10^24 s (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.\n10^289 s (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.\n\nIf you only use one line: 2^n at n=100 already outruns the universe. Not a million. A hundred.\nSmall end: 10^-9 s is one nanosecond, and light travels 30 cm in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.\nTwo framings if there is time:\n\nThe n^3 row is the scary one. 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.\nFaster hardware does not save you. A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-example-1",
-    "href": "slides/draft-02_slides.html#algorithmic-analysis-example-1",
-    "title": "CPSC 221",
-    "section": "Algorithmic analysis — example 1",
-    "text": "Algorithmic analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nC++ mysteries?"
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-example-1-1",
-    "href": "slides/draft-02_slides.html#algorithmic-analysis-example-1-1",
-    "title": "CPSC 221",
-    "section": "Algorithmic analysis — example 1",
-    "text": "Algorithmic analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat does it do? Describe it using a complete sentence. Give it a good name.\n\n \n\nI’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.\nHold the silence. Three minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#example-1-continued",
-    "href": "slides/draft-02_slides.html#example-1-continued",
-    "title": "CPSC 221",
-    "section": "Example 1, continued",
-    "text": "Example 1, continued\nForm groups of size 3. Look at the group papers.\nHow many written statements can you see in your group?\n\nQuick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#example-1-continued-1",
-    "href": "slides/draft-02_slides.html#example-1-continued-1",
-    "title": "CPSC 221",
-    "section": "Example 1, continued",
-    "text": "Example 1, continued\nRead your statement out loud, simultaneously on the count of 3.\n\ndon’t fix it as you read! You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.\nResist that. You are reading it so that you can hear it.\nLet the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.\nReading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.\nThe instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#example-1-continued-2",
-    "href": "slides/draft-02_slides.html#example-1-continued-2",
-    "title": "CPSC 221",
-    "section": "Example 1, continued",
-    "text": "Example 1, continued\nShare your statements, and discuss them.\nWrite a final description for your group.\n\nCirculate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.\nUseful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”"
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#example-1-continued-3",
-    "href": "slides/draft-02_slides.html#example-1-continued-3",
-    "title": "CPSC 221",
-    "section": "Example 1, continued",
-    "text": "Example 1, continued\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\nBuild it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.\nA version that survives all the attacks above:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1.\n\nThen the name falls out almost for free: indexOfFirst, firstIndexOf, findFirstIndex. Point out that “find” alone was never enough – a function called find could return a bool, a value, or an iterator.\nIf somebody has instead transcribed the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#what-just-happened",
-    "href": "slides/draft-02_slides.html#what-just-happened",
-    "title": "CPSC 221",
-    "section": "What just happened?",
-    "text": "What just happened?\n\nDeliberately bare – this part is talked, not projected. Prompts, in the order they tend to work:\n\nTwenty minutes ago almost nobody could write that sentence. Now almost all of you can.\nAnd I never taught you anything about searching an array. Say it, then stop. Let them work out why. Nothing was transmitted from the front of the room – what changed is that they talked to each other.\nYou needed each other. Not a lecture, not a recording, not a smarter person – two people who would not accept a vague sentence.\nThe contract: when one of you says something fuzzy, any of the others gets to say “say that more precisely.” Not rude. The most useful thing you can say to someone trying to learn this. They will hear me say it all term.\nA recording gives you information. The room gives you feedback.\n\nDo not add an attendance pitch. They just lived the argument; saying it a second time cheapens it."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-running-time",
-    "href": "slides/draft-02_slides.html#algorithmic-analysis-running-time",
-    "title": "CPSC 221",
-    "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThe blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called find could return a bool, a value or an iterator. A precise description hands you idxFirst almost for free.\nTake answers. Somebody will say “it depends” – that is the slide after this."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-running-time-1",
-    "href": "slides/draft-02_slides.html#algorithmic-analysis-running-time-1",
-    "title": "CPSC 221",
-    "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\nWhat should we count?\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-running-time-2",
-    "href": "slides/draft-02_slides.html#algorithmic-analysis-running-time-2",
-    "title": "CPSC 221",
-    "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
-  },
-  {
-    "objectID": "slides/draft-02_slides.html#best-worst-average",
-    "href": "slides/draft-02_slides.html#best-worst-average",
-    "title": "CPSC 221",
-    "section": "Best, worst, average",
-    "text": "Best, worst, average\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nFor an array of size \\(n\\):\n\nbest case   $T(n) = $\nworst case   $T(n) = $\naverage case   $T(n) = $\n\n\nBest: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking average over what? – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.\nWhich of the three do we usually report, and why? Worst case: it is a promise you can actually make."
-  },
-  {
     "objectID": "setup.html",
     "href": "setup.html",
     "title": "Setup: Tech stack",
@@ -419,6 +307,118 @@
       "Course information",
       "Announcements"
     ]
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#today",
+    "href": "slides/lecture-02_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\nAnnouncements\n\nLabs start next week\nHW1 available Monday Sep 14, due Sep 21\nRegistration for EX1 will be soon!\n\n\n\nWhere we’re going\n\nThe value of an algorithm\nThe abstraction of running time\nWhat it takes to describe an algorithm precisely"
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithm-analysis",
+    "href": "slides/lecture-02_slides.html#algorithm-analysis",
+    "title": "CPSC 221",
+    "section": "Algorithm analysis",
+    "text": "Algorithm analysis\nAnalysis of an algorithm gives insight into\n\nwhether it is correct\nhow long it runs — time complexity\nhow much memory it uses — space complexity\n\nAll with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.\n\nThirty seconds. This is a framing slide, not a content slide."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#where-we-stopped",
+    "href": "slides/lecture-02_slides.html#where-we-stopped",
+    "title": "CPSC 221",
+    "section": "Where we stopped",
+    "text": "Where we stopped\n\nIf an algorithm is not correct, is its value 0?\n\n\n\nNo — and the exceptions are important and worth considering:\n\napproximation — provably close, much faster\nheuristics — usually good, no promise\nrandomized — correct with high probability\nrestricted inputs — correct on the data you actually have\n\n\nWe spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#measuring-the-value-of-algorithms",
+    "href": "slides/lecture-02_slides.html#measuring-the-value-of-algorithms",
+    "title": "CPSC 221",
+    "section": "Measuring the value of algorithms",
+    "text": "Measuring the value of algorithms\nTwo algorithms solve the same problem. Which is better?\n\nUse different metrics — time, space most common\nExpress running time as a (positive) function of input size:\n\n\\[T(n): \\text{time to complete the operations on data of size } n\\]\n \n \n\nThe form of that function depends on the structure of the algorithm"
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#running-times",
+    "href": "slides/lecture-02_slides.html#running-times",
+    "title": "CPSC 221",
+    "section": "Running times",
+    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s\n\n\n\n\n\n\nWhich of these are you willing to wait for?\n\nAnchor: the universe is about 4.4 x 10^17 seconds old.\n\n10^12 s (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.\n10^18 s (2^n at n=100) — ~32 billion years. 2.3x the age of the universe.\n10^24 s (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.\n10^289 s (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.\n\nIf you only use one line: 2^n at n=100 already outruns the universe. Not a million. A hundred.\nSmall end: 10^-9 s is one nanosecond, and light travels 30 cm in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.\nTwo framings if there is time:\n\nThe n^3 row is the scary one. 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.\nFaster hardware does not save you. A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithmic-analysis-example-1",
+    "href": "slides/lecture-02_slides.html#algorithmic-analysis-example-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — example 1",
+    "text": "Algorithmic analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nC++ mysteries?"
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithmic-analysis-example-1-1",
+    "href": "slides/lecture-02_slides.html#algorithmic-analysis-example-1-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — example 1",
+    "text": "Algorithmic analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat does it do? Describe it using a complete sentence. Give it a good name.\n\n \n\nI’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.\nHold the silence. Three minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#example-1-continued",
+    "href": "slides/lecture-02_slides.html#example-1-continued",
+    "title": "CPSC 221",
+    "section": "Example 1, continued",
+    "text": "Example 1, continued\nForm groups of size 3. Look at the group papers.\nHow many written statements can you see in your group?\n\nQuick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#example-1-continued-1",
+    "href": "slides/lecture-02_slides.html#example-1-continued-1",
+    "title": "CPSC 221",
+    "section": "Example 1, continued",
+    "text": "Example 1, continued\nRead your statement out loud, simultaneously on the count of 3.\n\ndon’t fix it as you read! You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.\nResist that. You are reading it so that you can hear it.\nLet the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.\nReading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.\nThe instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#example-1-continued-2",
+    "href": "slides/lecture-02_slides.html#example-1-continued-2",
+    "title": "CPSC 221",
+    "section": "Example 1, continued",
+    "text": "Example 1, continued\nShare your statements, and discuss them.\nWrite a final description for your group.\n\nCirculate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.\nUseful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”"
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#example-1-continued-3",
+    "href": "slides/lecture-02_slides.html#example-1-continued-3",
+    "title": "CPSC 221",
+    "section": "Example 1, continued",
+    "text": "Example 1, continued\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\nBuild it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.\nA version that survives all the attacks above:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1.\n\nThen the name falls out almost for free: indexOfFirst, firstIndexOf, findFirstIndex. Point out that “find” alone was never enough – a function called find could return a bool, a value, or an iterator.\nIf somebody has instead transcribed the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#what-just-happened",
+    "href": "slides/lecture-02_slides.html#what-just-happened",
+    "title": "CPSC 221",
+    "section": "What just happened?",
+    "text": "What just happened?\n\nDeliberately bare – this part is talked, not projected. Prompts, in the order they tend to work:\n\nTwenty minutes ago almost nobody could write that sentence. Now almost all of you can.\nAnd I never taught you anything about searching an array. Say it, then stop. Let them work out why. Nothing was transmitted from the front of the room – what changed is that they talked to each other.\nYou needed each other. Not a lecture, not a recording, not a smarter person – two people who would not accept a vague sentence.\nThe contract: when one of you says something fuzzy, any of the others gets to say “say that more precisely.” Not rude. The most useful thing you can say to someone trying to learn this. They will hear me say it all term.\nA recording gives you information. The room gives you feedback.\n\nDo not add an attendance pitch. They just lived the argument; saying it a second time cheapens it."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithmic-analysis-running-time",
+    "href": "slides/lecture-02_slides.html#algorithmic-analysis-running-time",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThe blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called find could return a bool, a value or an iterator. A precise description hands you idxFirst almost for free.\nTake answers. Somebody will say “it depends” – that is the slide after this."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithmic-analysis-running-time-1",
+    "href": "slides/lecture-02_slides.html#algorithmic-analysis-running-time-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\nWhat should we count?\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#algorithmic-analysis-running-time-2",
+    "href": "slides/lecture-02_slides.html#algorithmic-analysis-running-time-2",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
+  },
+  {
+    "objectID": "slides/lecture-02_slides.html#best-worst-average",
+    "href": "slides/lecture-02_slides.html#best-worst-average",
+    "title": "CPSC 221",
+    "section": "Best, worst, average",
+    "text": "Best, worst, average\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nFor an array of size \\(n\\):\n\nbest case   $T(n) = $\nworst case   $T(n) = $\naverage case   $T(n) = $\n\n\nBest: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking average over what? – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.\nWhich of the three do we usually report, and why? Worst case: it is a promise you can actually make."
   },
   {
     "objectID": "syllabus.html",
