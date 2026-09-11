@@ -79,6 +79,29 @@ recording_url <- function(id, class_date) {
   )
 }
 
+# Labs live on PrairieLearn, all of them, from the start of term. PL addresses
+# assessments by a numeric database id that exists nowhere in this repo, so the
+# default link is the assessment list -- every lab is listed there, including
+# the ones that haven't opened yet, so a student always lands somewhere useful.
+#
+# A row in additional-resources.csv still wins, for a lab worth linking
+# directly once its id is known.
+prairielearn_url <- function(id) {
+  instance <- course_variables()$course$prairielearn
+  listing <- paste0(sub("/?$", "/", instance), "assessments")
+  override <- lookup_url(id, "prairielearn")
+
+  purrr::map2_chr(id, override, \(this_id, this_override) {
+    if (is.na(this_id)) {
+      return(NA_character_)
+    }
+    if (!is.na(this_override)) {
+      return(this_override)
+    }
+    listing
+  })
+}
+
 # Slides are authored in this repo, so derive the link from the file itself:
 # the schedule links `lecture-07` to slides/lecture-07_slides.qmd when that
 # file exists, and shows the faded "coming later" icon when it doesn't.

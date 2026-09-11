@@ -64,7 +64,7 @@ render_unit_schedule <- function() {
     \(id) {
       resource_cell(
         id,
-        lookup_url(id, "prairielearn"),
+        prairielearn_url(id),
         "calendar-week",
         "Lab on PrairieLearn"
       )
