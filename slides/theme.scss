@@ -103,6 +103,11 @@ $tbl-border:         #a8c3cd;
     color: $code-plain;
     background: $code-gutter-bg;
     border-right: 2px solid $code-panel-border;
+
+    // Chrome and Safari include generated content when you copy, so without
+    // this the gutter numbers come along and the pasted code won't compile.
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   pre.numberSource {
