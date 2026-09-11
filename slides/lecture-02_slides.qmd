@@ -2,9 +2,6 @@
 title: "{{< var course.code >}}"
 subtitle: "Reasoning About Algorithms"
 
-# Named draft-02 rather than lecture-02, so the schedule shows a faded icon
-# instead of a link. Rename to lecture-02_slides.qmd to publish it.
-#
 # The opening slides carry the motivation forward from Wednesday and
 # deliberately overlap the tail of lecture 1, which was never reached. They
 # follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
