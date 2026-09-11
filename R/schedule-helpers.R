@@ -79,27 +79,40 @@ recording_url <- function(id, class_date) {
   )
 }
 
-# Labs live on PrairieLearn, all of them, from the start of term. PL addresses
-# assessments by a numeric database id that exists nowhere in this repo, so the
-# default link is the assessment list -- every lab is listed there, including
-# the ones that haven't opened yet, so a student always lands somewhere useful.
+# Labs live on PrairieLearn, and are revealed one at a time rather than all at
+# once -- a student looking at the schedule in week 2 should see this week's
+# lab, not all ten.
 #
-# A row in additional-resources.csv still wins, for a lab worth linking
-# directly once its id is known.
-prairielearn_url <- function(id) {
+# PL addresses assessments by a numeric database id that exists nowhere in this
+# repo, so the link goes to the assessment list; the lab is at the top of it.
+# A row in additional-resources.csv wins, for a lab worth linking directly.
+#
+# The reveal follows PL's own pattern: a lab opens the weekend before the week
+# it belongs to, so the icon goes live on the Friday before. LAB_LEAD_DAYS is
+# the knob -- raise it to reveal labs earlier.
+LAB_LEAD_DAYS <- 3
+
+prairielearn_url <- function(id, week_starting) {
   instance <- course_variables()$course$prairielearn
   listing <- paste0(sub("/?$", "/", instance), "assessments")
   override <- lookup_url(id, "prairielearn")
 
-  purrr::map2_chr(id, override, \(this_id, this_override) {
-    if (is.na(this_id)) {
-      return(NA_character_)
+  purrr::pmap_chr(
+    list(id, week_starting, override),
+    \(this_id, this_monday, this_override) {
+      if (is.na(this_id)) {
+        return(NA_character_)
+      }
+      if (!is.na(this_override)) {
+        return(this_override)
+      }
+      if (is.na(this_monday) ||
+          lubridate::today() < this_monday - LAB_LEAD_DAYS) {
+        return(NA_character_)
+      }
+      listing
     }
-    if (!is.na(this_override)) {
-      return(this_override)
-    }
-    listing
-  })
+  )
 }
 
 # Slides are authored in this repo, so derive the link from the file itself:

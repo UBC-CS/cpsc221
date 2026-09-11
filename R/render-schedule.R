@@ -61,7 +61,7 @@ render_schedule <- function() {
       ),
       lab_cell = resource_cell(
         lab,
-        prairielearn_url(lab),
+        prairielearn_url(lab, date),
         "calendar-week",
         "Lab on PrairieLearn"
       ),

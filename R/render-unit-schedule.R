@@ -52,8 +52,8 @@ render_unit_schedule <- function() {
         sort_order = sort_order,
         title = id,
         title_url = NA_character_,
-        resource_1 = r1(id),
-        resource_2 = r2(id)
+        resource_1 = r1(id, date),
+        resource_2 = r2(id, date)
       )
   }
 
@@ -61,15 +61,15 @@ render_unit_schedule <- function() {
     lab,
     "lab",
     5,
-    \(id) {
+    \(id, date) {
       resource_cell(
         id,
-        prairielearn_url(id),
+        prairielearn_url(id, date),
         "calendar-week",
         "Lab on PrairieLearn"
       )
     },
-    \(id) rep("", length(id))
+    \(id, date) rep("", length(id))
   ) |>
     dplyr::mutate(
       title = stringr::str_replace(title, "^lab-0*(\\d+)$", "Lab \\1")
@@ -79,7 +79,7 @@ render_unit_schedule <- function() {
     hwpa,
     "assignment",
     6,
-    \(id) {
+    \(id, date) {
       resource_cell(
         id,
         lookup_url(id, "prairielearn"),
@@ -87,14 +87,14 @@ render_unit_schedule <- function() {
         "Assignment on PrairieLearn"
       )
     },
-    \(id) rep("", length(id))
+    \(id, date) rep("", length(id))
   )
 
   examlets <- weekly_items(
     exam,
     "exam",
     7,
-    \(id) {
+    \(id, date) {
       resource_cell(
         id,
         lookup_url(id, "pre-activity"),
@@ -102,7 +102,7 @@ render_unit_schedule <- function() {
         "Examlet review material"
       )
     },
-    \(id) {
+    \(id, date) {
       resource_cell(
         id,
         lookup_url(id, "practice"),
