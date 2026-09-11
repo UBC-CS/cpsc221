@@ -223,3 +223,18 @@ meeting. Any follow-up makes the opt-out visible again.
   mockery in week 1, you lose volunteers for the term.
 - **Do not add an attendance pitch at the end.** The students in the room just
   lived the argument. Saying it out loud a second time cheapens it.
+
+## For later: the AI comparison
+
+Cut from this lesson deliberately — a tool producing the sentence in three
+seconds argues against the point, which is that they needed each other. It
+belongs in a lecture where *assessment* is the subject.
+
+Worth keeping when that lecture happens (tested 2026-09-11): asked what the
+function does, **Gemini omitted "first"; ChatGPT got it right.** That is the
+demonstration in one line — the word the whole room fights over is the word a
+widely-used tool drops, and you cannot tell which you got without already
+knowing the answer.
+
+A local chat window for doing this live, driven by the `claude` CLI so no API
+key is involved, is in `tools/aidemo/server.py` at the root of the superproject.
