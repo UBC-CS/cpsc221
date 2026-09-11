@@ -216,18 +216,6 @@
 </div>
 
 </section>
-<section class="slide level2">
-
-<!-- Named draft-02 rather than lecture-02, so the schedule shows a faded icon
-     instead of a link. Rename to lecture-02_slides.qmd to publish it. -->
-<!-- The opening five slides carry the motivation forward from Wednesday and
-     deliberately overlap the tail of lecture 1, which was never reached. They
-     follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
-     begins at exactly the question Wednesday ended on.
-
-     Slide 5 -- example 1 -- is where the deck stops being a lecture and becomes
-     the activity. Budget about twelve minutes to get there. -->
-</section>
 <section id="today" class="slide level2 smaller">
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
@@ -489,7 +477,7 @@
 </tbody>
 </table>
 <p>What does it do? Describe it using a complete sentence. Give it a good name.</p>
-<countdown-timer id="timer_aecf1e8477fd0dffe09cca4f9756b882772f3c37" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_897f403b9be470f4b1a93108c6105494e21dac61" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>I’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.</p>
@@ -616,7 +604,7 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="algorithmic-analysis-running-time" class="slide level2 smaller">
+<section id="algorithmic-analysis-running-time" class="slide level2">
 <h2>Algorithmic analysis — running time</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
@@ -624,7 +612,7 @@
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>How long does it take?</strong></p>
+<p>How long does it take?</p>
 <aside class="notes">
 <p>The blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called <code>find</code> could return a bool, a value or an iterator. A precise description hands you <code>idxFirst</code> almost for free.</p>
 <p>Take answers. Somebody will say “it depends” – that is the slide after this.</p>
@@ -640,20 +628,22 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="how-long-does-it-take-it-depends" class="slide level2 smaller">
-<h2>How long does it take? <em>It depends!</em></h2>
+<section id="algorithmic-analysis-running-time-1" class="slide level2">
+<h2>Algorithmic analysis — running time</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
 <span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>How long does it take? <blue><em>It depends!</em> </blue></p>
 <p>What does it depend on?</p>
 <ul>
 <li></li>
 <li></li>
 <li></li>
 </ul>
+<p>What should we count?</p>
 <aside class="notes">
 <p>Blanks are for the pen. What the room should land on:</p>
 <ul>
@@ -674,8 +664,8 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="what-should-we-count" class="slide level2 smaller">
-<h2>What should we count?</h2>
+<section id="algorithmic-analysis-running-time-2" class="slide level2 smaller">
+<h2>Algorithmic analysis — running time</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>

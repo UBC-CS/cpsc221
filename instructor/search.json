@@ -216,18 +216,18 @@
     "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThe blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called find could return a bool, a value or an iterator. A precise description hands you idxFirst almost for free.\nTake answers. Somebody will say “it depends” – that is the slide after this."
   },
   {
-    "objectID": "slides/draft-02_slides.html#how-long-does-it-take-it-depends",
-    "href": "slides/draft-02_slides.html#how-long-does-it-take-it-depends",
+    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-running-time-1",
+    "href": "slides/draft-02_slides.html#algorithmic-analysis-running-time-1",
     "title": "CPSC 221",
-    "section": "How long does it take? It depends!",
-    "text": "How long does it take? It depends!\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat does it depend on?\n\n\n\n\n\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\nWhat should we count?\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
   },
   {
-    "objectID": "slides/draft-02_slides.html#what-should-we-count",
-    "href": "slides/draft-02_slides.html#what-should-we-count",
+    "objectID": "slides/draft-02_slides.html#algorithmic-analysis-running-time-2",
+    "href": "slides/draft-02_slides.html#algorithmic-analysis-running-time-2",
     "title": "CPSC 221",
-    "section": "What should we count?",
-    "text": "What should we count?\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
   },
   {
     "objectID": "slides/draft-02_slides.html#best-worst-average",
