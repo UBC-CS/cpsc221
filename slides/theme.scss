@@ -15,6 +15,11 @@ $code-gutter-width:  2.4em;
 $code-font-scale:    0.78;     // relative to the deck's base size, not the parent
 $code-max-cols:      80;       // terminal width; blocks never grow past this
 
+// Activity slides, matching dsci220 and cpsc203: the whole slide goes blue so
+// it is obvious from the back of the room that the class is doing something,
+// not watching something.
+$activity-bg:        #447099;
+
 // Data tables, drawn from the same family as the code panel so a slide holding
 // both doesn't look like two designs.
 $tbl-header-bg:      #2c3e50;
@@ -181,6 +186,52 @@ $text-colours: (
 
 @each $name, $colour in $text-colours {
   #{$name}, .#{$name} { color: $colour; }
+}
+
+// Activity slide: {.activity} on the heading turns the whole slide blue.
+//
+// The code panel is deliberately left alone -- a pale panel on a dark slide
+// reads as a printed handout, which is the right feel for work they are about
+// to do. Everything that is *not* the panel has to be lifted to white.
+.reveal section.activity,
+.reveal .activity {
+  background-color: $activity-bg;
+  color: #fff;
+
+  h1, h2, h3, h4 {
+    color: #fff;
+  }
+
+  a {
+    color: #a3d5ff;
+  }
+
+  strong {
+    color: #fff;
+  }
+
+  blockquote {
+    color: #fff;
+  }
+
+  // Bare markdown tables (the index/value array) -- the shaded-table style is
+  // light-on-dark by design and is left to its own rules.
+  table:not(.shaded-table table) {
+    color: #fff;
+
+    th,
+    td,
+    td[data-quarto-table-cell-role="th"] {
+      border-color: rgba(255, 255, 255, 0.45);
+      color: #fff;
+    }
+  }
+
+  // Inline code only -- `div.sourceCode` blocks keep their pale panel.
+  :not(pre) > code {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
 }
 
 // Shaded data table: wrap a markdown table in ::: {.shaded-table} to get a
