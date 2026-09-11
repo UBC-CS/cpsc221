@@ -6,7 +6,6 @@ subtitle: "Reasoning About Algorithms"
 <!-- Named draft-02 rather than lecture-02, so the schedule shows a faded icon
      instead of a link. Rename to lecture-02_slides.qmd to publish it. -->
 
-
 <!-- The opening five slides carry the motivation forward from Wednesday and
      deliberately overlap the tail of lecture 1, which was never reached. They
      follow the 2024W1 deck (oldslides/lec090624-reasoning.pdf), whose Lesson 1.2
@@ -21,6 +20,7 @@ subtitle: "Reasoning About Algorithms"
 
 - Labs start next week
 - HW1 available Monday Sep 14, due Sep 21
+- Registration for EX1 will be soon!
 
 \
 
@@ -34,18 +34,12 @@ subtitle: "Reasoning About Algorithms"
 
 Analysis of an algorithm gives insight into
 
-::: {.incremental}
 - whether it is **correct**
 - how long it runs — *time complexity*
 - how much memory it uses — *space complexity*
-:::
 
-. . .
-
-\
-
-And it lets us compare two algorithms that solve the **same problem** without
-running either one.
+All with the aim of making comparisons between different approaches to solving the
+same problem analytically, not experimentally.
 
 ::: notes
 Thirty seconds. This is a framing slide, not a content slide.
@@ -55,18 +49,14 @@ Thirty seconds. This is a framing slide, not a content slide.
 
 > If an algorithm is not [correct]{style="color: #3498db;"}, is its value 0?
 
-. . .
-
 \
 
-No — and the exceptions are a whole field each:
+No — and the exceptions are important and worth considering:
 
-::: {.incremental}
 - **approximation** — provably close, much faster
 - **heuristics** — usually good, no promise
 - **randomized** — correct with high probability
 - **restricted inputs** — correct on the data you actually have
-:::
 
 ::: notes
 We spent Wednesday on this. Land the answer and move -- do not re-run the
@@ -77,22 +67,22 @@ discussion, it already happened.
 
 Two algorithms solve the same problem. Which is better?
 
-. . .
-
 - Use different metrics — [time]{style="color: #3498db;"}, [space]{style="color: #3498db;"} most common
 - Express [running time]{style="color: #e74c3c;"} as a (positive) [function]{style="color: #e74c3c;"} of input size:
 
-. . .
+$$T(n): \text{time to complete the operations on data of size } n$$
 
-$$T(n) = \text{time to complete the operations on data of size } n$$
+\ 
 
-. . .
+\ 
 
 - The **form** of that function depends on the structure of the algorithm
 
 ## Running times {.smaller}
 
 Suppose a computer executes $10^{12}$ operations per sec.
+
+::: {.shaded-table}
 
 | operations | n=10 | n=100 | n=1000 | n=10,000 | n=$10^{12}$ |
 |---|---|---|---|---|---|
@@ -102,15 +92,56 @@ Suppose a computer executes $10^{12}$ operations per sec.
 | $n^3$ | $10^{-9}$ s | $10^{-6}$ s | $10^{-3}$ s | 1 s | $10^{24}$ s |
 | $2^n$ | $10^{-9}$ s | $10^{18}$ s | $10^{289}$ s | | |
 
-. . .
+:::
 
-So before we can say how long an algorithm takes, we have to be able to say
-**what it does** — precisely enough that the question even has an answer.
+Which of these are you willing to wait for?
 
 ::: notes
-The last line is the hinge. It is the only sentence connecting the lecture to
-the activity, so do not rush it.
+**Anchor: the universe is about 4.4 x 10^17 seconds old.**
+
+- **10^12 s** (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded
+  history; back to the Chauvet cave paintings.
+- **10^18 s** (2^n at n=100) — ~32 billion years. **2.3x the age of the
+  universe.**
+- **10^24 s** (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the
+  age of the universe.
+- **10^289 s** (2^n at n=1000) — 10^271 x the age of the universe. There are
+  only ~10^80 atoms in the observable universe; this exceeds that by 10^209.
+
+If you only use one line: **2^n at n=100 already outruns the universe.** Not a
+million. A hundred.
+
+Small end: 10^-9 s is one nanosecond, and light travels **30 cm** in it --
+Grace Hopper handed out 11.8-inch wires so engineers would stop asking why
+satellite calls were slow. At 10^-11 s light travels 3 mm.
+
+Two framings if there is time:
+
+- **The n^3 row is the scary one.** 2^n is easy to dismiss as pathological,
+  but n^3 is an innocent triple loop -- and at n=10,000 it is already 1 second
+  while n is still at 10^-8.
+- **Faster hardware does not save you.** A machine 1000x faster turns 10^289
+  into 10^286. The exponential eats all of hardware progress and doesn't
+  notice. That is why this is a math course, not a benchmarking course.
 :::
+
+## Algorithmic analysis — example 1 {.smaller}
+
+```cpp
+int ____________ (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+C++ mysteries?
+
+-  
+- 
+- 
+
 
 ## Algorithmic analysis — example 1 {.smaller}
 
@@ -145,13 +176,9 @@ it now gives away that the description is the hard part.
 
 > "It finds the key."
 
-. . .
-
 <br>
 
 And we all nodded.
-
-. . .
 
 Now you are going to write that sentence down.
 
@@ -184,8 +211,6 @@ finish fast are usually the ones about to discover they were imprecise.
 
 How many written statements can you see in your group?
 
-. . .
-
 <br>
 
 I am not asking whether they are any good.
@@ -209,8 +234,6 @@ Nobody is listening to you. That is the point.
 Do not fix it on the way out of your mouth.
 :::
 
-. . .
-
 You are going to want to. You will see the gap about half a second before you
 reach it, and your instinct will be to quietly patch it as you speak.
 
@@ -233,8 +256,6 @@ what destroys the effect.
 
 ## Did it sound like you expected? {.center}
 
-. . .
-
 <br>
 
 Now share them with your group.
@@ -256,8 +277,6 @@ Could a stranger reimplement this function correctly, from these words alone?
 
 Whose passes?
 
-. . .
-
 Any of them?
 
 {{< countdown minutes=8 >}}
@@ -274,7 +293,6 @@ tell you how I'd break it."
 
 ## I will take your words completely literally {.smaller}
 
-::: {.incremental}
 - *"It finds the key in the list."*
   → I return `true`. I found it.
 - *"It returns the position of the key."*
@@ -285,7 +303,6 @@ tell you how I'd break it."
   → I return a 1-based index. You didn't say otherwise.
 - *"It searches for the key and returns it."*
   → I return `5`. You said return *it*.
-:::
 
 ::: notes
 Use real statements from the room wherever you can -- ask for volunteers to
@@ -298,15 +315,24 @@ Keep the tone playful. You are being a pedantic genie, not a judge.
 
 > *"It returns the index of the key, or -1 if the key is not in the list."*
 
-. . .
+\
 
 That is a good sentence. It handles absence. It says *index*.
 
-. . .
+::: notes
+Let this sit for a beat. Agree with it -- genuinely. The room should think
+this one survived.
+:::
+
+## And the one that catches the careful people {.smaller}
+
+> *"It returns the index of the key, or -1 if the key is not in the list."*
+
+\
 
 `[5, 3, 5]`, key `5`. **I return `2`.**
 
-. . .
+\
 
 You never said **first**.
 
@@ -346,16 +372,10 @@ the code. The giveaway is that a transcription cannot name the function.
 
 Twenty minutes ago, almost nobody in this room could write that sentence.
 
-. . .
-
 Now almost all of you can.
-
-. . .
 
 And notice: **I have not taught you anything about linear search today.** I
 have not said one word about how the function works.
-
-. . .
 
 ::: {.callout-important appearance="minimal"}
 You got there by talking to each other.
@@ -367,16 +387,14 @@ You got there by talking to each other.
 
 *(live, right now — watch)*
 
-. . .
+\
 
 It will be correct. It will say *first*. It will handle absence. It will
 probably suggest a better name than mine.
 
-. . .
+## And you are nodding, because it looks right {.center .smaller}
 
-And you are nodding, because it looks right.
-
-. . .
+\
 
 You would have nodded twenty minutes ago too.
 
@@ -394,16 +412,10 @@ Do not editorialize while it generates. Let them read it.
 Reading a correct answer and thinking *"yes, that's what I meant"* feels
 exactly like understanding.
 
-. . .
-
 It is not the same thing. And from the inside, the two are **indistinguishable**.
-
-. . .
 
 The only way to tell them apart is to try to produce the answer yourself,
 from nothing — which is what you just spent twenty minutes discovering.
-
-. . .
 
 An examlet only ever asks you to produce.
 
@@ -411,8 +423,6 @@ An examlet only ever asks you to produce.
 
 You are allowed to use AI in this course, on homework, assignments, and labs.
 I mean that.
-
-. . .
 
 But what it hands you is a **hypothesis** until you can produce it yourself.
 
@@ -429,8 +439,6 @@ If you can't, you were holding someone else's answer.
 Your group got somewhere none of you got alone. That happened because
 somebody in your group refused to accept a vague sentence.
 
-. . .
-
 So here is the contract. The three of you agree that from now on, when one of
 you says something fuzzy, any of the others gets to say:
 
@@ -440,8 +448,6 @@ you says something fuzzy, any of the others gets to say:
 No apology needed. It is not rude. It is the most useful thing you can say to
 someone who is trying to learn this material.
 :::
-
-. . .
 
 You will hear me say it all term.
 
@@ -460,11 +466,7 @@ this course talks.
 Entirely up to you: swap contact info with these two and keep working
 together.
 
-. . .
-
 Piazza, email, Discord, phone —
-
-. . .
 
 **or nothing at all.** No one is checking, and I will never ask.
 
@@ -485,8 +487,6 @@ visible again.
 A recording gives you information.
 
 **The room gives you feedback.**
-
-. . .
 
 <br>
 

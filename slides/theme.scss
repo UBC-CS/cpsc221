@@ -15,6 +15,14 @@ $code-gutter-width:  2.4em;
 $code-font-scale:    0.78;     // relative to the deck's base size, not the parent
 $code-max-cols:      80;       // terminal width; blocks never grow past this
 
+// Data tables, drawn from the same family as the code panel so a slide holding
+// both doesn't look like two designs.
+$tbl-header-bg:      #2c3e50;
+$tbl-header-fg:      #ffffff;
+$tbl-stripe:         #eef4f7;
+$tbl-label-bg:       #dbe9ee;   // first column -- the row's name, not its data
+$tbl-border:         #a8c3cd;
+
 /*-- scss:rules --*/
 
 .reveal {
@@ -168,6 +176,58 @@ $text-colours: (
 
 @each $name, $colour in $text-colours {
   #{$name}, .#{$name} { color: $colour; }
+}
+
+// Shaded data table: wrap a markdown table in ::: {.shaded-table} to get a
+// dark header, zebra rows and an emphasised label column.
+//
+// Quarto rewrites <th> into <td data-quarto-table-cell-role="th">, so every
+// header rule has to name both or it silently misses.
+.reveal .shaded-table {
+  table {
+    border-collapse: collapse;
+    margin: 0.4em auto;
+    border: 1px solid $tbl-border;
+  }
+
+  th,
+  td {
+    border: 1px solid $tbl-border;
+    padding: 0.25em 0.7em;
+    text-align: center;
+  }
+
+  thead th,
+  thead td[data-quarto-table-cell-role="th"] {
+    background: $tbl-header-bg;
+    color: $tbl-header-fg;
+    font-weight: 700;
+    border-color: $tbl-header-bg;
+  }
+
+  tbody tr:nth-child(even) {
+    background: $tbl-stripe;
+  }
+
+  // The leading cell names the row, so it reads as a label rather than data.
+  tbody tr td:first-child {
+    background: $tbl-label-bg;
+    font-weight: 700;
+    text-align: left;
+  }
+
+  // Pandoc's colgroup stretches the table to the full slide width.
+  colgroup {
+    display: none;
+  }
+
+  // Draw attention without colour alone: any cell marked {.blow-up} in the
+  // source gets the warning treatment.
+  .blow-up {
+    background: #fdecea;
+    color: #c0392b;
+    font-weight: 700;
+  }
 }
 
 // Highlighter, for when colour alone isn't enough
