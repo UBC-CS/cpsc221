@@ -280,19 +280,3 @@ this function. Theta is the one that says what you actually mean.
 This is the distinction that gets tested, and it is the one students most
 reliably fudge.
 :::
-
-## Today's poser {.smaller}
-
-$$\text{Thm: } \log n! \in \Theta(n \log n)$$
-
-Proof:
-
-::: notes
-Leave it on the board. The upper bound is the easy half -- $\log n! = \sum
-\log i \le n \log n$.
-
-The lower bound is the one worth their time: keep the top half of the terms,
-each at least $\log(n/2)$, giving $(n/2)\log(n/2)$, which is $\Omega(n\log n)$.
-
-If time is short, set up the upper bound and leave the lower as the closer.
-:::
