@@ -198,10 +198,10 @@
     }
   </style>
 <meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
-<meta property="og:description" content="Reasoning About Algorithms">
+<meta property="og:description" content="Running Time">
 <meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
 <meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
-<meta name="twitter:description" content="Reasoning About Algorithms">
+<meta name="twitter:description" content="Running Time">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -210,7 +210,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Reasoning About Algorithms</p>
+  <p class="subtitle">Running Time</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -220,202 +220,86 @@
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
 <ul>
-<li>Labs start next week</li>
-<li>HW1 available Monday Sep 14, due Sep 21</li>
-<li>Registration for EX1 will be soon!</li>
+<li>HW1 is out — due Monday Sep 21</li>
+<li>Labs meet this week; Lab Intro is due Sunday</li>
+<li>PEX1 (practice for Examlet 1) releases Wednesday</li>
 </ul>
 <p><br>
 </p>
 <p><strong>Where we’re going</strong></p>
 <ul>
-<li>The value of an algorithm</li>
-<li>The abstraction of <em>running time</em></li>
-<li>What it takes to describe an algorithm precisely</li>
+<li>Finishing <em>how long does it take?</em></li>
+<li>Best, worst, average</li>
+<li>Asymptotics, reprised</li>
 </ul>
 </section>
-<section id="algorithm-analysis" class="slide level2 smaller">
-<h2>Algorithm analysis</h2>
-<p>Analysis of an algorithm gives insight into</p>
-<ul>
-<li>whether it is <strong>correct</strong></li>
-<li>how long it runs — <em>time complexity</em></li>
-<li>how much memory it uses — <em>space complexity</em></li>
-</ul>
-<p>All with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.</p>
-<aside class="notes">
-<p>Thirty seconds. This is a framing slide, not a content slide.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="where-we-stopped" class="slide level2 smaller">
+<section id="where-we-stopped" class="slide level2 center smaller">
 <h2>Where we stopped</h2>
-<blockquote>
-<p>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</p>
-</blockquote>
-<p><br>
-</p>
-<p>No — and the exceptions are important and worth considering:</p>
-<ul>
-<li><strong>approximation</strong> — provably close, much faster</li>
-<li><strong>heuristics</strong> — usually good, no promise</li>
-<li><strong>randomized</strong> — correct with high probability</li>
-<li><strong>restricted inputs</strong> — correct on the data you actually have</li>
-</ul>
-<aside class="notes">
-<p>We spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="measuring-the-value-of-algorithms" class="slide level2 smaller">
-<h2>Measuring the value of algorithms</h2>
-<p>Two algorithms solve the same problem. Which is better?</p>
-<ul>
-<li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
-<li>Express <span style="color: #e74c3c;">running time</span> as a (positive) <span style="color: #e74c3c;">function</span> of input size:</li>
-</ul>
-<p><span class="math display">\[T(n): \text{time to complete the operations on data of size } n\]</span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<ul>
-<li>The <strong>form</strong> of that function depends on the structure of the algorithm</li>
-</ul>
-</section>
-<section id="running-times" class="slide level2 smaller">
-<h2>Running times</h2>
-<p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
-<div class="shaded-table">
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>operations</th>
-<th>n=10</th>
-<th>n=100</th>
-<th>n=1000</th>
-<th>n=10,000</th>
-<th>n=<span class="math inline">\(10^{12}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td>1 s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n \log n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-7}\)</span> s</td>
-<td>40 s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(n^2\)</span></td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-4}\)</span> s</td>
-<td><span class="math inline">\(10^{12}\)</span> s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n^3\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-3}\)</span> s</td>
-<td>1 s</td>
-<td><span class="math inline">\(10^{24}\)</span> s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(2^n\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{18}\)</span> s</td>
-<td><span class="math inline">\(10^{289}\)</span> s</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Which of these are you willing to wait for?</p>
-<aside class="notes">
-<p><strong>Anchor: the universe is about 4.4 x 10^17 seconds old.</strong></p>
-<ul>
-<li><strong>10^12 s</strong> (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.</li>
-<li><strong>10^18 s</strong> (2^n at n=100) — ~32 billion years. <strong>2.3x the age of the universe.</strong></li>
-<li><strong>10^24 s</strong> (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.</li>
-<li><strong>10^289 s</strong> (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.</li>
-</ul>
-<p>If you only use one line: <strong>2^n at n=100 already outruns the universe.</strong> Not a million. A hundred.</p>
-<p>Small end: 10^-9 s is one nanosecond, and light travels <strong>30 cm</strong> in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.</p>
-<p>Two framings if there is time:</p>
-<ul>
-<li><strong>The n^3 row is the scary one.</strong> 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.</li>
-<li><strong>Faster hardware does not save you.</strong> A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="algorithmic-analysis-example-1" class="slide level2 smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>C++ mysteries?</p>
-<ul>
-<li></li>
-<li></li>
-<li></li>
-</ul>
+<p><strong>How long does it take?</strong></p>
+<aside class="notes">
+<p>Thirty seconds. They named this function on Friday and got as far as the question. Do not re-open the naming discussion – point at it and move.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="algorithmic-analysis-example-1-1" class="slide level2 activity smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<section id="algorithmic-analysis-running-time" class="slide level2">
+<h2>Algorithmic analysis — running time</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
 <span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>How long does it take? <blue><em>It depends!</em> </blue></p>
+<p>What does it depend on?</p>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<p>What should we count?</p>
+<aside class="notes">
+<p>Blanks are for the pen. What the room should land on:</p>
+<ul>
+<li>the <strong>size</strong> of the array</li>
+<li><strong>where q is</strong> – or whether it is there at all</li>
+<li>the <strong>speed of the machine</strong></li>
+</ul>
+<p>The third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="algorithmic-analysis-running-time-1" class="slide level2 smaller">
+<h2>Algorithmic analysis — running time</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <colgroup>
 <col style="width: 6%">
@@ -476,12 +360,10 @@
 </tr>
 </tbody>
 </table>
-<p>What does it do? Describe it using a complete sentence. Give it a good name.</p>
-<countdown-timer id="timer_f55dc0652ade9a9b7e7fa121eb389d32f97d8ad6" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
- </countdown-timer>
+<p>How many times does line 3 run if <span class="math inline">\(q\)</span> is 32? &nbsp; If <span class="math inline">\(q\)</span> is 45? &nbsp; If <span class="math inline">\(q\)</span> is 100?</p>
 <aside class="notes">
-<p>I’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.</p>
-<p>Hold the silence. Three minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise.</p>
+<p>Concrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.</p>
+<p>Then the abstraction: drop the clock, count the <em>operation that repeats</em>. Here that is the comparison on line 3.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -494,128 +376,330 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="example-1-continued" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Form groups of size 3. Look at the group papers.</p>
-<p>How many written statements can you see in your group?</p>
-<aside class="notes">
-<p>Quick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-1" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Read your statement out loud, simultaneously on the count of 3.</p>
-<aside class="notes">
-<p>don’t fix it as you read! You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.</p>
-<p><strong>Resist that.</strong> You are reading it so that <em>you</em> can hear it.</p>
-<p>Let the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.</p>
-<p>Reading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.</p>
-<p>The instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-2" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Share your statements, and discuss them.</p>
-<p>Write a final description for your group.</p>
-<aside class="notes">
-<p>Circulate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.</p>
-<p>Useful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-3" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside class="notes">
-<p>Build it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.</p>
-<p>A version that survives all the attacks above:</p>
-<blockquote>
-<p>Given a vector of integers <code>arr</code> and an integer <code>q</code>, return the index of the <em>first</em> element of <code>arr</code> equal to <code>q</code>, scanning from index 0 upward. If no element equals <code>q</code>, return -1.</p>
-</blockquote>
-<p>Then the name falls out almost for free: <code>indexOfFirst</code>, <code>firstIndexOf</code>, <code>findFirstIndex</code>. Point out that “find” alone was never enough – a function called <code>find</code> could return a bool, a value, or an iterator.</p>
-<p>If somebody has instead <em>transcribed</em> the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-just-happened" class="slide level2 smaller">
-<h2>What just happened?</h2>
-<aside class="notes">
-<p>Deliberately bare – this part is talked, not projected. Prompts, in the order they tend to work:</p>
-<ul>
-<li>Twenty minutes ago almost nobody could write that sentence. Now almost all of you can.</li>
-<li><strong>And I never taught you anything about searching an array.</strong> Say it, then stop. Let them work out why. Nothing was transmitted from the front of the room – what changed is that they talked to each other.</li>
-<li>You needed each other. Not a lecture, not a recording, not a smarter person – two people who would not accept a vague sentence.</li>
-<li>The contract: when one of you says something fuzzy, any of the others gets to say <strong>“say that more precisely.”</strong> Not rude. The most useful thing you can say to someone trying to learn this. They will hear me say it all term.</li>
-<li>A recording gives you information. <strong>The room gives you feedback.</strong></li>
-</ul>
-<p>Do not add an attendance pitch. They just lived the argument; saying it a second time cheapens it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="algorithmic-analysis-running-time" class="slide level2">
-<h2>Algorithmic analysis — running time</h2>
+<section id="best-worst-average" class="slide level2 smaller">
+<h2>Best, worst, average</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
 <span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How long does it take?</p>
+<p>For an array of size <span class="math inline">\(n\)</span>:</p>
+<ul>
+<li>best case &nbsp; $T(n) = $</li>
+<li>worst case &nbsp; $T(n) = $</li>
+<li>average case &nbsp; $T(n) = $</li>
+</ul>
 <aside class="notes">
-<p>The blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called <code>find</code> could return a bool, a value or an iterator. A precise description hands you <code>idxFirst</code> almost for free.</p>
-<p>Take answers. Somebody will say “it depends” – that is the slide after this.</p>
+<p>Best: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking <em>average over what?</em> – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.</p>
+<p>Which of the three do we usually report, and why? Worst case: it is a promise you can actually make.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="your-turn" class="slide level2 activity smaller">
+<h2>Your turn</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> findMin <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> temp <span class="op">=</span> arr<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> temp<span class="op">)</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>            temp <span class="op">=</span> arr<span class="op">[</span>i<span class="op">];</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> temp<span class="op">;</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+<th style="text-align: right;">8</th>
+<th style="text-align: right;">9</th>
+<th style="text-align: right;">10</th>
+<th style="text-align: right;">11</th>
+<th style="text-align: right;">12</th>
+<th style="text-align: right;">13</th>
+<th style="text-align: right;">14</th>
+<th style="text-align: right;">15</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">45</td>
+</tr>
+</tbody>
+</table>
+<p>Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) = $</p>
+<countdown-timer id="timer_462b0e5052c7ed6faa4d15dcf9f9ee2f50866895" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+ </countdown-timer>
+<aside class="notes">
+<p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
+<p>That is the contrast with <code>idxFirst</code>, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.</p>
+<p>The array is rigged so the minimum is at index 0 – students who are pattern matching on <code>idxFirst</code> will call that the best case. It isn’t.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="examining-the-details" class="slide level2 smaller">
+<h2>Examining the details</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
+<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>How many lines are executed in the worst case?</p>
+<p><span class="math display">\[T(n) = \]</span></p>
+<aside class="notes">
+<p>Count it with them, line by line, with the pen. A defensible answer is <span class="math inline">\(T(n) = 2n + 2\)</span> – the loop test and the comparison each run about n times, plus the initialisation and the final return.</p>
+<p>Do not fight about the exact constant. Getting two different numbers from two students is the <em>setup</em> for the next question, not a problem.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="does-it-matter" class="slide level2 smaller">
+<h2>Does it matter?</h2>
+<p><span class="math display">\[T(n) = 2n + 2\]</span></p>
+<p><br>
+</p>
+<p>Does the <strong>2n</strong> matter?</p>
+<p>Does the <strong>+2</strong> matter?</p>
+<aside class="notes">
+<p>This is the hinge into asymptotics, and it is worth slowing down for.</p>
+<p>The +2 is gone the moment n is large. The coefficient 2 survives scaling but not a change of machine – a computer twice as fast erases it. What no machine erases is the <strong>n</strong>.</p>
+<p>Land it: the only durable thing about <span class="math inline">\(2n+2\)</span> is that it is <em>linear</em>. That is what we want a notation for.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="asymptotics-reprised" class="slide level2 smaller">
+<h2>Asymptotics, reprised</h2>
+<p><span class="math inline">\(T(n) = O(f(n))\)</span> if there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(n_0\)</span> such that</p>
+<p><span class="math display">\[T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0\]</span></p>
+<p><br>
+</p>
+<p>“Eventually, and up to a constant, <span class="math inline">\(T\)</span> is no worse than <span class="math inline">\(f\)</span>.”</p>
+<aside class="notes">
+<p>Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-reminder-page" class="slide level2 smaller">
+<h2>The reminder page</h2>
+<div class="shaded-table">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>growth</th>
+<th>name</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(O(1)\)</span></td>
+<td>constant</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(\log n)\)</span></td>
+<td>logarithmic</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(\log^k n)\)</span></td>
+<td>poly-log</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(n)\)</span></td>
+<td>linear</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(n \log n)\)</span></td>
+<td>log-linear</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(n^{1+c})\)</span></td>
+<td>superlinear</td>
+<td><span class="math inline">\(c &gt; 0\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(n^2)\)</span></td>
+<td>quadratic</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(n^3)\)</span></td>
+<td>cubic</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(O(n^k)\)</span></td>
+<td>polynomial</td>
+<td>“tractable”</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(O(c^n)\)</span></td>
+<td>exponential</td>
+<td>“intractable”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<aside class="notes">
+<p>Point back at Friday’s running-times table – the tractable/intractable line is exactly where <span class="math inline">\(2^n\)</span> ran past the age of the universe.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="runtime-analysis-guidelines" class="slide level2 smaller">
+<h2>Runtime analysis guidelines</h2>
+<ul>
+<li>Single operations — <strong>constant</strong> time</li>
+<li>Consecutive operations — <strong>additive</strong></li>
+<li>Conditionals — constant for the test, plus the branch taken</li>
+<li>Loops — <strong>sum of the loop body</strong> times</li>
+<li>Function call — the time for that function</li>
+</ul>
+<aside class="notes">
+<p>These are the rules they will use on every homework this term. Nothing here is surprising; the value is having them written down in one place.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="back-to-where-we-started" class="slide level2 smaller">
+<h2>Back to where we started</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In the worst case, $T(n) = $</p>
+<p><br>
+</p>
+<p>Which should we use to describe it? &nbsp; <span class="math inline">\(o \quad O \quad \omega \quad \Omega \quad \theta \quad \Theta\)</span></p>
+<aside class="notes">
+<p>Worst case is <span class="math inline">\(\Theta(n)\)</span> – and the interesting part is <em>why not O(n)</em>. O is an upper bound and is true but weak: <span class="math inline">\(O(n^2)\)</span> is also a correct statement about this function. Theta is the one that says what you actually mean.</p>
+<p>This is the distinction that gets tested, and it is the one students most reliably fudge.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="todays-poser" class="slide level2 smaller">
+<h2>Today’s poser</h2>
+<p><span class="math display">\[\text{Thm: } \log n! \in \Theta(n \log n)\]</span></p>
+<p>Proof:</p>
+<aside class="notes">
+<p>Leave it on the board. The upper bound is the easy half – <span class="math inline">\(\log n! = \sum
+\log i \le n \log n\)</span>.</p>
+<p>The lower bound is the one worth their time: keep the top half of the terms, each at least <span class="math inline">\(\log(n/2)\)</span>, giving <span class="math inline">\((n/2)\log(n/2)\)</span>, which is <span class="math inline">\(\Omega(n\log n)\)</span>.</p>
+<p>If time is short, set up the upper bound and leave the lower as the closer.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
