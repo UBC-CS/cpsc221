@@ -475,7 +475,7 @@
 </tbody>
 </table>
 <p>Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) = $</p>
-<countdown-timer id="timer_350f8c68ae1255b1a43c93d7254c7a5ad721613a" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_4598bb475410eac592265c1fb261bdcbbdfb2503" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
@@ -679,27 +679,6 @@
 <aside class="notes">
 <p>Worst case is <span class="math inline">\(\Theta(n)\)</span> – and the interesting part is <em>why not O(n)</em>. O is an upper bound and is true but weak: <span class="math inline">\(O(n^2)\)</span> is also a correct statement about this function. Theta is the one that says what you actually mean.</p>
 <p>This is the distinction that gets tested, and it is the one students most reliably fudge.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="todays-poser" class="slide level2 smaller">
-<h2>Today’s poser</h2>
-<p><span class="math display">\[\text{Thm: } \log n! \in \Theta(n \log n)\]</span></p>
-<p>Proof:</p>
-<aside class="notes">
-<p>Leave it on the board. The upper bound is the easy half – <span class="math inline">\(\log n! = \sum
-\log i \le n \log n\)</span>.</p>
-<p>The lower bound is the one worth their time: keep the top half of the terms, each at least <span class="math inline">\(\log(n/2)\)</span>, giving <span class="math inline">\((n/2)\log(n/2)\)</span>, which is <span class="math inline">\(\Omega(n\log n)\)</span>.</p>
-<p>If time is short, set up the upper bound and leave the lower as the closer.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
