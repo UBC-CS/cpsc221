@@ -471,7 +471,7 @@
     "href": "slides/lecture-03_slides.html#algorithmic-analysis-running-time",
     "title": "CPSC 221",
     "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\nWhat should we count?\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
   },
   {
     "objectID": "slides/lecture-03_slides.html#algorithmic-analysis-running-time-1",
@@ -492,28 +492,21 @@
     "href": "slides/lecture-03_slides.html#your-turn",
     "title": "CPSC 221",
     "section": "Your turn",
-    "text": "Your turn\nint findMin (vector&lt;int&gt; arr) {\n    int temp = arr[0];\n    for (int i = 1; i &lt; arr.size(); i++)\n        if (arr[i] &lt; temp)\n            temp = arr[i];\n    return temp;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n1\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nBest case   $T(n) = $     Worst case   \\(T(n) =\\)\n\n \n\nThe point of this one: there is no early return. Best and worst are the same – \\(n-1\\) comparisons either way. The loop has to see every element to know it has the minimum.\nThat is the contrast with idxFirst, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.\nThe array is rigged so the minimum is at index 0 – students who are pattern matching on idxFirst will call that the best case. It isn’t."
+    "text": "Your turn\nint findMin (vector&lt;int&gt; arr) {\n    int temp = arr[0];\n    for (int i = 1; i &lt; arr.size(); i++)\n        if (arr[i] &lt; temp)\n            temp = arr[i];\n    return temp;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n1\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nBest case   \\(T(n) =\\)     Worst case   \\(T(n) =\\)\n\n \n\nThe point of this one: there is no early return. Best and worst are the same – \\(n-1\\) comparisons either way. The loop has to see every element to know it has the minimum.\nThat is the contrast with idxFirst, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.\nThe array is rigged so the minimum is at index 0 – students who are pattern matching on idxFirst will call that the best case. It isn’t."
   },
   {
     "objectID": "slides/lecture-03_slides.html#examining-the-details",
     "href": "slides/lecture-03_slides.html#examining-the-details",
     "title": "CPSC 221",
     "section": "Examining the details",
-    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n\\[T(n) = \\]\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
-  },
-  {
-    "objectID": "slides/lecture-03_slides.html#does-it-matter",
-    "href": "slides/lecture-03_slides.html#does-it-matter",
-    "title": "CPSC 221",
-    "section": "Does it matter?",
-    "text": "Does it matter?\n\\[T(n) = 2n + 2\\]\n\n\nDoes the 2n matter?\nDoes the +2 matter?\n\nThis is the hinge into asymptotics, and it is worth slowing down for.\nThe +2 is gone the moment n is large. The coefficient 2 survives scaling but not a change of machine – a computer twice as fast erases it. What no machine erases is the n.\nLand it: the only durable thing about \\(2n+2\\) is that it is linear. That is what we want a notation for."
+    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n$T(n) = $\n\n\nDoes the ___ matter?\nDoes the ___ matter?\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
   },
   {
     "objectID": "slides/lecture-03_slides.html#asymptotics-reprised",
     "href": "slides/lecture-03_slides.html#asymptotics-reprised",
     "title": "CPSC 221",
     "section": "Asymptotics, reprised",
-    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n“Eventually, and up to a constant factor, \\(T\\) is no worse than \\(f\\).”\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
+    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n\n       n time\n\n“Eventually, and up to a constant factor, \\(T\\) is no worse than \\(f\\).”\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
   },
   {
     "objectID": "slides/lecture-03_slides.html#the-reminder-page",

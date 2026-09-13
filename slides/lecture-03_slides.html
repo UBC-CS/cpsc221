@@ -271,7 +271,6 @@
 <li></li>
 <li></li>
 </ul>
-<p>What should we count?</p>
 <aside class="notes">
 <p>Blanks are for the pen. What the room should land on:</p>
 <ul>
@@ -474,8 +473,8 @@
 </tr>
 </tbody>
 </table>
-<p>Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; <span class="math inline">\(T(n) =\)</span></p>
-<countdown-timer id="timer_a2f5e45a4e4c1386fe7ea4323c35d0af7567ebdf" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<p>Best case &nbsp; <span class="math inline">\(T(n) =\)</span> &nbsp;&nbsp;&nbsp; Worst case &nbsp; <span class="math inline">\(T(n) =\)</span></p>
+<countdown-timer id="timer_1d97fbb22cd3cb18966d9a72aa440330d1bef902" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
@@ -502,33 +501,14 @@
 <span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>How many lines are executed in the worst case?</p>
-<p><span class="math display">\[T(n) = \]</span></p>
+<p>$T(n) = $</p>
+<p><br>
+</p>
+<p>Does the ___ matter?</p>
+<p>Does the ___ matter?</p>
 <aside class="notes">
 <p>Count it with them, line by line, with the pen. A defensible answer is <span class="math inline">\(T(n) = 2n + 2\)</span> – the loop test and the comparison each run about n times, plus the initialisation and the final return.</p>
 <p>Do not fight about the exact constant. Getting two different numbers from two students is the <em>setup</em> for the next question, not a problem.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="does-it-matter" class="slide level2 smaller">
-<h2>Does it matter?</h2>
-<p><span class="math display">\[T(n) = 2n + 2\]</span></p>
-<p><br>
-</p>
-<p>Does the <strong>2n</strong> matter?</p>
-<p>Does the <strong>+2</strong> matter?</p>
-<aside class="notes">
-<p>This is the hinge into asymptotics, and it is worth slowing down for.</p>
-<p>The +2 is gone the moment n is large. The coefficient 2 survives scaling but not a change of machine – a computer twice as fast erases it. What no machine erases is the <strong>n</strong>.</p>
-<p>Land it: the only durable thing about <span class="math inline">\(2n+2\)</span> is that it is <em>linear</em>. That is what we want a notation for.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -545,8 +525,14 @@
 <h2>Asymptotics, reprised</h2>
 <p><span class="math inline">\(T(n) = O(f(n))\)</span> if there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(n_0\)</span> such that</p>
 <p><span class="math display">\[T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0\]</span></p>
-<p><br>
-</p>
+<!-- Empty axes, to be drawn on with the pen: T(n), c*f(n), and n_0 where they
+     cross. Deliberately blank -- the picture is worth more built in front of
+     them than arriving finished. -->
+<!-- viewBox is ~3.3:1, matching the space left between the definition and the
+     closing line, so the axes fill the slide instead of floating in it. -->
+<svg viewbox="0 0 1100 330" style="width:100%; height:auto; display:block; margin:0;" role="img" aria-label="Empty coordinate axes for sketching T(n) against c f(n)">
+<defs> <marker id="ax-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"> <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"></path> </marker> </defs> <line x1="70" y1="278" x2="1075" y2="278" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <line x1="70" y1="278" x2="70" y2="20" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <text x="1070" y="318" text-anchor="end" font-family="serif" font-style="italic" font-size="30" fill="#1a1a1a">n</text> <text x="92" y="38" text-anchor="start" font-family="serif" font-style="italic" font-size="30" fill="#1a1a1a">time</text>
+</svg>
 <p>“Eventually, and up to a constant factor, <span class="math inline">\(T\)</span> is no worse than <span class="math inline">\(f\)</span>.”</p>
 <aside class="notes">
 <p>Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases.</p>
