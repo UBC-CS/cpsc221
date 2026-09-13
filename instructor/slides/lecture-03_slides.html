@@ -12,7 +12,7 @@
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -197,10 +197,10 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta property="og:description" content="Running Time">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta name="twitter:description" content="Running Time">
 <meta name="twitter:card" content="summary">
 </head>
@@ -233,7 +233,7 @@
 <li>Asymptotics, reprised</li>
 </ul>
 </section>
-<section id="where-we-stopped" class="slide level2 center smaller">
+<section id="where-we-stopped" class="slide level2 smaller">
 <h2>Where we stopped</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
@@ -241,7 +241,7 @@
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>How long does it take?</strong></p>
+<p>How long does it take?</p>
 <aside class="notes">
 <p>Thirty seconds. They named this function on Friday and got as far as the question. Do not re-open the naming discussion – point at it and move.</p>
 <style type="text/css">
@@ -386,9 +386,9 @@
 <span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For an array of size <span class="math inline">\(n\)</span>:</p>
 <ul>
-<li>best case &nbsp; $T(n) = $</li>
-<li>worst case &nbsp; $T(n) = $</li>
-<li>average case &nbsp; $T(n) = $</li>
+<li>best case &nbsp; <span class="math inline">\(T(n) =\)</span></li>
+<li>worst case &nbsp; <span class="math inline">\(T(n) =\)</span></li>
+<li>average case &nbsp; <span class="math inline">\(T(n) =\)</span></li>
 </ul>
 <aside class="notes">
 <p>Best: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking <em>average over what?</em> – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.</p>
@@ -474,8 +474,8 @@
 </tr>
 </tbody>
 </table>
-<p>Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) = $</p>
-<countdown-timer id="timer_665e6df7d0aa55cdc8202f14539e729198c86b02" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<p>Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; <span class="math inline">\(T(n) =\)</span></p>
+<countdown-timer id="timer_981439d27492dae94c59894f01f21ed5b136889c" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
@@ -547,7 +547,7 @@
 <p><span class="math display">\[T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0\]</span></p>
 <p><br>
 </p>
-<p>“Eventually, and up to a constant, <span class="math inline">\(T\)</span> is no worse than <span class="math inline">\(f\)</span>.”</p>
+<p>“Eventually, and up to a constant factor, <span class="math inline">\(T\)</span> is no worse than <span class="math inline">\(f\)</span>.”</p>
 <aside class="notes">
 <p>Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases.</p>
 <style type="text/css">
