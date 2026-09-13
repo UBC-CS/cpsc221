@@ -1,0 +1,298 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Running Time"
+
+# Opens with the three slides Friday did not reach. Lecture 2 ended on
+# "how long does it take?" -- this deck answers it, then follows the 2024W1
+# asymptotics deck (oldslides/lec090924-asymptotics.pdf) the rest of the way.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- HW1 is out — due Monday Sep 21
+- Labs meet this week; Lab Intro is due Sunday
+- PEX1 (practice for Examlet 1) releases Wednesday
+
+\
+
+**Where we're going**
+
+- Finishing *how long does it take?*
+- Best, worst, average
+- Asymptotics, reprised
+
+## Where we stopped {.center .smaller}
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+**How long does it take?**
+
+::: notes
+Thirty seconds. They named this function on Friday and got as far as the
+question. Do not re-open the naming discussion -- point at it and move.
+:::
+
+## Algorithmic analysis — running time
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+How long does it take? <blue>*It depends!* </blue>
+
+What does it depend on?
+
+-
+-
+-
+
+What should we count?
+
+::: notes
+Blanks are for the pen. What the room should land on:
+
+- the **size** of the array
+- **where q is** -- or whether it is there at all
+- the **speed of the machine**
+
+The third one is the one to kill: we are not benchmarking, so machine speed
+has to go. That is what forces us to count operations instead of seconds --
+and the first two are what force us into cases.
+:::
+
+## Algorithmic analysis — running time {.smaller}
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+How many times does line 3 run if $q$ is 32?  &nbsp; If $q$ is 45? &nbsp; If $q$ is 100?
+
+::: notes
+Concrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use
+the array on screen -- point at it with the pen.
+
+Then the abstraction: drop the clock, count the *operation that repeats*. Here
+that is the comparison on line 3.
+:::
+
+## Best, worst, average {.smaller}
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+For an array of size $n$:
+
+- best case &nbsp; $T(n) = $
+- worst case &nbsp; $T(n) = $
+- average case &nbsp; $T(n) = $
+
+::: notes
+Best: 1 -- q is at index 0. Worst: n -- q is last, or absent. Average: about
+n/2, and it is worth asking *average over what?* -- you have to assume a
+distribution before "average" means anything. That assumption is where most
+average-case analysis quietly goes wrong.
+
+Which of the three do we usually report, and why? Worst case: it is a promise
+you can actually make.
+:::
+
+## Your turn {.activity .smaller}
+
+```cpp
+int findMin (vector<int> arr) {
+    int temp = arr[0];
+    for (int i = 1; i < arr.size(); i++)
+        if (arr[i] < temp)
+            temp = arr[i];
+    return temp;
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|  1 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) = $
+
+{{< countdown minutes=3 >}}
+
+::: notes
+The point of this one: **there is no early return.** Best and worst are the
+same -- $n-1$ comparisons either way. The loop has to see every element to
+know it has the minimum.
+
+That is the contrast with `idxFirst`, where the cases genuinely differ. Some
+algorithms have cases; some don't. Worth saying out loud.
+
+The array is rigged so the minimum is at index 0 -- students who are pattern
+matching on `idxFirst` will call that the best case. It isn't.
+:::
+
+## Examining the details {.smaller}
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+How many lines are executed in the worst case?
+
+$$T(n) = $$
+
+::: notes
+Count it with them, line by line, with the pen. A defensible answer is
+$T(n) = 2n + 2$ -- the loop test and the comparison each run about n times,
+plus the initialisation and the final return.
+
+Do not fight about the exact constant. Getting two different numbers from two
+students is the *setup* for the next question, not a problem.
+:::
+
+## Does it matter? {.smaller}
+
+$$T(n) = 2n + 2$$
+
+\
+
+Does the **2n** matter?
+
+Does the **+2** matter?
+
+::: notes
+This is the hinge into asymptotics, and it is worth slowing down for.
+
+The +2 is gone the moment n is large. The coefficient 2 survives scaling but
+not a change of machine -- a computer twice as fast erases it. What no machine
+erases is the **n**.
+
+Land it: the only durable thing about $2n+2$ is that it is *linear*. That is
+what we want a notation for.
+:::
+
+## Asymptotics, reprised {.smaller}
+
+$T(n) = O(f(n))$ if there are positive constants $c$ and $n_0$ such that
+
+$$T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0$$
+
+\
+
+"Eventually, and up to a constant, $T$ is no worse than $f$."
+
+::: notes
+Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you
+ignore small inputs. Students who have seen this in 121 still tend to forget
+that n_0 exists, which is what makes them argue about small cases.
+:::
+
+## The reminder page {.smaller}
+
+::: {.shaded-table}
+
+| growth | name | |
+|---|---|---|
+| $O(1)$ | constant | |
+| $O(\log n)$ | logarithmic | |
+| $O(\log^k n)$ | poly-log | |
+| $O(n)$ | linear | |
+| $O(n \log n)$ | log-linear | |
+| $O(n^{1+c})$ | superlinear | $c > 0$ |
+| $O(n^2)$ | quadratic | |
+| $O(n^3)$ | cubic | |
+| $O(n^k)$ | polynomial | "tractable" |
+| $O(c^n)$ | exponential | "intractable" |
+
+:::
+
+::: notes
+Point back at Friday's running-times table -- the tractable/intractable line
+is exactly where $2^n$ ran past the age of the universe.
+:::
+
+## Runtime analysis guidelines {.smaller}
+
+- Single operations — **constant** time
+- Consecutive operations — **additive**
+- Conditionals — constant for the test, plus the branch taken
+- Loops — **sum of the loop body** times
+- Function call — the time for that function
+
+::: notes
+These are the rules they will use on every homework this term. Nothing here is
+surprising; the value is having them written down in one place.
+:::
+
+## Back to where we started {.smaller}
+
+```cpp
+int idxFirst (vector<int> arr, int q) {
+    for (int i = 0; i < arr.size(); i++)
+        if (arr[i] == q)
+            return i;
+    return -1;
+}
+```
+
+In the worst case, $T(n) = $
+
+\
+
+Which should we use to describe it? &nbsp; $o \quad O \quad \omega \quad \Omega \quad \theta \quad \Theta$
+
+::: notes
+Worst case is $\Theta(n)$ -- and the interesting part is *why not O(n)*. O is
+an upper bound and is true but weak: $O(n^2)$ is also a correct statement about
+this function. Theta is the one that says what you actually mean.
+
+This is the distinction that gets tested, and it is the one students most
+reliably fudge.
+:::
+
+## Today's poser {.smaller}
+
+$$\text{Thm: } \log n! \in \Theta(n \log n)$$
+
+Proof:
+
+::: notes
+Leave it on the board. The upper bound is the easy half -- $\log n! = \sum
+\log i \le n \log n$.
+
+The lower bound is the one worth their time: keep the top half of the terms,
+each at least $\log(n/2)$, giving $(n/2)\log(n/2)$, which is $\Omega(n\log n)$.
+
+If time is short, set up the upper bound and leave the lower as the closer.
+:::
