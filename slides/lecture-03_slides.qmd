@@ -22,7 +22,7 @@ subtitle: "Running Time"
 - Best, worst, average
 - Asymptotics, reprised
 
-## Where we stopped {.center .smaller}
+## Where we stopped {.smaller}
 
 ```cpp
 int idxFirst (vector<int> arr, int q) {
@@ -33,7 +33,7 @@ int idxFirst (vector<int> arr, int q) {
 }
 ```
 
-**How long does it take?**
+How long does it take?
 
 ::: notes
 Thirty seconds. They named this function on Friday and got as far as the
@@ -111,9 +111,9 @@ int idxFirst (vector<int> arr, int q) {
 
 For an array of size $n$:
 
-- best case &nbsp; $T(n) = $
-- worst case &nbsp; $T(n) = $
-- average case &nbsp; $T(n) = $
+- best case &nbsp; $T(n) =$
+- worst case &nbsp; $T(n) =$
+- average case &nbsp; $T(n) =$
 
 ::: notes
 Best: 1 -- q is at index 0. Worst: n -- q is last, or absent. Average: about
@@ -141,7 +141,7 @@ int findMin (vector<int> arr) {
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |  1 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
 
-Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) = $
+Best case &nbsp; $T(n) = $ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) =$
 
 {{< countdown minutes=3 >}}
 
@@ -210,7 +210,7 @@ $$T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0$$
 
 \
 
-"Eventually, and up to a constant, $T$ is no worse than $f$."
+"Eventually, and up to a constant factor, $T$ is no worse than $f$."
 
 ::: notes
 Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you
