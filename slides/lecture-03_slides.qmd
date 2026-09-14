@@ -110,9 +110,9 @@ int idxFirst (vector<int> arr, int q) {
 
 For an array of size $n$:
 
-- best case &nbsp; $T(n) =$
-- worst case &nbsp; $T(n) =$
-- average case &nbsp; $T(n) =$
+- best case 
+- worst case 
+- average case 
 
 ::: notes
 Best: 1 -- q is at index 0. Worst: n -- q is last, or absent. Average: about
@@ -140,7 +140,9 @@ int findMin (vector<int> arr) {
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 |  1 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
 
-Best case &nbsp; $T(n) =$ &nbsp;&nbsp;&nbsp; Worst case &nbsp; $T(n) =$
+Best case 
+
+Worst case
 
 {{< countdown minutes=3 >}}
 
