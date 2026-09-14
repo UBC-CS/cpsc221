@@ -171,14 +171,14 @@
     "href": "slides/lecture-03_slides.html#examining-the-details",
     "title": "CPSC 221",
     "section": "Examining the details",
-    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n$T(n) = $\n\n\nDoes the ___ matter?\nDoes the ___ matter?\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
+    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n\\(T(n) =\\)\n\n\nDoes the ___ matter?\nDoes the ___ matter?\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
   },
   {
     "objectID": "slides/lecture-03_slides.html#asymptotics-reprised",
     "href": "slides/lecture-03_slides.html#asymptotics-reprised",
     "title": "CPSC 221",
     "section": "Asymptotics, reprised",
-    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n\n       n time\n\n“Eventually, and up to a constant factor, \\(T\\) is no worse than \\(f\\).”\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
+    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n\n      \n\nWe typically use \\(f(n)\\) to describe …\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
   },
   {
     "objectID": "slides/lecture-03_slides.html#the-reminder-page",
@@ -199,7 +199,7 @@
     "href": "slides/lecture-03_slides.html#back-to-where-we-started",
     "title": "CPSC 221",
     "section": "Back to where we started",
-    "text": "Back to where we started\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIn the worst case, $T(n) = $\n\n\nWhich should we use to describe it?   \\(o \\quad O \\quad \\omega \\quad \\Omega \\quad \\theta \\quad \\Theta\\)\n\nWorst case is \\(\\Theta(n)\\) – and the interesting part is why not O(n). O is an upper bound and is true but weak: \\(O(n^2)\\) is also a correct statement about this function. Theta is the one that says what you actually mean.\nThis is the distinction that gets tested, and it is the one students most reliably fudge."
+    "text": "Back to where we started\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIn the worst case, \\(T(n) =\\)\n\n\nWhich should we use to describe it?   \\(o \\quad O \\quad \\omega \\quad \\Omega \\quad \\theta \\quad \\Theta\\)\n\nWorst case is \\(\\Theta(n)\\) – and the interesting part is why not O(n). O is an upper bound and is true but weak: \\(O(n^2)\\) is also a correct statement about this function. Theta is the one that says what you actually mean.\nThis is the distinction that gets tested, and it is the one students most reliably fudge."
   },
   {
     "objectID": "slides/draft-04_slides.html#warm-up",

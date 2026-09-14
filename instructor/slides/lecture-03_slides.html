@@ -474,7 +474,7 @@
 </tbody>
 </table>
 <p>Best case &nbsp; <span class="math inline">\(T(n) =\)</span> &nbsp;&nbsp;&nbsp; Worst case &nbsp; <span class="math inline">\(T(n) =\)</span></p>
-<countdown-timer id="timer_19b2a683787cbe1027447af417f724e043de4b8f" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
+<countdown-timer id="timer_6ae141a5e0c984b886f1533b630e333964e85b1a" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
  </countdown-timer>
 <aside class="notes">
 <p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
@@ -501,7 +501,7 @@
 <span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>How many lines are executed in the worst case?</p>
-<p>$T(n) = $</p>
+<p><span class="math inline">\(T(n) =\)</span></p>
 <p><br>
 </p>
 <p>Does the ___ matter?</p>
@@ -531,9 +531,9 @@
 <!-- viewBox is ~3.3:1, matching the space left between the definition and the
      closing line, so the axes fill the slide instead of floating in it. -->
 <svg viewbox="0 0 1100 330" style="width:100%; height:auto; display:block; margin:0;" role="img" aria-label="Empty coordinate axes for sketching T(n) against c f(n)">
-<defs> <marker id="ax-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"> <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"></path> </marker> </defs> <line x1="70" y1="278" x2="1075" y2="278" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <line x1="70" y1="278" x2="70" y2="20" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <text x="1070" y="318" text-anchor="end" font-family="serif" font-style="italic" font-size="30" fill="#1a1a1a">n</text> <text x="92" y="38" text-anchor="start" font-family="serif" font-style="italic" font-size="30" fill="#1a1a1a">time</text>
+<defs> <marker id="ax-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"> <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"></path> </marker> </defs> <line x1="470" y1="278" x2="728" y2="278" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <line x1="470" y1="278" x2="470" y2="20" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line>
 </svg>
-<p>“Eventually, and up to a constant factor, <span class="math inline">\(T\)</span> is no worse than <span class="math inline">\(f\)</span>.”</p>
+<p>We typically use <span class="math inline">\(f(n)\)</span> to describe …</p>
 <aside class="notes">
 <p>Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases.</p>
 <style type="text/css">
@@ -658,7 +658,7 @@
 <span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
 <span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
 <span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the worst case, $T(n) = $</p>
+<p>In the worst case, <span class="math inline">\(T(n) =\)</span></p>
 <p><br>
 </p>
 <p>Which should we use to describe it? &nbsp; <span class="math inline">\(o \quad O \quad \omega \quad \Omega \quad \theta \quad \Theta\)</span></p>
