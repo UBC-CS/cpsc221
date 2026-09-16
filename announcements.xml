@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>{{&lt; var course.full-title &gt;}}</title>
+<link>https://ubc-cs.github.io/cpsc221/announcements.html</link>
+<atom:link href="https://ubc-cs.github.io/cpsc221/announcements.xml" rel="self" type="application/rss+xml"/>
+<description>Course website for {{&lt; var course.code &gt;}}
+</description>
+<generator>quarto-1.10.18</generator>
+<lastBuildDate>Mon, 14 Sep 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 2 — Sep 14 to Sep 20</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/01_week-02/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>09/14</strong></td>
+<td>HW1 released — allow about 3 hours</td>
+</tr>
+<tr class="even">
+<td><strong>09/16</strong></td>
+<td>PEX1 released — practice for Examlet 1</td>
+</tr>
+<tr class="odd">
+<td><strong>09/18</strong></td>
+<td>Friday class is an async video, posted Thursday morning</td>
+</tr>
+<tr class="even">
+<td><strong>09/20</strong></td>
+<td>Lab Intro <strong>due</strong> · Lab Debug released</td>
+</tr>
+<tr class="odd">
+<td><strong>09/21</strong></td>
+<td>HW1 <strong>due</strong> · PA1 released</td>
+</tr>
+</tbody>
+</table>
+<p>Examlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/01_week-02/</guid>
+  <pubDate>Mon, 14 Sep 2026 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Welcome to CPSC 221</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/00_welcome/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Everything for this course is on this site. The <a href="../../index.html">schedule</a> is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The <a href="../../syllabus.html">syllabus</a> has the grading scheme and course policies, including the one on generative AI.</p>
+<p>First things first:</p>
+<ul>
+<li>Work through <a href="../../getting-started.html">Getting started</a> and <a href="../../setup.html">Setup</a> to get your machine ready.</li>
+<li>Enrol in <a href="https://us.prairielearn.com/pl/course_instance/231085/">PrairieLearn</a>, where all labs, homework, assignments and examlets live.</li>
+<li>Lab Intro is open now.</li>
+</ul>
+
+
+
+ ]]></description>
+  <category>logistics</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/00_welcome/</guid>
+  <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+</item>
+</channel>
+</rss>

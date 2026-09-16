@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Announcements – CPSC 221: Basic Algorithms and Data Structures—Instructor version</title>
+<title>weeklyemail – {{&lt; var course.full-title &gt;}}---Instructor version</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -36,8 +36,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -79,70 +77,14 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-description','listing-date','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles/styles.css">
-<link rel="alternate" type="application/rss+xml" title="{{< var course.full-title >}}---Instructor version" href="announcements.xml" data-external="1"><meta property="og:title" content="Announcements – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta property="og:title" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta property="og:description" content="Course website for CPSC 221">
 <meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:title" content="Announcements – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:description" content="Course website for CPSC 221">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -327,7 +269,7 @@ window.Quarto = {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Announcements</h1>
+          <h1 class="quarto-secondary-nav-title"></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -365,7 +307,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./announcements.html" class="sidebar-item-text sidebar-link active">
+  <a href="./announcements.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Announcements</span></a>
   </div>
 </li>
@@ -448,94 +390,100 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZGVhZGxpbmU=">deadline <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bG9naXN0aWNz">logistics <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cpsc-221-weekly-email-2026w1" id="toc-cpsc-221-weekly-email-2026w1" class="nav-link active" data-scroll-target="#cpsc-221-weekly-email-2026w1">CPSC 221 weekly email — 2026W1</a>
+  <ul class="collapse">
+  <li><a href="#week-2-mon-sep-14-to-sun-sep-20" id="toc-week-2-mon-sep-14-to-sun-sep-20" class="nav-link" data-scroll-target="#week-2-mon-sep-14-to-sun-sep-20">Week 2 — Mon Sep 14 to Sun Sep 20</a></li>
+  <li><a href="#week-1-mon-sep-7-to-sun-sep-13" id="toc-week-1-mon-sep-7-to-sun-sep-13" class="nav-link" data-scroll-target="#week-1-mon-sep-7-to-sun-sep-13">Week 1 — Mon Sep 7 to Sun Sep 13</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block">Announcements</h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Newest first. Anything time-sensitive also goes out by email.</p>
-</div>
-</div>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="ZGVhZGxpbmU=" data-listing-date-sort="1789344000000" data-listing-file-modified-sort="1789537337196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="85">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/01_week-02/index.html" class="no-external">Week 2 — Sep 14 to Sep 20</a>
-</h3>
-<div class="listing-categories">
 
-<div class="listing-category" onclick="window.quartoListingCategory('ZGVhZGxpbmU='); return false;">deadline</div>
+<section id="cpsc-221-weekly-email-2026w1" class="level1">
+<h1>CPSC 221 weekly email — 2026W1</h1>
+<p>Omnibus. One section per week, newest at the top. Not published: the Quarto project renders <code>**/*.qmd</code> only, so <code>.md</code> files at the root never ship.</p>
+<p>Sent Sunday evenings, directly to students. Once sent, the facts go up as a post under <code>posts/</code> — the website keeps the list, the email keeps the warmth.</p>
+<p><strong>Standing links</strong></p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td>Course website</td>
+<td><a href="https://ubc-cs.github.io/cpsc221/" class="uri">https://ubc-cs.github.io/cpsc221/</a></td>
+</tr>
+<tr class="even">
+<td>PrairieLearn</td>
+<td><a href="https://us.prairielearn.com/pl/course_instance/231085/" class="uri">https://us.prairielearn.com/pl/course_instance/231085/</a></td>
+</tr>
+<tr class="odd">
+<td>Piazza</td>
+<td><a href="https://piazza.com/ubc.ca/winterterm12026/cpsc221" class="uri">https://piazza.com/ubc.ca/winterterm12026/cpsc221</a></td>
+</tr>
+<tr class="even">
+<td>Canvas</td>
+<td><a href="https://canvas.ubc.ca/courses/190808" class="uri">https://canvas.ubc.ca/courses/190808</a></td>
+</tr>
+<tr class="odd">
+<td>Recordings</td>
+<td>Canvas → Media Gallery (both sections, by date)</td>
+</tr>
+<tr class="even">
+<td>Class</td>
+<td>MWF, FSC 1005 — 101 at 2:00, 102 at 3:00. Fri is async video from week 2</td>
+</tr>
+<tr class="odd">
+<td>Office hours</td>
+<td>Cinda: Tue 2–4. Nathan: Mon 4–5.</td>
+</tr>
+<tr class="even">
+<td>Admin / accommodations</td>
+<td>cpsc221-admin@cs.ubc.ca (Anca Barbu)</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<section id="week-2-mon-sep-14-to-sun-sep-20" class="level2">
+<h2 class="anchored" data-anchor-id="week-2-mon-sep-14-to-sun-sep-20">Week 2 — Mon Sep 14 to Sun Sep 20</h2>
+<hr>
+<p>Hi everyone,</p>
+<p>Welcome to week 2!! We hope your weekend was fantastic.</p>
+<p>The news: 1. Labs meet this week, and every week hereafter except for weeks 6, 10, and 14. Attendance at labs is not mandatory, and the material will be available all week, BUT our TAs are amazing and this is your chance to get to know them!</p>
+<ol start="2" type="1">
+<li><p>HW1 releases tomorrow night, Due Mon, 09/21, 11:59p. We anticipate that it will take you approximately 3hr. You should engage with the material. We will test your understanding of the concepts via the examlets!</p></li>
+<li><p>Friday’s class is cancelled…for the rest of the term. Nathan and I will be recording a video of the lesson and posting it by each Thursday morning.(Note that this is new material, just like any class meeting.) Videos will be recorded Wed afternoons at 4:30p. You are welcome to join the zoom! :)</p></li>
+<li><p>Examlet 1 is next week, self-scheduled in ORCA for some session Thursday (9/24) through Sunday (9/27). It covers all material in the course through week 2 (this week). I will let you know the <em>second</em> the examlet is available for registration on prairietest.com.</p></li>
+<li><p>To help you prepare for your examlet, we will release practice problems on Wednesday, 09/16, at 11:59p. This will be the pattern throughout the term.</p></li>
+</ol>
+<p>I can’t think of anything else for tonight – you are always welcome to drop us an email (cheeren@cs.ubc.ca, nharms@cs.ubc.ca), or post questions on piazza (https://piazza.com/ubc.ca/winterterm12026/cpsc221). Also, in case you’ve misplaced it, the course website is https://ubc-cs.github.io/cpsc221.</p>
+<p>See you in class tomorrow! (Oh, that reminds me of another thing. We know that your decision to attend class is a choice. We make all course materials accessible because we believe it’s the right thing to do, so we know you could glean the material on your own (at 3am?). BUT we think the chances of building your understanding via human communication, and of smiling while you learn, are greatly improved by coming to the class meetings. We love it when you’re in the room…)</p>
+<p>All the best! Cinda and Nathan and the CPSC221 teaching team!</p>
+<hr>
+<p>⚠ <strong>Before sending</strong></p>
+<ol type="1">
+<li><strong>PrairieTest <code>examUuid</code>s</strong> are inherited from the previous term. Until they point at this term’s ORCA exams, students cannot register and item 4 above cannot say anything specific.</li>
+<li><strong>TA roster</strong> is still “TBA” on the syllabus and the lecture 1 slides.</li>
+</ol>
+<hr>
+</section>
+<section id="week-1-mon-sep-7-to-sun-sep-13" class="level2">
+<h2 class="anchored" data-anchor-id="week-1-mon-sep-7-to-sun-sep-13">Week 1 — Mon Sep 7 to Sun Sep 13</h2>
+<p><em>Not sent — the term started before this file existed.</em></p>
+<p>Wednesday Sep 9 was the first meeting (Monday was Labour Day). Friday Sep 11 ran the “what does it do?” activity and reached “how long does it take?”. Lab Intro opened Sep 8.</p>
 
-</div>
-<div class="delink listing-description"><a href="./posts/01_week-02/index.html" class="no-external">
-<p>HW1 out, labs begin, PEX1 Wednesday.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/01_week-02/index.html" class="no-external">
-<div class="listing-date">
-Sep 14, 2026
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="bG9naXN0aWNz" data-listing-date-sort="1788912000000" data-listing-file-modified-sort="1789537337196" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="74">
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/00_welcome/index.html" class="no-external">Welcome to CPSC 221</a>
-</h3>
-<div class="listing-categories">
 
-<div class="listing-category" onclick="window.quartoListingCategory('bG9naXN0aWNz'); return false;">logistics</div>
+</section>
+</section>
 
-</div>
-<div class="delink listing-description"><a href="./posts/00_welcome/index.html" class="no-external">
-<p>Where everything lives, and what to do first.</p>
-</a></div>
-</div>
-<div class="metadata">
-<a href="./posts/00_welcome/index.html" class="no-external">
-<div class="listing-date">
-Sep 9, 2026
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
