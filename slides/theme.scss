@@ -188,6 +188,46 @@ $text-colours: (
   #{$name}, .#{$name} { color: $colour; }
 }
 
+// Callouts: rounded and roomy, so a boxed claim on a slide reads as a thing to
+// look at rather than a footnote. Quarto's default is a thin left rule at body
+// size, which disappears from the back of a lecture hall.
+.reveal div.callout,
+.reveal div.callout.callout-style-simple {
+  // Quarto's simple style sets a thick left rule and hairlines elsewhere, at
+  // higher specificity -- all four sides have to be forced to match.
+  border: 3px solid $tbl-border !important;
+  border-radius: 18px !important;
+  background: $tbl-stripe;
+  margin: 0.6em 0;
+  padding: 0.1em 0.2em;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.10);
+
+  .callout-body,
+  .callout-content {
+    background: none;
+    border: none;
+    padding: 0.35em 0.9em;
+  }
+
+  // Callout text is the point of the slide, so it sizes off the deck rather
+  // than off whatever the parent happens to be -- {.smaller} can't shrink it.
+  p {
+    font-size: calc(var(--r-main-font-size) * 0.92);
+    line-height: 1.35;
+    margin: 0.25em 0;
+  }
+
+  code {
+    font-size: 0.92em;
+  }
+}
+
+// Colour the border by callout type, keeping the fill neutral.
+.reveal div.callout-note      { border-color: $tbl-header-bg !important; }
+.reveal div.callout-tip       { border-color: #18bc9c !important; }
+.reveal div.callout-important { border-color: #c0392b !important; }
+.reveal div.callout-warning   { border-color: #f39c12 !important; }
+
 // Activity slide: {.activity} on the heading turns the whole slide blue.
 //
 // The code panel is deliberately left alone -- a pale panel on a dark slide

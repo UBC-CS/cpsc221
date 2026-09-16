@@ -1,0 +1,21 @@
+---
+title: "Welcome to {{< var course.code >}}"
+description: "Where everything lives, and what to do first."
+author: "{{< var instructor.name >}}"
+date: 2026-09-09
+categories:
+  - logistics
+---
+
+Everything for this course is on this site. The [schedule](/index.qmd) is the
+landing page — slides, labs, assignments and examlets all hang off it as they
+go live. The [syllabus](/syllabus.qmd) has the grading scheme and course
+policies, including the one on generative AI.
+
+First things first:
+
+- Work through [Getting started](/getting-started.qmd) and
+  [Setup](/setup.qmd) to get your machine ready.
+- Enrol in [PrairieLearn]({{< var course.prairielearn >}}), where all labs,
+  homework, assignments and examlets live.
+- Lab Intro is open now.
