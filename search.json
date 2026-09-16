@@ -110,329 +110,81 @@
     ]
   },
   {
-    "objectID": "slides/lecture-03_slides.html#today",
-    "href": "slides/lecture-03_slides.html#today",
+    "objectID": "slides/lecture-04_slides.html#today",
+    "href": "slides/lecture-04_slides.html#today",
     "title": "CPSC 221",
     "section": "Today",
-    "text": "Today\nAnnouncements\n\nHW1 is out — due Monday Sep 21\nLabs meet this week; Lab Intro is due Sunday\nPEX1 (practice for Examlet 1) releases Wednesday\n\n\n\nWhere we’re going\n\nFinishing how long does it take?\nBest, worst, average\nAsymptotics, reprised"
+    "text": "Today\nAnnouncements\n\nExamlet 1 is next week — do the practice problems\nHW1 is out, due Monday Sep 21\nFriday’s class is a video, posted by Thursday morning\n\nrecording at 4:30p today, if you’d like to attend (zoom)!\n\n\n\n\nWhere we’re going\n\nRuntime, final words\nWarm-up\nIntro to correctness\nLoop invariants"
   },
   {
-    "objectID": "slides/lecture-03_slides.html#where-we-stopped",
-    "href": "slides/lecture-03_slides.html#where-we-stopped",
+    "objectID": "slides/lecture-04_slides.html#asymptotic-notation",
+    "href": "slides/lecture-04_slides.html#asymptotic-notation",
     "title": "CPSC 221",
-    "section": "Where we stopped",
-    "text": "Where we stopped\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThirty seconds. They named this function on Friday and got as far as the question. Do not re-open the naming discussion – point at it and move."
+    "section": "Asymptotic notation",
+    "text": "Asymptotic notation\nFor positive constants \\(c\\) and \\(n_0\\):\n\n\n\n\n\n\n\n\n\\(T(n) \\in O(f(n))\\)\nif \\(\\exists\\, c, n_0\\) such that\n\\(T(n) \\le c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\Omega(f(n))\\)\nif \\(\\exists\\, c, n_0\\) such that\n\\(T(n) \\ge c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\Theta(f(n))\\)\nif\n\\(T(n) \\in O(f(n))\\) and \\(T(n) \\in \\Omega(f(n))\\)\n\n\n\\(T(n) \\in o(f(n))\\)\nif for any \\(c\\), \\(\\exists\\, n_0\\) such that\n\\(T(n) &lt; c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\omega(f(n))\\)\nif for any \\(c\\), \\(\\exists\\, n_0\\) such that\n\\(T(n) &gt; c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\n\nThe whole family on one page, for reference rather than for working through.\nThe distinction worth thirty seconds if anyone asks: \\(O\\) and \\(\\Omega\\) say there exists a constant; \\(o\\) and \\(\\omega\\) say for every constant. That is why little-o is strictly stronger than big-O – no constant, however generous, saves you.\nThey will need \\(\\Omega\\) and \\(\\Theta\\) on the examlet and in PEX1. This slide is where they come from; the practice questions are where they get learned."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#algorithmic-analysis-running-time",
-    "href": "slides/lecture-03_slides.html#algorithmic-analysis-running-time",
+    "objectID": "slides/lecture-04_slides.html#warm-up",
+    "href": "slides/lecture-04_slides.html#warm-up",
     "title": "CPSC 221",
-    "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
+    "section": "Warm-up",
+    "text": "Warm-up\n\\[\\text{Thm: } \\log n! \\in \\Theta(n \\log n)\\]\nProof:\n\nCarried over from lecture 3, which ran out of time.\nUpper bound is the easy half – \\(\\log n! = \\sum \\log i \\le n \\log n\\).\nLower bound: keep the top half of the terms, each at least \\(\\log(n/2)\\), giving \\((n/2)\\log(n/2)\\), which is \\(\\Omega(n\\log n)\\).\nNote this is the first place \\(\\Theta\\) gets used rather than stated – you need both halves, which is the point."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#algorithmic-analysis-running-time-1",
-    "href": "slides/lecture-03_slides.html#algorithmic-analysis-running-time-1",
+    "objectID": "slides/lecture-04_slides.html#intro-to-algorithm-correctness",
+    "href": "slides/lecture-04_slides.html#intro-to-algorithm-correctness",
     "title": "CPSC 221",
-    "section": "Algorithmic analysis — running time",
-    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
+    "section": "Intro to algorithm correctness",
+    "text": "Intro to algorithm correctness\nint ____________ (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nGood name — what does it do?\nRunning time?\nDoes it work?\n\nSame three questions as lecture 2, now in one slide, because they know how to do the first two. Move fast on name and runtime – the whole lecture is the third question.\nName: it returns an index, not a value, so idxOfMin in the house style. Careful – lecture 3’s findMin returned the min value. Worth naming the difference out loud; it is the same distinction they fought over in lecture 2.\nRuntime: \\(\\Theta(n)\\), one pass, no early return.\n“Does it work?” is the new question. Nobody has an answer yet, which is the point."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#best-worst-average",
-    "href": "slides/lecture-03_slides.html#best-worst-average",
+    "objectID": "slides/lecture-04_slides.html#correctness-prelims",
+    "href": "slides/lecture-04_slides.html#correctness-prelims",
     "title": "CPSC 221",
-    "section": "Best, worst, average",
-    "text": "Best, worst, average\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nFor an array of size \\(n\\):\n\nbest case\nworst case\naverage case\n\n\nBest: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking average over what? – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.\nWhich of the three do we usually report, and why? Worst case: it is a promise you can actually make."
+    "section": "Correctness: prelims",
+    "text": "Correctness: prelims\nint ____________ (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat are the possible values of \\(i\\)?\nStop the algorithm at some iteration \\(i\\) — what do we know about the variables?\n\nPen work on the array. Stop it at \\(i = 5\\) and ask what retloc must be. Then \\(i = 9\\). They will get there concretely before they can say it generally, which is the right order.\n\\(i\\) ranges over \\(a{+}1 \\ldots n{-}1\\). The answer you are steering toward: retloc is the index of the smallest element seen so far – and “so far” is the thing that needs pinning down precisely."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#your-turn",
-    "href": "slides/lecture-03_slides.html#your-turn",
+    "objectID": "slides/lecture-04_slides.html#what-are-we-trying-to-prove",
+    "href": "slides/lecture-04_slides.html#what-are-we-trying-to-prove",
     "title": "CPSC 221",
-    "section": "Your turn",
-    "text": "Your turn\nint findMin (vector&lt;int&gt; arr) {\n    int temp = arr[0];\n    for (int i = 1; i &lt; arr.size(); i++)\n        if (arr[i] &lt; temp)\n            temp = arr[i];\n    return temp;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n1\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nBest case\nWorst case\n\n \n\nThe point of this one: there is no early return. Best and worst are the same – \\(n-1\\) comparisons either way. The loop has to see every element to know it has the minimum.\nThat is the contrast with idxFirst, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.\nThe array is rigged so the minimum is at index 0 – students who are pattern matching on idxFirst will call that the best case. It isn’t."
+    "section": "What are we trying to prove?",
+    "text": "What are we trying to prove?\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nThm. idxOfMin(C, a) returns the index of the minimum value in C[a..n-1].\n\nThe theorem comes first, deliberately. You cannot choose an invariant until you know what you are trying to deliver – the invariant is reverse-engineered from the theorem, and doing it in this order is what makes the next slide feel inevitable rather than arbitrary.\nAsk: at the moment the loop exits, what would we need to be true?"
   },
   {
-    "objectID": "slides/lecture-03_slides.html#examining-the-details",
-    "href": "slides/lecture-03_slides.html#examining-the-details",
+    "objectID": "slides/lecture-04_slides.html#the-invariant",
+    "href": "slides/lecture-04_slides.html#the-invariant",
     "title": "CPSC 221",
-    "section": "Examining the details",
-    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n\\(T(n) =\\)\n\n\nDoes the ___ matter?\nDoes the ___ matter?\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
+    "section": "The invariant",
+    "text": "The invariant\nWe want, at exit: retloc is the index of the min of C[a..n-1].\n\n\nSo carry that claim through the loop:\n\n\n\nLoop invariant. At the start of iteration \\(i\\), retloc is the index of the minimum value in C[a..___].\n\n\n\n\nThe blank is i-1, and the whole exercise is getting it right.\nAt the top of iteration \\(i\\) we have not yet examined C[i], so the range we can vouch for stops at \\(i-1\\). Almost everyone writes a..i.\nCheck it against the exit: the loop ends with \\(i = n\\), so the invariant reads C[a..n-1] – exactly the theorem. That is the test for whether you chose the right invariant, and it is worth doing out loud: a good invariant is one that becomes the theorem when the loop stops."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#asymptotics-reprised",
-    "href": "slides/lecture-03_slides.html#asymptotics-reprised",
+    "objectID": "slides/lecture-04_slides.html#proof-strategy",
+    "href": "slides/lecture-04_slides.html#proof-strategy",
     "title": "CPSC 221",
-    "section": "Asymptotics, reprised",
-    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n\n      \n\nWe typically use \\(f(n)\\) to describe …\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
+    "section": "Proof Strategy",
+    "text": "Proof Strategy\n\n\n\nLoop invariant. At the start of iteration \\(i\\), retloc is the index of the minimum value in C[a..___].\n\n\n\nProving the Theorem requires three things:\n\n\n\n\n\n\n\n\nInitialization\nthe invariant is true before the first iteration\n\n\nRestoration\nif true at the start of iteration \\(i\\), it is true at the start of \\(i+1\\)\n\n\nTermination\nthe loop ends — and invariant + exit condition give the theorem\n\n\n\n\n\n\nWhat does this smell like?\n\nSay “this is induction” out loud. Initialization is the base case, maintenance is the inductive step. They have the machinery from 121; naming it means they can reuse it instead of learning a ritual.\nTermination is the part that is not induction and the part they forget. It is where the invariant gets cashed in."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#the-reminder-page",
-    "href": "slides/lecture-03_slides.html#the-reminder-page",
+    "objectID": "slides/lecture-04_slides.html#initialization-and-restoration",
+    "href": "slides/lecture-04_slides.html#initialization-and-restoration",
     "title": "CPSC 221",
-    "section": "The reminder page",
-    "text": "The reminder page\n\n\n\n\ngrowth\nname\n\n\n\n\n\n\\(O(1)\\)\nconstant\n\n\n\n\\(O(\\log n)\\)\nlogarithmic\n\n\n\n\\(O(\\log^k n)\\)\npoly-log\n\n\n\n\\(O(n)\\)\nlinear\n\n\n\n\\(O(n \\log n)\\)\nlog-linear\n\n\n\n\\(O(n^{1+c})\\)\nsuperlinear\n\\(c &gt; 0\\)\n\n\n\\(O(n^2)\\)\nquadratic\n\n\n\n\\(O(n^3)\\)\ncubic\n\n\n\n\\(O(n^k)\\)\npolynomial\n“tractable”\n\n\n\\(O(c^n)\\)\nexponential\n“intractable”\n\n\n\n\n\nPoint back at Friday’s running-times table – the tractable/intractable line is exactly where \\(2^n\\) ran past the age of the universe."
+    "section": "Initialization and restoration",
+    "text": "Initialization and restoration\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nInitialization. \\(i = a{+}1\\):\nRestoration. Assume invariant holds at the top of \\(i\\), and then run the body:\n\nInitialization: retloc = a, and the min of the one-element range C[a..a] is at index \\(a\\). Holds.\nMaintenance: the body compares C[i] with C[retloc] and moves retloc only if C[i] is strictly smaller. Either way retloc ends up the index of the min of C[a..i] – which is the invariant at the top of \\(i{+}1\\). Done.\nWorth naming: the invariant is false in the middle of the body, between the comparison and the assignment. It only has to hold at the top of each iteration. Students who think it must hold everywhere get stuck here."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#runtime-analysis-guidelines",
-    "href": "slides/lecture-03_slides.html#runtime-analysis-guidelines",
+    "objectID": "slides/lecture-04_slides.html#termination",
+    "href": "slides/lecture-04_slides.html#termination",
     "title": "CPSC 221",
-    "section": "Runtime analysis guidelines",
-    "text": "Runtime analysis guidelines\n\nSingle operations — constant time\nConsecutive operations — additive\nConditionals — constant for the test, plus the branch taken\nLoops — sum of the loop body times\nFunction call — the time for that function\n\n\nThese are the rules they will use on every homework this term. Nothing here is surprising; the value is having them written down in one place."
+    "section": "Termination",
+    "text": "Termination\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nDoes the loop stop?\nWhat is the state when it does?\n\nStops: \\(i\\) rises by one each pass against a fixed bound, so after \\(n-a-1\\) passes the guard fails.\nThe second question is the one that matters and the one nobody writes down. Two facts combine:\n\nthe guard is false, so \\(i = n\\)\nthe invariant holds, so retloc indexes the min of C[a..i-1]\n\nSubstitute: C[a..n-1]. That is the theorem, and the proof ends – not with more argument, but by reading the invariant at exit.\nIf the invariant had been a..i, this substitution would have given C[a..n], which is out of bounds. The off-by-one from two slides ago shows up here as a proof that does not close."
   },
   {
-    "objectID": "slides/lecture-03_slides.html#back-to-where-we-started",
-    "href": "slides/lecture-03_slides.html#back-to-where-we-started",
+    "objectID": "slides/lecture-04_slides.html#the-recipe",
+    "href": "slides/lecture-04_slides.html#the-recipe",
     "title": "CPSC 221",
-    "section": "Back to where we started",
-    "text": "Back to where we started\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIn the worst case, \\(T(n) =\\)\n\n\nWhich should we use to describe it?   \\(o \\quad O \\quad \\omega \\quad \\Omega \\quad \\theta \\quad \\Theta\\)\n\nWorst case is \\(\\Theta(n)\\) – and the interesting part is why not O(n). O is an upper bound and is true but weak: \\(O(n^2)\\) is also a correct statement about this function. Theta is the one that says what you actually mean.\nThis is the distinction that gets tested, and it is the one students most reliably fudge."
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#introductions",
-    "href": "slides/lecture-01_slides.html#introductions",
-    "title": "CPSC 221",
-    "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Monday 12:00–1:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
-    "href": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
-    "title": "CPSC 221",
-    "section": "All you need to know is at…",
-    "text": "All you need to know is at…\nhttps://ubc-cs.github.io/cpsc221/\n\n\nInfo on:\n\nStaff\nCommunications\nLab sections\nPAs\nExams\nMarking\nAcademic Integrity\n\n\n\nPAs — Due Mon after 2wk\nHWs — Due Mon after 1wk\nLabs — once a week, av Sun-Sun\nExams — 50min in ORCA\nClass Meetings in FSC 1005\n\n101: MWF 2p,\n102: MWF 3p.\n\n\n\nhttps://canvas.ubc.ca/courses/190808"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#term-schedule",
-    "href": "slides/lecture-01_slides.html#term-schedule",
-    "title": "CPSC 221",
-    "section": "Term Schedule",
-    "text": "Term Schedule\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nMon\nM\nW\nF\nHW/PA\nLab\nEX\n\n\n\n\n1\nSep 7\n \n🎉\n🎉\n \n \n \n\n\n2\nSep 14\n🎉\n🎉\n📹\n \n🪄\n \n\n\n3\nSep 21\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n4\nSep 28\n🎉\n \n📹\n \n🪄\n🤩\n\n\n5\nOct 5\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n6\nOct 12\n \n📹\n📹\n \n \n \n\n\n7\nOct 19\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n8\nOct 26\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n9\nNov 2\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n10\nNov 9\n \n \n📹\n \n \n \n\n\n11\nNov 16\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n12\nNov 23\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n13\nNov 30\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n14\nDec 7\n🎉\n \n \n \n \n \n\n\n\nLegend: 🎉 in-person lecture   📹 async video   🪄 lab   🤩 examlet   🏎️ HW due   🚀 PA due     off / nothing due"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#grading",
-    "href": "slides/lecture-01_slides.html#grading",
-    "title": "CPSC 221",
-    "section": "Grading",
-    "text": "Grading\n\n\n\n\n\n\n\n\n\n\n\nComponent\n\nWeight\n\n\n\n\n🎉 Class meetings\nattendance not required\n0%\n\n\n🪄 Labs\nbest 8 of 10 × 1%\n8%\n\n\n🏎️ Homework\n3 × 2%\n6%\n\n\n🚀 Programming assignments\n3 × 2%\n6%\n\n\n🤩 Examlets\n9 × 6%\n54%\n\n\n🏆 Final exam\ncumulative\n26%\n\n\n\n\n100%\n\n\n\n\n\n80% of your grade is written under invigilation.\n\n\nThe point of this slide is the last line, not the table. Labs/HW/PAs are where you learn the material — they are worth 20% precisely so you can afford to struggle on them. The examlets and final are where you show it, and there is nothing to lean on there but what you actually know.\nTies directly to the GenAI policy: use whatever you like on the 20%, but the same material comes back at you on the 80%."
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#todays-announcements",
-    "href": "slides/lecture-01_slides.html#todays-announcements",
-    "title": "CPSC 221",
-    "section": "Today’s announcements",
-    "text": "Today’s announcements\n\nLabs start next week\nClass meets in person this Friday\n\nToday’s Plan:\n\nintro to algorithm analysis — code!"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#wheres-meghan",
-    "href": "slides/lecture-01_slides.html#wheres-meghan",
-    "title": "CPSC 221",
-    "section": "Where’s Meghan?",
-    "text": "Where’s Meghan?\nObservations:"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#which-closet",
-    "href": "slides/lecture-01_slides.html#which-closet",
-    "title": "CPSC 221",
-    "section": "Which closet…",
-    "text": "Which closet…\n\n \n\n\n↔︎"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#course-goals",
-    "href": "slides/lecture-01_slides.html#course-goals",
-    "title": "CPSC 221",
-    "section": "Course Goals",
-    "text": "Course Goals\n\nBecome familiar with some of the fundamental data structures and algorithms in computer science\n\nLearn when to use them\n\nImprove your ability to solve problems abstractly\n\nData structures and algorithms are the building blocks\n\nImprove your ability to analyze algorithms\n\nProve correctness\nGauge, compare, and improve time and space complexity\n\nBecome modestly skilled with C++ and UNIX"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
-    "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
-    "title": "CPSC 221",
-    "section": "Measuring the value of algorithms",
-    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#running-times",
-    "href": "slides/lecture-01_slides.html#running-times",
-    "title": "CPSC 221",
-    "section": "Running times",
-    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s"
-  },
-  {
-    "objectID": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
-    "href": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
-    "title": "CPSC 221",
-    "section": "Algorithmic Analysis — example 1",
-    "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat questions do you have about the code?"
-  },
-  {
-    "objectID": "posts/01_week-02/index.html",
-    "href": "posts/01_week-02/index.html",
-    "title": "Week 2 — Sep 14 to Sep 20",
-    "section": "",
-    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "",
-    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLecture 5\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "formatting.html",
-    "href": "formatting.html",
-    "title": "Formatting",
-    "section": "",
-    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
-  },
-  {
-    "objectID": "cpp-short-course.html",
-    "href": "cpp-short-course.html",
-    "title": "C++ Short Course (optional)",
-    "section": "",
-    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
-  },
-  {
-    "objectID": "cpp-short-course.html#sessions",
-    "href": "cpp-short-course.html#sessions",
-    "title": "C++ Short Course (optional)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "about.html#contributors",
-    "href": "about.html#contributors",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "announcements.html",
-    "href": "announcements.html",
-    "title": "Announcements",
-    "section": "",
-    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Course information",
-      "Announcements"
-    ]
-  },
-  {
-    "objectID": "getting-started.html",
-    "href": "getting-started.html",
-    "title": "Getting started",
-    "section": "",
-    "text": "Your first class meeting is in Forest Sciences Centre (FSC 1005) — Section 101: MWF 2:00 PM, Section 102: MWF 3:00 PM. This page collects a few resources you can look over before class starts, to help you scope the course and plan your schedule.\nThere are 4 different components to the course, each with its own set of deliverables and deadlines:\n\nProgramming Assignments and Homework — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)\nLabs — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You’ll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)\nExams — You’ll complete nine (nearly) weekly examlets, self-scheduled, collectively worth a large share of your grade — see the Grading Scheme. These will ask about the previous week’s content, so treat them as motivation to stay connected with the material. There’s also a self-scheduled final exam. (~3hr/wk total.)\nClass Content — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the Schedule for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)",
-    "crumbs": [
-      "Resources",
-      "Getting started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#welcome-to-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220636f757273652e636f6465203e7d7d",
-    "href": "getting-started.html#welcome-to-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220636f757273652e636f6465203e7d7d",
-    "title": "Getting started",
-    "section": "",
-    "text": "Your first class meeting is in Forest Sciences Centre (FSC 1005) — Section 101: MWF 2:00 PM, Section 102: MWF 3:00 PM. This page collects a few resources you can look over before class starts, to help you scope the course and plan your schedule.\nThere are 4 different components to the course, each with its own set of deliverables and deadlines:\n\nProgramming Assignments and Homework — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)\nLabs — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You’ll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)\nExams — You’ll complete nine (nearly) weekly examlets, self-scheduled, collectively worth a large share of your grade — see the Grading Scheme. These will ask about the previous week’s content, so treat them as motivation to stay connected with the material. There’s also a self-scheduled final exam. (~3hr/wk total.)\nClass Content — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the Schedule for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)",
-    "crumbs": [
-      "Resources",
-      "Getting started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#what-you-can-do-now",
-    "href": "getting-started.html#what-you-can-do-now",
-    "title": "Getting started",
-    "section": "What you can do now",
-    "text": "What you can do now\n\nGet a head start on C++. Students consistently report that learning C++ is one of the biggest hurdles in this course. We don’t expect prior C++ experience, but some self-study before the term starts will make the labs more comfortable — see the optional C++ Short Course recordings.\nBlock out your calendar. Put all four course components above on your weekly schedule, and plan blocks of time for PA/HW work.\nCheck your setup. A significant part of the course is delivered online, so you’ll need a reliable internet connection capable of video. Live class meetings aren’t mandatory, but past students have found them useful. Let us know if you have concerns about your technical setup or access to resources.\nStart building study groups. Feel free to use Piazza to coordinate with classmates now.\nDo your machine setup early, if you can — see Setup: Tech stack for the compiler/editor workflow, and the lab intro materials once released. Everyone’s environment is a little different, so ask TAs for help if you get stuck.",
-    "crumbs": [
-      "Resources",
-      "Getting started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#support-resources",
-    "href": "getting-started.html#support-resources",
-    "title": "Getting started",
-    "section": "Support resources",
-    "text": "Support resources\n\nCanvas & tech support: contact the UBC IT Service Centre, or see Canvas resources for students and basic tips for navigating Canvas.\nGeneral tech/toolkit help: Chapman Learning Commons tech support.",
-    "crumbs": [
-      "Resources",
-      "Getting started"
-    ]
-  },
-  {
-    "objectID": "getting-started.html#in-closing",
-    "href": "getting-started.html#in-closing",
-    "title": "Getting started",
-    "section": "In closing",
-    "text": "In closing\nFor topical/content questions, post to CPSC 221’s Piazza — if you think your question is a general one, ask it publicly (anonymously if you’d like). For administrative matters — illness, academic concessions, accommodations, and other logistics — email the Course Coordinator, Anca Barbu, at cpsc221-admin@cs.ubc.ca.\nSee you soon!",
-    "crumbs": [
-      "Resources",
-      "Getting started"
-    ]
-  },
-  {
-    "objectID": "posts/00_welcome/index.html",
-    "href": "posts/00_welcome/index.html",
-    "title": "Welcome to CPSC 221",
-    "section": "",
-    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
-  },
-  {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Setup: Tech stack",
-    "section": "",
-    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
-  },
-  {
-    "objectID": "setup.html#hardware",
-    "href": "setup.html#hardware",
-    "title": "Setup: Tech stack",
-    "section": "Hardware",
-    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
-  },
-  {
-    "objectID": "setup.html#computing-environment",
-    "href": "setup.html#computing-environment",
-    "title": "Setup: Tech stack",
-    "section": "Computing environment",
-    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
-  },
-  {
-    "objectID": "setup.html#attribution",
-    "href": "setup.html#attribution",
-    "title": "Setup: Tech stack",
-    "section": "Attribution",
-    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
+    "section": "The recipe",
+    "text": "The recipe\n\n\n\n\n\n\n\n\n1. Recognize the Claim\nthe postcondition you are trying to reach\n\n\n2. Find an invariant\nstrong enough to give that at exit, and still true after one pass\n\n\n3. Initialization\ntrue before the first iteration\n\n\n4. Restoration\nstart of \\(i\\) \\(\\Rightarrow\\) start of \\(i{+}1\\)\n\n\n5. Termination\nthe loop ends, and invariant gives result\n\n\n\n\n\n\nHere the invariant was the theorem with \\(n\\) replaced by \\(i\\). That is the easy case — often it has to say more than the theorem.\n\n\nProving correctness is only one use of invariants — they are also how you design a loop in the first place.\n\nSteps 1 and 2 are the ones this lecture added. Most students arrive able to do 3, 4, 5 mechanically and with no idea where the invariant came from.\nDo not oversell step 2. idxOfMin is the easy case, where the invariant is the theorem with \\(n\\) replaced by \\(i\\). In general the invariant must be stronger than the postcondition, because a claim that barely implies the result will not survive an iteration – binary search carries “if q is present it is in [lo,hi]”, Euclid carries gcd(x,y) unchanged, the playlist partition carries three moving boundaries. None of those is the theorem with a substitution.\nThat is strengthening the induction hypothesis, which they saw in 121. Worth naming if someone asks why their invariant will not go through – usually it is too weak, not wrong.\nLand the last line. An invariant written before the body tells you what the body must do; written after, it is an audit. The first is the more valuable habit – and it is what HW1 zone 3 is actually asking for."
   },
   {
     "objectID": "slides/lecture-02_slides.html#today",
@@ -526,81 +278,399 @@
     "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThe blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called find could return a bool, a value or an iterator. A precise description hands you idxFirst almost for free.\nTake answers. Somebody will say “it depends” – that is the slide after this."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#today",
-    "href": "slides/lecture-04_slides.html#today",
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Setup: Tech stack",
+    "section": "",
+    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
+  },
+  {
+    "objectID": "setup.html#hardware",
+    "href": "setup.html#hardware",
+    "title": "Setup: Tech stack",
+    "section": "Hardware",
+    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
+  },
+  {
+    "objectID": "setup.html#computing-environment",
+    "href": "setup.html#computing-environment",
+    "title": "Setup: Tech stack",
+    "section": "Computing environment",
+    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
+  },
+  {
+    "objectID": "setup.html#attribution",
+    "href": "setup.html#attribution",
+    "title": "Setup: Tech stack",
+    "section": "Attribution",
+    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
+  },
+  {
+    "objectID": "posts/00_welcome/index.html",
+    "href": "posts/00_welcome/index.html",
+    "title": "Welcome to CPSC 221",
+    "section": "",
+    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
+  },
+  {
+    "objectID": "getting-started.html",
+    "href": "getting-started.html",
+    "title": "Getting started",
+    "section": "",
+    "text": "Your first class meeting is in Forest Sciences Centre (FSC 1005) — Section 101: MWF 2:00 PM, Section 102: MWF 3:00 PM. This page collects a few resources you can look over before class starts, to help you scope the course and plan your schedule.\nThere are 4 different components to the course, each with its own set of deliverables and deadlines:\n\nProgramming Assignments and Homework — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)\nLabs — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You’ll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)\nExams — You’ll complete nine (nearly) weekly examlets, self-scheduled, collectively worth a large share of your grade — see the Grading Scheme. These will ask about the previous week’s content, so treat them as motivation to stay connected with the material. There’s also a self-scheduled final exam. (~3hr/wk total.)\nClass Content — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the Schedule for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)",
+    "crumbs": [
+      "Resources",
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#welcome-to-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220636f757273652e636f6465203e7d7d",
+    "href": "getting-started.html#welcome-to-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2076617220636f757273652e636f6465203e7d7d",
+    "title": "Getting started",
+    "section": "",
+    "text": "Your first class meeting is in Forest Sciences Centre (FSC 1005) — Section 101: MWF 2:00 PM, Section 102: MWF 3:00 PM. This page collects a few resources you can look over before class starts, to help you scope the course and plan your schedule.\nThere are 4 different components to the course, each with its own set of deliverables and deadlines:\n\nProgramming Assignments and Homework — Think of these as projects: you and your (optional) partner manage your own progress. Work windows are 1–2 weeks, and assignments may overlap. (~8hr/wk total, variable and unpredictable.)\nLabs — Every lab is a coding exercise you upload to PrairieLearn for auto-grading. You’ll work on it yourself for the first part of the lab, then get walked through the solution tutorial-style in the last half hour. Your 8 highest lab scores (of 10) count toward your grade. (~2hr/wk total.)\nExams — You’ll complete nine (nearly) weekly examlets, self-scheduled, collectively worth a large share of your grade — see the Grading Scheme. These will ask about the previous week’s content, so treat them as motivation to stay connected with the material. There’s also a self-scheduled final exam. (~3hr/wk total.)\nClass Content — A mix of live in-person meetings and short async videos that fill in the gaps between them — see the Schedule for the exact pattern. All classroom instruction is recorded and available afterward. (~3hr/wk total.)",
+    "crumbs": [
+      "Resources",
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#what-you-can-do-now",
+    "href": "getting-started.html#what-you-can-do-now",
+    "title": "Getting started",
+    "section": "What you can do now",
+    "text": "What you can do now\n\nGet a head start on C++. Students consistently report that learning C++ is one of the biggest hurdles in this course. We don’t expect prior C++ experience, but some self-study before the term starts will make the labs more comfortable — see the optional C++ Short Course recordings.\nBlock out your calendar. Put all four course components above on your weekly schedule, and plan blocks of time for PA/HW work.\nCheck your setup. A significant part of the course is delivered online, so you’ll need a reliable internet connection capable of video. Live class meetings aren’t mandatory, but past students have found them useful. Let us know if you have concerns about your technical setup or access to resources.\nStart building study groups. Feel free to use Piazza to coordinate with classmates now.\nDo your machine setup early, if you can — see Setup: Tech stack for the compiler/editor workflow, and the lab intro materials once released. Everyone’s environment is a little different, so ask TAs for help if you get stuck.",
+    "crumbs": [
+      "Resources",
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#support-resources",
+    "href": "getting-started.html#support-resources",
+    "title": "Getting started",
+    "section": "Support resources",
+    "text": "Support resources\n\nCanvas & tech support: contact the UBC IT Service Centre, or see Canvas resources for students and basic tips for navigating Canvas.\nGeneral tech/toolkit help: Chapman Learning Commons tech support.",
+    "crumbs": [
+      "Resources",
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "getting-started.html#in-closing",
+    "href": "getting-started.html#in-closing",
+    "title": "Getting started",
+    "section": "In closing",
+    "text": "In closing\nFor topical/content questions, post to CPSC 221’s Piazza — if you think your question is a general one, ask it publicly (anonymously if you’d like). For administrative matters — illness, academic concessions, accommodations, and other logistics — email the Course Coordinator, Anca Barbu, at cpsc221-admin@cs.ubc.ca.\nSee you soon!",
+    "crumbs": [
+      "Resources",
+      "Getting started"
+    ]
+  },
+  {
+    "objectID": "announcements.html",
+    "href": "announcements.html",
+    "title": "Announcements",
+    "section": "",
+    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "about.html#contributors",
+    "href": "about.html#contributors",
+    "title": "About",
+    "section": "",
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "cpp-short-course.html",
+    "href": "cpp-short-course.html",
+    "title": "C++ Short Course (optional)",
+    "section": "",
+    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+  },
+  {
+    "objectID": "cpp-short-course.html#sessions",
+    "href": "cpp-short-course.html#sessions",
+    "title": "C++ Short Course (optional)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+  },
+  {
+    "objectID": "formatting.html",
+    "href": "formatting.html",
+    "title": "Formatting",
+    "section": "",
+    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "",
+    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "Schedule",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nSelection Sort\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nSelection Sort\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nLecture 6\n\n\n    Wed Sep 23\nLecture 7\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    examlet review    examlet practice\nFaded icons mark material that isn’t posted yet.",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "posts/01_week-02/index.html",
+    "href": "posts/01_week-02/index.html",
+    "title": "Week 2 — Sep 14 to Sep 20",
+    "section": "",
+    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#introductions",
+    "href": "slides/lecture-01_slides.html#introductions",
+    "title": "CPSC 221",
+    "section": "Introductions",
+    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Monday 12:00–1:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
+    "href": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
+    "title": "CPSC 221",
+    "section": "All you need to know is at…",
+    "text": "All you need to know is at…\nhttps://ubc-cs.github.io/cpsc221/\n\n\nInfo on:\n\nStaff\nCommunications\nLab sections\nPAs\nExams\nMarking\nAcademic Integrity\n\n\n\nPAs — Due Mon after 2wk\nHWs — Due Mon after 1wk\nLabs — once a week, av Sun-Sun\nExams — 50min in ORCA\nClass Meetings in FSC 1005\n\n101: MWF 2p,\n102: MWF 3p.\n\n\n\nhttps://canvas.ubc.ca/courses/190808"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#term-schedule",
+    "href": "slides/lecture-01_slides.html#term-schedule",
+    "title": "CPSC 221",
+    "section": "Term Schedule",
+    "text": "Term Schedule\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeek\nMon\nM\nW\nF\nHW/PA\nLab\nEX\n\n\n\n\n1\nSep 7\n \n🎉\n🎉\n \n \n \n\n\n2\nSep 14\n🎉\n🎉\n📹\n \n🪄\n \n\n\n3\nSep 21\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n4\nSep 28\n🎉\n \n📹\n \n🪄\n🤩\n\n\n5\nOct 5\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n6\nOct 12\n \n📹\n📹\n \n \n \n\n\n7\nOct 19\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n8\nOct 26\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n9\nNov 2\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n10\nNov 9\n \n \n📹\n \n \n \n\n\n11\nNov 16\n🎉\n🎉\n📹\n \n🪄\n🤩\n\n\n12\nNov 23\n🎉\n🎉\n📹\n🚀\n🪄\n🤩\n\n\n13\nNov 30\n🎉\n🎉\n📹\n🏎️\n🪄\n🤩\n\n\n14\nDec 7\n🎉\n \n \n \n \n \n\n\n\nLegend: 🎉 in-person lecture   📹 async video   🪄 lab   🤩 examlet   🏎️ HW due   🚀 PA due     off / nothing due"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#grading",
+    "href": "slides/lecture-01_slides.html#grading",
+    "title": "CPSC 221",
+    "section": "Grading",
+    "text": "Grading\n\n\n\n\n\n\n\n\n\n\n\nComponent\n\nWeight\n\n\n\n\n🎉 Class meetings\nattendance not required\n0%\n\n\n🪄 Labs\nbest 8 of 10 × 1%\n8%\n\n\n🏎️ Homework\n3 × 2%\n6%\n\n\n🚀 Programming assignments\n3 × 2%\n6%\n\n\n🤩 Examlets\n9 × 6%\n54%\n\n\n🏆 Final exam\ncumulative\n26%\n\n\n\n\n100%\n\n\n\n\n\n80% of your grade is written under invigilation.\n\n\nThe point of this slide is the last line, not the table. Labs/HW/PAs are where you learn the material — they are worth 20% precisely so you can afford to struggle on them. The examlets and final are where you show it, and there is nothing to lean on there but what you actually know.\nTies directly to the GenAI policy: use whatever you like on the 20%, but the same material comes back at you on the 80%."
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#todays-announcements",
+    "href": "slides/lecture-01_slides.html#todays-announcements",
+    "title": "CPSC 221",
+    "section": "Today’s announcements",
+    "text": "Today’s announcements\n\nLabs start next week\nClass meets in person this Friday\n\nToday’s Plan:\n\nintro to algorithm analysis — code!"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#wheres-meghan",
+    "href": "slides/lecture-01_slides.html#wheres-meghan",
+    "title": "CPSC 221",
+    "section": "Where’s Meghan?",
+    "text": "Where’s Meghan?\nObservations:"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#which-closet",
+    "href": "slides/lecture-01_slides.html#which-closet",
+    "title": "CPSC 221",
+    "section": "Which closet…",
+    "text": "Which closet…\n\n \n\n\n↔︎"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#course-goals",
+    "href": "slides/lecture-01_slides.html#course-goals",
+    "title": "CPSC 221",
+    "section": "Course Goals",
+    "text": "Course Goals\n\nBecome familiar with some of the fundamental data structures and algorithms in computer science\n\nLearn when to use them\n\nImprove your ability to solve problems abstractly\n\nData structures and algorithms are the building blocks\n\nImprove your ability to analyze algorithms\n\nProve correctness\nGauge, compare, and improve time and space complexity\n\nBecome modestly skilled with C++ and UNIX"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
+    "href": "slides/lecture-01_slides.html#measuring-the-value-of-algorithms",
+    "title": "CPSC 221",
+    "section": "Measuring the value of algorithms",
+    "text": "Measuring the value of algorithms\n\nIf an algorithm is not correct, is its value 0?\n\n\n\n\n\nUse different metrics — time, space most common\nExpress running times as a (positive) function:\n\n\n\n\nForm of function depends on structure of the algorithm…"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#running-times",
+    "href": "slides/lecture-01_slides.html#running-times",
+    "title": "CPSC 221",
+    "section": "Running times",
+    "text": "Running times\nSuppose a computer executes \\(10^{12}\\) operations per sec.\n\n\n\n\n\n\n\n\n\n\n\noperations\nn=10\nn=100\nn=1000\nn=10,000\nn=\\(10^{12}\\)\n\n\n\n\n\\(n\\)\n\\(10^{-11}\\) s\n\\(10^{-10}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n1 s\n\n\n\\(n \\log n\\)\n\\(10^{-11}\\) s\n\\(10^{-9}\\) s\n\\(10^{-8}\\) s\n\\(10^{-7}\\) s\n40 s\n\n\n\\(n^2\\)\n\\(10^{-10}\\) s\n\\(10^{-8}\\) s\n\\(10^{-6}\\) s\n\\(10^{-4}\\) s\n\\(10^{12}\\) s\n\n\n\\(n^3\\)\n\\(10^{-9}\\) s\n\\(10^{-6}\\) s\n\\(10^{-3}\\) s\n1 s\n\\(10^{24}\\) s\n\n\n\\(2^n\\)\n\\(10^{-9}\\) s\n\\(10^{18}\\) s\n\\(10^{289}\\) s"
+  },
+  {
+    "objectID": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
+    "href": "slides/lecture-01_slides.html#algorithmic-analysis-example-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic Analysis — example 1",
+    "text": "Algorithmic Analysis — example 1\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nWhat questions do you have about the code?"
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#today",
+    "href": "slides/lecture-03_slides.html#today",
     "title": "CPSC 221",
     "section": "Today",
-    "text": "Today\nAnnouncements\n\nExamlet 1 is next week — do the practice problems\nHW1 is out, due Monday Sep 21\nFriday’s class is a video, posted by Thursday morning\n\nrecording at 4:30p today, if you’d like to attend (zoom)!\n\n\n\n\nWhere we’re going\n\nRuntime, final words\nWarm-up\nIntro to correctness\nLoop invariants"
+    "text": "Today\nAnnouncements\n\nHW1 is out — due Monday Sep 21\nLabs meet this week; Lab Intro is due Sunday\nPEX1 (practice for Examlet 1) releases Wednesday\n\n\n\nWhere we’re going\n\nFinishing how long does it take?\nBest, worst, average\nAsymptotics, reprised"
   },
   {
-    "objectID": "slides/lecture-04_slides.html#asymptotic-notation",
-    "href": "slides/lecture-04_slides.html#asymptotic-notation",
+    "objectID": "slides/lecture-03_slides.html#where-we-stopped",
+    "href": "slides/lecture-03_slides.html#where-we-stopped",
     "title": "CPSC 221",
-    "section": "Asymptotic notation",
-    "text": "Asymptotic notation\nFor positive constants \\(c\\) and \\(n_0\\):\n\n\n\n\n\n\n\n\n\\(T(n) \\in O(f(n))\\)\nif \\(\\exists\\, c, n_0\\) such that\n\\(T(n) \\le c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\Omega(f(n))\\)\nif \\(\\exists\\, c, n_0\\) such that\n\\(T(n) \\ge c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\Theta(f(n))\\)\nif\n\\(T(n) \\in O(f(n))\\) and \\(T(n) \\in \\Omega(f(n))\\)\n\n\n\\(T(n) \\in o(f(n))\\)\nif for any \\(c\\), \\(\\exists\\, n_0\\) such that\n\\(T(n) &lt; c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\\(T(n) \\in \\omega(f(n))\\)\nif for any \\(c\\), \\(\\exists\\, n_0\\) such that\n\\(T(n) &gt; c\\,f(n)\\) for all \\(n \\ge n_0\\)\n\n\n\n\nThe whole family on one page, for reference rather than for working through.\nThe distinction worth thirty seconds if anyone asks: \\(O\\) and \\(\\Omega\\) say there exists a constant; \\(o\\) and \\(\\omega\\) say for every constant. That is why little-o is strictly stronger than big-O – no constant, however generous, saves you.\nThey will need \\(\\Omega\\) and \\(\\Theta\\) on the examlet and in PEX1. This slide is where they come from; the practice questions are where they get learned."
+    "section": "Where we stopped",
+    "text": "Where we stopped\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThirty seconds. They named this function on Friday and got as far as the question. Do not re-open the naming discussion – point at it and move."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#warm-up",
-    "href": "slides/lecture-04_slides.html#warm-up",
+    "objectID": "slides/lecture-03_slides.html#algorithmic-analysis-running-time",
+    "href": "slides/lecture-03_slides.html#algorithmic-analysis-running-time",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take? It depends! \nWhat does it depend on?\n\n\n\n\n\n\nBlanks are for the pen. What the room should land on:\n\nthe size of the array\nwhere q is – or whether it is there at all\nthe speed of the machine\n\nThe third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#algorithmic-analysis-running-time-1",
+    "href": "slides/lecture-03_slides.html#algorithmic-analysis-running-time-1",
+    "title": "CPSC 221",
+    "section": "Algorithmic analysis — running time",
+    "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nHow many times does line 3 run if \\(q\\) is 32?   If \\(q\\) is 45?   If \\(q\\) is 100?\n\nConcrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.\nThen the abstraction: drop the clock, count the operation that repeats. Here that is the comparison on line 3."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#best-worst-average",
+    "href": "slides/lecture-03_slides.html#best-worst-average",
+    "title": "CPSC 221",
+    "section": "Best, worst, average",
+    "text": "Best, worst, average\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nFor an array of size \\(n\\):\n\nbest case\nworst case\naverage case\n\n\nBest: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking average over what? – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.\nWhich of the three do we usually report, and why? Worst case: it is a promise you can actually make."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#your-turn",
+    "href": "slides/lecture-03_slides.html#your-turn",
+    "title": "CPSC 221",
+    "section": "Your turn",
+    "text": "Your turn\nint findMin (vector&lt;int&gt; arr) {\n    int temp = arr[0];\n    for (int i = 1; i &lt; arr.size(); i++)\n        if (arr[i] &lt; temp)\n            temp = arr[i];\n    return temp;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n1\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nBest case\nWorst case\n\n \n\nThe point of this one: there is no early return. Best and worst are the same – \\(n-1\\) comparisons either way. The loop has to see every element to know it has the minimum.\nThat is the contrast with idxFirst, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.\nThe array is rigged so the minimum is at index 0 – students who are pattern matching on idxFirst will call that the best case. It isn’t."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#examining-the-details",
+    "href": "slides/lecture-03_slides.html#examining-the-details",
+    "title": "CPSC 221",
+    "section": "Examining the details",
+    "text": "Examining the details\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow many lines are executed in the worst case?\n\\(T(n) =\\)\n\n\nDoes the ___ matter?\nDoes the ___ matter?\n\nCount it with them, line by line, with the pen. A defensible answer is \\(T(n) = 2n + 2\\) – the loop test and the comparison each run about n times, plus the initialisation and the final return.\nDo not fight about the exact constant. Getting two different numbers from two students is the setup for the next question, not a problem."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#asymptotics-reprised",
+    "href": "slides/lecture-03_slides.html#asymptotics-reprised",
+    "title": "CPSC 221",
+    "section": "Asymptotics, reprised",
+    "text": "Asymptotics, reprised\n\\(T(n) = O(f(n))\\) if there are positive constants \\(c\\) and \\(n_0\\) such that\n\\[T(n) \\le c \\cdot f(n) \\quad \\text{for all } n \\ge n_0\\]\n\n\n\n      \n\nWe typically use \\(f(n)\\) to describe …\n\nBoth quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#the-reminder-page",
+    "href": "slides/lecture-03_slides.html#the-reminder-page",
+    "title": "CPSC 221",
+    "section": "The reminder page",
+    "text": "The reminder page\n\n\n\n\ngrowth\nname\n\n\n\n\n\n\\(O(1)\\)\nconstant\n\n\n\n\\(O(\\log n)\\)\nlogarithmic\n\n\n\n\\(O(\\log^k n)\\)\npoly-log\n\n\n\n\\(O(n)\\)\nlinear\n\n\n\n\\(O(n \\log n)\\)\nlog-linear\n\n\n\n\\(O(n^{1+c})\\)\nsuperlinear\n\\(c &gt; 0\\)\n\n\n\\(O(n^2)\\)\nquadratic\n\n\n\n\\(O(n^3)\\)\ncubic\n\n\n\n\\(O(n^k)\\)\npolynomial\n“tractable”\n\n\n\\(O(c^n)\\)\nexponential\n“intractable”\n\n\n\n\n\nPoint back at Friday’s running-times table – the tractable/intractable line is exactly where \\(2^n\\) ran past the age of the universe."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#runtime-analysis-guidelines",
+    "href": "slides/lecture-03_slides.html#runtime-analysis-guidelines",
+    "title": "CPSC 221",
+    "section": "Runtime analysis guidelines",
+    "text": "Runtime analysis guidelines\n\nSingle operations — constant time\nConsecutive operations — additive\nConditionals — constant for the test, plus the branch taken\nLoops — sum of the loop body times\nFunction call — the time for that function\n\n\nThese are the rules they will use on every homework this term. Nothing here is surprising; the value is having them written down in one place."
+  },
+  {
+    "objectID": "slides/lecture-03_slides.html#back-to-where-we-started",
+    "href": "slides/lecture-03_slides.html#back-to-where-we-started",
+    "title": "CPSC 221",
+    "section": "Back to where we started",
+    "text": "Back to where we started\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIn the worst case, \\(T(n) =\\)\n\n\nWhich should we use to describe it?   \\(o \\quad O \\quad \\omega \\quad \\Omega \\quad \\theta \\quad \\Theta\\)\n\nWorst case is \\(\\Theta(n)\\) – and the interesting part is why not O(n). O is an upper bound and is true but weak: \\(O(n^2)\\) is also a correct statement about this function. Theta is the one that says what you actually mean.\nThis is the distinction that gets tested, and it is the one students most reliably fudge."
+  },
+  {
+    "objectID": "slides/lecture-05_slides.html#today",
+    "href": "slides/lecture-05_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\nAnnouncements\n\nExamlet 1 is next week — do the practice problems\nHW1 due Monday, 11:59 pm\n\n\n\nWhere we’re going\n\nWarm-up\nSelection sort — what it does, how long it takes\nSelection sort — why it works"
+  },
+  {
+    "objectID": "slides/lecture-05_slides.html#warm-up",
+    "href": "slides/lecture-05_slides.html#warm-up",
     "title": "CPSC 221",
     "section": "Warm-up",
-    "text": "Warm-up\n\\[\\text{Thm: } \\log n! \\in \\Theta(n \\log n)\\]\nProof:\n\nCarried over from lecture 3, which ran out of time.\nUpper bound is the easy half – \\(\\log n! = \\sum \\log i \\le n \\log n\\).\nLower bound: keep the top half of the terms, each at least \\(\\log(n/2)\\), giving \\((n/2)\\log(n/2)\\), which is \\(\\Omega(n\\log n)\\).\nNote this is the first place \\(\\Theta\\) gets used rather than stated – you need both halves, which is the point."
+    "text": "Warm-up\nMy algorithm runs in time \\(\\Omega(n \\log n)\\).\nYour algorithm runs in time \\(O(n!)\\).\n\n\nWhose is better?\n\nThe answer is: you cannot tell, and that is the whole point.\nMine is bounded below – it takes at least \\(n\\log n\\), and might take \\(n^{100}\\). Yours is bounded above – it takes at most \\(n!\\), and might take constant time. The two claims do not meet, so no comparison follows.\nWorth saying plainly on the recording: these are the two bounds pointing in opposite directions, and reading \\(\\Omega\\) as “best case” and \\(O\\) as “worst case” is what makes people think a comparison is available here.\nPause after the question. Viewers can stop and think."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#intro-to-algorithm-correctness",
-    "href": "slides/lecture-04_slides.html#intro-to-algorithm-correctness",
+    "objectID": "slides/lecture-05_slides.html#where-we-left-off",
+    "href": "slides/lecture-05_slides.html#where-we-left-off",
     "title": "CPSC 221",
-    "section": "Intro to algorithm correctness",
-    "text": "Intro to algorithm correctness\nint ____________ (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nGood name — what does it do?\nRunning time?\nDoes it work?\n\nSame three questions as lecture 2, now in one slide, because they know how to do the first two. Move fast on name and runtime – the whole lecture is the third question.\nName: it returns an index, not a value, so idxOfMin in the house style. Careful – lecture 3’s findMin returned the min value. Worth naming the difference out loud; it is the same distinction they fought over in lecture 2.\nRuntime: \\(\\Theta(n)\\), one pass, no early return.\n“Does it work?” is the new question. Nobody has an answer yet, which is the point."
+    "section": "Where we left off",
+    "text": "Where we left off\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nWe named it, evaluated its runtime, and proved it is correct.\n\nThirty seconds of recap – this is the function we proved on Wednesday. \\(\\Theta(n)\\), and the invariant was “retloc is the index of the min of C[a..i-1]”.\nWe are about to use it as a building block, which is the reason it was worth proving."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#correctness-prelims",
-    "href": "slides/lecture-04_slides.html#correctness-prelims",
+    "objectID": "slides/lecture-05_slides.html#another-example",
+    "href": "slides/lecture-05_slides.html#another-example",
     "title": "CPSC 221",
-    "section": "Correctness: prelims",
-    "text": "Correctness: prelims\nint ____________ (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat are the possible values of \\(i\\)?\nStop the algorithm at some iteration \\(i\\) — what do we know about the variables?\n\nPen work on the array. Stop it at \\(i = 5\\) and ask what retloc must be. Then \\(i = 9\\). They will get there concretely before they can say it generally, which is the right order.\n\\(i\\) ranges over \\(a{+}1 \\ldots n{-}1\\). The answer you are steering toward: retloc is the index of the smallest element seen so far – and “so far” is the thing that needs pinning down precisely."
+    "section": "Another example",
+    "text": "Another example\nvoid ____________ (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n32\n11\n73\n21\n29\n86\n81\n92\n57\n61\n64\n15\n79\n44\n7\n45\n\n\n\nWhat does it do?    How long does it take?\n\nTrace two iterations on the array with the pen before naming it. \\(i=0\\) finds 7 at index 14 and swaps it to the front; \\(i=1\\) finds 11, already in place.\nName: selection sort. It repeatedly selects the smallest remaining element.\nRunning time: idxOfMin(C, i) costs \\(n-i\\), so the total is \\(n + (n-1) + \\cdots + 1 = \\Theta(n^2)\\). Note it does not care what the data looks like – best and worst are the same, which is the findMin observation from lecture 3 one level up."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#what-are-we-trying-to-prove",
-    "href": "slides/lecture-04_slides.html#what-are-we-trying-to-prove",
+    "objectID": "slides/lecture-05_slides.html#selection-sort",
+    "href": "slides/lecture-05_slides.html#selection-sort",
     "title": "CPSC 221",
-    "section": "What are we trying to prove?",
-    "text": "What are we trying to prove?\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nThm. idxOfMin(C, a) returns the index of the minimum value in C[a..n-1].\n\nThe theorem comes first, deliberately. You cannot choose an invariant until you know what you are trying to deliver – the invariant is reverse-engineered from the theorem, and doing it in this order is what makes the next slide feel inevitable rather than arbitrary.\nAsk: at the moment the loop exits, what would we need to be true?"
+    "section": "Selection sort",
+    "text": "Selection sort\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n7\n11\n15\n21\n29\n86\n81\n92\n57\n61\n64\n73\n79\n44\n32\n45\n\n\n\n\\(T(n) = \\Theta(n^2)\\)\n\nThe array shown is mid-run, not sorted. Point at the boundary: everything left of index 5 is sorted and small; everything right of it is untouched original data. That picture is the invariant, and the next slide makes them read it."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#the-invariant",
-    "href": "slides/lecture-04_slides.html#the-invariant",
+    "objectID": "slides/lecture-05_slides.html#oops",
+    "href": "slides/lecture-05_slides.html#oops",
     "title": "CPSC 221",
-    "section": "The invariant",
-    "text": "The invariant\nWe want, at exit: retloc is the index of the min of C[a..n-1].\n\n\nSo carry that claim through the loop:\n\n\n\nLoop invariant. At the start of iteration \\(i\\), retloc is the index of the minimum value in C[a..___].\n\n\n\n\nThe blank is i-1, and the whole exercise is getting it right.\nAt the top of iteration \\(i\\) we have not yet examined C[i], so the range we can vouch for stops at \\(i-1\\). Almost everyone writes a..i.\nCheck it against the exit: the loop ends with \\(i = n\\), so the invariant reads C[a..n-1] – exactly the theorem. That is the test for whether you chose the right invariant, and it is worth doing out loud: a good invariant is one that becomes the theorem when the loop stops."
+    "section": "Oops",
+    "text": "Oops\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n7\n11\n15\n21\n29\n86\n81\n92\n57\n61\n64\n73\n79\n44\n18\n45\n\n\n\nMy code crashed partway through the loop.\nWhat is the latest iteration I could have been on?\n\nThis is the best slide in the lecture. Pause here.\nAnswer: \\(i = 3\\). How you get there is the point.\nThe prefix looks sorted a long way – 7, 11, 15, 21, 29 – so the eyeball answer is 5. But 18 is sitting at index 14. For the invariant to hold at \\(i=5\\) the first five entries would have to be the five smallest, and they are not: 18 belongs in there and 29 does not. Same failure at \\(i=4\\).\nAt \\(i=3\\) it holds: 7, 11, 15 really are the three smallest values in the array, and they are sorted. So iteration 3 had begun and not finished – it would have found 18 and swapped it into position 3.\nTwo things to land:\n\nThe weak invariant cannot answer this. “The prefix is sorted” is true through index 4 and gives the wrong answer. Only “and holds the \\(i\\) smallest” gets you there – the clause we added one slide ago, doing work.\nYou just read the state of a crashed program off the data. That is what invariants are for outside of proofs: they say what must be true at any moment, which is exactly what debugging is."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#proof-strategy",
-    "href": "slides/lecture-04_slides.html#proof-strategy",
+    "objectID": "slides/lecture-05_slides.html#what-is-always-true",
+    "href": "slides/lecture-05_slides.html#what-is-always-true",
     "title": "CPSC 221",
-    "section": "Proof Strategy",
-    "text": "Proof Strategy\n\n\n\nLoop invariant. At the start of iteration \\(i\\), retloc is the index of the minimum value in C[a..___].\n\n\n\nProving the Theorem requires three things:\n\n\n\n\n\n\n\n\nInitialization\nthe invariant is true before the first iteration\n\n\nRestoration\nif true at the start of iteration \\(i\\), it is true at the start of \\(i+1\\)\n\n\nTermination\nthe loop ends — and invariant + exit condition give the theorem\n\n\n\n\n\n\nWhat does this smell like?\n\nSay “this is induction” out loud. Initialization is the base case, maintenance is the inductive step. They have the machinery from 121; naming it means they can reuse it instead of learning a ritual.\nTermination is the part that is not induction and the part they forget. It is where the invariant gets cashed in."
+    "section": "What is always true?",
+    "text": "What is always true?\nAt the start of iteration \\(i\\):\n\n\n\nC[0..i-1] is sorted.\n\n\n\n\n\nIs that enough?\n\nTake this seriously for a moment – it is the answer everyone gives, and it is true. It is just not enough.\nTry restoration with it: assume C[0..i-1] is sorted, run one iteration, and try to conclude C[0..i] is sorted. You cannot. Nothing stops the element we just dropped into position \\(i\\) from being smaller than C[i-1] – unless we already knew the prefix held the smallest elements.\nLet them sit with the failed attempt before the fix. The failure is the lesson."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#initialization-and-restoration",
-    "href": "slides/lecture-04_slides.html#initialization-and-restoration",
+    "objectID": "slides/lecture-05_slides.html#strengthen-it",
+    "href": "slides/lecture-05_slides.html#strengthen-it",
+    "title": "CPSC 221",
+    "section": "Strengthen it",
+    "text": "Strengthen it\n\n\n\nAt the start of iteration \\(i\\):   C[0..i-1] is sorted, and holds the \\(i\\) smallest values in C.\n\n\n\n\nThis is lecture 4’s closing point, arrived at the hard way: the invariant has to be stronger than the postcondition.\nThe theorem only says the array ends up sorted. “Holds the \\(i\\) smallest” never appears in it. But drop that clause and restoration fails, so the proof needs it – carried through every iteration purely to make the induction go.\nName it: strengthening the induction hypothesis. Same move as 121."
+  },
+  {
+    "objectID": "slides/lecture-05_slides.html#initialization-and-restoration",
+    "href": "slides/lecture-05_slides.html#initialization-and-restoration",
     "title": "CPSC 221",
     "section": "Initialization and restoration",
-    "text": "Initialization and restoration\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nInitialization. \\(i = a{+}1\\):\nRestoration. Assume invariant holds at the top of \\(i\\), and then run the body:\n\nInitialization: retloc = a, and the min of the one-element range C[a..a] is at index \\(a\\). Holds.\nMaintenance: the body compares C[i] with C[retloc] and moves retloc only if C[i] is strictly smaller. Either way retloc ends up the index of the min of C[a..i] – which is the invariant at the top of \\(i{+}1\\). Done.\nWorth naming: the invariant is false in the middle of the body, between the comparison and the assignment. It only has to hold at the top of each iteration. Students who think it must hold everywhere get stuck here."
+    "text": "Initialization and restoration\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nInitialization. \\(i = 0\\):\nRestoration. Assume the invariant holds at the start of iteration \\(i\\); run the body:\n \n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n7\n11\n15\n21\n29\n86\n81\n92\n57\n61\n64\n73\n79\n44\n18\n45\n\n\n\n\nInitialization: \\(i=0\\), so the prefix is empty. An empty sequence is sorted, and it trivially holds the zero smallest values. Holds.\nRestoration: by the invariant, C[0..i-1] is sorted and holds the \\(i\\) smallest. idxOfMin(C, i) – already proved correct on Wednesday – returns the index of the smallest of what remains. Swapping it into position \\(i\\) makes C[0..i] hold the \\(i+1\\) smallest, and the new element is \\(\\ge\\) everything in the sorted prefix, so C[0..i] is still sorted. That is the invariant at \\(i+1\\).\nSay where idxOfMin gets used: this proof depends on Wednesday’s proof. That is what proving small things buys you."
   },
   {
-    "objectID": "slides/lecture-04_slides.html#termination",
-    "href": "slides/lecture-04_slides.html#termination",
+    "objectID": "slides/lecture-05_slides.html#termination",
+    "href": "slides/lecture-05_slides.html#termination",
     "title": "CPSC 221",
     "section": "Termination",
-    "text": "Termination\nint idxOfMin (vector&lt;int&gt;& C, int a) {\n    int retloc = a;\n    for (int i = a+1; i &lt; C.size(); i++)\n        if (C[i] &lt; C[retloc]) {\n            retloc = i;\n        }\n    return retloc;\n}\nDoes the loop stop?\nWhat is the state when it does?\n\nStops: \\(i\\) rises by one each pass against a fixed bound, so after \\(n-a-1\\) passes the guard fails.\nThe second question is the one that matters and the one nobody writes down. Two facts combine:\n\nthe guard is false, so \\(i = n\\)\nthe invariant holds, so retloc indexes the min of C[a..i-1]\n\nSubstitute: C[a..n-1]. That is the theorem, and the proof ends – not with more argument, but by reading the invariant at exit.\nIf the invariant had been a..i, this substitution would have given C[a..n], which is out of bounds. The off-by-one from two slides ago shows up here as a proof that does not close."
-  },
-  {
-    "objectID": "slides/lecture-04_slides.html#the-recipe",
-    "href": "slides/lecture-04_slides.html#the-recipe",
-    "title": "CPSC 221",
-    "section": "The recipe",
-    "text": "The recipe\n\n\n\n\n\n\n\n\n1. Recognize the Claim\nthe postcondition you are trying to reach\n\n\n2. Find an invariant\nstrong enough to give that at exit, and still true after one pass\n\n\n3. Initialization\ntrue before the first iteration\n\n\n4. Restoration\nstart of \\(i\\) \\(\\Rightarrow\\) start of \\(i{+}1\\)\n\n\n5. Termination\nthe loop ends, and invariant gives result\n\n\n\n\n\n\nHere the invariant was the theorem with \\(n\\) replaced by \\(i\\). That is the easy case — often it has to say more than the theorem.\n\n\nProving correctness is only one use of invariants — they are also how you design a loop in the first place.\n\nSteps 1 and 2 are the ones this lecture added. Most students arrive able to do 3, 4, 5 mechanically and with no idea where the invariant came from.\nDo not oversell step 2. idxOfMin is the easy case, where the invariant is the theorem with \\(n\\) replaced by \\(i\\). In general the invariant must be stronger than the postcondition, because a claim that barely implies the result will not survive an iteration – binary search carries “if q is present it is in [lo,hi]”, Euclid carries gcd(x,y) unchanged, the playlist partition carries three moving boundaries. None of those is the theorem with a substitution.\nThat is strengthening the induction hypothesis, which they saw in 121. Worth naming if someone asks why their invariant will not go through – usually it is too weak, not wrong.\nLand the last line. An invariant written before the body tells you what the body must do; written after, it is an audit. The first is the more valuable habit – and it is what HW1 zone 3 is actually asking for."
+    "text": "Termination\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nDoes the loop stop?\nWhat is the state when it does?\n\nStops: \\(i\\) rises by one against a fixed bound, so after \\(n\\) iterations the guard fails.\nAt exit \\(i = n\\), so the invariant reads: C[0..n-1] is sorted and holds the \\(n\\) smallest values – which is the whole array. Sorted. That is the theorem.\nNote the second clause does nothing at all at this point. It existed only to get us here, and then it retires."
   },
   {
     "objectID": "summaries/lecture-01_summary.html",
