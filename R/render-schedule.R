@@ -39,7 +39,9 @@ render_schedule <- function() {
       ),
       fri_recording = resource_cell(
         fri_id,
-        recording_url(fri_id, date + 4),
+        # Friday is an async video: recorded Wednesday, posted Thursday
+        # morning, so it is available the day before the date it sits on.
+        recording_url(fri_id, date + 3),
         "circle-play",
         "Recording"
       ),

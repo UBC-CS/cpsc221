@@ -23,6 +23,10 @@ render_unit_schedule <- function() {
         day == "fri_id" ~ 4
       ),
       date = date + offset,
+      # Friday's video is posted Thursday morning, so it becomes available a
+      # day before the meeting it belongs to. Mon/Wed recordings follow the
+      # class itself.
+      available = dplyr::if_else(day == "fri_id", date - 1, date),
       kind = "lecture",
       sort_order = offset,
       title = lecture_title(id),
@@ -35,7 +39,7 @@ render_unit_schedule <- function() {
       ),
       resource_2 = resource_cell(
         id,
-        recording_url(id, date),
+        recording_url(id, available),
         "circle-play",
         "Recording"
       )
