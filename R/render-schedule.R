@@ -15,7 +15,7 @@ render_schedule <- function() {
       ),
       mon_recording = resource_cell(
         mon_id,
-        recording_url(mon_id, date + 0),
+        lookup_url(mon_id, "recording"),
         "circle-play",
         "Recording"
       ),
@@ -27,7 +27,7 @@ render_schedule <- function() {
       ),
       wed_recording = resource_cell(
         wed_id,
-        recording_url(wed_id, date + 2),
+        lookup_url(wed_id, "recording"),
         "circle-play",
         "Recording"
       ),
@@ -41,7 +41,7 @@ render_schedule <- function() {
         fri_id,
         # Friday is an async video: recorded Wednesday, posted Thursday
         # morning, so it is available the day before the date it sits on.
-        recording_url(fri_id, date + 3),
+        lookup_url(fri_id, "recording"),
         "circle-play",
         "Recording"
       ),
@@ -63,7 +63,7 @@ render_schedule <- function() {
       ),
       lab_cell = resource_cell(
         lab,
-        prairielearn_url(lab, date),
+        lookup_url(lab, "prairielearn"),
         "calendar-week",
         "Lab on PrairieLearn"
       ),
@@ -71,13 +71,13 @@ render_schedule <- function() {
         exam,
         lookup_url(exam, "pre-activity"),
         "book",
-        "Examlet review material"
+        "Book your examlet seat (PrairieTest)"
       ),
       exam_practice = resource_cell(
         exam,
         lookup_url(exam, "practice"),
         "pen-to-square",
-        "Examlet practice problems"
+        "Examlet practice problems (PrairieLearn)"
       ),
       week = as.character(week)
     ) |>

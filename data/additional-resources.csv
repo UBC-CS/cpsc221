@@ -1,4 +1,11 @@
 id,type,resource
+lecture-01,recording,https://canvas.ubc.ca/courses/190808/external_tools/66459
+lecture-02,recording,https://canvas.ubc.ca/courses/190808/external_tools/66459
+lab-01,prairielearn,https://us.prairielearn.com/pl/course_instance/231085/assessments
 HW1,prairielearn,https://us.prairielearn.com/pl/course_instance/231085/assessments
-Examlet 1,pre-activity,https://us.prairielearn.com/pl/course_instance/231085/assessments
-Examlet 2,pre-activity,https://us.prairielearn.com/pl/course_instance/231085/assessments
+Examlet 1,pre-activity,https://us.prairietest.com/
+Examlet 1,practice,https://us.prairielearn.com/pl/course_instance/231085/assessments
+Examlet 2,pre-activity,https://us.prairietest.com/
+lecture-03,recording,https://canvas.ubc.ca/courses/190808/external_tools/66459
+lecture-04,recording,https://canvas.ubc.ca/courses/190808/external_tools/66459
+lecture-05,recording,https://canvas.ubc.ca/courses/190808/external_tools/66459
