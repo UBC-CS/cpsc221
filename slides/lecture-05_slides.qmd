@@ -1,57 +1,78 @@
 ---
 title: "{{< var course.code >}}"
-subtitle: "Selection Sort"
+subtitle: "Loop Invariants"
 
-# Follows oldslides/lec091124-selection.pdf.
-#
-# This one is an async video, so there are no room questions that need an
-# answer back. Blanks are still there to fill in while recording -- pauses work
-# on video, and a viewer can stop the tape and try it.
-#
-# The spine: selection sort is the example where the obvious invariant is too
-# weak. That pays off lecture 4's closing claim that an invariant often has to
-# say more than the theorem.
+# Lecture 4 ran out of time partway through, so the correctness half was
+# carried into Friday's video. These slides are lecture 4's from "Intro to
+# algorithm correctness" onward, duplicated deliberately -- lecture 4's deck is
+# left whole as authored, and this is what was actually recorded.
 ---
-## Today {.smaller}
+## Intro to algorithm correctness {.smaller}
 
-**Announcements**
+```cpp
+int ____________ (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
 
-- Examlet 1 is next week — do the practice problems
-- HW1 due Monday, 11:59 pm
+Good name — what does it do?
 
-\
+Running time?
 
-**Where we're going**
-
-- Warm-up
-- Selection sort — what it does, how long it takes
-- Selection sort — why it works
-
-## Warm-up {.smaller}
-
-My algorithm runs in time $\Omega(n \log n)$.
-
-Your algorithm runs in time $O(n!)$.
-
-\
-
-**Whose is better?**
+Does it work?
 
 ::: notes
-The answer is: you cannot tell, and that is the whole point.
+Same three questions as lecture 2, now in one slide, because they know how to
+do the first two. Move fast on name and runtime -- the whole lecture is the
+third question.
 
-Mine is bounded *below* -- it takes at least $n\log n$, and might take
-$n^{100}$. Yours is bounded *above* -- it takes at most $n!$, and might take
-constant time. The two claims do not meet, so no comparison follows.
+Name: it returns an **index**, not a value, so `idxOfMin` in the house style.
+Careful -- lecture 3's `findMin` returned the min *value*. Worth naming the
+difference out loud; it is the same distinction they fought over in lecture 2.
 
-Worth saying plainly on the recording: these are the two bounds pointing in
-opposite directions, and reading $\Omega$ as "best case" and $O$ as "worst
-case" is what makes people think a comparison is available here.
+Runtime: $\Theta(n)$, one pass, no early return.
 
-Pause after the question. Viewers can stop and think.
+"Does it work?" is the new question. Nobody has an answer yet, which is the
+point.
 :::
 
-## Where we left off {.smaller}
+## Correctness: prelims {.smaller}
+
+```cpp
+int ____________ (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+What are the possible values of $i$?
+
+Stop the algorithm at some iteration $i$ — what do we know about the variables?
+
+::: notes
+Pen work on the array. Stop it at $i = 5$ and ask what `retloc` must be. Then
+$i = 9$. They will get there concretely before they can say it generally,
+which is the right order.
+
+$i$ ranges over $a{+}1 \ldots n{-}1$. The answer you are steering toward:
+`retloc` is the index of the smallest element seen *so far* -- and "so far"
+is the thing that needs pinning down precisely.
+:::
+
+## What are we trying to prove? {.smaller}
 
 ```cpp
 int idxOfMin (vector<int>& C, int a) {
@@ -64,215 +85,181 @@ int idxOfMin (vector<int>& C, int a) {
 }
 ```
 
-We named it, evaluated its runtime, and proved it is correct.
+**Thm.** `idxOfMin(C, a)` returns the index of the minimum value in
+`C[a..n-1]`.
 
 ::: notes
-Thirty seconds of recap -- this is the function we proved on Wednesday.
-$\Theta(n)$, and the invariant was "`retloc` is the index of the min of
-`C[a..i-1]`".
+The theorem comes first, deliberately. You cannot choose an invariant until you
+know what you are trying to deliver -- the invariant is *reverse-engineered*
+from the theorem, and doing it in this order is what makes the next slide feel
+inevitable rather than arbitrary.
 
-We are about to use it as a building block, which is the reason it was worth
-proving.
+Ask: at the moment the loop exits, what would we need to be true?
 :::
 
-## Another example {.smaller}
+## The invariant {.smaller}
 
-```cpp
-void ____________ (vector<int>& C) {
-    for (int i = 0; i < C.size(); i++) {
-        int m = idxOfMin(C, i);
-        swap(C, m, i);
-    }
-}
-```
+We want, at exit: `retloc` is the index of the min of `C[a..n-1]`.
 
-|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+\
 
-What does it do? &nbsp;&nbsp; How long does it take?
-
-::: notes
-Trace two iterations on the array with the pen before naming it. $i=0$ finds 7
-at index 14 and swaps it to the front; $i=1$ finds 11, already in place.
-
-Name: **selection sort**. It repeatedly *selects* the smallest remaining
-element.
-
-Running time: `idxOfMin(C, i)` costs $n-i$, so the total is
-$n + (n-1) + \cdots + 1 = \Theta(n^2)$. Note it does not care what the data
-looks like -- best and worst are the same, which is the `findMin` observation
-from lecture 3 one level up.
-:::
-
-## Selection sort {.smaller}
-
-```cpp
-void selectionSort (vector<int>& C) {
-    for (int i = 0; i < C.size(); i++) {
-        int m = idxOfMin(C, i);
-        swap(C, m, i);
-    }
-}
-```
-
-|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|  7 | 11 | 15 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 73 | 79 | 44 | 32 | 45 |
-
-$T(n) = \Theta(n^2)$ 
-
-::: notes
-The array shown is mid-run, not sorted. Point at the boundary: everything left
-of index 5 is sorted and small; everything right of it is untouched original
-data. That picture *is* the invariant, and the next slide makes them read it.
-:::
-
-## Oops {.smaller}
-
-```cpp
-void selectionSort (vector<int>& C) {
-    for (int i = 0; i < C.size(); i++) {
-        int m = idxOfMin(C, i);
-        swap(C, m, i);
-    }
-}
-```
-
-|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|  7 | 11 | 15 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 73 | 79 | 44 | 18 | 45 |
-
-**My code crashed partway through the loop.**
-
-What is the latest iteration I could have been on?
-
-::: notes
-This is the best slide in the lecture. Pause here.
-
-Answer: **$i = 3$.** How you get there is the point.
-
-The prefix looks sorted a long way -- 7, 11, 15, 21, 29 -- so the eyeball
-answer is 5. But 18 is sitting at index 14. For the invariant to hold at $i=5$
-the first five entries would have to be the five smallest, and they are not:
-18 belongs in there and 29 does not. Same failure at $i=4$.
-
-At $i=3$ it holds: 7, 11, 15 really are the three smallest values in the array,
-and they are sorted. So iteration 3 had begun and not finished -- it would have
-found 18 and swapped it into position 3.
-
-Two things to land:
-
-- **The weak invariant cannot answer this.** "The prefix is sorted" is true
-  through index 4 and gives the wrong answer. Only "and holds the $i$ smallest"
-  gets you there -- the clause we added one slide ago, doing work.
-- **You just read the state of a crashed program off the data.** That is what
-  invariants are for outside of proofs: they say what must be true at any
-  moment, which is exactly what debugging is.
-:::
-
-## What is always true? {.smaller}
-
-At the start of iteration $i$:
+So carry that claim through the loop:
 
 ::: {.callout-note appearance="minimal"}
-`C[0..i-1]` is **sorted**.
+**Loop invariant.** At the start of iteration $i$, `retloc` is the index of the
+minimum value in `C[a..`\_\_\_`]`.
+:::
+
+::: notes
+The blank is `i-1`, and the whole exercise is getting it right.
+
+At the *top* of iteration $i$ we have not yet examined `C[i]`, so the range
+we can vouch for stops at $i-1$. Almost everyone writes `a..i`.
+
+Check it against the exit: the loop ends with $i = n$, so the invariant reads
+`C[a..n-1]` -- exactly the theorem. That is the test for whether you chose
+the right invariant, and it is worth doing out loud: a good invariant is one
+that *becomes* the theorem when the loop stops.
+:::
+
+## Proof Strategy {.smaller}
+
+::: {.callout-note appearance="minimal"}
+**Loop invariant.** At the start of iteration $i$, `retloc` is the index of the
+minimum value in `C[a..`\_\_\_`]`.
+:::
+
+Proving the Theorem requires three things:
+
+::: {.shaded-table}
+
+| | |
+|---|---|
+| **Initialization** | the invariant is true before the first iteration |
+| **Restoration** | if true at the start of iteration $i$, it is true at the start of $i+1$ |
+| **Termination** | the loop ends — and invariant + exit condition give the theorem |
+
 :::
 
 \
 
-Is that enough?
+What does this smell like?
 
 ::: notes
-Take this seriously for a moment -- it is the answer everyone gives, and it is
-true. It is just not *enough*.
+Say "this is induction" out loud. Initialization is the base case, maintenance
+is the inductive step. They have the machinery from 121; naming it means they
+can reuse it instead of learning a ritual.
 
-Try restoration with it: assume `C[0..i-1]` is sorted, run one iteration, and
-try to conclude `C[0..i]` is sorted. You cannot. Nothing stops the element we
-just dropped into position $i$ from being smaller than `C[i-1]` -- unless we
-already knew the prefix held the smallest elements.
-
-Let them sit with the failed attempt before the fix. The failure is the lesson.
-:::
-
-## Strengthen it {.smaller}
-
-::: {.callout-note appearance="minimal"}
-At the start of iteration $i$: &nbsp; `C[0..i-1]` is **sorted**, and holds the
-$i$ **smallest** values in `C`.
-:::
-
-
-::: notes
-This is lecture 4's closing point, arrived at the hard way: the invariant has
-to be *stronger* than the postcondition.
-
-The theorem only says the array ends up sorted. "Holds the $i$ smallest" never
-appears in it. But drop that clause and restoration fails, so the proof needs
-it -- carried through every iteration purely to make the induction go.
-
-Name it: strengthening the induction hypothesis. Same move as 121.
+Termination is the part that is *not* induction and the part they forget. It is
+where the invariant gets cashed in.
 :::
 
 ## Initialization and restoration {.smaller}
 
 ```cpp
-void selectionSort (vector<int>& C) {
-    for (int i = 0; i < C.size(); i++) {
-        int m = idxOfMin(C, i);
-        swap(C, m, i);
-    }
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
 }
 ```
 
-**Initialization.** $i = 0$:
+**Initialization.** $i = a{+}1$:
 
-**Restoration.** Assume the invariant holds at the start of iteration $i$; run the body:
-
-\ 
-
-\ 
-
-|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
-|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-|  7 | 11 | 15 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 73 | 79 | 44 | 18 | 45 |
+**Restoration.** Assume invariant holds at the top of $i$, and then run the body:
 
 ::: notes
-Initialization: $i=0$, so the prefix is empty. An empty sequence is sorted, and
-it trivially holds the zero smallest values. Holds.
+Initialization: `retloc = a`, and the min of the one-element range
+`C[a..a]` is at index $a$. Holds.
 
-Restoration: by the invariant, `C[0..i-1]` is sorted and holds the $i$
-smallest. `idxOfMin(C, i)` -- already proved correct on Wednesday -- returns
-the index of the smallest of what remains. Swapping it into position $i$ makes
-`C[0..i]` hold the $i+1$ smallest, and the new element is $\ge$ everything in
-the sorted prefix, so `C[0..i]` is still sorted. That is the invariant at $i+1$.
+Maintenance: the body compares `C[i]` with `C[retloc]` and moves
+`retloc` only if `C[i]` is strictly smaller. Either way `retloc` ends up
+the index of the min of `C[a..i]` -- which is the invariant at the top of
+$i{+}1$. Done.
 
-Say where `idxOfMin` gets used: this proof *depends* on Wednesday's proof. That
-is what proving small things buys you.
+Worth naming: the invariant is *false in the middle of the body*, between the
+comparison and the assignment. It only has to hold at the top of each
+iteration. Students who think it must hold everywhere get stuck here.
 :::
 
 ## Termination {.smaller}
 
 ```cpp
-void selectionSort (vector<int>& C) {
-    for (int i = 0; i < C.size(); i++) {
-        int m = idxOfMin(C, i);
-        swap(C, m, i);
-    }
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
 }
 ```
 
-Does the loop stop?
+**Does the loop stop?**
 
-What is the state when it does?
+**What is the state when it does?** 
 
 ::: notes
-Stops: $i$ rises by one against a fixed bound, so after $n$ iterations the
-guard fails.
+Stops: $i$ rises by one each pass against a fixed bound, so after $n-a-1$
+passes the guard fails.
 
-At exit $i = n$, so the invariant reads: `C[0..n-1]` is sorted and holds the
-$n$ smallest values -- which is the whole array. Sorted. That is the theorem.
+The second question is the one that matters and the one nobody writes down.
+Two facts combine:
 
-Note the second clause does nothing at all at this point. It existed only to
-get us here, and then it retires.
+- the guard is false, so $i = n$
+- the invariant holds, so `retloc` indexes the min of `C[a..i-1]`
+
+Substitute: `C[a..n-1]`. That is the theorem, and the proof ends -- not
+with more argument, but by *reading* the invariant at exit.
+
+If the invariant had been `a..i`, this substitution would have given
+`C[a..n]`, which is out of bounds. The off-by-one from two slides ago shows
+up here as a proof that does not close.
+:::
+
+## The recipe {.smaller}
+
+::: {.shaded-table}
+
+| | |
+|---|---|
+| **1. Recognize the Claim** | the postcondition you are trying to reach |
+| **2. Find an invariant** | strong enough to give that at exit, and still true after one pass |
+| **3. Initialization** | true before the first iteration |
+| **4. Restoration** | start of $i$ $\Rightarrow$ start of $i{+}1$ |
+| **5. Termination** | the loop ends, and invariant gives result |
+
+:::
+
+\
+
+Here the invariant was the theorem with $n$ replaced by $i$. That is the easy
+case — often it has to say **more** than the theorem.
+
+\
+
+Proving correctness is only one use of invariants — they are also how you
+**design** a loop in the first place.
+
+::: notes
+Steps 1 and 2 are the ones this lecture added. Most students arrive able to do
+3, 4, 5 mechanically and with no idea where the invariant came from.
+
+Do not oversell step 2. `idxOfMin` is the easy case, where the invariant is the
+theorem with $n$ replaced by $i$. In general the invariant must be *stronger*
+than the postcondition, because a claim that barely implies the result will not
+survive an iteration -- binary search carries "if `q` is present it is in
+`[lo,hi]`", Euclid carries `gcd(x,y)` unchanged, the playlist partition carries
+three moving boundaries. None of those is the theorem with a substitution.
+
+That is strengthening the induction hypothesis, which they saw in 121. Worth
+naming if someone asks why their invariant will not go through -- usually it is
+too weak, not wrong.
+
+Land the last line. An invariant written *before* the body tells you what the
+body must do; written after, it is an audit. The first is the more valuable
+habit -- and it is what HW1 zone 3 is actually asking for.
 :::
