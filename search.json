@@ -247,7 +247,7 @@
     "href": "slides/lecture-01_slides.html#introductions",
     "title": "CPSC 221",
     "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Monday 12:00–1:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
+    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Tuesday 10:30–11:30 AM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
   },
   {
     "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
@@ -398,6 +398,26 @@
     "crumbs": [
       "Course information",
       "Announcements"
+    ]
+  },
+  {
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
     ]
   },
   {

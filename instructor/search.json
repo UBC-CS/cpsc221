@@ -59,7 +59,14 @@
     "href": "weeklyemail.html",
     "title": "CPSC 221 weekly email — 2026W1",
     "section": "",
-    "text": "Omnibus. One section per week, newest at the top. Not published: the Quarto project renders **/*.qmd only, so .md files at the root never ship.\nSent Sunday evenings, directly to students. Once sent, the facts go up as a post under posts/ — the website keeps the list, the email keeps the warmth.\nStanding links\n\n\n\nCourse website\nhttps://ubc-cs.github.io/cpsc221/\n\n\nPrairieLearn\nhttps://us.prairielearn.com/pl/course_instance/231085/\n\n\nPiazza\nhttps://piazza.com/ubc.ca/winterterm12026/cpsc221\n\n\nCanvas\nhttps://canvas.ubc.ca/courses/190808\n\n\nRecordings\nCanvas → Media Gallery (both sections, by date)\n\n\nClass\nMWF, FSC 1005 — 101 at 2:00, 102 at 3:00. Fri is async video from week 2\n\n\nOffice hours\nCinda: Tue 2–4. Nathan: Mon 4–5.\n\n\nAdmin / accommodations\ncpsc221-admin@cs.ubc.ca (Anca Barbu)\n\n\n\n\n\n\n\nHi everyone,\nWelcome to week 2!! We hope your weekend was fantastic.\nThe news: 1. Labs meet this week, and every week hereafter except for weeks 6, 10, and 14. Attendance at labs is not mandatory, and the material will be available all week, BUT our TAs are amazing and this is your chance to get to know them!\n\nHW1 releases tomorrow night, Due Mon, 09/21, 11:59p. We anticipate that it will take you approximately 3hr. You should engage with the material. We will test your understanding of the concepts via the examlets!\nFriday’s class is cancelled…for the rest of the term. Nathan and I will be recording a video of the lesson and posting it by each Thursday morning.(Note that this is new material, just like any class meeting.) Videos will be recorded Wed afternoons at 4:30p. You are welcome to join the zoom! :)\nExamlet 1 is next week, self-scheduled in ORCA for some session Thursday (9/24) through Sunday (9/27). It covers all material in the course through week 2 (this week). I will let you know the second the examlet is available for registration on prairietest.com.\nTo help you prepare for your examlet, we will release practice problems on Wednesday, 09/16, at 11:59p. This will be the pattern throughout the term.\n\nI can’t think of anything else for tonight – you are always welcome to drop us an email (cheeren@cs.ubc.ca, nharms@cs.ubc.ca), or post questions on piazza (https://piazza.com/ubc.ca/winterterm12026/cpsc221). Also, in case you’ve misplaced it, the course website is https://ubc-cs.github.io/cpsc221.\nSee you in class tomorrow! (Oh, that reminds me of another thing. We know that your decision to attend class is a choice. We make all course materials accessible because we believe it’s the right thing to do, so we know you could glean the material on your own (at 3am?). BUT we think the chances of building your understanding via human communication, and of smiling while you learn, are greatly improved by coming to the class meetings. We love it when you’re in the room…)\nAll the best! Cinda and Nathan and the CPSC221 teaching team!\n\n⚠ Before sending\n\nPrairieTest examUuids are inherited from the previous term. Until they point at this term’s ORCA exams, students cannot register and item 4 above cannot say anything specific.\nTA roster is still “TBA” on the syllabus and the lecture 1 slides.\n\n\n\n\n\nNot sent — the term started before this file existed.\nWednesday Sep 9 was the first meeting (Monday was Labour Day). Friday Sep 11 ran the “what does it do?” activity and reached “how long does it take?”. Lab Intro opened Sep 8."
+    "text": "Omnibus. One section per week, newest at the top. Not published: the Quarto project renders **/*.qmd only, so .md files at the root never ship.\nSent Sunday evenings, directly to students. Once sent, the facts go up as a post under posts/ — the website keeps the list, the email keeps the warmth.\nStanding links\n\n\n\nCourse website\nhttps://ubc-cs.github.io/cpsc221/\n\n\nPrairieLearn\nhttps://us.prairielearn.com/pl/course_instance/231085/\n\n\nPiazza\nhttps://piazza.com/ubc.ca/winterterm12026/cpsc221\n\n\nCanvas\nhttps://canvas.ubc.ca/courses/190808\n\n\nRecordings\nCanvas → Media Gallery (both sections, by date)\n\n\nClass\nMWF, FSC 1005 — 101 at 2:00, 102 at 3:00. Fri is async video from week 2\n\n\nOffice hours\nCinda: Tue 2–4. Nathan: Mon 4–5.\n\n\nAdmin / accommodations\ncpsc221-admin@cs.ubc.ca (Anca Barbu)\n\n\n\n\n\n\nNot yet drafted. Must include:\n\nCinda’s office hours have moved to Tuesday 10:30–11:30 am, ICCS 233 (was Monday 12–1). Nathan’s are unchanged, Monday 4–5.\nHW1 due Mon 21, PA1 out the same night, due Oct 5\nExamlet 1 Thu 24 – Sun 27 — book a seat on PrairieTest, work PEX1\nPEX2 releases Wed 23\nLab Debug due Sun 27, Lab Linked Lists opens\n\n\n\n\n\n\nHi everyone,\nWelcome to week 2!! We hope your weekend was fantastic.\nThe news: 1. Labs meet this week, and every week hereafter except for weeks 6, 10, and 14. Attendance at labs is not mandatory, and the material will be available all week, BUT our TAs are amazing and this is your chance to get to know them!\n\nHW1 releases tomorrow night, Due Mon, 09/21, 11:59p. We anticipate that it will take you approximately 3hr. You should engage with the material. We will test your understanding of the concepts via the examlets!\nFriday’s class is cancelled…for the rest of the term. Nathan and I will be recording a video of the lesson and posting it by each Thursday morning.(Note that this is new material, just like any class meeting.) Videos will be recorded Wed afternoons at 4:30p. You are welcome to join the zoom! :)\nExamlet 1 is next week, self-scheduled in ORCA for some session Thursday (9/24) through Sunday (9/27). It covers all material in the course through week 2 (this week). I will let you know the second the examlet is available for registration on prairietest.com.\nTo help you prepare for your examlet, we will release practice problems on Wednesday, 09/16, at 11:59p. This will be the pattern throughout the term.\n\nI can’t think of anything else for tonight – you are always welcome to drop us an email (cheeren@cs.ubc.ca, nharms@cs.ubc.ca), or post questions on piazza (https://piazza.com/ubc.ca/winterterm12026/cpsc221). Also, in case you’ve misplaced it, the course website is https://ubc-cs.github.io/cpsc221.\nSee you in class tomorrow! (Oh, that reminds me of another thing. We know that your decision to attend class is a choice. We make all course materials accessible because we believe it’s the right thing to do, so we know you could glean the material on your own (at 3am?). BUT we think the chances of building your understanding via human communication, and of smiling while you learn, are greatly improved by coming to the class meetings. We love it when you’re in the room…)\nAll the best! Cinda and Nathan and the CPSC221 teaching team!\n\n⚠ Before sending\n\nPrairieTest examUuids are inherited from the previous term. Until they point at this term’s ORCA exams, students cannot register and item 4 above cannot say anything specific.\nTA roster is still “TBA” on the syllabus and the lecture 1 slides.\n\n\n\n\n\nNot sent — the term started before this file existed.\nWednesday Sep 9 was the first meeting (Monday was Labour Day). Friday Sep 11 ran the “what does it do?” activity and reached “how long does it take?”. Lab Intro opened Sep 8."
+  },
+  {
+    "objectID": "weeklyemail.html#week-3-mon-sep-21-to-sun-sep-27",
+    "href": "weeklyemail.html#week-3-mon-sep-21-to-sun-sep-27",
+    "title": "CPSC 221 weekly email — 2026W1",
+    "section": "",
+    "text": "Not yet drafted. Must include:\n\nCinda’s office hours have moved to Tuesday 10:30–11:30 am, ICCS 233 (was Monday 12–1). Nathan’s are unchanged, Monday 4–5.\nHW1 due Mon 21, PA1 out the same night, due Oct 5\nExamlet 1 Thu 24 – Sun 27 — book a seat on PrairieTest, work PEX1\nPEX2 releases Wed 23\nLab Debug due Sun 27, Lab Linked Lists opens"
   },
   {
     "objectID": "weeklyemail.html#week-2-mon-sep-14-to-sun-sep-20",
@@ -301,6 +308,26 @@
     "crumbs": [
       "Course information",
       "Announcements"
+    ]
+  },
+  {
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
     ]
   },
   {
@@ -624,7 +651,7 @@
     "href": "slides/lecture-01_slides.html#introductions",
     "title": "CPSC 221",
     "section": "Introductions",
-    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Monday 12:00–1:00 PM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
+    "text": "Introductions\n\nUs:\n\nCinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Tuesday 10:30–11:30 AM in ICCS 233\nNathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465\nCourse Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca\n\nTAs:"
   },
   {
     "objectID": "slides/lecture-01_slides.html#all-you-need-to-know-is-at",
