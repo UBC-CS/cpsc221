@@ -579,6 +579,76 @@
     "text": "For later: the AI comparison\nCut from this lesson deliberately — a tool producing the sentence in three seconds argues against the point, which is that they needed each other. It belongs in a lecture where assessment is the subject.\nWorth keeping when that lecture happens (tested 2026-09-11): asked what the function does, Gemini omitted “first”; ChatGPT got it right. That is the demonstration in one line — the word the whole room fights over is the word a widely-used tool drops, and you cannot tell which you got without already knowing the answer.\nA local chat window for doing this live, driven by the claude CLI so no API key is involved, is in tools/aidemo/server.py at the root of the superproject."
   },
   {
+    "objectID": "lesson-plans/selection-sort-proof.html",
+    "href": "lesson-plans/selection-sort-proof.html",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "",
+    "text": "Written to be worked at the board. It leans on two results rather than reproving them: idxOfMin, proved in lecture 4/5, and swap, assumed."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-code",
+    "href": "lesson-plans/selection-sort-proof.html#the-code",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The code",
+    "text": "The code\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWrite \\(n\\) for C.size(), and \\(C_0\\) for the contents of C on entry. Note \\(n\\) does not change: nothing in the loop resizes C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are allowed to assume",
+    "text": "What we are allowed to assume\n\n\n\n\n\n\nLemma 1 (idxOfMin). For \\(0 \\le a &lt; n\\), idxOfMin(C, a) returns an index \\(\\ell\\) with \\(a \\le \\ell &lt; n\\) and \\[C[\\ell] \\;=\\; \\min_{a \\le j &lt; n} C[j],\\] and does not modify C.\n\n\n\n\n\n\n\n\n\nLemma 2 (swap). swap(C, p, q) leaves C with \\(C'[p] = C[q]\\), \\(C'[q] = C[p]\\), and \\(C'[k] = C[k]\\) for every \\(k \\notin \\{p, q\\}\\). In particular it is a transposition, so it permutes the contents of C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are proving",
+    "text": "What we are proving\n\n\n\n\n\n\nTheorem. After selectionSort(C) returns, C is a permutation of \\(C_0\\) and \\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\).\n\n\n\nBoth halves are needed. Sortedness alone is satisfied by a function that overwrites the array with zeroes."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "href": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The invariant",
+    "text": "The invariant\nAt the top of iteration \\(i\\) — meaning just before the guard is tested with the loop variable equal to \\(i\\) — for \\(0 \\le i \\le n\\):\n\n\n\n\n\n\n\\(P(i)\\):\n\nC is a permutation of \\(C_0\\);\n\\(C[0] \\le C[1] \\le \\cdots \\le C[i-1]\\);\n\\(\\displaystyle\\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\\).\n\n\n\n\nClauses (b) and (c) are vacuous when \\(i = 0\\); (c) is also vacuous when \\(i = n\\).\nClause (c) is the one that does not appear in the theorem. It is carried purely to make the induction go through — see the remark at the end."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "href": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "a) Initialization",
+    "text": "a) Initialization\nTake \\(i = 0\\).\n\nNo statement has executed, so C holds \\(C_0\\), and the identity is a permutation.\nThe range \\(C[0..{-1}]\\) is empty, and the empty sequence is sorted.\nThere is no \\(k\\) with \\(0 \\le k &lt; 0\\), so the maximum is over an empty set and the claim is vacuous.\n\nHence \\(P(0)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "href": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "b) Restoration",
+    "text": "b) Restoration\nAssume \\(P(i)\\) holds at the top of iteration \\(i\\), and that the guard passed, so \\(i &lt; n\\). Let C denote the contents at the top of the iteration and \\(C'\\) the contents after the body runs. We show \\(P(i+1)\\) holds of \\(C'\\).\nThe body does two things:\n\\[m \\;=\\; \\texttt{idxOfMin(C, i)}, \\qquad \\texttt{swap(C, m, i)}.\\]\nBy Lemma 1, \\(i \\le m &lt; n\\) and \\[C[m] \\;=\\; \\min_{i \\le j &lt; n} C[j], \\tag{$\\star$}\\] and C is unchanged by the call. By Lemma 2, \\[C'[i] = C[m], \\qquad C'[m] = C[i], \\qquad C'[k] = C[k] \\text{ otherwise.}\\]\n(a) Permutation. idxOfMin does not modify C, and swap is a transposition. A composition of permutations is a permutation, so by the inductive hypothesis \\(C'\\) is a permutation of \\(C_0\\).\n(b) The prefix is sorted. We must show \\(C'[0] \\le \\cdots \\le C'[i]\\).\nSince \\(m \\ge i\\), the swap touches only indices \\(\\ge i\\), so \\[C'[k] = C[k] \\quad \\text{for all } k &lt; i,\\] and by the inductive hypothesis (b) this prefix is sorted. It remains to check the join, that \\(C'[i-1] \\le C'[i]\\), and only when \\(i \\ge 1\\).\nBy the inductive hypothesis (c), \\[C[i-1] \\;\\le\\; \\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\n\\;\\overset{(\\star)}{=}\\; C[m] \\;=\\; C'[i],\\] and \\(C'[i-1] = C[i-1]\\), so \\(C'[i-1] \\le C'[i]\\) as required.\nWhen \\(i = 0\\) the range \\(C'[0..0]\\) is a single element and is sorted trivially.\n(c) The prefix stays below the suffix. We must show \\[\\max_{0 \\le k &lt; i+1} C'[k] \\;\\le\\; \\min_{i+1 \\le j &lt; n} C'[j].\\]\nBy part (b) just proved, \\(C'[0..i]\\) is sorted, so its maximum is its last entry: \\[\\max_{0 \\le k \\le i} C'[k] \\;=\\; C'[i] \\;=\\; C[m].\\]\nFor the right-hand side, compare the two suffixes as multisets. The swap moves \\(C[m]\\) to position \\(i\\) and \\(C[i]\\) to position \\(m\\), and both \\(i\\) and \\(m\\) lie in \\([i, n)\\), so \\[\\{\\, C'[j] : i+1 \\le j &lt; n \\,\\} \\;=\\; \\{\\, C[j] : i \\le j &lt; n \\,\\} \\setminus \\{ C[m] \\}.\\]\nEvery element of \\(\\{C[j] : i \\le j &lt; n\\}\\) is \\(\\ge C[m]\\) by \\((\\star)\\), since \\(C[m]\\) is the minimum of exactly that set. Removing one element cannot introduce anything smaller, so every remaining element is \\(\\ge C[m] = C'[i]\\), which is the claim.\nHence \\(P(i+1)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#c-termination",
+    "href": "lesson-plans/selection-sort-proof.html#c-termination",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "c) Termination",
+    "text": "c) Termination\nThe loop variable starts at \\(0\\), increases by exactly \\(1\\) per iteration, and is tested against the fixed bound \\(n\\). So after \\(n\\) iterations the guard fails and control leaves the loop with \\(i = n\\).\n\\(P(n)\\) therefore holds, and reading it off:\n\n\nC is a permutation of \\(C_0\\);\n\n\n\\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\) — the whole array is sorted;\n\n\nvacuous.\n\n\nTogether, (a) and (b) are exactly the theorem. \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "href": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: why clause (c) is there",
+    "text": "Remark: why clause (c) is there\nDrop (c) and the proof fails at one specific line. In part (b) we needed \\(C'[i-1] \\le C'[i]\\), and the only thing that delivers it is knowing that everything already placed is no larger than anything still to come. Sortedness of the prefix alone says nothing about how the prefix compares to the rest, so the newly placed element could land below its predecessor.\nSo (c) is not part of what we set out to prove, and it is not used at termination — it retires there, vacuous. It exists solely so that the inductive step can be taken. That is strengthening the induction hypothesis: the statement you can prove is sometimes stronger than the one you want."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "href": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: the last iteration",
+    "text": "Remark: the last iteration\nThe loop runs to \\(i = n-1\\), where idxOfMin(C, n-1) must return \\(n-1\\) and the swap exchanges an element with itself. It is harmless, and the proof covers it without a special case, but the loop could equally run to \\(n-2\\). Worth a sentence if someone asks — it is the same observation as the final pass of a bubble sort doing nothing."
+  },
+  {
     "objectID": "cpp-short-course.html",
     "href": "cpp-short-course.html",
     "title": "C++ Short Course (optional)",
