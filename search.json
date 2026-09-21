@@ -728,6 +728,20 @@
     "text": "Oops\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n7\n11\n15\n21\n29\n86\n81\n92\n57\n61\n64\n73\n79\n44\n18\n45\n\n\n\nMy code crashed partway through the loop.\nWhat is the latest iteration I could have been on?\n\nThis is the best slide in the lecture. Pause here.\nAnswer: \\(i = 3\\). How you get there is the point.\nThe prefix looks sorted a long way – 7, 11, 15, 21, 29 – so the eyeball answer is 5. But 18 is sitting at index 14. For the invariant to hold at \\(i=5\\) the first five entries would have to be the five smallest, and they are not: 18 belongs in there and 29 does not. Same failure at \\(i=4\\).\nAt \\(i=3\\) it holds: 7, 11, 15 really are the three smallest values in the array, and they are sorted. So iteration 3 had begun and not finished – it would have found 18 and swapped it into position 3.\nTwo things to land:\n\nThe weak invariant cannot answer this. “The prefix is sorted” is true through index 4 and gives the wrong answer. Only “and holds the \\(i\\) smallest” gets you there – the clause we added one slide ago, doing work.\nYou just read the state of a crashed program off the data. That is what invariants are for outside of proofs: they say what must be true at any moment, which is exactly what debugging is."
   },
   {
+    "objectID": "slides/lecture-06_slides.html#what-does-it-do",
+    "href": "slides/lecture-06_slides.html#what-does-it-do",
+    "title": "CPSC 221",
+    "section": "What does it do?",
+    "text": "What does it do?\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nThm.\n\nBlank on purpose – build the statement with the room, then write it.\nWhat they will offer: “C ends up sorted.” Accept it, then break it: a function that overwrites every entry with 0 leaves C sorted. So does one that returns an empty array. Sortedness alone is not the claim.\nWhat is missing is that the same values are still there. That is the permutation clause, and this is the first time it appears – it never came up for idxOfMin, which did not modify anything.\nA statement that survives:\n\nAfter selectionSort(C) returns, C is a permutation of its original contents, and C[0] &lt;= C[1] &lt;= … &lt;= C[n-1].\n\nPoint back at the array on the previous slide if it helps: same sixteen values as we started with, in a different order. Nothing was invented and nothing was lost.\nThis is the theorem the next three slides are working toward, so leave it on the board."
+  },
+  {
+    "objectID": "slides/lecture-06_slides.html#how-long-does-it-take",
+    "href": "slides/lecture-06_slides.html#how-long-does-it-take",
+    "title": "CPSC 221",
+    "section": "How long does it take?",
+    "text": "How long does it take?\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\nBlank for annotation.\nThe derivation: idxOfMin(C, i) scans C[i..n-1], so it costs \\(n - i\\). The swap is constant. So\n\\[T(n) = \\sum_{i=0}^{n-1} (n - i) = n + (n-1) + \\cdots + 1 = \\frac{n(n+1)}{2}\n= \\Theta(n^2).\\]\nThe point worth making after the algebra: nothing in that sum mentions the data. Best case and worst case are the same, unlike idxFirst. Selection sort does the same work on a sorted array as on a shuffled one."
+  },
+  {
     "objectID": "slides/lecture-06_slides.html#what-is-always-true",
     "href": "slides/lecture-06_slides.html#what-is-always-true",
     "title": "CPSC 221",
@@ -739,21 +753,35 @@
     "href": "slides/lecture-06_slides.html#strengthen-it",
     "title": "CPSC 221",
     "section": "Strengthen it",
-    "text": "Strengthen it\n\n\n\nAt the start of iteration \\(i\\):   C[0..i-1] is sorted, and holds the \\(i\\) smallest values in C.\n\n\n\n\nThis is lecture 4’s closing point, arrived at the hard way: the invariant has to be stronger than the postcondition.\nThe theorem only says the array ends up sorted. “Holds the \\(i\\) smallest” never appears in it. But drop that clause and restoration fails, so the proof needs it – carried through every iteration purely to make the induction go.\nName it: strengthening the induction hypothesis. Same move as 121."
+    "text": "Strengthen it\n\n\n\nAt the start of iteration \\(i\\):   C is a permutation of what we started with, C[0..i-1] is sorted, and holds the \\(i\\) smallest values in C.\n\n\n\n\nThis is lecture 4’s closing point, arrived at the hard way: the invariant has to be stronger than the postcondition.\nThe theorem only says the array ends up sorted. “Holds the \\(i\\) smallest” never appears in it. But drop that clause and restoration fails, so the proof needs it – carried through every iteration purely to make the induction go.\nName it: strengthening the induction hypothesis. Same move as 121.\nThe three clauses are there for three different reasons, and it is worth separating them:\n\npermutation – carries the first half of the theorem. Needed because sortedness alone does not say the values are still ours.\nsorted prefix – the second half of the theorem, restricted to what has been placed so far.\nthe \\(i\\) smallest – in the theorem nowhere. Purely to make restoration go through."
   },
   {
-    "objectID": "slides/lecture-06_slides.html#initialization-and-restoration",
-    "href": "slides/lecture-06_slides.html#initialization-and-restoration",
+    "objectID": "slides/lecture-06_slides.html#initialization",
+    "href": "slides/lecture-06_slides.html#initialization",
     "title": "CPSC 221",
-    "section": "Initialization and restoration",
-    "text": "Initialization and restoration\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nInitialization. \\(i = 0\\):\nRestoration. Assume the invariant holds at the start of iteration \\(i\\); run the body:\n \n \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n\n\n\n\n7\n11\n15\n21\n29\n86\n81\n92\n57\n61\n64\n73\n79\n44\n18\n45\n\n\n\n\nInitialization: \\(i=0\\), so the prefix is empty. An empty sequence is sorted, and it trivially holds the zero smallest values. Holds.\nRestoration: by the invariant, C[0..i-1] is sorted and holds the \\(i\\) smallest. idxOfMin(C, i) – already proved correct on Wednesday – returns the index of the smallest of what remains. Swapping it into position \\(i\\) makes C[0..i] hold the \\(i+1\\) smallest, and the new element is \\(\\ge\\) everything in the sorted prefix, so C[0..i] is still sorted. That is the invariant at \\(i+1\\).\nSay where idxOfMin gets used: this proof depends on Wednesday’s proof. That is what proving small things buys you."
+    "section": "Initialization",
+    "text": "Initialization\n\nP(i) — at the start of iteration \\(i\\): C is a permutation of what we started with; C[0..i-1] is sorted; and it holds the \\(i\\) smallest values in C.\n\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\n\\(i = 0\\):\n\nBlank for annotation. All three clauses, and all three are easy:\n\npermutation – nothing has run, so C still holds exactly what it held on entry. The identity is a permutation.\nsorted – C[0..-1] is empty, and the empty sequence is sorted.\nthe 0 smallest – vacuous; there is no \\(k\\) with \\(0 \\le k &lt; 0\\).\n\nDo not rush past the empty-range cases. Students distrust them, and this is the cheapest place to get comfortable with “vacuously true”."
+  },
+  {
+    "objectID": "slides/lecture-06_slides.html#restoration",
+    "href": "slides/lecture-06_slides.html#restoration",
+    "title": "CPSC 221",
+    "section": "Restoration",
+    "text": "Restoration\n\nP(i) — at the start of iteration \\(i\\): C is a permutation of what we started with; C[0..i-1] is sorted; and it holds the \\(i\\) smallest values in C.\n\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nAssume the invariant at the start of iteration \\(i\\). Run the body:\n\n\n\\(m =\\)       after the swap:\n\nBlank for annotation. Set up the step before proving anything.\nBy Lemma (idxOfMin), \\(i \\le m &lt; n\\) and C[m] is the smallest value in C[i..n-1]. The call does not modify C.\nBy Lemma (swap), afterwards C'[i] = C[m], C'[m] = C[i], and every other entry is untouched.\nPermutation falls out here: a swap is a transposition, and a composition of permutations is a permutation. One line, then move on – the interesting work is the next slide.\nWorth pointing at: this proof uses Wednesday’s result. That is what proving small things buys you."
+  },
+  {
+    "objectID": "slides/lecture-06_slides.html#restoration-continued",
+    "href": "slides/lecture-06_slides.html#restoration-continued",
+    "title": "CPSC 221",
+    "section": "Restoration, continued",
+    "text": "Restoration, continued\n\nP(i) — at the start of iteration \\(i\\): C is a permutation of what we started with; C[0..i-1] is sorted; and it holds the \\(i\\) smallest values in C.\n\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWhy is C[0..i] still sorted?\n\n\nWhy does it still hold the \\(i+1\\) smallest?\n\nThis is where the lecture actually lives. Two questions, two different arguments.\nSorted. Since \\(m \\ge i\\), the swap touches nothing below \\(i\\), so the old prefix is unchanged and still sorted. The only new comparison is C'[i-1] &lt;= C'[i], and it comes straight from the third clause:\nC[i-1] \\(\\le\\) max of the prefix \\(\\le\\) min of the suffix \\(=\\) C[m] \\(=\\) C'[i].\nWithout the “smallest” clause there is nothing here. That is the payoff of two slides ago – say it out loud.\nStill the smallest. Compare the suffixes as sets, not index by index. The swap moved C[m] out to position \\(i\\) and C[i] in to position \\(m\\), and both positions are in the range \\([i, n)\\). So the new suffix is the old suffix with C[m] removed. Everything in the old suffix was \\(\\ge\\) C[m], and dropping one element cannot introduce anything smaller.\nStudents reach for an index argument here and get tangled. The set framing is the whole trick."
   },
   {
     "objectID": "slides/lecture-06_slides.html#termination",
     "href": "slides/lecture-06_slides.html#termination",
     "title": "CPSC 221",
     "section": "Termination",
-    "text": "Termination\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nDoes the loop stop?\nWhat is the state when it does?\n\nStops: \\(i\\) rises by one against a fixed bound, so after \\(n\\) iterations the guard fails.\nAt exit \\(i = n\\), so the invariant reads: C[0..n-1] is sorted and holds the \\(n\\) smallest values – which is the whole array. Sorted. That is the theorem.\nNote the second clause does nothing at all at this point. It existed only to get us here, and then it retires."
+    "text": "Termination\n\nP(i) — at the start of iteration \\(i\\): C is a permutation of what we started with; C[0..i-1] is sorted; and it holds the \\(i\\) smallest values in C.\n\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nDoes the loop stop?\nWhat is the state when it does?\n\nStops: \\(i\\) rises by one against a fixed bound, so after \\(n\\) iterations the guard fails.\nAt exit \\(i = n\\), so the invariant reads: C[0..n-1] is sorted and holds the \\(n\\) smallest values – which is the whole array. Sorted. That is the theorem.\nNote the second clause does nothing at all at this point. It existed only to get us here, and then it retires."
   },
   {
     "objectID": "summaries/lecture-01_summary.html",
