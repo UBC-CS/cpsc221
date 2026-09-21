@@ -11,7 +11,51 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 14 Sep 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 21 Sep 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 3 — Sep 21 to Sep 27</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/02_week-03/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>09/21</strong></td>
+<td>HW1 <strong>due</strong> · PA1 released, due 10/05</td>
+</tr>
+<tr class="even">
+<td><strong>09/23</strong></td>
+<td>PEX2 released</td>
+</tr>
+<tr class="odd">
+<td><strong>09/24 – 09/27</strong></td>
+<td><strong>Examlet 1</strong> — self-scheduled in ORCA</td>
+</tr>
+<tr class="even">
+<td><strong>09/27</strong></td>
+<td>Lab Debug <strong>due</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Examlet 1 covers everything through week 2: asymptotics, running times, best and worst cases, and loop invariants. Check your ORCA reservation.</p>
+<p><br>
+</p>
+<p><strong>Office hours have changed.</strong> Cinda is now <strong>Tuesdays 10:30–11:30 am, ICCS 233</strong>. Nathan is unchanged, <strong>Mondays 4–5 pm, ICCS X465</strong>.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/02_week-03/</guid>
+  <pubDate>Mon, 21 Sep 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 2 — Sep 14 to Sep 20</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
