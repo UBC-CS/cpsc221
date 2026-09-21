@@ -1,0 +1,26 @@
+---
+title: "Week 3 — Sep 21 to Sep 27"
+description: "Examlet 1 week. HW1 due, PA1 out, PEX2 Wednesday."
+author: "{{< var instructor.name >}}"
+date: 2026-09-21
+categories:
+  - deadline
+  - examlet
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **09/21** | HW1 **due** · PA1 released, due 10/05 |
+| **09/23** | PEX2 released |
+| **09/24 – 09/27** | **Examlet 1** — self-scheduled in ORCA |
+| **09/27** | Lab Debug **due** |
+
+Examlet 1 covers everything through week 2: asymptotics, running times, best
+and worst cases, and loop invariants. Check your ORCA reservation.
+
+\
+
+**Office hours have changed.** Cinda is now **Tuesdays 10:30–11:30 am, ICCS
+233**. Nathan is unchanged, **Mondays 4–5 pm, ICCS X465**.

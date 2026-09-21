@@ -23,14 +23,60 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ## Week 3 — Mon Sep 21 to Sun Sep 27
 
-*Not yet drafted. Must include:*
+*Draft. Dates checked against PrairieLearn. Examlet window in item 4 needs
+confirming against ORCA before this goes out.*
 
-- **Cinda's office hours have moved** to **Tuesday 10:30–11:30 am, ICCS 233**
-  (was Monday 12–1). Nathan's are unchanged, Monday 4–5.
-- HW1 due Mon 21, PA1 out the same night, due Oct 5
-- **Examlet 1 Thu 24 – Sun 27** — book a seat on PrairieTest, work PEX1
-- PEX2 releases Wed 23
-- Lab Debug due Sun 27, Lab Linked Lists opens
+---
+
+Hi everyone,
+
+Welcome to week 3! This is our first examlet week, so there's a bit more news
+than usual.
+
+The tidbits:
+
+1. **Cinda's office hours have moved.** They're now **Tuesdays, 10:30–11:30a, in
+   ICCS 233**.  Nathan's are unchanged: **Mondays 4–5p, ICCS X465**. Both are on
+   the course website, right at the top.
+
+2. **HW1 is due Monday, 9/21, 11:59p.** A reminder that you get one shot at each
+   question and you won't see a score until after it closes.
+
+3. **PA1 comes out Monday**, due Monday 10/05. Your work on the labs should be 
+excellent prep for the task.
+
+4. **Examlet 1 is this week**, self-scheduled in ORCA for a session between
+   **Thursday (9/24) and Sunday (9/27)**. It covers everything through week 2:
+   asymptotics, running times, best and worst cases, and loop invariants.
+   Please check your reservation!
+
+5. **PEX1 is available**. It, together with your Labs and HW assignment, should be 
+adequate prep for EX1.  **PEX2** will be released on Wednesday evening, 09/23.
+
+6. **Labs:** Lab Debug is due Sunday 09/27.
+
+7. Small thing, but a few of you asked: **printing the slides works now.** Add
+   `?print-pdf` to the end of a slide deck's address and print from there, or navigate 
+   to Tools and PDF Export from the slide menu. 
+
+As always, email us (cheeren@cs.ubc.ca, or nharms@cs.ubc.ca) or post on Piazza
+(https://piazza.com/ubc.ca/winterterm12026/cpsc221), and the website is
+https://ubc-cs.github.io/cpsc221.
+
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+⚠ **Before sending**
+
+1. **Examlet window** — Thu 9/24 to Sun 9/27 is carried over from the week 2
+   email. Confirm against ORCA.
+2. **Registration still isn't open.** All nine examlets and the final carry
+   last term's PrairieTest `examUuid`, so item 4's promise to email "the
+   moment it opens" depends on that being repointed first.
+3. **TA names** — still not in any email, and labs have been running a week.
 
 ---
 
