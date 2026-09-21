@@ -11,8 +11,8 @@ execute:
 **Contact**\
 {{< var icon.mail >}} [{{< var instructor.email >}}](mailto:{{< var instructor.email >}}) ({{< var instructor.name >}})\
 {{< var icon.mail >}} [{{< var instructor2.email >}}](mailto:{{< var instructor2.email >}}) ({{< var instructor2.name >}})\
-{{< var icon.time >}} {{< var instructor.office-hours >}} ({{< var instructor.name >}})\
-{{< var icon.time >}} {{< var instructor2.office-hours >}} ({{< var instructor2.name >}})\
+{{< var icon.time >}} {{< var instructor.office-hours >}} {{< var icon.building >}} {{< var instructor.office >}} ({{< var instructor.name >}})\
+{{< var icon.time >}} {{< var instructor2.office-hours >}} {{< var icon.building >}} {{< var instructor2.office >}} ({{< var instructor2.name >}})\
 :::
 
 ::: {.column width="50%"}

@@ -148,6 +148,25 @@ $tbl-border:         #a8c3cd;
   }
 }
 
+// ---- printing (?print-pdf) ------------------------------------------
+// Pandoc ships an @media print rule setting `text-indent: -5em` on every code
+// line. Combined with the panel's overflow:hidden that shears the first few
+// characters off each line -- `void selectionSort` prints as `lectionSort`.
+// CSS counters also do not survive Chrome's paged layout, so the gutter draws
+// empty. Both only show up in the PDF, never on screen.
+@media print {
+  .reveal div.sourceCode code.sourceCode > span {
+    text-indent: 0 !important;
+    padding-left: calc(#{$code-gutter-width} + 0.85em) !important;
+  }
+
+  // Re-seed the counter on the <pre>: when paginated, Chrome loses a reset that
+  // sits on the inner <code>, so the gutter prints empty.
+  .reveal pre.numberSource {
+    counter-reset: source-line 0 !important;
+  }
+}
+
 // ---- inline text colours ---------------------------------------------
 // Two equivalent spellings, use whichever reads better in the source:
 //     <blue>text</blue>      — terse; nested markdown still works

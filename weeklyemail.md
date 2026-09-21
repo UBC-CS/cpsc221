@@ -21,6 +21,19 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 3 — Mon Sep 21 to Sun Sep 27
+
+*Not yet drafted. Must include:*
+
+- **Cinda's office hours have moved** to **Tuesday 10:30–11:30 am, ICCS 233**
+  (was Monday 12–1). Nathan's are unchanged, Monday 4–5.
+- HW1 due Mon 21, PA1 out the same night, due Oct 5
+- **Examlet 1 Thu 24 – Sun 27** — book a seat on PrairieTest, work PEX1
+- PEX2 releases Wed 23
+- Lab Debug due Sun 27, Lab Linked Lists opens
+
+---
+
 ## Week 2 — Mon Sep 14 to Sun Sep 20
 
 ---
