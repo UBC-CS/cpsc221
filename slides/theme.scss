@@ -148,6 +148,36 @@ $tbl-border:         #a8c3cd;
   }
 }
 
+// Proof slides: the code is reference, not the subject, so it shrinks to make
+// room for working. {.proof} on the heading turns this on.
+.reveal section.proof {
+  div.sourceCode code.sourceCode {
+    font-size: calc(var(--r-main-font-size) * 0.48);
+  }
+
+  div.sourceCode {
+    margin: 0.2em 0 0.4em 0;
+  }
+}
+
+// A standing reminder of the loop invariant, parked in the top-right corner of
+// each slide of a proof. Absolutely positioned so it costs no layout: the code
+// block and the space below it are left free to annotate.
+.reveal .invariant {
+  position: absolute;
+  top: 0.2em;
+  right: 0;
+  width: 46%;
+  font-size: 0.38em;
+  line-height: 1.35;
+  color: #5b7c86;
+  text-align: left;
+  border-left: 3px solid $tbl-border;
+  padding: 0.25em 0 0.25em 0.7em;
+
+  strong { color: $tbl-header-bg; }
+}
+
 // ---- printing (?print-pdf) ------------------------------------------
 // Pandoc ships an @media print rule setting `text-indent: -5em` on every code
 // line. Combined with the panel's overflow:hidden that shears the first few
