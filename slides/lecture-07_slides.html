@@ -196,10 +196,10 @@
     }
   </style>
 <meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
-<meta property="og:description" content="Selection Sort">
+<meta property="og:description" content="Insertion Sort">
 <meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
 <meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
-<meta name="twitter:description" content="Selection Sort">
+<meta name="twitter:description" content="Insertion Sort">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -208,7 +208,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Selection Sort</p>
+  <p class="subtitle">Insertion Sort</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -218,435 +218,43 @@
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
 <ul>
-<li><strong>HW1 is due tonight</strong>, 11:59 pm</li>
-<li><strong>PA1 is out tonight</strong>, due Oct 5</li>
-<li><strong>Examlet 1 is this week</strong> — Thursday through Sunday. Book your seat on PrairieTest, and work PEX1</li>
-<li>PEX2 releases Wednesday night</li>
+<li><strong>PA1 is out</strong>, due Monday Oct 5. It is linked lists all the way down</li>
+<li><strong>Examlet 1 is Thursday through Sunday</strong> — book your seat on PrairieTest</li>
+<li>PEX2 releases tonight</li>
+<li>HW1 closed Monday</li>
 </ul>
 <p><br>
 </p>
 <p><strong>Where we’re going</strong></p>
 <ul>
-<li>Warm-up</li>
-<li>Selection sort — what it does, how long it takes</li>
-<li>Selection sort — why it works</li>
+<li>Finishing selection sort</li>
+<li>A mystery function</li>
+<li>Insertion sort</li>
 </ul>
 </section>
-<section id="warm-up" class="slide level2 smaller">
-<h2>Warm-up</h2>
-<p>My algorithm runs in time <span class="math inline">\(\Omega(n \log n)\)</span>.</p>
-<p>Your algorithm runs in time <span class="math inline">\(O(n!)\)</span>.</p>
-<p><br>
-</p>
-<p><strong>Whose is better?</strong></p>
-<aside class="notes">
-<p>The answer is: you cannot tell, and that is the whole point.</p>
-<p>Mine is bounded <em>below</em> – it takes at least <span class="math inline">\(n\log n\)</span>, and might take <span class="math inline">\(n^{100}\)</span>. Yours is bounded <em>above</em> – it takes at most <span class="math inline">\(n!\)</span>, and might take constant time. The two claims do not meet, so no comparison follows.</p>
-<p>Worth saying plainly on the recording: these are the two bounds pointing in opposite directions, and reading <span class="math inline">\(\Omega\)</span> as “best case” and <span class="math inline">\(O\)</span> as “worst case” is what makes people think a comparison is available here.</p>
-<p>Pause after the question. Viewers can stop and think.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="where-we-left-off" class="slide level2 smaller">
+<section id="where-we-left-off" class="slide level2 smaller proof">
 <h2>Where we left off</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxOfMin <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">,</span> <span class="dt">int</span> a<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> retloc <span class="op">=</span> a<span class="op">;</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> a<span class="op">+</span><span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>C<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> C<span class="op">[</span>retloc<span class="op">])</span> <span class="op">{</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>            retloc <span class="op">=</span> i<span class="op">;</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
-<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> retloc<span class="op">;</span></span>
-<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>We named it, evaluated its runtime, and proved it is correct.</p>
-<aside class="notes">
-<p>Thirty seconds of recap – this is the function we proved on Wednesday. <span class="math inline">\(\Theta(n)\)</span>, and the invariant was “<code>retloc</code> is the index of the min of <code>C[a..i-1]</code>”.</p>
-<p>We are about to use it as a building block, which is the reason it was worth proving.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="another-example" class="slide level2 smaller">
-<h2>Another example</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p>What does it do? &nbsp;&nbsp; How long does it take?</p>
-<aside class="notes">
-<p>Trace two iterations on the array with the pen before naming it. <span class="math inline">\(i=0\)</span> finds 7 at index 14 and swaps it to the front; <span class="math inline">\(i=1\)</span> finds 11, already in place.</p>
-<p>Name: <strong>selection sort</strong>. It repeatedly <em>selects</em> the smallest remaining element.</p>
-<p>Running time: <code>idxOfMin(C, i)</code> costs <span class="math inline">\(n-i\)</span>, so the total is <span class="math inline">\(n + (n-1) + \cdots + 1 = \Theta(n^2)\)</span>. Note it does not care what the data looks like – best and worst are the same, which is the <code>findMin</code> observation from lecture 3 one level up.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="selection-sort" class="slide level2 smaller">
-<h2>Selection sort</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p><span class="math inline">\(T(n) = \Theta(n^2)\)</span></p>
-<aside class="notes">
-<p>The array shown is mid-run, not sorted. Point at the boundary: everything left of index 5 is sorted and small; everything right of it is untouched original data. That picture <em>is</em> the invariant, and the next slide makes them read it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="oops" class="slide level2 smaller">
-<h2>Oops</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">18</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p><strong>My code crashed partway through the loop.</strong></p>
-<p>What is the latest iteration I could have been on?</p>
-<aside class="notes">
-<p>This is the best slide in the lecture. Pause here.</p>
-<p>Answer: <strong><span class="math inline">\(i = 3\)</span>.</strong> How you get there is the point.</p>
-<p>The prefix looks sorted a long way – 7, 11, 15, 21, 29 – so the eyeball answer is 5. But 18 is sitting at index 14. For the invariant to hold at <span class="math inline">\(i=5\)</span> the first five entries would have to be the five smallest, and they are not: 18 belongs in there and 29 does not. Same failure at <span class="math inline">\(i=4\)</span>.</p>
-<p>At <span class="math inline">\(i=3\)</span> it holds: 7, 11, 15 really are the three smallest values in the array, and they are sorted. So iteration 3 had begun and not finished – it would have found 18 and swapped it into position 3.</p>
-<p>Two things to land:</p>
-<ul>
-<li><strong>The weak invariant cannot answer this.</strong> “The prefix is sorted” is true through index 4 and gives the wrong answer. Only “and holds the <span class="math inline">\(i\)</span> smallest” gets you there – the clause we added one slide ago, doing work.</li>
-<li><strong>You just read the state of a crashed program off the data.</strong> That is what invariants are for outside of proofs: they say what must be true at any moment, which is exactly what debugging is.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-does-it-do" class="slide level2 smaller">
-<h2>What does it do?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Thm.</strong></p>
-<aside class="notes">
-<p>Blank on purpose – build the statement with the room, then write it.</p>
-<p>What they will offer: “C ends up sorted.” Accept it, then break it: a function that overwrites every entry with 0 leaves C sorted. So does one that returns an empty array. Sortedness alone is not the claim.</p>
-<p>What is missing is that the <em>same values</em> are still there. That is the permutation clause, and this is the first time it appears – it never came up for idxOfMin, which did not modify anything.</p>
-<p>A statement that survives:</p>
-<blockquote>
-<p>After selectionSort(C) returns, C is a permutation of its original contents, and C[0] &lt;= C[1] &lt;= … &lt;= C[n-1].</p>
-</blockquote>
-<p>Point back at the array on the previous slide if it helps: same sixteen values as we started with, in a different order. Nothing was invented and nothing was lost.</p>
-<p>This is the theorem the next three slides are working toward, so leave it on the board.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="how-long-does-it-take" class="slide level2 smaller">
-<h2>How long does it take?</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside class="notes">
-<p>Blank for annotation.</p>
-<p>The derivation: <code>idxOfMin(C, i)</code> scans <code>C[i..n-1]</code>, so it costs <span class="math inline">\(n - i\)</span>. The swap is constant. So</p>
-<p><span class="math display">\[T(n) = \sum_{i=0}^{n-1} (n - i) = n + (n-1) + \cdots + 1 = \frac{n(n+1)}{2}
-= \Theta(n^2).\]</span></p>
-<p>The point worth making after the algebra: <strong>nothing in that sum mentions the data.</strong> Best case and worst case are the same, unlike <code>idxFirst</code>. Selection sort does the same work on a sorted array as on a shuffled one.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-is-always-true" class="slide level2 smaller">
-<h2>What is always true?</h2>
-<p>At the start of iteration <span class="math inline">\(i\)</span>:</p>
-<div class="callout callout-note no-icon callout-style-simple">
-<div class="callout-body">
-<div class="callout-content">
-<p><code>C[0..i-1]</code> is <strong>sorted</strong>.</p>
-</div>
-</div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Thm.</strong> &nbsp; After <code>selectionSort(C)</code> returns, <code>C</code> is a permutation of <span class="math inline">\(C_0\)</span> and <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[n-1]\)</span>.</p>
 <p><br>
 </p>
-<p>Is that enough?</p>
+<p><strong>Loop invariant.</strong> &nbsp; <span class="math inline">\(P(i)\)</span>, at the start of iteration <span class="math inline">\(i\)</span>:<br>
+&nbsp;&nbsp;<strong>A.</strong>&nbsp; <span class="math inline">\(C\)</span> is a permutation of <span class="math inline">\(C_0\)</span><br>
+&nbsp;&nbsp;<strong>B.</strong>&nbsp; <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[i-1]\)</span><br>
+&nbsp;&nbsp;<strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; i} C[k] \;\le\; \min_{i \le j &lt; n} C[j]\)</span></p>
 <aside class="notes">
-<p>Take this seriously for a moment – it is the answer everyone gives, and it is true. It is just not <em>enough</em>.</p>
-<p>Try restoration with it: assume <code>C[0..i-1]</code> is sorted, run one iteration, and try to conclude <code>C[0..i]</code> is sorted. You cannot. Nothing stops the element we just dropped into position <span class="math inline">\(i\)</span> from being smaller than <code>C[i-1]</code> – unless we already knew the prefix held the smallest elements.</p>
-<p>Let them sit with the failed attempt before the fix. The failure is the lesson.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="strengthen-it" class="slide level2 smaller">
-<h2>Strengthen it</h2>
-<div class="callout callout-note no-icon callout-style-simple">
-<div class="callout-body">
-<div class="callout-content">
-<p>At the start of iteration <span class="math inline">\(i\)</span>: &nbsp; <code>C</code> is a <strong>permutation</strong> of what we started with, <code>C[0..i-1]</code> is <strong>sorted</strong>, and holds the <span class="math inline">\(i\)</span> <strong>smallest</strong> values in <code>C</code>.</p>
-</div>
-</div>
-</div>
-<aside class="notes">
-<p>This is lecture 4’s closing point, arrived at the hard way: the invariant has to be <em>stronger</em> than the postcondition.</p>
-<p>The theorem only says the array ends up sorted. “Holds the <span class="math inline">\(i\)</span> smallest” never appears in it. But drop that clause and restoration fails, so the proof needs it – carried through every iteration purely to make the induction go.</p>
-<p>Name it: strengthening the induction hypothesis. Same move as 121.</p>
-<p>The three clauses are there for three different reasons, and it is worth separating them:</p>
+<p>Where Monday ended. Read the theorem, read <span class="math inline">\(P(i)\)</span>, then go.</p>
+<p>Two things worth re-saying before resuming, because they are the reasons the rest of the proof works:</p>
 <ul>
-<li><strong>permutation</strong> – carries the first half of the theorem. Needed because sortedness alone does not say the values are still ours.</li>
-<li><strong>sorted prefix</strong> – the second half of the theorem, restricted to what has been placed so far.</li>
-<li><strong>the <span class="math inline">\(i\)</span> smallest</strong> – in the theorem nowhere. Purely to make restoration go through.</li>
+<li><strong><span class="math inline">\(C_0\)</span> is the array we were handed.</strong> Clause A is the first half of the theorem, carried through every iteration. Sortedness alone would not say the values are still ours – zeroing the array leaves it sorted.</li>
+<li><strong>Clause C is not in the theorem.</strong> It is there purely to make restoration go through. That was Monday’s punchline: the invariant has to be <em>stronger</em> than what you are trying to prove.</li>
 </ul>
+<p>Then: initialization, restoration, termination. Three obligations, and we are about to discharge them in order.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -667,13 +275,14 @@
 <p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[i-1]\)</span></p>
 <p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; i} C[k] \;\le\; \min_{i \le j &lt; n} C[j]\)</span></p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong><span class="math inline">\(i = 0\)</span>:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Check that the loop invariant holds at the start of the loop:</p>
+<p>(<span class="math inline">\(i =\)</span> ___)</p>
 <aside class="notes">
 <p>Blank for annotation. All three clauses, and all three are easy:</p>
 <ul>
@@ -702,59 +311,26 @@
 <p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[i-1]\)</span></p>
 <p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; i} C[k] \;\le\; \min_{i \le j &lt; n} C[j]\)</span></p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Assume the invariant at the start of iteration <span class="math inline">\(i\)</span>. Run the body:</p>
-<p><br>
-</p>
-<p><span class="math inline">\(m =\)</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; after the swap:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Assume the invariant at the start of iteration <span class="math inline">\(i\)</span>.</p>
+<p>Run the body:</p>
+<p>&nbsp;&nbsp;Line 3:</p>
+<p>&nbsp;&nbsp;Line 4:</p>
+<p>Check the invariants:</p>
+<p>&nbsp;&nbsp;A.</p>
+<p>&nbsp;&nbsp;B.</p>
+<p>&nbsp;&nbsp;C.</p>
 <aside class="notes">
 <p>Blank for annotation. Set up the step before proving anything.</p>
 <p>By Lemma (<code>idxOfMin</code>), <span class="math inline">\(i \le m &lt; n\)</span> and <code>C[m]</code> is the smallest value in <code>C[i..n-1]</code>. The call does not modify <code>C</code>.</p>
 <p>By Lemma (<code>swap</code>), afterwards <code>C'[i] = C[m]</code>, <code>C'[m] = C[i]</code>, and every other entry is untouched.</p>
 <p><strong>Permutation</strong> falls out here: a swap is a transposition, and a composition of permutations is a permutation. One line, then move on – the interesting work is the next slide.</p>
 <p>Worth pointing at: this proof <em>uses</em> Wednesday’s result. That is what proving small things buys you.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="restoration-continued" class="slide level2 smaller proof">
-<h2>Restoration, continued</h2>
-<div class="invariant">
-<p><strong>P(i)</strong> at the start of iteration <span class="math inline">\(i\)</span>:</p>
-<p><strong>A.</strong>&nbsp; <span class="math inline">\(C\)</span> is a permutation of <span class="math inline">\(C_0\)</span></p>
-<p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[i-1]\)</span></p>
-<p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; i} C[k] \;\le\; \min_{i \le j &lt; n} C[j]\)</span></p>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Why is <code>C[0..i]</code> still <strong>sorted</strong>?</p>
-<p><br>
-</p>
-<p>Why does it still hold the <span class="math inline">\(i+1\)</span> <strong>smallest</strong>?</p>
-<aside class="notes">
-<p>This is where the lecture actually lives. Two questions, two different arguments.</p>
-<p><strong>Sorted.</strong> Since <span class="math inline">\(m \ge i\)</span>, the swap touches nothing below <span class="math inline">\(i\)</span>, so the old prefix is unchanged and still sorted. The only new comparison is <code>C'[i-1] &lt;= C'[i]</code>, and it comes straight from the third clause:</p>
-<p><code>C[i-1]</code> <span class="math inline">\(\le\)</span> max of the prefix <span class="math inline">\(\le\)</span> min of the suffix <span class="math inline">\(=\)</span> <code>C[m]</code> <span class="math inline">\(=\)</span> <code>C'[i]</code>.</p>
-<p><strong>Without the “smallest” clause there is nothing here.</strong> That is the payoff of two slides ago – say it out loud.</p>
-<p><strong>Still the smallest.</strong> Compare the suffixes as <em>sets</em>, not index by index. The swap moved <code>C[m]</code> out to position <span class="math inline">\(i\)</span> and <code>C[i]</code> in to position <span class="math inline">\(m\)</span>, and both positions are in the range <span class="math inline">\([i, n)\)</span>. So the new suffix is the old suffix with <code>C[m]</code> removed. Everything in the old suffix was <span class="math inline">\(\ge\)</span> <code>C[m]</code>, and dropping one element cannot introduce anything smaller.</p>
-<p>Students reach for an index argument here and get tangled. The set framing is the whole trick.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -775,18 +351,348 @@
 <p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0] \le C[1] \le \cdots \le C[i-1]\)</span></p>
 <p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; i} C[k] \;\le\; \min_{i \le j &lt; n} C[j]\)</span></p>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
-<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
-<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
-<span id="cb10-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> selectionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span> <span class="op">{</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> m <span class="op">=</span> idxOfMin<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> m<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Does the loop stop?</p>
 <p>What is the state when it does?</p>
 <aside class="notes">
 <p>Stops: <span class="math inline">\(i\)</span> rises by one against a fixed bound, so after <span class="math inline">\(n\)</span> iterations the guard fails.</p>
 <p>At exit <span class="math inline">\(i = n\)</span>, so the invariant reads: <code>C[0..n-1]</code> is sorted and holds the <span class="math inline">\(n\)</span> smallest values – which is the whole array. Sorted. That is the theorem.</p>
 <p>Note the second clause does nothing at all at this point. It existed only to get us here, and then it retires.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-mystery-function" class="slide level2 smaller">
+<h2>A mystery function</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> ________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">,</span> <span class="dt">int</span> loc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">// assumes C[0..loc-1] is sorted, loc valid</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> j <span class="op">=</span> loc<span class="op">;</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> C<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">&gt;</span> C<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> j<span class="op">-</span><span class="dv">1</span><span class="op">,</span> j<span class="op">);</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>        j<span class="op">--;</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>What does it do? &nbsp;&nbsp; How long does it take? &nbsp;&nbsp; Is it correct?</p>
+<aside class="notes">
+<p>Trace it with <code>loc = 4</code>, the 19. It swaps left past 32, past 26, stops at 14. The sorted prefix grew by one.</p>
+<p>Name: <code>slide</code>, or <code>insert</code>. It takes one element and slides it back into a sorted prefix.</p>
+<p>Time: worst case <code>loc</code> swaps – the element belongs at the front. Best case zero – it is already in place. Worth noticing now, because it is where insertion sort’s two cases come from.</p>
+<p>Note the precondition on line 2. Everything this function does is wrong if <code>C[0..loc-1]</code> is not already sorted. That is the first time a comment has been load-bearing.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="is-slide-correct" class="slide level2 smaller proof">
+<h2>Is <code>slide</code> correct?</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> slide <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">,</span> <span class="dt">int</span> loc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">// assumes C[0..loc-1] is sorted, loc valid</span></span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> j <span class="op">=</span> loc<span class="op">;</span></span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> C<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">&gt;</span> C<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> j<span class="op">-</span><span class="dv">1</span><span class="op">,</span> j<span class="op">);</span></span>
+<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a>        j<span class="op">--;</span></span>
+<span id="cb6-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb6-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Thm.</strong> &nbsp; If <code>C[0..loc-1]</code> is sorted, then afterwards <code>C</code> is a permutation of <span class="math inline">\(C_0\)</span> and <code>C[0..loc]</code> is sorted.</p>
+<ul>
+<li>Variable: <span class="math inline">\(j\)</span>, from ___ down to ___</li>
+<li>Loop invariant <span class="math inline">\(Q(j)\)</span>, at the top of the test:<br>
+&nbsp;&nbsp;<strong>A.</strong>&nbsp; <code>C</code> is a _______ of <span class="math inline">\(C_0\)</span><br>
+&nbsp;&nbsp;<strong>B.</strong>&nbsp; <code>C[0..</code>___<code>]</code> is sorted, and <code>C[</code>___<code>..loc]</code> is sorted<br>
+&nbsp;&nbsp;<strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; j} C[k] \;\le\; \min_{j &lt; k \le \mathit{loc}} C[k]\)</span></li>
+</ul>
+<aside class="notes">
+<p>Blanks: <span class="math inline">\(j\)</span> runs from <code>loc</code> down; <strong>permutation</strong>; <code>C[0..j-1]</code> and <code>C[j..loc]</code>.</p>
+<p>Say what the invariant is picturing: one value is in flight at position <span class="math inline">\(j\)</span>, and everything on either side of it is already in its final relative order.</p>
+<ul>
+<li><strong>A</strong> – the body is a <code>swap</code> and nothing else, so this is free. <em>This is what we bought by not using a temp variable.</em> With <code>temp</code>, mid-loop the array holds a duplicate and is missing a value, and clause A is simply false until the last line.</li>
+<li><strong>B</strong> – <code>C[0..j-1]</code> is an untouched piece of the sorted prefix. <code>C[j..loc]</code> is sorted because the guard only swapped when <code>C[j-1] &gt; C[j]</code>: everything we pushed up is bigger than the value we are carrying.</li>
+<li><strong>C</strong> – the strengthening clause, exactly as in selection sort. Second time this move has come up, so name it again.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="slide-continued" class="slide level2 smaller proof">
+<h2><code>slide</code>, continued</h2>
+<div class="invariant">
+<p><strong>Q(j)</strong> at the top of the test:</p>
+<p><strong>A.</strong>&nbsp; <span class="math inline">\(C\)</span> is a permutation of <span class="math inline">\(C_0\)</span></p>
+<p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0..j-1]\)</span> and <span class="math inline">\(C[j..\mathit{loc}]\)</span> are each sorted</p>
+<p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; j} C[k] \;\le\; \min_{j &lt; k \le \mathit{loc}} C[k]\)</span></p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> slide <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">,</span> <span class="dt">int</span> loc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">// assumes C[0..loc-1] is sorted, loc valid</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> j <span class="op">=</span> loc<span class="op">;</span></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> C<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">&gt;</span> C<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> j<span class="op">-</span><span class="dv">1</span><span class="op">,</span> j<span class="op">);</span></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>        j<span class="op">--;</span></span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Initialization: &nbsp; <span class="math inline">\(j =\)</span> ___</p>
+<p><br>
+</p>
+<p>Restoration:</p>
+<aside class="notes">
+<p>Initialization: <span class="math inline">\(j = loc\)</span>. A is trivial, B is the precondition plus a one-element suffix, C is vacuous on the right.</p>
+<p>Restoration: assume <span class="math inline">\(Q(j)\)</span> and that the guard passed, so <code>C[j-1] &gt; C[j]</code>. The body swaps them and decrements. A survives because a swap is a transposition. B survives because the value we pushed up is bigger than the one we are carrying. C survives because both pieces only lost and gained the one element in flight.</p>
+<p>Termination is the interesting one and gets its own slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="slide-termination" class="slide level2 smaller proof">
+<h2><code>slide</code>, termination</h2>
+<div class="invariant">
+<p><strong>Q(j)</strong> at the top of the test:</p>
+<p><strong>A.</strong>&nbsp; <span class="math inline">\(C\)</span> is a permutation of <span class="math inline">\(C_0\)</span></p>
+<p><strong>B.</strong>&nbsp; <span class="math inline">\(C[0..j-1]\)</span> and <span class="math inline">\(C[j..\mathit{loc}]\)</span> are each sorted</p>
+<p><strong>C.</strong>&nbsp; <span class="math inline">\(\max_{0 \le k &lt; j} C[k] \;\le\; \min_{j &lt; k \le \mathit{loc}} C[k]\)</span></p>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> slide <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">,</span> <span class="dt">int</span> loc<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">// assumes C[0..loc-1] is sorted, loc valid</span></span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> j <span class="op">=</span> loc<span class="op">;</span></span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>j <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> C<span class="op">[</span>j<span class="op">-</span><span class="dv">1</span><span class="op">]</span> <span class="op">&gt;</span> C<span class="op">[</span>j<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>        swap<span class="op">(</span>C<span class="op">,</span> j<span class="op">-</span><span class="dv">1</span><span class="op">,</span> j<span class="op">);</span></span>
+<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a>        j<span class="op">--;</span></span>
+<span id="cb8-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The loop exits when __________ &nbsp; <strong>or</strong> &nbsp; __________</p>
+<p><br>
+</p>
+<p>Case 1:</p>
+<p><br>
+</p>
+<p>Case 2:</p>
+<aside class="notes">
+<p><strong>Two ways out, and they are not the same argument.</strong> The guard is <code>j &gt; 0 &amp;&amp; C[j-1] &gt; C[j]</code>, so it fails if <em>either</em> conjunct fails.</p>
+<p><strong>Case 1: <code>C[j-1] &lt;= C[j]</code>.</strong> The value in flight is no smaller than its left neighbour. B already gives <code>C[0..j-1]</code> sorted and <code>C[j..loc]</code> sorted, and this is exactly the one comparison joining them. Plus C, so everything left of <span class="math inline">\(j\)</span> is <span class="math inline">\(\le\)</span> everything right of it. <code>C[0..loc]</code> is sorted.</p>
+<p><strong>Case 2: <span class="math inline">\(j = 0\)</span>.</strong> There is nothing to the left at all. B’s first piece is empty, so B alone gives it – no join needed, and C is vacuous.</p>
+<p>Either way <code>C[0..loc]</code> is sorted, and A says the values are still ours. That is the theorem.</p>
+<p>Students want to handle only Case 1. Make them say why Case 2 is not a gap – and notice that it is the case that actually happens when the element belongs at the front, which is insertion sort’s worst case.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="insertion-sort" class="slide level2 smaller">
+<h2>Insertion sort</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>        slide<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>Worst case running time:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Best case?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Two lines, because <code>slide</code> did the work. Trace a couple of iterations on the top array before going near running time.</p>
+<p>Worst: fill the blank row reversed – every element slides the whole way. <span class="math inline">\(1 + 2 + \cdots + (n-1) = \Theta(n^2)\)</span>.</p>
+<p>Best: fill it already sorted. Every call to <code>slide</code> tests once and stops. <span class="math inline">\(\Theta(n)\)</span>.</p>
+<p><strong>Stop and make the comparison.</strong> Selection sort’s best and worst were both <span class="math inline">\(\Theta(n^2)\)</span>, because <code>idxOfMin</code> always scans everything. Insertion sort’s differ by a growth rate – the first algorithm all term where the data changes the answer.</p>
+<p>Worth asking out loud: if you knew your input was nearly sorted, which would you reach for?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="insertion-sort-correctness" class="slide level2 smaller proof">
+<h2>Insertion sort — correctness</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertionSort <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;&amp;</span> C<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> C<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
+<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a>        slide<span class="op">(</span>C<span class="op">,</span> i<span class="op">);</span></span>
+<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+<th style="text-align: right;">5</th>
+<th style="text-align: right;">6</th>
+<th style="text-align: right;">7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+<p>Correctness proof —</p>
+<ul>
+<li>Variable: <span class="math inline">\(i \in \{1 \ldots n\}\)</span></li>
+<li>Loop invariant: at start of arb iter <span class="math inline">\(i\)</span>, <code>C</code> is a _______ of the input, and <code>C[0..</code>___<code>]</code> is sorted</li>
+<li>Initialization: <span class="math inline">\(i =\)</span> ___ . &nbsp; <code>C[0..</code>___<code>]</code> sorted?</li>
+<li>Restoration: assume LI holds at start of iteration <span class="math inline">\(i\)</span>.</li>
+<li>Termination: <span class="math inline">\(i =\)</span> _____ , LI gives</li>
+</ul>
+<aside class="notes">
+<p>Blanks: <strong>permutation</strong> … <code>C[0..i-1]</code> … <span class="math inline">\(i=1\)</span>, <code>C[0..0]</code> … <span class="math inline">\(i=n\)</span>.</p>
+<p>Two clauses only – compare selection sort, which also needed “and holds the <span class="math inline">\(i\)</span> smallest”. Insertion sort does not, because it never claims the prefix is final; placed elements still move. The invariant follows from what the algorithm guarantees, not from the theorem.</p>
+<p>Restoration: this is now one line, by the Lemma. <code>slide</code>’s precondition is <code>C[0..i-1]</code> sorted, which is exactly clause B of the invariant. Its conclusion is that <code>C</code> is still a permutation and <code>C[0..i]</code> is sorted – which is <span class="math inline">\(P(i+1)\)</span>. Nothing else to do.</p>
+<p>Say how short that was next to selection sort, and why: the work went into <code>slide</code>, and the loop took three lines because the building block was already proved. Same shape as <code>idxOfMin</code> and selection sort on Monday. <strong>Prove the small thing, then the big thing is easy.</strong></p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

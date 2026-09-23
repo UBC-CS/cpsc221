@@ -101,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-402e17105848f93cca08830877af0033.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-7bb14b35c08f3965eda46bc8748642c7.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -517,7 +517,7 @@
 </p>
 <p>What does this smell like?</p>
 <aside class="notes">
-<p>Say “this is induction” out loud. Initialization is the base case, maintenance is the inductive step. They have the machinery from 121; naming it means they can reuse it instead of learning a ritual.</p>
+<p>Say “this is induction” out loud. Initialization is the base case, restoration is the inductive step. They have the machinery from 121; naming it means they can reuse it instead of learning a ritual.</p>
 <p>Termination is the part that is <em>not</em> induction and the part they forget. It is where the invariant gets cashed in.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -545,7 +545,7 @@
 <p><strong>Restoration.</strong> Assume invariant holds at the top of <span class="math inline">\(i\)</span>, and then run the body:</p>
 <aside class="notes">
 <p>Initialization: <code>retloc = a</code>, and the min of the one-element range <code>C[a..a]</code> is at index <span class="math inline">\(a\)</span>. Holds.</p>
-<p>Maintenance: the body compares <code>C[i]</code> with <code>C[retloc]</code> and moves <code>retloc</code> only if <code>C[i]</code> is strictly smaller. Either way <code>retloc</code> ends up the index of the min of <code>C[a..i]</code> – which is the invariant at the top of <span class="math inline">\(i{+}1\)</span>. Done.</p>
+<p>Restoration: the body compares <code>C[i]</code> with <code>C[retloc]</code> and moves <code>retloc</code> only if <code>C[i]</code> is strictly smaller. Either way <code>retloc</code> ends up the index of the min of <code>C[a..i]</code> – which is the invariant at the top of <span class="math inline">\(i{+}1\)</span>. Done.</p>
 <p>Worth naming: the invariant is <em>false in the middle of the body</em>, between the comparison and the assignment. It only has to hold at the top of each iteration. Students who think it must hold everywhere get stuck here.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
