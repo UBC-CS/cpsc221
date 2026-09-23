@@ -293,9 +293,13 @@ separating them:
 ## Initialization {.smaller .proof}
 
 ::: {.invariant}
-**P(i)** — at the start of iteration $i$: `C` is a **permutation** of what we
-started with; `C[0..i-1]` is **sorted**; and it holds the $i$ **smallest**
-values in `C`.
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
 :::
 
 
@@ -325,9 +329,13 @@ cheapest place to get comfortable with "vacuously true".
 ## Restoration {.smaller .proof}
 
 ::: {.invariant}
-**P(i)** — at the start of iteration $i$: `C` is a **permutation** of what we
-started with; `C[0..i-1]` is **sorted**; and it holds the $i$ **smallest**
-values in `C`.
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
 :::
 
 
@@ -366,9 +374,13 @@ small things buys you.
 ## Restoration, continued {.smaller .proof}
 
 ::: {.invariant}
-**P(i)** — at the start of iteration $i$: `C` is a **permutation** of what we
-started with; `C[0..i-1]` is **sorted**; and it holds the $i$ **smallest**
-values in `C`.
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
 :::
 
 
@@ -413,9 +425,13 @@ the whole trick.
 ## Termination {.smaller .proof}
 
 ::: {.invariant}
-**P(i)** — at the start of iteration $i$: `C` is a **permutation** of what we
-started with; `C[0..i-1]` is **sorted**; and it holds the $i$ **smallest**
-values in `C`.
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
 :::
 
 

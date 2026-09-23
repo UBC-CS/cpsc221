@@ -9,6 +9,7 @@ $code-keyword:       #2e75b6;   // int, for, if, return, vector
 $code-literal:       #c00000;   // numeric literals
 $code-plain:         #1a1a1a;   // identifiers, operators, punctuation
 $code-comment:       #5b7c86;
+$inline-code:        #1f4e79;   // inline `code` in prose -- same family, darker
 
 $code-line-height:   1.45;
 $code-gutter-width:  2.4em;
@@ -139,12 +140,12 @@ $tbl-border:         #a8c3cd;
   code span.fu,
   code span.cn { color: $code-plain; }
 
-  // Inline code keeps the panel colour but stays compact
+  // Inline code: deep blue text, no panel. A shaded box behind every `C[0..i-1]`
+  // left the proof slides looking striped, and boxed the word in slide titles.
   code:not(.sourceCode) {
-    background: $code-panel-bg;
-    color: $code-plain;
-    border-radius: 4px;
-    padding: 0.05em 0.3em;
+    background: none;
+    color: $inline-code;
+    padding: 0;
   }
 }
 
@@ -167,13 +168,16 @@ $tbl-border:         #a8c3cd;
   position: absolute;
   top: 0.2em;
   right: 0;
-  width: 46%;
-  font-size: 0.38em;
-  line-height: 1.35;
+  width: 48%;
+  font-size: 0.72em;
+  line-height: 1.3;
   color: #5b7c86;
   text-align: left;
   border-left: 3px solid $tbl-border;
   padding: 0.25em 0 0.25em 0.7em;
+
+  // one clause per line, no paragraph gaps between them
+  p { margin: 0 0 0.12em 0; }
 
   strong { color: $tbl-header-bg; }
 }

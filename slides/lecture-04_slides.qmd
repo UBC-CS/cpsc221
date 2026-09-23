@@ -209,7 +209,7 @@ Proving the Theorem requires three things:
 What does this smell like?
 
 ::: notes
-Say "this is induction" out loud. Initialization is the base case, maintenance
+Say "this is induction" out loud. Initialization is the base case, restoration
 is the inductive step. They have the machinery from 121; naming it means they
 can reuse it instead of learning a ritual.
 
@@ -238,7 +238,7 @@ int idxOfMin (vector<int>& C, int a) {
 Initialization: `retloc = a`, and the min of the one-element range
 `C[a..a]` is at index $a$. Holds.
 
-Maintenance: the body compares `C[i]` with `C[retloc]` and moves
+Restoration: the body compares `C[i]` with `C[retloc]` and moves
 `retloc` only if `C[i]` is strictly smaller. Either way `retloc` ends up
 the index of the min of `C[a..i]` -- which is the invariant at the top of
 $i{+}1$. Done.
