@@ -508,119 +508,117 @@
     "text": "The recipe\n\n\n\n\n\n\n\n\n1. Recognize the Claim\nthe postcondition you are trying to reach\n\n\n2. Find an invariant\nstrong enough to give that at exit, and still true after one pass\n\n\n3. Initialization\ntrue before the first iteration\n\n\n4. Restoration\nstart of \\(i\\) \\(\\Rightarrow\\) start of \\(i{+}1\\)\n\n\n5. Termination\nthe loop ends, and invariant gives result\n\n\n\n\n\n\nHere the invariant was the theorem with \\(n\\) replaced by \\(i\\). That is the easy case — often it has to say more than the theorem.\n\n\nProving correctness is only one use of invariants — they are also how you design a loop in the first place.\n\nSteps 1 and 2 are the ones this lecture added. Most students arrive able to do 3, 4, 5 mechanically and with no idea where the invariant came from.\nDo not oversell step 2. idxOfMin is the easy case, where the invariant is the theorem with \\(n\\) replaced by \\(i\\). In general the invariant must be stronger than the postcondition, because a claim that barely implies the result will not survive an iteration – binary search carries “if q is present it is in [lo,hi]”, Euclid carries gcd(x,y) unchanged, the playlist partition carries three moving boundaries. None of those is the theorem with a substitution.\nThat is strengthening the induction hypothesis, which they saw in 121. Worth naming if someone asks why their invariant will not go through – usually it is too weak, not wrong.\nLand the last line. An invariant written before the body tells you what the body must do; written after, it is an audit. The first is the more valuable habit – and it is what HW1 zone 3 is actually asking for."
   },
   {
-    "objectID": "announcements.html",
-    "href": "announcements.html",
-    "title": "Announcements",
+    "objectID": "slides/lecture-08_slides.html#today",
+    "href": "slides/lecture-08_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\nAnnouncements\n\nPA1 is out, due Monday Oct 5\nExamlet 1 is this week — Thursday through Sunday. Book your seat on PrairieTest\nHW1 closed Monday\n\n\n\nLesson 3.2 (video)\n\nLinked memory\nSingly linked lists\n\ninsertAtFront\nprintReverse"
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#something-new",
+    "href": "slides/lecture-08_slides.html#something-new",
+    "title": "CPSC 221",
+    "section": "Something NEW!!",
+    "text": "Something NEW!!\nMake at least 3 observations about this code:\ntemplate &lt;class LIT&gt;\nstruct Node{\n   LIT data;\n   Node * next;\n   Node(LIT nData, Node * next=NULL): data(nData) {}\n};\n\n \n \n \n \n\n\nFour observations, in the order they are worth making:\n\nIt is a struct, not a class – so everything is public.\nIt is a template, so the node can hold any type.\nA Node contains a pointer to a Node. This is the one that matters, and it looks illegal at first: a type defined in terms of itself. It is fine because Node * is a pointer – a fixed size, whatever Node turns out to be. A Node containing a Node would be infinite; a Node containing an address is 8 bytes.\nThe constructor takes next and never uses it. The initializer list sets data only, so next is left uninitialised. Worth slowing down on – it is a real bug, and it is the kind that bites in PA1."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#a-metaphor-for-memory",
+    "href": "slides/lecture-08_slides.html#a-metaphor-for-memory",
+    "title": "CPSC 221",
+    "section": "A metaphor for memory…",
+    "text": "A metaphor for memory…\n\n\nBuying memory by the gigabyte, and a street map.\nThe point of the map: every house has an address, the addresses are laid out in order, and knowing an address is not the same as knowing what is in the house. That is the whole idea of a pointer in one picture."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#variables-and-pointers",
+    "href": "slides/lecture-08_slides.html#variables-and-pointers",
+    "title": "CPSC 221",
+    "section": "Variables and Pointers:",
+    "text": "Variables and Pointers:\n\n\nBacktrack to variables:\n\n\n\n\nSpecial variable type:\n\n\n\n\n\nloc\nname\nval\ntype\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFill the table in as you go.\nA variable is four things: a location, a name, a value, and a type. Three of those are familiar; loc is the one nobody has had to think about before, and it is the whole reason this lesson exists.\nPut two or three ordinary variables in the table first – int x, char c – so the columns mean something. Then the special type: a variable whose value is another variable’s loc. Add it as one more row, so it is visibly the same kind of thing, not a new species."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#pointers-and-dynamic-memory",
+    "href": "slides/lecture-08_slides.html#pointers-and-dynamic-memory",
+    "title": "CPSC 221",
+    "section": "Pointers and dynamic memory:",
+    "text": "Pointers and dynamic memory:\n\n\nint * p;\n\n\n\n\n\nloc\nname\nval\ntype\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nloc\nname\nval\ntype\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTwo tables now, and the colours are the point: green is the stack, orange is the heap.\nint * p; puts one row in the green table – a variable named p, of type int *, whose value is garbage. Nothing at all happens in the orange table. That is the distinction the whole lesson turns on, so say it plainly: declaring a pointer does not give you anything to point at.\nThen add p = new int; on top and fill the orange row, so both halves are on the board before the next slide starts asking questions."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#fun-and-games-with-pointers-warm-up",
+    "href": "slides/lecture-08_slides.html#fun-and-games-with-pointers-warm-up",
+    "title": "CPSC 221",
+    "section": "Fun and games with pointers: (warm-up)",
+    "text": "Fun and games with pointers: (warm-up)\nint * p, q;\nWhat type is q? ______________\n\n\nint *p;\nint x;\np = &x;\n*p = 6;\ncout &lt;&lt; x;\ncout &lt;&lt; p;\ncout &lt;&lt; x;   What is output? ______________\ncout &lt;&lt; p;   What is output? ______________\nWrite a statement whose output is the value of x, using variable p: ______________\n\nFirst one is the classic: q is an int, not an int *. The * binds to the declarator, not the type. That is exactly why the course writes int *p, *q; with the star against the name.\nSecond block: x is 6, because *p = 6 wrote through p into x.\ncout &lt;&lt; p; prints an address – a hex number that changes every run and is not interesting in itself. Worth saying so, or someone will try to memorise it.\nLast blank: cout &lt;&lt; *p;."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#section",
+    "href": "slides/lecture-08_slides.html#section",
+    "title": "CPSC 221",
     "section": "",
-    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3 — Sep 21 to Sep 27\n\n\n\ndeadline\n\nexamlet\n\n\n\nExamlet 1 week. HW1 due, PA1 out, PEX2 Wednesday.\n\n\n\n\n\nSep 21, 2026\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
+    "text": "int *p, *q;\np = new int;\nq = p;\n*q = 8;\ncout &lt;&lt; *p;\nq = new int;\n*q = 9;\np = NULL;\ndelete q;\nq = NULL;\n\n\n\n\ncout &lt;&lt; *p;   What is output? __________\n\n\n\np = NULL;   Do you like this? __________\nq = NULL;   Do you like this? __________\n\n\n\n\nMemory leak:\n\n\nDeleting a null pointer:\nDereferencing a null pointer:\n\n\n\n\nTrace the whole thing in the two tables, line by line – this is the slide that pays for the two-colour setup.\ncout &lt;&lt; *p; prints 8. q = p made them aliases, so *q = 8 wrote the very thing p points at.\np = NULL; – no, this is bad. p was the only handle on that first new int. Setting it to NULL abandons the memory without freeing it. Point at the orange row that now has nothing aimed at it: that row is stuck there until the program exits.\nq = NULL; – yes, this is good. It comes right after delete q, so q is dangling. Setting it to NULL is exactly the right habit.\nSame two words, opposite verdicts, and the difference is only what came before.\nThen the box, three definitions:\n\nMemory leak – allocated memory with no remaining pointer to it, so it can never be freed.\nDeleting a null pointer – legal, and does nothing at all. Safe.\nDereferencing a null pointer – undefined behaviour. In practice a segfault.\n\nThe asymmetry between those last two is the part worth repeating: delete on NULL is harmless, * on NULL is fatal."
+  },
+  {
+    "objectID": "slides/lecture-08_slides.html#lets-explore",
+    "href": "slides/lecture-08_slides.html#lets-explore",
+    "title": "CPSC 221",
+    "section": "Let’s explore…",
+    "text": "Let’s explore…\n\n\n\n1\npointers1.cpp\none int, two names\n\n\n2\npointers2.cpp\nnew, delete, and aliasing\n\n\n3\npointers3.cpp\na leak, and two ways to meet NULL\n\n\n\n\n\ng++ -o p1 pointers1.cpp && ./p1\n\nRun them, break them, watch what happens.\n\np = &x then *p = 6. Print x, *p, &x, p, and &p – the last one is the surprise, because it makes the point that p is a variable like any other and has a location of its own. Then assign to x and read it back through *p.\nq = p makes two handles on one heap int. Write through q, read through p. Print both pointers – the addresses are identical, which is the point.\nThe three failures, in order: the leak (overwrite the only pointer to a new’d int), delete on a NULL pointer (legal, does nothing), and dereferencing NULL. The third one really does crash – exit 139, segmentation fault. Let it.\n\nThe 2024 replit links are gone, so these are rebuilt from scratch. Source is on the site at slides/code/lecture-08/ – paste into whatever sandbox, or just run them in a terminal on camera."
+  },
+  {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Setup: Tech stack",
+    "section": "",
+    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
+  },
+  {
+    "objectID": "setup.html#hardware",
+    "href": "setup.html#hardware",
+    "title": "Setup: Tech stack",
+    "section": "Hardware",
+    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
+  },
+  {
+    "objectID": "setup.html#computing-environment",
+    "href": "setup.html#computing-environment",
+    "title": "Setup: Tech stack",
+    "section": "Computing environment",
+    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
+  },
+  {
+    "objectID": "setup.html#attribution",
+    "href": "setup.html#attribution",
+    "title": "Setup: Tech stack",
+    "section": "Attribution",
+    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
+  },
+  {
+    "objectID": "formatting.html",
+    "href": "formatting.html",
+    "title": "Formatting",
+    "section": "",
+    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "",
+    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
     "crumbs": [
       "Course information",
-      "Announcements"
+      "Schedule"
     ]
   },
   {
-    "objectID": "faq.html",
-    "href": "faq.html",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "Schedule",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
     "crumbs": [
-      "FAQ"
+      "Course information",
+      "Schedule"
     ]
-  },
-  {
-    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "cpp-short-course.html",
-    "href": "cpp-short-course.html",
-    "title": "C++ Short Course (optional)",
-    "section": "",
-    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
-  },
-  {
-    "objectID": "cpp-short-course.html#sessions",
-    "href": "cpp-short-course.html#sessions",
-    "title": "C++ Short Course (optional)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html",
-    "href": "lesson-plans/selection-sort-proof.html",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "",
-    "text": "Written to be worked at the board. It leans on two results rather than reproving them: idxOfMin, proved in lecture 4/5, and swap, assumed."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#the-code",
-    "href": "lesson-plans/selection-sort-proof.html#the-code",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "The code",
-    "text": "The code\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWrite \\(n\\) for C.size(), and \\(C_0\\) for the contents of C on entry. Note \\(n\\) does not change: nothing in the loop resizes C."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
-    "href": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "What we are allowed to assume",
-    "text": "What we are allowed to assume\n\n\n\n\n\n\nLemma 1 (idxOfMin). For \\(0 \\le a &lt; n\\), idxOfMin(C, a) returns an index \\(\\ell\\) with \\(a \\le \\ell &lt; n\\) and \\[C[\\ell] \\;=\\; \\min_{a \\le j &lt; n} C[j],\\] and does not modify C.\n\n\n\n\n\n\n\n\n\nLemma 2 (swap). swap(C, p, q) leaves C with \\(C'[p] = C[q]\\), \\(C'[q] = C[p]\\), and \\(C'[k] = C[k]\\) for every \\(k \\notin \\{p, q\\}\\). In particular it is a transposition, so it permutes the contents of C."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
-    "href": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "What we are proving",
-    "text": "What we are proving\n\n\n\n\n\n\nTheorem. After selectionSort(C) returns, C is a permutation of \\(C_0\\) and \\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\).\n\n\n\nBoth halves are needed. Sortedness alone is satisfied by a function that overwrites the array with zeroes."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#the-invariant",
-    "href": "lesson-plans/selection-sort-proof.html#the-invariant",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "The invariant",
-    "text": "The invariant\nAt the top of iteration \\(i\\) — meaning just before the guard is tested with the loop variable equal to \\(i\\) — for \\(0 \\le i \\le n\\):\n\n\n\n\n\n\n\\(P(i)\\):\n\nC is a permutation of \\(C_0\\);\n\\(C[0] \\le C[1] \\le \\cdots \\le C[i-1]\\);\n\\(\\displaystyle\\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\\).\n\n\n\n\nClauses (b) and (c) are vacuous when \\(i = 0\\); (c) is also vacuous when \\(i = n\\).\nClause (c) is the one that does not appear in the theorem. It is carried purely to make the induction go through — see the remark at the end."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#a-initialization",
-    "href": "lesson-plans/selection-sort-proof.html#a-initialization",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "a) Initialization",
-    "text": "a) Initialization\nTake \\(i = 0\\).\n\nNo statement has executed, so C holds \\(C_0\\), and the identity is a permutation.\nThe range \\(C[0..{-1}]\\) is empty, and the empty sequence is sorted.\nThere is no \\(k\\) with \\(0 \\le k &lt; 0\\), so the maximum is over an empty set and the claim is vacuous.\n\nHence \\(P(0)\\). \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#b-restoration",
-    "href": "lesson-plans/selection-sort-proof.html#b-restoration",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "b) Restoration",
-    "text": "b) Restoration\nAssume \\(P(i)\\) holds at the top of iteration \\(i\\), and that the guard passed, so \\(i &lt; n\\). Let C denote the contents at the top of the iteration and \\(C'\\) the contents after the body runs. We show \\(P(i+1)\\) holds of \\(C'\\).\nThe body does two things:\n\\[m \\;=\\; \\texttt{idxOfMin(C, i)}, \\qquad \\texttt{swap(C, m, i)}.\\]\nBy Lemma 1, \\(i \\le m &lt; n\\) and \\[C[m] \\;=\\; \\min_{i \\le j &lt; n} C[j], \\tag{$\\star$}\\] and C is unchanged by the call. By Lemma 2, \\[C'[i] = C[m], \\qquad C'[m] = C[i], \\qquad C'[k] = C[k] \\text{ otherwise.}\\]\n(a) Permutation. idxOfMin does not modify C, and swap is a transposition. A composition of permutations is a permutation, so by the inductive hypothesis \\(C'\\) is a permutation of \\(C_0\\).\n(b) The prefix is sorted. We must show \\(C'[0] \\le \\cdots \\le C'[i]\\).\nSince \\(m \\ge i\\), the swap touches only indices \\(\\ge i\\), so \\[C'[k] = C[k] \\quad \\text{for all } k &lt; i,\\] and by the inductive hypothesis (b) this prefix is sorted. It remains to check the join, that \\(C'[i-1] \\le C'[i]\\), and only when \\(i \\ge 1\\).\nBy the inductive hypothesis (c), \\[C[i-1] \\;\\le\\; \\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\n\\;\\overset{(\\star)}{=}\\; C[m] \\;=\\; C'[i],\\] and \\(C'[i-1] = C[i-1]\\), so \\(C'[i-1] \\le C'[i]\\) as required.\nWhen \\(i = 0\\) the range \\(C'[0..0]\\) is a single element and is sorted trivially.\n(c) The prefix stays below the suffix. We must show \\[\\max_{0 \\le k &lt; i+1} C'[k] \\;\\le\\; \\min_{i+1 \\le j &lt; n} C'[j].\\]\nBy part (b) just proved, \\(C'[0..i]\\) is sorted, so its maximum is its last entry: \\[\\max_{0 \\le k \\le i} C'[k] \\;=\\; C'[i] \\;=\\; C[m].\\]\nFor the right-hand side, compare the two suffixes as multisets. The swap moves \\(C[m]\\) to position \\(i\\) and \\(C[i]\\) to position \\(m\\), and both \\(i\\) and \\(m\\) lie in \\([i, n)\\), so \\[\\{\\, C'[j] : i+1 \\le j &lt; n \\,\\} \\;=\\; \\{\\, C[j] : i \\le j &lt; n \\,\\} \\setminus \\{ C[m] \\}.\\]\nEvery element of \\(\\{C[j] : i \\le j &lt; n\\}\\) is \\(\\ge C[m]\\) by \\((\\star)\\), since \\(C[m]\\) is the minimum of exactly that set. Removing one element cannot introduce anything smaller, so every remaining element is \\(\\ge C[m] = C'[i]\\), which is the claim.\nHence \\(P(i+1)\\). \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#c-termination",
-    "href": "lesson-plans/selection-sort-proof.html#c-termination",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "c) Termination",
-    "text": "c) Termination\nThe loop variable starts at \\(0\\), increases by exactly \\(1\\) per iteration, and is tested against the fixed bound \\(n\\). So after \\(n\\) iterations the guard fails and control leaves the loop with \\(i = n\\).\n\\(P(n)\\) therefore holds, and reading it off:\n\n\nC is a permutation of \\(C_0\\);\n\n\n\\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\) — the whole array is sorted;\n\n\nvacuous.\n\n\nTogether, (a) and (b) are exactly the theorem. \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
-    "href": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "Remark: why clause (c) is there",
-    "text": "Remark: why clause (c) is there\nDrop (c) and the proof fails at one specific line. In part (b) we needed \\(C'[i-1] \\le C'[i]\\), and the only thing that delivers it is knowing that everything already placed is no larger than anything still to come. Sortedness of the prefix alone says nothing about how the prefix compares to the rest, so the newly placed element could land below its predecessor.\nSo (c) is not part of what we set out to prove, and it is not used at termination — it retires there, vacuous. It exists solely so that the inductive step can be taken. That is strengthening the induction hypothesis: the statement you can prove is sometimes stronger than the one you want."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
-    "href": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "Remark: the last iteration",
-    "text": "Remark: the last iteration\nThe loop runs to \\(i = n-1\\), where idxOfMin(C, n-1) must return \\(n-1\\) and the swap exchanges an element with itself. It is harmless, and the proof covers it without a special case, but the loop could equally run to \\(n-2\\). Worth a sentence if someone asks — it is the same observation as the final pass of a bubble sort doing nothing."
   },
   {
     "objectID": "lesson-plans/lecture-02_lesson-plan.html",
@@ -714,61 +712,119 @@
     "text": "For later: the AI comparison\nCut from this lesson deliberately — a tool producing the sentence in three seconds argues against the point, which is that they needed each other. It belongs in a lecture where assessment is the subject.\nWorth keeping when that lecture happens (tested 2026-09-11): asked what the function does, Gemini omitted “first”; ChatGPT got it right. That is the demonstration in one line — the word the whole room fights over is the word a widely-used tool drops, and you cannot tell which you got without already knowing the answer.\nA local chat window for doing this live, driven by the claude CLI so no API key is involved, is in tools/aidemo/server.py at the root of the superproject."
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "objectID": "lesson-plans/selection-sort-proof.html",
+    "href": "lesson-plans/selection-sort-proof.html",
+    "title": "Selection sort — a formal proof of correctness",
     "section": "",
-    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
+    "text": "Written to be worked at the board. It leans on two results rather than reproving them: idxOfMin, proved in lecture 4/5, and swap, assumed."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-code",
+    "href": "lesson-plans/selection-sort-proof.html#the-code",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The code",
+    "text": "The code\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWrite \\(n\\) for C.size(), and \\(C_0\\) for the contents of C on entry. Note \\(n\\) does not change: nothing in the loop resizes C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are allowed to assume",
+    "text": "What we are allowed to assume\n\n\n\n\n\n\nLemma 1 (idxOfMin). For \\(0 \\le a &lt; n\\), idxOfMin(C, a) returns an index \\(\\ell\\) with \\(a \\le \\ell &lt; n\\) and \\[C[\\ell] \\;=\\; \\min_{a \\le j &lt; n} C[j],\\] and does not modify C.\n\n\n\n\n\n\n\n\n\nLemma 2 (swap). swap(C, p, q) leaves C with \\(C'[p] = C[q]\\), \\(C'[q] = C[p]\\), and \\(C'[k] = C[k]\\) for every \\(k \\notin \\{p, q\\}\\). In particular it is a transposition, so it permutes the contents of C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are proving",
+    "text": "What we are proving\n\n\n\n\n\n\nTheorem. After selectionSort(C) returns, C is a permutation of \\(C_0\\) and \\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\).\n\n\n\nBoth halves are needed. Sortedness alone is satisfied by a function that overwrites the array with zeroes."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "href": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The invariant",
+    "text": "The invariant\nAt the top of iteration \\(i\\) — meaning just before the guard is tested with the loop variable equal to \\(i\\) — for \\(0 \\le i \\le n\\):\n\n\n\n\n\n\n\\(P(i)\\):\n\nC is a permutation of \\(C_0\\);\n\\(C[0] \\le C[1] \\le \\cdots \\le C[i-1]\\);\n\\(\\displaystyle\\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\\).\n\n\n\n\nClauses (b) and (c) are vacuous when \\(i = 0\\); (c) is also vacuous when \\(i = n\\).\nClause (c) is the one that does not appear in the theorem. It is carried purely to make the induction go through — see the remark at the end."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "href": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "a) Initialization",
+    "text": "a) Initialization\nTake \\(i = 0\\).\n\nNo statement has executed, so C holds \\(C_0\\), and the identity is a permutation.\nThe range \\(C[0..{-1}]\\) is empty, and the empty sequence is sorted.\nThere is no \\(k\\) with \\(0 \\le k &lt; 0\\), so the maximum is over an empty set and the claim is vacuous.\n\nHence \\(P(0)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "href": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "b) Restoration",
+    "text": "b) Restoration\nAssume \\(P(i)\\) holds at the top of iteration \\(i\\), and that the guard passed, so \\(i &lt; n\\). Let C denote the contents at the top of the iteration and \\(C'\\) the contents after the body runs. We show \\(P(i+1)\\) holds of \\(C'\\).\nThe body does two things:\n\\[m \\;=\\; \\texttt{idxOfMin(C, i)}, \\qquad \\texttt{swap(C, m, i)}.\\]\nBy Lemma 1, \\(i \\le m &lt; n\\) and \\[C[m] \\;=\\; \\min_{i \\le j &lt; n} C[j], \\tag{$\\star$}\\] and C is unchanged by the call. By Lemma 2, \\[C'[i] = C[m], \\qquad C'[m] = C[i], \\qquad C'[k] = C[k] \\text{ otherwise.}\\]\n(a) Permutation. idxOfMin does not modify C, and swap is a transposition. A composition of permutations is a permutation, so by the inductive hypothesis \\(C'\\) is a permutation of \\(C_0\\).\n(b) The prefix is sorted. We must show \\(C'[0] \\le \\cdots \\le C'[i]\\).\nSince \\(m \\ge i\\), the swap touches only indices \\(\\ge i\\), so \\[C'[k] = C[k] \\quad \\text{for all } k &lt; i,\\] and by the inductive hypothesis (b) this prefix is sorted. It remains to check the join, that \\(C'[i-1] \\le C'[i]\\), and only when \\(i \\ge 1\\).\nBy the inductive hypothesis (c), \\[C[i-1] \\;\\le\\; \\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\n\\;\\overset{(\\star)}{=}\\; C[m] \\;=\\; C'[i],\\] and \\(C'[i-1] = C[i-1]\\), so \\(C'[i-1] \\le C'[i]\\) as required.\nWhen \\(i = 0\\) the range \\(C'[0..0]\\) is a single element and is sorted trivially.\n(c) The prefix stays below the suffix. We must show \\[\\max_{0 \\le k &lt; i+1} C'[k] \\;\\le\\; \\min_{i+1 \\le j &lt; n} C'[j].\\]\nBy part (b) just proved, \\(C'[0..i]\\) is sorted, so its maximum is its last entry: \\[\\max_{0 \\le k \\le i} C'[k] \\;=\\; C'[i] \\;=\\; C[m].\\]\nFor the right-hand side, compare the two suffixes as multisets. The swap moves \\(C[m]\\) to position \\(i\\) and \\(C[i]\\) to position \\(m\\), and both \\(i\\) and \\(m\\) lie in \\([i, n)\\), so \\[\\{\\, C'[j] : i+1 \\le j &lt; n \\,\\} \\;=\\; \\{\\, C[j] : i \\le j &lt; n \\,\\} \\setminus \\{ C[m] \\}.\\]\nEvery element of \\(\\{C[j] : i \\le j &lt; n\\}\\) is \\(\\ge C[m]\\) by \\((\\star)\\), since \\(C[m]\\) is the minimum of exactly that set. Removing one element cannot introduce anything smaller, so every remaining element is \\(\\ge C[m] = C'[i]\\), which is the claim.\nHence \\(P(i+1)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#c-termination",
+    "href": "lesson-plans/selection-sort-proof.html#c-termination",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "c) Termination",
+    "text": "c) Termination\nThe loop variable starts at \\(0\\), increases by exactly \\(1\\) per iteration, and is tested against the fixed bound \\(n\\). So after \\(n\\) iterations the guard fails and control leaves the loop with \\(i = n\\).\n\\(P(n)\\) therefore holds, and reading it off:\n\n\nC is a permutation of \\(C_0\\);\n\n\n\\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\) — the whole array is sorted;\n\n\nvacuous.\n\n\nTogether, (a) and (b) are exactly the theorem. \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "href": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: why clause (c) is there",
+    "text": "Remark: why clause (c) is there\nDrop (c) and the proof fails at one specific line. In part (b) we needed \\(C'[i-1] \\le C'[i]\\), and the only thing that delivers it is knowing that everything already placed is no larger than anything still to come. Sortedness of the prefix alone says nothing about how the prefix compares to the rest, so the newly placed element could land below its predecessor.\nSo (c) is not part of what we set out to prove, and it is not used at termination — it retires there, vacuous. It exists solely so that the inductive step can be taken. That is strengthening the induction hypothesis: the statement you can prove is sometimes stronger than the one you want."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "href": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: the last iteration",
+    "text": "Remark: the last iteration\nThe loop runs to \\(i = n-1\\), where idxOfMin(C, n-1) must return \\(n-1\\) and the swap exchanges an element with itself. It is harmless, and the proof covers it without a special case, but the loop could equally run to \\(n-2\\). Worth a sentence if someone asks — it is the same observation as the final pass of a bubble sort doing nothing."
+  },
+  {
+    "objectID": "cpp-short-course.html",
+    "href": "cpp-short-course.html",
+    "title": "C++ Short Course (optional)",
+    "section": "",
+    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+  },
+  {
+    "objectID": "cpp-short-course.html#sessions",
+    "href": "cpp-short-course.html#sessions",
+    "title": "C++ Short Course (optional)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+  },
+  {
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
     "crumbs": [
-      "Course information",
-      "Schedule"
+      "FAQ"
     ]
   },
   {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n\n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLecture 8\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLecture 9\n\n\n    Fri Oct  2\nLecture 10\n\n\n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nLecture 11\n\n\n    Wed Oct  7\nLecture 12\n\n\n    Fri Oct  9\nLecture 13\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nLecture 14\n\n\n    Fri Oct 16\nLecture 15\n\n\n    Mon Oct 19\nLecture 16\n\n\n    Wed Oct 21\nLecture 17\n\n\n    Fri Oct 23\nLecture 18\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nLecture 19\n\n\n    Wed Oct 28\nLecture 20\n\n\n    Fri Oct 30\nLecture 21\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 22\n\n\n    Wed Nov  4\nLecture 23\n\n\n    Fri Nov  6\nLecture 24\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 25\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 26\n\n\n    Wed Nov 18\nLecture 27\n\n\n    Fri Nov 20\nLecture 28\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 29\n\n\n    Wed Nov 25\nLecture 30\n\n\n    Fri Nov 27\nLecture 31\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 32\n\n\n    Wed Dec  2\nLecture 33\n\n\n    Fri Dec  4\nLecture 34\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 35\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
+    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
     "crumbs": [
-      "Course information",
-      "Schedule"
+      "FAQ"
     ]
   },
   {
-    "objectID": "formatting.html",
-    "href": "formatting.html",
-    "title": "Formatting",
+    "objectID": "announcements.html",
+    "href": "announcements.html",
+    "title": "Announcements",
     "section": "",
-    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
-  },
-  {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Setup: Tech stack",
-    "section": "",
-    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
-  },
-  {
-    "objectID": "setup.html#hardware",
-    "href": "setup.html#hardware",
-    "title": "Setup: Tech stack",
-    "section": "Hardware",
-    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
-  },
-  {
-    "objectID": "setup.html#computing-environment",
-    "href": "setup.html#computing-environment",
-    "title": "Setup: Tech stack",
-    "section": "Computing environment",
-    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
-  },
-  {
-    "objectID": "setup.html#attribution",
-    "href": "setup.html#attribution",
-    "title": "Setup: Tech stack",
-    "section": "Attribution",
-    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
+    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 3 — Sep 21 to Sep 27\n\n\n\ndeadline\n\nexamlet\n\n\n\nExamlet 1 week. HW1 due, PA1 out, PEX2 Wednesday.\n\n\n\n\n\nSep 21, 2026\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
   },
   {
     "objectID": "slides/lecture-04_slides.html#today",

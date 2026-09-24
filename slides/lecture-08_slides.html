@@ -10,7 +10,7 @@
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -195,329 +195,68 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta property="og:description" content="Introduction to Data Structures and Algorithms">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:description" content="Introduction to Data Structures and Algorithms">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:description" content="Linked Memory">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:description" content="Linked Memory">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="images/lecture-01/wave.jpg" data-background-size="cover" class="quarto-title-block center">
+<section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Introduction to Data Structures and Algorithms</p>
+  <p class="subtitle">Linked Memory</p>
 
 <div class="quarto-title-authors">
 </div>
 
 </section>
-<section id="introductions" class="slide level2 smaller">
-<h2>Introductions</h2>
-<!-- TODO: talking point -- "why did I choose that slide?" -- discuss the wave photo before diving into logistics -->
-<p><strong>Us:</strong></p>
+<section id="today" class="slide level2 smaller">
+<h2>Today</h2>
+<p><strong>Announcements</strong></p>
 <ul>
-<li>Cinda Heeren (Sec 101/102): cheeren@cs.ubc.ca · OH Tuesday 10:30–11:30 AM in ICCS 233</li>
-<li>Nathan Harms (Sec 102): nharms@cs.ubc.ca · OH Monday 4:00–5:00 PM in ICCS X465</li>
-<li>Course Coordinator: Anca Barbu — cpsc221-admin@cs.ubc.ca</li>
+<li><strong>PA1 is out</strong>, due Monday Oct 5</li>
+<li><strong>Examlet 1 is this week</strong> — Thursday through Sunday. Book your seat on PrairieTest</li>
+<li>HW1 closed Monday</li>
 </ul>
-<p><strong>TAs:</strong> <img data-src="images/lecture-01/mpv-shot0044.jpg"></p>
-</section>
-<section id="all-you-need-to-know-is-at" class="slide level2 smaller">
-<h2>All you need to know is at…</h2>
-<p><a href="">https://ubc-cs.github.io/cpsc221/</a></p>
-<div class="columns">
-<div class="column" style="width:50%;">
-<p>Info on:</p>
+<p><br>
+</p>
+<p><strong>Lesson 3.2 (video)</strong></p>
 <ul>
-<li>Staff</li>
-<li>Communications</li>
-<li>Lab sections</li>
-<li>PAs</li>
-<li>Exams</li>
-<li>Marking</li>
-<li>Academic Integrity</li>
-</ul>
-</div><div class="column" style="width:50%;">
+<li>Linked memory</li>
+<li>Singly linked lists
 <ul>
-<li>PAs — Due Mon after 2wk</li>
-<li>HWs — Due Mon after 1wk</li>
-<li>Labs — once a week, av Sun-Sun</li>
-<li>Exams — 50min in ORCA</li>
-<li>Class Meetings in FSC 1005
-<ul>
-<li>101: MWF 2p,</li>
-<li>102: MWF 3p.</li>
+<li><code>insertAtFront</code></li>
+<li><code>printReverse</code></li>
 </ul></li>
 </ul>
-</div></div>
-<p><a href="https://canvas.ubc.ca/courses/190808">https://canvas.ubc.ca/courses/190808</a></p>
 </section>
-<section id="term-schedule" class="slide level2">
-<h2>Term Schedule</h2>
-<!-- CSS: include once -->
-<style>
-  .pill{display:inline-block; min-width:1.6em; padding:0.1em 0.35em; border-radius:0.3em; text-align:center; font-weight:600; line-height:1;}
-  .pill--off{background:#ddd; color:#111;}
-  .pill--class{background:purple; color:#fff;}
-  .pill--video{background:#f97316; color:#fff;}
-  .pill--lab{background:dodgerblue; color:#fff;}
-  .pill--exam{background:seagreen; color:#fff;}
-  .pill--hw{background:#facc15; color:#111;}
-  .pill--pa{background:#ef4444; color:#fff;}
-  .week-num{font-size:1.3em; font-weight:800; line-height:1;}
-  .date-cell{font-size:1em; white-space:nowrap; color:#666;}
-  #term-schedule table td, #term-schedule table th{vertical-align:middle; padding:0.05em 0.3em; line-height:1.1;}
-  #term-schedule table{font-size:0.48em; margin:0 auto; width:60%;}
-  #term-schedule p{font-size:0.48em; text-align:center;}
-</style>
-<div id="term-schedule">
-<table class="caption-top">
-<colgroup>
-<col style="width: 1%">
-<col style="width: 3%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 14%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: center;">Week</th>
-<th>Mon</th>
-<th style="text-align: center;">M</th>
-<th style="text-align: center;">W</th>
-<th style="text-align: center;">F</th>
-<th style="text-align: center;">HW/PA</th>
-<th style="text-align: center;">Lab</th>
-<th style="text-align: center;">EX</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">1</span></td>
-<td><span class="date-cell">Sep 7</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Labour Day">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="No lab this week">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">2</span></td>
-<td><span class="date-cell">Sep 14</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">3</span></td>
-<td><span class="date-cell">Sep 21</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--hw" title="HW1 due">🏎️</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">4</span></td>
-<td><span class="date-cell">Sep 28</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="National Day for Truth and Reconciliation">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">5</span></td>
-<td><span class="date-cell">Oct 5</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--pa" title="PA1 due">🚀</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">6</span></td>
-<td><span class="date-cell">Oct 12</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Thanksgiving">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="No lab this week">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">7</span></td>
-<td><span class="date-cell">Oct 19</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--hw" title="HW2 due">🏎️</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">8</span></td>
-<td><span class="date-cell">Oct 26</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">9</span></td>
-<td><span class="date-cell">Nov 2</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--pa" title="PA2 due">🚀</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">10</span></td>
-<td><span class="date-cell">Nov 9</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="No class">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Remembrance Day">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="No lab this week">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">11</span></td>
-<td><span class="date-cell">Nov 16</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Nothing due">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">12</span></td>
-<td><span class="date-cell">Nov 23</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--pa" title="PA3 due">🚀</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="week-num">13</span></td>
-<td><span class="date-cell">Nov 30</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--video" title="Video">📹</span></td>
-<td style="text-align: center;"><span class="pill pill--hw" title="HW3 due">🏎️</span></td>
-<td style="text-align: center;"><span class="pill pill--lab" title="Lab">🪄</span></td>
-<td style="text-align: center;"><span class="pill pill--exam" title="Examlet">🤩</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="week-num">14</span></td>
-<td><span class="date-cell">Dec 7</span></td>
-<td style="text-align: center;"><span class="pill pill--class" title="Lecture">🎉</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Term over">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Term over">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Term over">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Term over">&nbsp;</span></td>
-<td style="text-align: center;"><span class="pill pill--off" title="Term over">&nbsp;</span></td>
-</tr>
-</tbody>
-</table>
-<p>Legend: <span class="pill pill--class" title="Lecture">🎉</span> in-person lecture &nbsp; <span class="pill pill--video" title="Video">📹</span> async video &nbsp; <span class="pill pill--lab" title="Lab">🪄</span> lab &nbsp; <span class="pill pill--exam" title="Examlet">🤩</span> examlet &nbsp; <span class="pill pill--hw" title="HW due">🏎️</span> HW due &nbsp; <span class="pill pill--pa" title="PA due">🚀</span> PA due &nbsp; <span class="pill pill--off" title="No class / nothing due">&nbsp;</span> off / nothing due</p>
-</div>
-<!-- TODO: mid-term break not yet confirmed against the official UBC 2026W1 academic calendar -->
-</section>
-<section id="grading" class="slide level2">
-<h2>Grading</h2>
-<!-- Same pill colours and emoji as the term schedule above, so a row here maps
-     straight onto a column there. -->
-<style>
-  /* Pandoc emits a <colgroup> with percentage widths that stretch the table to
-     the full slide; dropping it lets the columns size to their content. */
-  #grading table colgroup{display:none;}
-  #grading table{font-size:0.62em; margin:0.3em auto 0 auto; width:auto;}
-  #grading table td, #grading table th{vertical-align:middle; padding:0.18em 1.1em;}
-  #grading .wt{font-weight:800; white-space:nowrap;}
-  #grading .each{color:#666; font-size:0.85em; white-space:nowrap;}
-  /* Markdown table rows can't carry a class, so the total is addressed by position. */
-  #grading tbody tr:last-child td{border-top:2px solid #1a1a1a;}
-</style>
-<div id="grading">
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Component</th>
-<th></th>
-<th>Weight</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="pill pill--class" title="Lecture">🎉</span> Class meetings</td>
-<td><span class="each">attendance not required</span></td>
-<td><span class="wt">0%</span></td>
-</tr>
-<tr class="even">
-<td><span class="pill pill--lab" title="Lab">🪄</span> Labs</td>
-<td><span class="each">best 8 of 10 × 1%</span></td>
-<td><span class="wt">8%</span></td>
-</tr>
-<tr class="odd">
-<td><span class="pill pill--hw" title="HW">🏎️</span> Homework</td>
-<td><span class="each">3 × 2%</span></td>
-<td><span class="wt">6%</span></td>
-</tr>
-<tr class="even">
-<td><span class="pill pill--pa" title="PA">🚀</span> Programming assignments</td>
-<td><span class="each">3 × 2%</span></td>
-<td><span class="wt">6%</span></td>
-</tr>
-<tr class="odd">
-<td><span class="pill pill--exam" title="Examlet">🤩</span> Examlets</td>
-<td><span class="each">9 × 6%</span></td>
-<td><span class="wt">54%</span></td>
-</tr>
-<tr class="even">
-<td><span class="pill" style="background:gold; color:#111;" title="Final">🏆</span> Final exam</td>
-<td><span class="each">cumulative</span></td>
-<td><span class="wt">26%</span></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-<td><span class="wt">100%</span></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="fragment">
-<p><strong>80% of your grade is written under invigilation.</strong></p>
-</div>
+<section id="something-new" class="slide level2 smaller">
+<h2>Something NEW!!</h2>
+<p>Make at least 3 observations about this code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node<span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>   LIT data<span class="op">;</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>   Node <span class="op">*</span> next<span class="op">;</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>   Node<span class="op">(</span>LIT nData<span class="op">,</span> Node <span class="op">*</span> next<span class="op">=</span>NULL<span class="op">):</span> data<span class="op">(</span>nData<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>&nbsp;</li>
+<li>&nbsp;</li>
+<li>&nbsp;</li>
+<li>&nbsp;</li>
+</ul>
 <aside class="notes">
-<p>The point of this slide is the last line, not the table. Labs/HW/PAs are where you <em>learn</em> the material — they are worth 20% precisely so you can afford to struggle on them. The examlets and final are where you <em>show</em> it, and there is nothing to lean on there but what you actually know.</p>
-<p>Ties directly to the GenAI policy: use whatever you like on the 20%, but the same material comes back at you on the 80%.</p>
+<p>Four observations, in the order they are worth making:</p>
+<ul>
+<li>It is a <code>struct</code>, not a <code>class</code> – so everything is public.</li>
+<li>It is a template, so the node can hold any type.</li>
+<li><strong>A <code>Node</code> contains a pointer to a <code>Node</code>.</strong> This is the one that matters, and it looks illegal at first: a type defined in terms of itself. It is fine because <code>Node *</code> is a pointer – a fixed size, whatever <code>Node</code> turns out to be. A <code>Node</code> containing a <code>Node</code> would be infinite; a <code>Node</code> containing an address is 8 bytes.</li>
+<li>The constructor takes <code>next</code> and <strong>never uses it.</strong> The initializer list sets <code>data</code> only, so <code>next</code> is left uninitialised. Worth slowing down on – it is a real bug, and it is the kind that bites in PA1.</li>
+</ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -530,174 +269,346 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="todays-announcements" class="slide level2">
-<h2>Today’s announcements</h2>
-<ol type="1">
-<li>Labs start next week</li>
-<li>Class meets <strong>in person</strong> this Friday</li>
-</ol>
-<p><strong>Today’s Plan:</strong></p>
-<ol type="1">
-<li>intro to algorithm analysis — code!</li>
-</ol>
-</section>
-<section>
-<section id="whats-this-course-about" class="title-slide slide level1 center" data-background-image="images/lecture-01/wave.jpg" data-background-size="cover">
-<h1>What’s this course about?</h1>
+<section id="a-metaphor-for-memory" class="slide level2 smaller">
+<h2>A metaphor for memory…</h2>
 
+<img data-src="images/lecture-08/metaphor.png" class="r-stretch"><aside class="notes">
+<p>Buying memory by the gigabyte, and a street map.</p>
+<p>The point of the map: every house has an address, the addresses are laid out in order, and knowing an address is not the same as knowing what is in the house. That is the whole idea of a pointer in one picture.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="wheres-meghan" class="slide level2" data-background-image="images/lecture-01/world-cup-bc-place.jpg" data-background-size="contain" data-background-position="top">
-<h2>Where’s Meghan?</h2>
-<p>Observations:</p>
-<!-- discussion prompt: how would you find one specific person in a stadium full of people? -->
-</section>
-<section id="which-closet" class="slide level2">
-<h2>Which closet…</h2>
-<div id="closet-compare" style="position:relative; height:480px; width:360px; margin:0 auto; aspect-ratio:3/4; overflow:hidden; border-radius:8px; box-shadow:0 12px 32px rgba(0,0,0,0.45);">
-<img src="images/lecture-01/closet-messy.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;"> <img id="closet-compare-top" src="images/lecture-01/closet-organized.jpg" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; clip-path: inset(0 50% 0 0);">
-<div id="closet-compare-handle" style="position:absolute; top:0; bottom:0; left:50%; width:4px; background:#fff; box-shadow:0 0 6px rgba(0,0,0,0.6); pointer-events:none;">
-<div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:36px; height:36px; border-radius:50%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center; font-size:18px;">
-↔︎
-</div>
-</div>
-<p><input type="range" min="0" max="100" value="50" id="closet-compare-range" style="position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; cursor:ew-resize; -webkit-appearance:none; -moz-appearance:none; appearance:none; background:transparent;"></p>
-</div>
-<style>
-#closet-compare-range::-webkit-slider-runnable-track { background: transparent; }
-#closet-compare-range::-webkit-slider-thumb { -webkit-appearance: none; width: 0; height: 0; background: transparent; border: none; }
-#closet-compare-range::-moz-range-track { background: transparent; border: none; }
-#closet-compare-range::-moz-range-thumb { width: 0; height: 0; background: transparent; border: none; }
-#closet-compare-range::-moz-focus-outer { border: 0; }
-</style>
-<script>
-(function () {
-  const range = document.getElementById('closet-compare-range');
-  const top = document.getElementById('closet-compare-top');
-  const handle = document.getElementById('closet-compare-handle');
-  range.addEventListener('input', function () {
-    const v = range.value;
-    top.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
-    handle.style.left = v + '%';
-  });
-})();
-</script>
-</section>
-<section id="course-goals" class="slide level2 smaller">
-<h2>Course Goals</h2>
-<ul>
-<li>Become familiar with some of the fundamental <span style="color: #e74c3c;">data structures</span> and <span style="color: #e74c3c;">algorithms</span> in computer science
-<ul>
-<li>Learn when to use them</li>
-</ul></li>
-<li>Improve your ability to <span style="color: #18bc9c;">solve problems abstractly</span>
-<ul>
-<li>Data structures and algorithms are the building blocks</li>
-</ul></li>
-<li>Improve your ability to <span style="color: #3498db;">analyze algorithms</span>
-<ul>
-<li>Prove <span style="color: #3498db;">correctness</span></li>
-<li>Gauge, compare, and improve <span style="color: #3498db;">time</span> and <span style="color: #3498db;">space</span> complexity</li>
-</ul></li>
-<li>Become modestly skilled with C++ and UNIX</li>
-</ul>
-</section>
-<section id="measuring-the-value-of-algorithms" class="slide level2">
-<h2>Measuring the value of algorithms</h2>
-<ul>
-<li>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</li>
-</ul>
+<section id="variables-and-pointers" class="slide level2 smaller">
+<h2>Variables and Pointers:</h2>
+<div class="columns">
+<div class="column" style="width:52%;">
+<p>Backtrack to variables:</p>
 <p><br>
+<br>
+<br>
 </p>
-<!-- ===== Wed Sep 9 2026: class ended HERE — the "is its value 0?" question was
-     the last thing covered. Everything below is still owed on Friday. ===== -->
-<ul>
-<li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
-<li>Express <span style="color: #e74c3c;">running times</span> as a (positive) <span style="color: #e74c3c;">function</span>:</li>
-</ul>
-<p><br>
-</p>
-<ul>
-<li>Form of function depends on structure of the algorithm…</li>
-</ul>
-</section>
-<section id="running-times" class="slide level2 smaller">
-<h2>Running times</h2>
-<p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
+<p>Special variable type:</p>
+</div><div class="column" style="width:48%;">
+<div class="memtable">
+<table class="caption-top">
 <thead>
 <tr class="header">
-<th>operations</th>
-<th>n=10</th>
-<th>n=100</th>
-<th>n=1000</th>
-<th>n=10,000</th>
-<th>n=<span class="math inline">\(10^{12}\)</span></th>
+<th>loc</th>
+<th>name</th>
+<th>val</th>
+<th>type</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline">\(n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td>1 s</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(n \log n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-7}\)</span> s</td>
-<td>40 s</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(n^2\)</span></td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-4}\)</span> s</td>
-<td><span class="math inline">\(10^{12}\)</span> s</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(n^3\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-3}\)</span> s</td>
-<td>1 s</td>
-<td><span class="math inline">\(10^{24}\)</span> s</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(2^n\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{18}\)</span> s</td>
-<td><span class="math inline">\(10^{289}\)</span> s</td>
+<td></td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div></div>
+<aside class="notes">
+<p>Fill the table in as you go.</p>
+<p>A variable is four things: a location, a name, a value, and a type. Three of those are familiar; <code>loc</code> is the one nobody has had to think about before, and it is the whole reason this lesson exists.</p>
+<p>Put two or three ordinary variables in the table first – <code>int x</code>, <code>char c</code> – so the columns mean something. Then the special type: a variable whose <em>value</em> is another variable’s <code>loc</code>. Add it as one more row, so it is visibly the same kind of thing, not a new species.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="algorithmic-analysis-example-1" class="slide level2 smaller">
-<h2>Algorithmic Analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>What questions do you have about the code?</p>
+<section id="pointers-and-dynamic-memory" class="slide level2 smaller">
+<h2>Pointers and dynamic memory:</h2>
+<div class="columns">
+<div class="column" style="width:34%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span> p<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:66%;">
+<div class="memtable">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>loc</th>
+<th>name</th>
+<th>val</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="memtable heap">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>loc</th>
+<th>name</th>
+<th>val</th>
+<th>type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div></div>
+<aside class="notes">
+<p>Two tables now, and the colours are the point: green is the stack, orange is the heap.</p>
+<p><code>int * p;</code> puts one row in the <strong>green</strong> table – a variable named <code>p</code>, of type <code>int *</code>, whose value is garbage. Nothing at all happens in the orange table. That is the distinction the whole lesson turns on, so say it plainly: <em>declaring a pointer does not give you anything to point at.</em></p>
+<p>Then add <code>p = new int;</code> on top and fill the orange row, so both halves are on the board before the next slide starts asking questions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="fun-and-games-with-pointers-warm-up" class="slide level2 smaller">
+<h2>Fun and games with pointers: (warm-up)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span> p<span class="op">,</span> q<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What type is <code>q</code>? ______________</p>
+<p><br>
+</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>p<span class="op">;</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> x<span class="op">;</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="op">&amp;</span>x<span class="op">;</span></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">*</span>p <span class="op">=</span> <span class="dv">6</span><span class="op">;</span></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> x<span class="op">;</span></span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> p<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>cout &lt;&lt; x;</code> &nbsp; What is output? ______________</p>
+<p><code>cout &lt;&lt; p;</code> &nbsp; What is output? ______________</p>
+<p>Write a statement whose output is the value of <code>x</code>, using variable <code>p</code>: ______________</p>
+<aside class="notes">
+<p>First one is the classic: <strong><code>q</code> is an <code>int</code></strong>, not an <code>int *</code>. The <code>*</code> binds to the declarator, not the type. That is exactly why the course writes <code>int *p, *q;</code> with the star against the name.</p>
+<p>Second block: <code>x</code> is 6, because <code>*p = 6</code> wrote through <code>p</code> into <code>x</code>.</p>
+<p><code>cout &lt;&lt; p;</code> prints an address – a hex number that changes every run and is not interesting in itself. Worth saying so, or someone will try to memorise it.</p>
+<p>Last blank: <code>cout &lt;&lt; *p;</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section" class="slide level2 smaller smallcode">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> <span class="op">*</span>p<span class="op">,</span> <span class="op">*</span>q<span class="op">;</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">*</span>q <span class="op">=</span> <span class="dv">8</span><span class="op">;</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>p<span class="op">;</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">;</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">*</span>q <span class="op">=</span> <span class="dv">9</span><span class="op">;</span></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> q<span class="op">;</span></span>
+<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> NULL<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:58%;">
+<p><br>
+<br>
+</p>
+<p><code>cout &lt;&lt; *p;</code> &nbsp; What is output? __________</p>
+<p><br>
+<br>
+</p>
+<p><code>p = NULL;</code> &nbsp; Do you like this? __________</p>
+<p><code>q = NULL;</code> &nbsp; Do you like this? __________</p>
+</div></div>
+<div class="callout callout-note no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p>Memory leak:</p>
+<p><br>
+</p>
+<p>Deleting a null pointer:</p>
+<p>Dereferencing a null pointer:</p>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Trace the whole thing in the two tables, line by line – this is the slide that pays for the two-colour setup.</p>
+<p><code>cout &lt;&lt; *p;</code> prints <strong>8</strong>. <code>q = p</code> made them aliases, so <code>*q = 8</code> wrote the very thing <code>p</code> points at.</p>
+<p><code>p = NULL;</code> – <strong>no, this is bad.</strong> <code>p</code> was the only handle on that first <code>new int</code>. Setting it to <code>NULL</code> abandons the memory without freeing it. Point at the orange row that now has nothing aimed at it: that row is stuck there until the program exits.</p>
+<p><code>q = NULL;</code> – <strong>yes, this is good.</strong> It comes right after <code>delete q</code>, so <code>q</code> is dangling. Setting it to <code>NULL</code> is exactly the right habit.</p>
+<p>Same two words, opposite verdicts, and the difference is only what came before.</p>
+<p>Then the box, three definitions:</p>
+<ul>
+<li><strong>Memory leak</strong> – allocated memory with no remaining pointer to it, so it can never be freed.</li>
+<li><strong>Deleting a null pointer</strong> – legal, and does nothing at all. Safe.</li>
+<li><strong>Dereferencing a null pointer</strong> – undefined behaviour. In practice a segfault.</li>
+</ul>
+<p>The asymmetry between those last two is the part worth repeating: <code>delete</code> on <code>NULL</code> is harmless, <code>*</code> on <code>NULL</code> is fatal.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="lets-explore" class="slide level2 smaller">
+<h2>Let’s explore…</h2>
+<table class="caption-top">
+<tbody>
+<tr class="odd">
+<td><strong>1</strong></td>
+<td><a href="code/lecture-08/pointers1.cpp"><code>pointers1.cpp</code></a></td>
+<td>one int, two names</td>
+</tr>
+<tr class="even">
+<td><strong>2</strong></td>
+<td><a href="code/lecture-08/pointers2.cpp"><code>pointers2.cpp</code></a></td>
+<td><code>new</code>, <code>delete</code>, and aliasing</td>
+</tr>
+<tr class="odd">
+<td><strong>3</strong></td>
+<td><a href="code/lecture-08/pointers3.cpp"><code>pointers3.cpp</code></a></td>
+<td>a leak, and two ways to meet <code>NULL</code></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="ex">g++</span> <span class="at">-o</span> p1 pointers1.cpp <span class="kw">&amp;&amp;</span> <span class="ex">./p1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<p>Run them, break them, watch what happens.</p>
+<ol type="1">
+<li><p><code>p = &amp;x</code> then <code>*p = 6</code>. Print <code>x</code>, <code>*p</code>, <code>&amp;x</code>, <code>p</code>, and <code>&amp;p</code> – the last one is the surprise, because it makes the point that <code>p</code> is a variable like any other and has a location of its own. Then assign to <code>x</code> and read it back through <code>*p</code>.</p></li>
+<li><p><code>q = p</code> makes two handles on one heap <code>int</code>. Write through <code>q</code>, read through <code>p</code>. Print both pointers – the addresses are identical, which is the point.</p></li>
+<li><p>The three failures, in order: the leak (overwrite the only pointer to a <code>new</code>’d int), <code>delete</code> on a <code>NULL</code> pointer (legal, does nothing), and dereferencing <code>NULL</code>. <strong>The third one really does crash</strong> – exit 139, segmentation fault. Let it.</p></li>
+</ol>
+<p>The 2024 replit links are gone, so these are rebuilt from scratch. Source is on the site at slides/code/lecture-08/ – paste into whatever sandbox, or just run them in a terminal on camera.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 
 
-</section></section>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">

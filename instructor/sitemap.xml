@@ -2,110 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/summaries/lecture-01_summary.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/summaries/part-01_summary.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/summaries/part-02_summary.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/posts/01_week-02/index.html</loc>
-    <lastmod>2026-09-23T11:30:32.588Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.338Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/getting-started.html</loc>
-    <lastmod>2026-09-23T11:30:32.586Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.336Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/syllabus.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-01_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.609Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-03_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-06_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-05_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
-    <loc>https://ubc-cs.github.io/cpsc221/announcements.html</loc>
-    <lastmod>2026-09-23T11:30:32.576Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/faq.html</loc>
-    <lastmod>2026-09-23T11:30:32.577Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/cpp-short-course.html</loc>
-    <lastmod>2026-09-23T11:30:32.576Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/lesson-plans/selection-sort-proof.html</loc>
-    <lastmod>2026-09-23T11:30:32.587Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/lesson-plans/lecture-02_lesson-plan.html</loc>
-    <lastmod>2026-09-23T11:30:32.587Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/index.html</loc>
-    <lastmod>2026-09-23T11:30:32.586Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ubc-cs.github.io/cpsc221/formatting.html</loc>
-    <lastmod>2026-09-23T11:30:32.586Z</lastmod>
+    <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-08_slides.html</loc>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/setup.html</loc>
-    <lastmod>2026-09-23T11:30:32.589Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.339Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/formatting.html</loc>
+    <lastmod>2026-09-24T00:09:08.336Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/index.html</loc>
+    <lastmod>2026-09-24T00:09:08.336Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/lesson-plans/lecture-02_lesson-plan.html</loc>
+    <lastmod>2026-09-24T00:09:08.337Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/lesson-plans/selection-sort-proof.html</loc>
+    <lastmod>2026-09-24T00:09:08.337Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/cpp-short-course.html</loc>
+    <lastmod>2026-09-24T00:09:08.323Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/faq.html</loc>
+    <lastmod>2026-09-24T00:09:08.324Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ubc-cs.github.io/cpsc221/announcements.html</loc>
+    <lastmod>2026-09-24T00:09:08.323Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-04_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-07_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/slides/lecture-02_slides.html</loc>
-    <lastmod>2026-09-23T11:30:32.610Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.371Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/weeklyemail.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.374Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/about.html</loc>
-    <lastmod>2026-09-23T11:30:32.576Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.323Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/posts/00_welcome/index.html</loc>
-    <lastmod>2026-09-23T11:30:32.588Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.338Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/posts/02_week-03/index.html</loc>
-    <lastmod>2026-09-23T11:30:32.588Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.338Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/summaries/week-01_summary.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
   <url>
     <loc>https://ubc-cs.github.io/cpsc221/summaries/part-03_summary.html</loc>
-    <lastmod>2026-09-23T11:30:32.611Z</lastmod>
+    <lastmod>2026-09-24T00:09:08.373Z</lastmod>
   </url>
 </urlset>
