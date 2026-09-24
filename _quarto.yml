@@ -6,6 +6,10 @@ project:
     port: 4200
   type: website
   output-dir: _site
+  # Demo source shown in lectures. Quarto only copies files it can see a link
+  # to, and these are linked from slides as plain text, so name them here.
+  resources:
+    - slides/code/**
 
 website:
   title: "{{< var course.full-title >}}"

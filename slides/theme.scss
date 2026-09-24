@@ -29,6 +29,10 @@ $tbl-stripe:         #eef4f7;
 $tbl-label-bg:       #dbe9ee;   // first column -- the row's name, not its data
 $tbl-border:         #a8c3cd;
 
+// Memory diagrams: stack green and heap orange, taken off the 2024 slides.
+$mem-stack:          #b6f5cd;
+$mem-heap:           #fbe0c9;
+
 /*-- scss:rules --*/
 
 .reveal {
@@ -150,8 +154,11 @@ $tbl-border:         #a8c3cd;
 }
 
 // Proof slides: the code is reference, not the subject, so it shrinks to make
-// room for working. {.proof} on the heading turns this on.
-.reveal section.proof {
+// room for working. {.proof} on the heading turns this on. {.smallcode} is the
+// same shrink without the proof connotation -- for slides that are mostly
+// annotation space around a listing.
+.reveal section.proof,
+.reveal section.smallcode {
   div.sourceCode code.sourceCode {
     font-size: calc(var(--r-main-font-size) * 0.48);
   }
@@ -324,6 +331,50 @@ $text-colours: (
   :not(pre) > code {
     background-color: rgba(255, 255, 255, 0.18);
     color: #fff;
+  }
+}
+
+// Memory tables: the loc / name / val / type grids from the 2024 pointer
+// slides. Green is the stack, orange (::: {.memtable .heap}) the heap. Rows
+// are deliberately empty -- they get filled in live -- so the cells need a
+// height of their own or they collapse to nothing.
+//
+// Same <th> rewriting caveat as .shaded-table below.
+.reveal .memtable {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.6em;
+
+  table {
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.62em;
+    border: 1.5px solid #1a1a1a;   // the collapsed bottom edge otherwise clips
+  }
+
+  th,
+  td,
+  td[data-quarto-table-cell-role="th"] {
+    border: 1.5px solid #1a1a1a;
+    background: $mem-stack;
+    padding: 0.15em 0.55em;
+    height: 1.75em;
+    min-width: 3.1em;
+    text-align: center;
+    font-weight: 400;
+    color: $code-plain;
+  }
+
+  colgroup {
+    display: none;
+  }
+}
+
+.reveal .memtable.heap {
+  th,
+  td,
+  td[data-quarto-table-cell-role="th"] {
+    background: $mem-heap;
   }
 }
 
