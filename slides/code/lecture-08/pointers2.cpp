@@ -18,8 +18,8 @@ int main() {
     cout << endl << "*p = " << *p << endl;               // ... and seen through p
 
     delete p;      // frees the int
-    p = NULL;
-    q = NULL;      // q pointed at the same thing, so it was dangling too
+    p = nullptr;
+    q = nullptr;      // q pointed at the same thing, so it was dangling too
 
     cout << "freed, both pointers NULLed" << endl;
     return 0;

@@ -241,7 +241,7 @@
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node<span class="op">{</span></span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>   LIT data<span class="op">;</span></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>   Node <span class="op">*</span> next<span class="op">;</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>   Node<span class="op">(</span>LIT nData<span class="op">,</span> Node <span class="op">*</span> next<span class="op">=</span>NULL<span class="op">):</span> data<span class="op">(</span>nData<span class="op">)</span> <span class="op">{}</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>   Node<span class="op">(</span>LIT nData<span class="op">,</span> Node <span class="op">*</span> next<span class="op">=</span><span class="kw">nullptr</span><span class="op">):</span> data<span class="op">(</span>nData<span class="op">)</span> <span class="op">{}</span></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>&nbsp;</li>
@@ -513,9 +513,9 @@
 <span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>cout <span class="op">&lt;&lt;</span> <span class="op">*</span>p<span class="op">;</span></span>
 <span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="kw">new</span> <span class="dt">int</span><span class="op">;</span></span>
 <span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">*</span>q <span class="op">=</span> <span class="dv">9</span><span class="op">;</span></span>
-<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> NULL<span class="op">;</span></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span>
 <span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a><span class="kw">delete</span> q<span class="op">;</span></span>
-<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> NULL<span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> <span class="kw">nullptr</span><span class="op">;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:58%;">
 <p><br>
 <br>
@@ -524,8 +524,8 @@
 <p><br>
 <br>
 </p>
-<p><code>p = NULL;</code> &nbsp; Do you like this? __________</p>
-<p><code>q = NULL;</code> &nbsp; Do you like this? __________</p>
+<p><code>p = nullptr;</code> &nbsp; Do you like this? __________</p>
+<p><code>q = nullptr;</code> &nbsp; Do you like this? __________</p>
 </div></div>
 <div class="callout callout-note no-icon callout-style-simple">
 <div class="callout-body">
@@ -541,8 +541,8 @@
 <aside class="notes">
 <p>Trace the whole thing in the two tables, line by line – this is the slide that pays for the two-colour setup.</p>
 <p><code>cout &lt;&lt; *p;</code> prints <strong>8</strong>. <code>q = p</code> made them aliases, so <code>*q = 8</code> wrote the very thing <code>p</code> points at.</p>
-<p><code>p = NULL;</code> – <strong>no, this is bad.</strong> <code>p</code> was the only handle on that first <code>new int</code>. Setting it to <code>NULL</code> abandons the memory without freeing it. Point at the orange row that now has nothing aimed at it: that row is stuck there until the program exits.</p>
-<p><code>q = NULL;</code> – <strong>yes, this is good.</strong> It comes right after <code>delete q</code>, so <code>q</code> is dangling. Setting it to <code>NULL</code> is exactly the right habit.</p>
+<p><code>p = nullptr;</code> – <strong>no, this is bad.</strong> <code>p</code> was the only handle on that first <code>new int</code>. Setting it to <code>nullptr</code> abandons the memory without freeing it. Point at the orange row that now has nothing aimed at it: that row is stuck there until the program exits.</p>
+<p><code>q = nullptr;</code> – <strong>yes, this is good.</strong> It comes right after <code>delete q</code>, so <code>q</code> is dangling. Setting it to <code>nullptr</code> is exactly the right habit.</p>
 <p>Same two words, opposite verdicts, and the difference is only what came before.</p>
 <p>Then the box, three definitions:</p>
 <ul>
@@ -550,7 +550,7 @@
 <li><strong>Deleting a null pointer</strong> – legal, and does nothing at all. Safe.</li>
 <li><strong>Dereferencing a null pointer</strong> – undefined behaviour. In practice a segfault.</li>
 </ul>
-<p>The asymmetry between those last two is the part worth repeating: <code>delete</code> on <code>NULL</code> is harmless, <code>*</code> on <code>NULL</code> is fatal.</p>
+<p>The asymmetry between those last two is the part worth repeating: <code>delete</code> on <code>nullptr</code> is harmless, <code>*</code> on <code>nullptr</code> is fatal.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -580,7 +580,7 @@
 <tr class="odd">
 <td><strong>3</strong></td>
 <td><a href="code/lecture-08/pointers3.cpp"><code>pointers3.cpp</code></a></td>
-<td>a leak, and two ways to meet <code>NULL</code></td>
+<td>a leak, and two ways to meet <code>nullptr</code></td>
 </tr>
 </tbody>
 </table>
@@ -592,7 +592,7 @@
 <ol type="1">
 <li><p><code>p = &amp;x</code> then <code>*p = 6</code>. Print <code>x</code>, <code>*p</code>, <code>&amp;x</code>, <code>p</code>, and <code>&amp;p</code> – the last one is the surprise, because it makes the point that <code>p</code> is a variable like any other and has a location of its own. Then assign to <code>x</code> and read it back through <code>*p</code>.</p></li>
 <li><p><code>q = p</code> makes two handles on one heap <code>int</code>. Write through <code>q</code>, read through <code>p</code>. Print both pointers – the addresses are identical, which is the point.</p></li>
-<li><p>The three failures, in order: the leak (overwrite the only pointer to a <code>new</code>’d int), <code>delete</code> on a <code>NULL</code> pointer (legal, does nothing), and dereferencing <code>NULL</code>. <strong>The third one really does crash</strong> – exit 139, segmentation fault. Let it.</p></li>
+<li><p>The three failures, in order: the leak (overwrite the only pointer to a <code>new</code>’d int), <code>delete</code> on a <code>nullptr</code> pointer (legal, does nothing), and dereferencing <code>nullptr</code>. <strong>The third one really does crash</strong> – exit 139, segmentation fault. Let it.</p></li>
 </ol>
 <p>The 2024 replit links are gone, so these are rebuilt from scratch. Source is on the site at slides/code/lecture-08/ – paste into whatever sandbox, or just run them in a terminal on camera.</p>
 <style type="text/css">
