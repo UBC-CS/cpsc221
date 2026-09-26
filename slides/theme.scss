@@ -94,6 +94,11 @@ $mem-heap:           #fbe0c9;
     // over-wide line is visible (and obviously wants shortening).
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+    // A blank line's span holds only a newline, so it collapses to nothing
+    // and its gutter number lands on its neighbour's. These decks are full of
+    // blank bodies waiting to be annotated, so pin the height. (:empty does
+    // not match -- the newline counts as content.)
+    min-height: calc(1em * #{$code-line-height});
     padding-right: 0.8em;                      // keep code off the right border
     position: relative;
     left: 0 !important;                        // cancel Pandoc's -4em shift
@@ -436,4 +441,28 @@ mark, .hl {
   color: inherit;
   padding: 0.05em 0.2em;
   border-radius: 3px;
+}
+
+// Linked-list node figures (lectures 9 onward). A node is a two-cell box:
+// the data half and the next half. The next half either holds a bullet with
+// an arrow leaving it, or a diagonal slash meaning nullptr -- the same
+// notation used on the 2024 slides.
+//
+// Drawn as inline SVG in the deck; these are only the shared colours, so a
+// figure inherits the palette instead of hardcoding it.
+.reveal svg.nodefig {
+  --node-fill:   #{$mem-heap};
+  --node-stroke: #1a1a1a;
+  --node-text:   #{$code-plain};
+  display: block;
+  margin: 0.3em auto;
+  // No max-width / height:auto here on purpose: Quarto lowercases viewBox to
+  // viewbox, which SVG ignores, so each figure carries explicit width and
+  // height in user units instead. Letting CSS resize it would distort them.
+
+  .cell  { fill: var(--node-fill); stroke: var(--node-stroke); stroke-width: 2; }
+  .wire  { stroke: var(--node-stroke); stroke-width: 2; fill: none; }
+  .nullx { stroke: var(--node-stroke); stroke-width: 2; }
+  .val   { fill: var(--node-text); font-family: "SF Mono", Menlo, monospace; }
+  .lbl   { fill: #{$code-comment}; font-family: inherit; font-style: italic; }
 }

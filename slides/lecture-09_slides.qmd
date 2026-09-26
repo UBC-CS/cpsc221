@@ -1,0 +1,296 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Linked Lists"
+
+# Condensed from oldslides/lec091824-lists.pdf and lec092324-linkedmem-1.pdf,
+# which are largely the same deck. The first half -- the Node memory model and
+# the four recursive functions -- is here; the List ADT half is lecture 10.
+#
+# Dropped: lec092324 pages 2-5, which re-teach pointers. That is lecture 8 now.
+# Dropped: the sorting-visualizer link on the title slide; it belongs with
+# merge sort, and is stashed in the root TODO.md.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **PA1 is due Monday Oct 5** — linked lists all the way down
+- **Examlet 2 is this week** — book your seat on PrairieTest
+- PEX2 is posted, and now covers pointers
+
+\
+
+**Where we're going**
+
+- A new memory model
+- `insertAtFront`
+- `printReverse`, `printReverseOdds`
+- `reverse`
+
+## A new memory model: {.smaller .smallcode}
+
+```cpp
+template <class T>
+struct Node {
+    T data;
+    Node * next;
+    Node(T nD, Node * nN = nullptr) : data(nD), next(nN) { }
+};
+```
+
+What is the result of each statement?
+
+```cpp
+int main() {
+    Node<int> nn(5);
+    Node<int> * pnn;
+}
+```
+
+Write code that would result in each of these memory configurations, in order:
+
+<svg class="nodefig" width="640" height="90">
+  <path class="wire" d="M18 30 C 40 14, 62 14, 78 30"/>
+  <polygon points="78,30 68,24 68,36" fill="#1a1a1a"/>
+  <rect class="cell" x="80" y="18" width="44" height="46"/>
+  <rect class="cell" x="124" y="18" width="44" height="46"/>
+  <text class="val" x="102" y="48" font-size="22" text-anchor="middle">8</text>
+  <line class="nullx" x1="128" y1="60" x2="164" y2="22"/>
+  <path class="wire" d="M350 30 C 372 14, 394 14, 410 30"/>
+  <polygon points="410,30 400,24 400,36" fill="#1a1a1a"/>
+  <rect class="cell" x="412" y="18" width="44" height="46"/>
+  <rect class="cell" x="456" y="18" width="44" height="46"/>
+  <text class="val" x="434" y="48" font-size="22" text-anchor="middle">6</text>
+  <circle cx="478" cy="41" r="4" fill="#1a1a1a"/>
+  <path class="wire" d="M478 41 L 530 41"/>
+  <polygon points="540,41 528,35 528,47" fill="#1a1a1a"/>
+  <rect class="cell" x="542" y="18" width="44" height="46"/>
+  <rect class="cell" x="586" y="18" width="44" height="46"/>
+  <text class="val" x="564" y="48" font-size="22" text-anchor="middle">8</text>
+  <line class="nullx" x1="590" y1="60" x2="626" y2="22"/>
+</svg>
+
+::: notes
+`Node<int> nn(5);` will not compile on its own -- the constructor takes a
+value, so this one is fine, but point out that there is no default
+constructor. `Node<int> * pnn;` allocates nothing at all: it is a pointer with
+garbage in it, exactly like `int *p;` on Friday.
+
+Then build the two pictures:
+
+- one node holding 8, next is `nullptr`
+- two nodes, 6 then 8, the second one's next is `nullptr`
+
+The answers are `new Node<int>(8)` and
+`new Node<int>(6, new Node<int>(8))`, and the second one is worth writing out
+slowly. The constructor's default argument is what makes it read so neatly.
+
+The diagonal slash means `nullptr`. Establish that notation now -- it is the
+whole rest of the term.
+:::
+
+## Example 1: `insertAtFront` {.smaller}
+
+```cpp
+insertAtFront<farmAnimal>(head, cow);
+```
+
+<svg class="nodefig" width="560" height="80">
+  <text class="lbl" x="6" y="46" font-size="15">head</text>
+  <path class="wire" d="M46 41 L 96 41"/>
+  <polygon points="106,41 94,35 94,47" fill="#1a1a1a"/>
+  <rect class="cell" x="108" y="18" width="70" height="46"/>
+  <rect class="cell" x="178" y="18" width="30" height="46"/>
+  <text class="val" x="143" y="47" font-size="17" text-anchor="middle">dog</text>
+  <circle cx="193" cy="41" r="4" fill="#1a1a1a"/>
+  <path class="wire" d="M193 41 L 240 41"/>
+  <polygon points="250,41 238,35 238,47" fill="#1a1a1a"/>
+  <rect class="cell" x="252" y="18" width="70" height="46"/>
+  <rect class="cell" x="322" y="18" width="30" height="46"/>
+  <text class="val" x="287" y="47" font-size="17" text-anchor="middle">cat</text>
+  <circle cx="337" cy="41" r="4" fill="#1a1a1a"/>
+  <path class="wire" d="M337 41 L 384 41"/>
+  <polygon points="394,41 382,35 382,47" fill="#1a1a1a"/>
+  <rect class="cell" x="396" y="18" width="70" height="46"/>
+  <rect class="cell" x="466" y="18" width="30" height="46"/>
+  <text class="val" x="431" y="47" font-size="17" text-anchor="middle">pig</text>
+  <line class="nullx" x1="470" y1="60" x2="492" y2="22"/>
+</svg>
+
+```cpp
+void insertAtFront(Node * ________ curr, LIT e) {
+
+}
+```
+
+Running time?
+
+::: notes
+The blank in the signature is the point of the slide: it has to be
+`Node *& curr`, a reference to the pointer. Pass the pointer by value and you
+change a copy, and the caller's `head` still aims at `dog`.
+
+This is the first place the course needs a pointer to be passed by reference,
+and it is exactly the situation the double pointer on PEX2 describes -- a
+function that has to change where the caller's pointer aims. `Node **` would
+also work; `Node *&` is the C++ way.
+
+Body is two lines: `curr = new Node(e, curr);` or the long form. $\Theta(1)$ --
+no traversal, which is the whole appeal of a list.
+:::
+
+## Example 2: `printReverse` {.smaller}
+
+<svg class="nodefig" width="520" height="70">
+  <g>
+    <rect class="cell" x="10"  y="14" width="40" height="40"/><text class="val" x="30"  y="42" font-size="20" text-anchor="middle">8</text>
+    <rect class="cell" x="110" y="14" width="40" height="40"/><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text>
+    <rect class="cell" x="210" y="14" width="40" height="40"/><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text>
+    <rect class="cell" x="310" y="14" width="40" height="40"/><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text>
+    <rect class="cell" x="410" y="14" width="40" height="40"/><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <path class="wire" d="M50 34 L 100 34"/><polygon points="110,34 98,28 98,40" fill="#1a1a1a"/>
+    <path class="wire" d="M150 34 L 200 34"/><polygon points="210,34 198,28 198,40" fill="#1a1a1a"/>
+    <path class="wire" d="M250 34 L 300 34"/><polygon points="310,34 298,28 298,40" fill="#1a1a1a"/>
+    <path class="wire" d="M350 34 L 400 34"/><polygon points="410,34 398,28 398,40" fill="#1a1a1a"/>
+  </g>
+</svg>
+
+```cpp
+void printReverse(Node * curr) {
+
+}
+```
+
+\
+
+Running time? &nbsp; *(our first recurrence)*
+
+::: notes
+Recurse first, print after:
+
+```
+if (curr == nullptr) return;
+printReverse(curr->next);
+cout << curr->data;
+```
+
+The whole lesson is that swapping those two lines prints forwards. The
+recursion is doing the reversing, not any code they wrote.
+
+**Then the recurrence, slowly, because it is the first one.**
+$T(n) = T(n-1) + \Theta(1)$, with $T(0) = \Theta(1)$. Unroll it on the board:
+$n$ levels, constant work each, so $\Theta(n)$.
+
+Worth saying out loud that the call stack is holding $n$ frames at the deepest
+point -- the space is $\Theta(n)$ too, which an iterative version would not
+need. First time space and time come apart.
+:::
+
+## Example 3: `printReverseOdds` {.smaller .smallcode}
+
+<svg class="nodefig" width="620" height="70">
+  <g>
+    <rect class="cell" x="10"  y="14" width="40" height="40"/><text class="val" x="30"  y="42" font-size="20" text-anchor="middle">8</text>
+    <rect class="cell" x="110" y="14" width="40" height="40"/><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text>
+    <rect class="cell" x="210" y="14" width="40" height="40"/><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text>
+    <rect class="cell" x="310" y="14" width="40" height="40"/><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text>
+    <rect class="cell" x="410" y="14" width="40" height="40"/><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text>
+    <rect class="cell" x="510" y="14" width="40" height="40"/><text class="val" x="530" y="42" font-size="20" text-anchor="middle">1</text>
+  </g>
+  <g>
+    <path class="wire" d="M50 34 L 100 34"/><polygon points="110,34 98,28 98,40" fill="#1a1a1a"/>
+    <path class="wire" d="M150 34 L 200 34"/><polygon points="210,34 198,28 198,40" fill="#1a1a1a"/>
+    <path class="wire" d="M250 34 L 300 34"/><polygon points="310,34 298,28 298,40" fill="#1a1a1a"/>
+    <path class="wire" d="M350 34 L 400 34"/><polygon points="410,34 398,28 398,40" fill="#1a1a1a"/>
+    <path class="wire" d="M450 34 L 500 34"/><polygon points="510,34 498,28 498,40" fill="#1a1a1a"/>
+  </g>
+</svg>
+
+```cpp
+void printReverseOdds(Node * curr) {
+    // no items in list
+
+
+    // one item in list
+
+
+    // >1 item in list
+
+}
+```
+
+Running time?
+
+::: notes
+Prints every other node, from the back: for `8 4 2 6 3 1` the odd-indexed
+values are 4, 6, 1, so it prints `1 6 4`.
+
+**Three cases, and that is the point of the slide.** A recursion that steps by
+*two* needs two base cases, not one:
+
+- `curr == nullptr` -- nothing to do
+- `curr->next == nullptr` -- one node left, and it is at an even index, so
+  nothing to print either
+- otherwise recurse on `curr->next->next`, then print `curr->next->data`
+
+Students who write only the first base case walk off the end of the list on
+lists of even length. Let that happen before fixing it.
+
+Running time: $T(n) = T(n-2) + \Theta(1)$, so $n/2$ levels -- still
+$\Theta(n)$. Good place to note that halving the *work per level* does not
+change the growth rate.
+:::
+
+## Example 4: `reverse` {.smaller .smallcode}
+
+<svg class="nodefig" width="520" height="70">
+  <g>
+    <rect class="cell" x="10"  y="14" width="40" height="40"/><text class="val" x="30"  y="42" font-size="20" text-anchor="middle">8</text>
+    <rect class="cell" x="110" y="14" width="40" height="40"/><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text>
+    <rect class="cell" x="210" y="14" width="40" height="40"/><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text>
+    <rect class="cell" x="310" y="14" width="40" height="40"/><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text>
+    <rect class="cell" x="410" y="14" width="40" height="40"/><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text>
+  </g>
+  <g>
+    <path class="wire" d="M50 34 L 100 34"/><polygon points="110,34 98,28 98,40" fill="#1a1a1a"/>
+    <path class="wire" d="M150 34 L 200 34"/><polygon points="210,34 198,28 198,40" fill="#1a1a1a"/>
+    <path class="wire" d="M250 34 L 300 34"/><polygon points="310,34 298,28 298,40" fill="#1a1a1a"/>
+    <path class="wire" d="M350 34 L 400 34"/><polygon points="410,34 398,28 398,40" fill="#1a1a1a"/>
+  </g>
+</svg>
+
+```cpp
+Node * reverse(Node * curr) {
+    if (curr != nullptr && _________________) {
+        Node * revRest = ______________________
+
+
+
+    }
+    return ______________;
+}
+```
+
+Running time?
+
+::: notes
+Blanks: `curr->next != nullptr`; `revRest = reverse(curr->next);` then
+`curr->next->next = curr;` and `curr->next = nullptr;`; return `revRest`,
+or `curr` in the base case.
+
+The move that makes it work: **after the recursive call, `curr->next` still
+points at the node that is now the tail of the reversed rest.** So `curr`
+already has a handle on where to attach itself. Draw that -- it is the only
+hard idea here.
+
+Then `curr->next = nullptr`, because `curr` is about to be the last node.
+Forget that line and the list has a cycle, and printing it never terminates.
+
+$T(n) = T(n-1) + \Theta(1) = \Theta(n)$, same shape as `printReverse`.
+
+This function returns the new head rather than taking `Node *&`. Worth
+contrasting with `insertAtFront` -- two different ways to let a function
+change what the caller's pointer aims at.
+:::
