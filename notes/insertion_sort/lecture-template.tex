@@ -1,0 +1,114 @@
+\documentclass[11pt]{article}
+\usepackage{lecturenotes}
+
+% Uncomment to change the colour of comments in code for this document only.
+% \definecolor{codecomment}{gray}{0.25}
+
+\course{CPSC 221: Basic Algorithms and Data Structures}
+
+\begin{document}
+
+\lecture{N}{Lecture Title}{Month Day, 2026}
+
+\section{Introduction}
+
+Inline code looks like \cppinline{std::vector<int>}, and a short snippet
+looks like this:
+
+\begin{cpp}
+#include <vector>
+
+// Returns the sum of the entries of v.
+int sum(const std::vector<int>& v) {
+    int total = 0;
+    for (int x : v) {
+        total += x; /* accumulate */
+    }
+    return total;
+}
+\end{cpp}
+
+\section{Algorithms}
+
+\begin{algorithm}[label=alg:findmin]{Finding the minimum of an array}
+// Precondition: n >= 1.
+int findMin(const int a[], int n) {
+    int best = a[0];
+    for (int i = 1; i < n; i++) {    (*@\label{line:loop}@*)
+        if (a[i] < best) {
+            best = a[i];             // new smallest so far
+        }
+    }
+    return best;
+}
+\end{algorithm}
+
+\Cref{alg:findmin} makes $n - 1$ comparisons, one per iteration of the loop
+on line~\ref{line:loop}.
+
+\section{Theorem environments}
+
+\begin{definition}[Big-O]\label{def:bigo}
+  $f(n) \in O(g(n))$ if there exist constants $c > 0$ and $n_0$ such that
+  $f(n) \le c \cdot g(n)$ for all $n \ge n_0$.
+\end{definition}
+
+\begin{theorem}[Correctness of \texttt{findMin}]\label{thm:findmin}
+  For every array \cppinline{a} of length $n \ge 1$, \cref{alg:findmin}
+  returns $\min_{0 \le i < n} a[i]$.
+\end{theorem}
+
+\begin{proof}
+  By induction on the loop invariant: at the start of iteration $i$,
+  \cppinline{best} $= \min_{0 \le j < i} a[j]$.
+\end{proof}
+
+\begin{lemma}\label{lem:example}
+  A lemma.
+\end{lemma}
+
+\begin{proposition}
+  A proposition.
+\end{proposition}
+
+\begin{corollary}
+  A corollary of \cref{thm:findmin} and \cref{lem:example}.
+\end{corollary}
+
+\begin{claim}
+  A claim.
+\end{claim}
+
+\begin{fact}
+  A fact.
+\end{fact}
+
+\begin{conjecture}
+  A conjecture.
+\end{conjecture}
+
+\begin{example}
+  An example using \cref{def:bigo}: $3n + 5 \in O(n)$.
+\end{example}
+
+\begin{exercise}
+  An exercise.
+\end{exercise}
+
+\begin{problem}
+  A problem.
+\end{problem}
+
+\begin{theorem*}
+  An unnumbered theorem (every environment has a starred version).
+\end{theorem*}
+
+\begin{remark}
+  Remarks and notes are not boxed.
+\end{remark}
+
+\begin{note}
+  A note.
+\end{note}
+
+\end{document}

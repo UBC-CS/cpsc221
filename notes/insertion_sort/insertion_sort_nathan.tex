@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+\usepackage{lecturenotes}
+
+% Uncomment to change the colour of comments in code for this document only.
+% \definecolor{codecomment}{gray}{0.25}
+
+\course{CPSC 221: Basic Algorithms and Data Structures}
+
+\begin{document}
+
+\lecture{Insertion Sort}{September 25, 2026}
+
+In the in-class lectures and Friday video, we skipped the correctness proof of insertion sort. We
+thought it would be most useful to see a complete proof written out, instead of explained in a
+lecture or video. Nathan and Cinda will each write the proof in their own way, so that you can see
+two different ways of writing a proof.
+
+
+Insertion sort is the following algorithm:
+
+\begin{cpp}
+// Sorts C
+void insertion_sort(vector<int>& C){
+    for(i=0; i < C.size()-1; i++){
+        insert(C, i+1).
+    }
+}
+\end{cpp}
+
+The \cppinline{insert} subroutine is implemented as follows:
+
+\begin{cpp}
+// The following function assumes that:
+// 1. loc is in {0, ..., n-1}  where n is the number of entries in C; and
+// 2. C[0,...,loc-1] is sorted.
+void insert(vector<int>& C, int loc){
+    int j = loc;
+    while(j > 0 && C[j-1] > C[j]){
+        swap(C, j-1, j); // int temp = C[j]; C[j] = C[j-1]; C[j-1] = temp;
+        j--;
+    }
+}
+\end{cpp}
+
+\section{Nathan's Proof}
+
+We will prove the theorem in excruciating detail. It is usually not necessary to go into such
+excruciating detail for simple algorithms like this, but we will do it because suffering can be good
+for you.
+
+
+
+\subsection{The \texttt{insert} Subroutine}
+We will first analyze the \cppinline{insert} subroutine and then apply it to prove the correctness
+of insertion sort.
+
+\newcommand{\cv}[1]{ \ifmmode{\text{\cppinline{#1}}}\else{\cppinline{#1}} \fi }
+
+\begin{lemma}
+\label{lemma:nh}
+Let $\cv{C}$ be any array of integers and let $\cv{loc} \in \{0, \dotsc, n-1\}$ where
+$n = \cv{C.size()}$. Assume that $\cv{C[0, ..., loc-1]}$ is sorted. Then, upon termination
+of $\cv{insert(C, loc)}$, $C[0, ..., loc]$ is sorted.
+\end{lemma}
+\begin{proof}
+We first argue that the algorithm will terminate. Since \cv{j} is initialized to \cv{loc}, is
+decremented in line 8, and never changed otherwise, the loop will run at most $\cv{loc}$ number of
+times, since it requires $\cv j > 0$. 
+
+Let $C_0$ be the initial state of the variable $\cv C$. We define the following loop invariant:
+\[
+\text{\textbf{LI:}} \begin{cases}
+1. &\text{ $\cv C$ is a permutation of $C_0$;} \\
+2. &\text{ $\cv{C[j, ..., loc]}$ is sorted;} \\
+3. &\text{ If $0 < \cv j \leq \cv{loc}$ then $C[0, ..., j-1]$ is sorted; } \\
+4. &\text{ If $0 < \cv j < \cv{loc}$ then $\cv{C[j-1] < C[j+1]}$.}
+\end{cases}
+\]
+Suppose that \textbf{LI} holds at the beginning of the final execution of line 6.  Then line 6
+guarantees that, on termination, either:
+\begin{enumerate}
+\item $j = 0$. In this case, item 2 of \textbf{LI} guarantees that \cv{C[0, ..., loc]} is sorted,
+as desired.
+\item $j > 0$ but $\cv{C[j-1]} \leq \cv{C[j]}$. In this case, item 2 of \textbf{LI} guarantees that
+\cv{C[0, ..., j-1]} and \cv{C[j, ... loc]} are sorted, and $\cv{C[j-1]} \leq \cv{C[j]}$. Therefore
+$\cv{C}$ is sorted, as desired.
+\end{enumerate}
+Now we prove the following claim:
+\begin{claim}
+Statement \textbf{LI} is true at the start of line 6, every time line 6 is executed.
+\end{claim}
+\begin{proof}[Proof of claim]
+\textbf{Base case:} We first prove that \textbf{LI} holds when line 6 is first executed.
+We verify the properties of \textbf{LI}:
+\begin{enumerate}
+\item $\cv C = C_0$ so it is the trivial permutation.
+\item Since $\cv j = \cv{loc}$, this statement trivially holds.
+\item $\cv{C[0, ..., loc-1]}$ is sorted by assumption.
+\item Since $\cv j = \cv{loc}$, this statement trivially holds.
+\end{enumerate}
+
+\textbf{Inductive step:} We show that, assuming \textbf{LI} holds at the start of an execution of
+the loop (i.e. after line 6 is executed but before line 7 is executed), then it also holds at the
+end of the loop (i.e. after line 8 is executed). This ensures that it is true the next time line 6
+starts.
+
+For notational convenience, let $C$ be the state of \cv C at the start of the loop, and let $C'$ be
+the state of \cv C at the end of the loop. Let $j$ be the value of \cv j at the start of the loop
+and $j' = j-1$ the value of \cv j at the end of the loop. By induction, we assume \textbf{LI} holds
+for $C$ and $j$, and we must verify \textbf{LI} for the values $C'$ and $j'$:
+\begin{enumerate}
+\item $C'$ is a permutation of $C_0$ because $C$ is a permutation of $C_0$, and $C'$ is obtained
+from $C$ by swapping two entries.
+
+\item We want to show that $C'[j', \dotsc, \cv{loc}] = C'[j-1, j, \dotsc, \cv{loc}]$ is sorted.
+Since entries $j-1, j$ of $C$ were swapped to obtain $C'$,
+\[
+C'[j-1, j, \dotsc, \cv{loc}]
+= \begin{cases}
+    (C[j], C[j-1]) &\text{ if } j = \cv{loc} \\
+    (C[j], C[j-1], C[j+1], \dotsc, C[\cv{loc}]) &\text{ if } j < \cv{loc} .
+  \end{cases}
+\]
+since entries $j-1, j$ were swapped to obtain $C'$. By the loop condition, $C[j] < C[j-1]$. If $j =
+\cv{loc}$ then we are done. Otherwise, $0 < j < \cv{loc}$ so $C[j, \dotsc, \cv{loc}]$ is sorted and
+$C[j-1] \leq C[j+1]$ (using \textbf{LI} for $C, j$). Therefore $C[j] < C[j-1] \leq C[j+1] \leq
+\dotsm \leq C[\cv{loc}]$, as desired.
+
+\item We want to show that, if $0 < j' \leq \cv{loc}$, then  $C'[0, \dotsc, j'-1]$ is sorted. But
+$C'[0, \dotsc, j'-1] = C'[0, \dotsc, j-2] = C[0, \dotsc, j-2]$ since this part of the array is not
+modified. So the claim holds by \text{LI} on $C, j$.
+
+\item We want to show that $C'[j'-1] < C'[j'+1]$ if $0 < j' < \cv{loc}$. We have
+\begin{align*}
+    C'[j'-1]
+    &= C'[j-2] \\
+    &= C[j-2] \tag{Since this entry is untouched} \\
+    &\leq C[j-1] \tag{Since $C[0, \dotsc, j-1]$ is sorted} \\
+    &= C'[j] \tag{Since this is the swapped value} \\
+    &= C'[j'+1] .
+\end{align*}
+\end{enumerate}
+This concludes the proof of the claim.
+\end{proof}
+The claim guarantees that \textbf{LI} holds at the beginning of the final execution of line 6, so
+the output is correct.
+\end{proof}
+
+\subsection{The Whole Algorithm}
+
+\begin{theorem}
+Let \cv C be an integer array. Upon termination of \cv{insertion_sort(C)}, \cv C is sorted.
+\end{theorem}
+\begin{proof}
+We define another loop invariant:
+\[
+    \textbf{LI: } \qquad \cv{C[0, ..., i]} \text{ is sorted.}
+\]
+We want to establish the following claim:
+\begin{claim}
+At the beginning of each execution of line 3, \cv{insertion_sort}(C), \textbf{LI} is true.
+\end{claim}
+\begin{proof}[Proof of claim]
+Let $n = \cv{C.size()}$ be the number of elements in array \cv C.
+
+\textbf{Base case:} We want to show that \textbf{LI} is true on the first execution of line 3.
+In this case $\cv i = 0$ so $\cv{C[0, ..., i]} = \cv{C[0]}$ so the statement is trivial.
+
+\textbf{Inductive step:} Assume \textbf{LI} is true at the beginning of a loop. We want to show that
+it is also true at the end of the loop. Let $C, i$ be the values of \cv C, \cv i at the start of the
+loop and let $C', i'$ be the values at the end of the loop (so $i' = i + 1$). By the inductive
+hypothesis, $C[0, \dotsc, i]$ is sorted. We want to show that $C'[0, \dotsc, i+1]$ is sorted.  Since
+$C[0, \dotsc, i]$ is sorted, the assumption of \cref{lemma:nh} is satisfied. Since $C'[0, \dotsc,
+i+1]$ is the value of \cv C after \cv{insert(C,i)} is run on values $C, i$, $C'[0, \dotsc, i+1]$ is
+sorted.
+\end{proof}
+
+Since \cv i gets incremented in each loop and the loop terminates when $\cv i \geq n$, the algorithm
+will terminate. On the final execution of line 3, $\cv{i} = n-1$ and \textbf{LI} is true, so
+\cv{C[0, ..., n-1]} is sorted, as desired.
+\end{proof}
+
+\end{document}

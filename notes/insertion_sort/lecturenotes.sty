@@ -1,0 +1,222 @@
+% lecturenotes.sty -- shared preamble for CPSC 221 lecture notes.
+%
+% Load with \usepackage{lecturenotes} from a file in this directory.
+% Colours are defined near the top so they are easy to change; any of them
+% can also be overridden from a document with, e.g.,
+%   \definecolor{codecomment}{gray}{0.45}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{lecturenotes}[2026/09/25 CPSC 221 lecture notes]
+
+% ---------------------------------------------------------------------------
+% Page, fonts, and general packages
+% ---------------------------------------------------------------------------
+\RequirePackage[margin=1in]{geometry}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[scaled=0.95,varqu,var0]{inconsolata} % monospace font for code
+\RequirePackage{microtype}
+\RequirePackage{amsmath,amssymb,amsthm,mathtools}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{enumitem}
+\RequirePackage{fancyhdr}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{listings}
+\RequirePackage[colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue]{hyperref}
+\RequirePackage[capitalise,noabbrev]{cleveref}
+
+% ---------------------------------------------------------------------------
+% Colours
+% ---------------------------------------------------------------------------
+% Code
+\definecolor{codecomment}{gray}{0.40}     % comments in code snippets
+\definecolor{codekeyword}{RGB}{0,51,153}  % keywords (int, for, return, ...)
+\definecolor{codestring}{RGB}{163,21,21}  % string and character literals
+\definecolor{codedirective}{RGB}{128,0,128} % #include, #define, ...
+\definecolor{codelinenumber}{gray}{0.55}  % line numbers
+\definecolor{codebackground}{gray}{0.97}  % code box background
+\definecolor{codeframe}{gray}{0.75}       % code box border
+
+% Theorem boxes
+\definecolor{theoremcolor}{RGB}{31,78,145}     % theorem, lemma, proposition, ...
+\definecolor{definitioncolor}{RGB}{35,120,60}  % definition
+\definecolor{examplecolor}{RGB}{190,110,20}    % example, exercise
+
+% Links
+\definecolor{linkblue}{RGB}{31,78,145}
+
+% ---------------------------------------------------------------------------
+% Lecture header
+% ---------------------------------------------------------------------------
+% \course{CPSC 221: Basic Algorithms and Data Structures}
+% \lecture{<title>}{<date>}  -- typesets the heading block
+\newcommand{\@coursename}{}
+\newcommand{\course}[1]{\renewcommand{\@coursename}{#1}}
+\newcommand{\@lecturenumber}{}
+\newcommand{\@lecturetitle}{}
+
+\newcommand{\lecture}[2]{%
+  \renewcommand{\@lecturetitle}{#1}%
+  \setcounter{section}{0}%
+  \begin{tcolorbox}[enhanced, sharp corners, boxrule=0pt, leftrule=3pt,
+      colback=theoremcolor!6, colframe=theoremcolor,
+      left=10pt, top=8pt, bottom=8pt]
+    {\small\scshape \@coursename\hfill #2}\par\medskip
+    {\Large\bfseries Lecture: #1}
+  \end{tcolorbox}
+  \vspace{0.5em}%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\@coursename}
+\fancyhead[R]{\small Lecture \@lecturenumber: \@lecturetitle}
+\fancyfoot[C]{\thepage}
+
+% ---------------------------------------------------------------------------
+% Theorem-like environments
+% ---------------------------------------------------------------------------
+% All numbered environments share one counter, numbered within sections
+% (Theorem 1.1, Lemma 1.2, Definition 1.3, ...). Every environment accepts
+% an optional name: \begin{theorem}[Master Theorem] ... \end{theorem}.
+% Starred versions (theorem*, lemma*, ...) are unnumbered.
+\newcommand{\@newthm}[2]{%
+  \newtheorem{#1}[theorem]{#2}%
+  \newtheorem*{#1*}{#2}%
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\@newthm{lemma}{Lemma}
+\@newthm{proposition}{Proposition}
+\@newthm{corollary}{Corollary}
+\@newthm{claim}{Claim}
+\@newthm{fact}{Fact}
+\@newthm{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+\@newthm{definition}{Definition}
+\@newthm{example}{Example}
+\@newthm{exercise}{Exercise}
+\@newthm{problem}{Problem}
+
+\theoremstyle{remark}
+\@newthm{remark}{Remark}
+\@newthm{note}{Note}
+
+% Coloured boxes. \tcolorboxenvironment wraps the amsthm environments above,
+% so \label/\cref behave exactly as with plain amsthm.
+\tcbset{
+  thmbox/.style={
+    enhanced, breakable, sharp corners,
+    boxrule=0pt, leftrule=2.5pt,
+    colback=#1!5, colframe=#1,
+    left=8pt, right=8pt, top=4pt, bottom=4pt,
+    before skip=10pt, after skip=10pt,
+  },
+}
+\newcommand{\@boxthm}[2]{%
+  \tcolorboxenvironment{#1}{thmbox=#2}%
+  \tcolorboxenvironment{#1*}{thmbox=#2}%
+}
+\@boxthm{theorem}{theoremcolor}
+\@boxthm{lemma}{theoremcolor}
+\@boxthm{proposition}{theoremcolor}
+\@boxthm{corollary}{theoremcolor}
+\@boxthm{claim}{theoremcolor}
+\@boxthm{fact}{theoremcolor}
+\@boxthm{conjecture}{theoremcolor}
+\@boxthm{definition}{definitioncolor}
+\@boxthm{example}{examplecolor}
+\@boxthm{exercise}{examplecolor}
+\@boxthm{problem}{examplecolor}
+% Remarks, notes, and proofs are left unboxed.
+
+\crefname{claim}{Claim}{Claims}
+\crefname{fact}{Fact}{Facts}
+\crefname{conjecture}{Conjecture}{Conjectures}
+\crefname{exercise}{Exercise}{Exercises}
+\crefname{problem}{Problem}{Problems}
+\crefname{note}{Note}{Notes}
+
+% ---------------------------------------------------------------------------
+% C++ code
+% ---------------------------------------------------------------------------
+\lstdefinestyle{cpp}{
+  language=C++,
+  basicstyle=\ttfamily\upshape\small,
+  keywordstyle=\color{codekeyword}\bfseries,
+  commentstyle=\color{codecomment},
+  stringstyle=\color{codestring},
+  directivestyle=\color{codedirective},
+  morekeywords={nullptr, constexpr, noexcept, override, final, auto,
+    decltype, static_assert, thread_local, alignas, alignof, concept,
+    requires, consteval, constinit, co_await, co_return, co_yield},
+  numbers=left,
+  numberstyle=\scriptsize\ttfamily\color{codelinenumber},
+  numbersep=8pt,
+  stepnumber=1,
+  tabsize=4,
+  showstringspaces=false,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  keepspaces=true,
+  upquote=true,
+  % Write LaTeX inside code between (*@ and @*), e.g. (*@\label{line:loop}@*),
+  % then refer to the line with \ref{line:loop}.
+  escapeinside={(*@}{@*)},
+  literate={~}{{\textasciitilde}}1,
+}
+\lstset{style=cpp}
+
+% Shared look of the code boxes.
+\tcbset{
+  codebox/.style={
+    enhanced, breakable, listing only, sharp corners,
+    colback=codebackground, colframe=codeframe, boxrule=0.4pt,
+    left=18pt, right=4pt, top=2pt, bottom=2pt,
+    before skip=10pt, after skip=10pt,
+    listing options={style=cpp},
+  },
+}
+
+% Unnumbered C++ snippet:
+%   \begin{cpp}
+%   int x = 0; // comment
+%   \end{cpp}
+% The optional argument takes tcolorbox or listings options, e.g.
+%   \begin{cpp}[listing options app={firstnumber=10}] ... \end{cpp}
+\DeclareTCBListing{cpp}{ !O{} }{codebox, #1}
+
+% Numbered, titled algorithm in C++:
+%   \begin{algorithm}[label=alg:findmin]{Finding the minimum}
+%   ...
+%   \end{algorithm}
+% Refer to it with \cref{alg:findmin}.
+\DeclareTCBListing[auto counter, number within=section,
+    crefname={Algorithm}{Algorithms}]{algorithm}{ O{} m }{%
+  codebox,
+  colbacktitle=codeframe!40, coltitle=black,
+  fonttitle=\bfseries,
+  title={Algorithm~\thetcbcounter: #2},
+  #1}
+
+% Inline code: \cppinline{std::vector<int>} or \cppinline|a[i] = b{}|.
+\newcommand{\cppinline}{\lstinline[style=cpp,basicstyle=\ttfamily\upshape]}
+
+% Include a whole source file: \cppfile{code/findmin.cpp}
+\newcommand{\cppfile}[2][]{\tcbinputlisting{codebox, listing file={#2}, #1}}
+
+% ---------------------------------------------------------------------------
+% Handy maths macros
+% ---------------------------------------------------------------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\endinput
