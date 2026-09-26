@@ -7,12 +7,10 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/quarto-contrib/countdown-0.6.0/countdown.js"></script>
-<link href="../site_libs/quarto-contrib/countdown-0.6.0/countdown.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -197,11 +195,11 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta property="og:description" content="Reasoning About Algorithms">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:description" content="Reasoning About Algorithms">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:description" content="Linked Lists">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:description" content="Linked Lists">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -210,7 +208,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Reasoning About Algorithms</p>
+  <p class="subtitle">Linked Lists</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -220,30 +218,46 @@
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
 <ul>
-<li>Labs start next week</li>
-<li>HW1 available Monday Sep 14, due Sep 21</li>
-<li>Registration for EX1 will be soon!</li>
+<li><strong>PA1 is due Monday Oct 5</strong> — linked lists all the way down</li>
+<li><strong>Examlet 2 is this week</strong> — book your seat on PrairieTest</li>
+<li>PEX2 is posted, and now covers pointers</li>
 </ul>
 <p><br>
 </p>
 <p><strong>Where we’re going</strong></p>
 <ul>
-<li>The value of an algorithm</li>
-<li>The abstraction of <em>running time</em></li>
-<li>What it takes to describe an algorithm precisely</li>
+<li>A new memory model</li>
+<li><code>insertAtFront</code></li>
+<li><code>printReverse</code>, <code>printReverseOdds</code></li>
+<li><code>reverse</code></li>
 </ul>
 </section>
-<section id="algorithm-analysis" class="slide level2 smaller">
-<h2>Algorithm analysis</h2>
-<p>Analysis of an algorithm gives insight into</p>
-<ul>
-<li>whether it is <strong>correct</strong></li>
-<li>how long it runs — <em>time complexity</em></li>
-<li>how much memory it uses — <em>space complexity</em></li>
-</ul>
-<p>All with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.</p>
+<section id="a-new-memory-model" class="slide level2 smaller smallcode">
+<h2>A new memory model:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span> <span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    T data<span class="op">;</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*</span> next<span class="op">;</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    Node<span class="op">(</span>T nD<span class="op">,</span> Node <span class="op">*</span> nN <span class="op">=</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">:</span> data<span class="op">(</span>nD<span class="op">),</span> next<span class="op">(</span>nN<span class="op">)</span> <span class="op">{</span> <span class="op">}</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What is the result of each statement?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    Node<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> nn<span class="op">(</span><span class="dv">5</span><span class="op">);</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>    Node<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> <span class="op">*</span> pnn<span class="op">;</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Write code that would result in each of these memory configurations, in order:</p>
+<svg class="nodefig" width="640" height="90">
+<path class="wire" d="M18 30 C 40 14, 62 14, 78 30"></path> <polygon points="78,30 68,24 68,36" fill="#1a1a1a"></polygon> <rect class="cell" x="80" y="18" width="44" height="46"></rect> <rect class="cell" x="124" y="18" width="44" height="46"></rect> <text class="val" x="102" y="48" font-size="22" text-anchor="middle">8</text> <line class="nullx" x1="128" y1="60" x2="164" y2="22"></line> <path class="wire" d="M350 30 C 372 14, 394 14, 410 30"></path> <polygon points="410,30 400,24 400,36" fill="#1a1a1a"></polygon> <rect class="cell" x="412" y="18" width="44" height="46"></rect> <rect class="cell" x="456" y="18" width="44" height="46"></rect> <text class="val" x="434" y="48" font-size="22" text-anchor="middle">6</text> <circle cx="478" cy="41" r="4" fill="#1a1a1a"></circle> <path class="wire" d="M478 41 L 530 41"></path> <polygon points="540,41 528,35 528,47" fill="#1a1a1a"></polygon> <rect class="cell" x="542" y="18" width="44" height="46"></rect> <rect class="cell" x="586" y="18" width="44" height="46"></rect> <text class="val" x="564" y="48" font-size="22" text-anchor="middle">8</text> <line class="nullx" x1="590" y1="60" x2="626" y2="22"></line>
+</svg>
 <aside class="notes">
-<p>Thirty seconds. This is a framing slide, not a content slide.</p>
+<p><code>Node&lt;int&gt; nn(5);</code> will not compile on its own – the constructor takes a value, so this one is fine, but point out that there is no default constructor. <code>Node&lt;int&gt; * pnn;</code> allocates nothing at all: it is a pointer with garbage in it, exactly like <code>int *p;</code> on Friday.</p>
+<p>Then build the two pictures:</p>
+<ul>
+<li>one node holding 8, next is <code>nullptr</code></li>
+<li>two nodes, 6 then 8, the second one’s next is <code>nullptr</code></li>
+</ul>
+<p>The answers are <code>new Node&lt;int&gt;(8)</code> and <code>new Node&lt;int&gt;(6, new Node&lt;int&gt;(8))</code>, and the second one is worth writing out slowly. The constructor’s default argument is what makes it read so neatly.</p>
+<p>The diagonal slash means <code>nullptr</code>. Establish that notation now – it is the whole rest of the term.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -256,22 +270,89 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="where-we-stopped" class="slide level2 smaller">
-<h2>Where we stopped</h2>
-<blockquote>
-<p>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</p>
-</blockquote>
+<section id="example-1-insertatfront" class="slide level2 smaller">
+<h2>Example 1: <code>insertAtFront</code></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>insertAtFront<span class="op">&lt;</span>farmAnimal<span class="op">&gt;(</span>head<span class="op">,</span> cow<span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<svg class="nodefig" width="560" height="80">
+<text class="lbl" x="6" y="46" font-size="15">head</text> <path class="wire" d="M46 41 L 96 41"></path> <polygon points="106,41 94,35 94,47" fill="#1a1a1a"></polygon> <rect class="cell" x="108" y="18" width="70" height="46"></rect> <rect class="cell" x="178" y="18" width="30" height="46"></rect> <text class="val" x="143" y="47" font-size="17" text-anchor="middle">dog</text> <circle cx="193" cy="41" r="4" fill="#1a1a1a"></circle> <path class="wire" d="M193 41 L 240 41"></path> <polygon points="250,41 238,35 238,47" fill="#1a1a1a"></polygon> <rect class="cell" x="252" y="18" width="70" height="46"></rect> <rect class="cell" x="322" y="18" width="30" height="46"></rect> <text class="val" x="287" y="47" font-size="17" text-anchor="middle">cat</text> <circle cx="337" cy="41" r="4" fill="#1a1a1a"></circle> <path class="wire" d="M337 41 L 384 41"></path> <polygon points="394,41 382,35 382,47" fill="#1a1a1a"></polygon> <rect class="cell" x="396" y="18" width="70" height="46"></rect> <rect class="cell" x="466" y="18" width="30" height="46"></rect> <text class="val" x="431" y="47" font-size="17" text-anchor="middle">pig</text> <line class="nullx" x1="470" y1="60" x2="492" y2="22"></line>
+</svg>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insertAtFront<span class="op">(</span>Node <span class="op">*</span> ________ curr<span class="op">,</span> LIT e<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running time?</p>
+<aside class="notes">
+<p>The blank in the signature is the point of the slide: it has to be <code>Node *&amp; curr</code>, a reference to the pointer. Pass the pointer by value and you change a copy, and the caller’s <code>head</code> still aims at <code>dog</code>.</p>
+<p>This is the first place the course needs a pointer to be passed by reference, and it is exactly the situation the double pointer on PEX2 describes – a function that has to change where the caller’s pointer aims. <code>Node **</code> would also work; <code>Node *&amp;</code> is the C++ way.</p>
+<p>Body is two lines: <code>curr = new Node(e, curr);</code> or the long form. <span class="math inline">\(\Theta(1)\)</span> – no traversal, which is the whole appeal of a list.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-2-printreverse" class="slide level2 smaller">
+<h2>Example 2: <code>printReverse</code></h2>
+<svg class="nodefig" width="520" height="70">
+<g> <rect class="cell" x="10" y="14" width="40" height="40"></rect><text class="val" x="30" y="42" font-size="20" text-anchor="middle">8</text> <rect class="cell" x="110" y="14" width="40" height="40"></rect><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text> <rect class="cell" x="210" y="14" width="40" height="40"></rect><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text> <rect class="cell" x="310" y="14" width="40" height="40"></rect><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text> <rect class="cell" x="410" y="14" width="40" height="40"></rect><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text> </g> <g> <path class="wire" d="M50 34 L 100 34"></path><polygon points="110,34 98,28 98,40" fill="#1a1a1a"></polygon> <path class="wire" d="M150 34 L 200 34"></path><polygon points="210,34 198,28 198,40" fill="#1a1a1a"></polygon> <path class="wire" d="M250 34 L 300 34"></path><polygon points="310,34 298,28 298,40" fill="#1a1a1a"></polygon> <path class="wire" d="M350 34 L 400 34"></path><polygon points="410,34 398,28 398,40" fill="#1a1a1a"></polygon> </g>
+</svg>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printReverse<span class="op">(</span>Node <span class="op">*</span> curr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br>
 </p>
-<p>No — and the exceptions are important and worth considering:</p>
+<p>Running time? &nbsp; <em>(our first recurrence)</em></p>
+<aside class="notes">
+<p>Recurse first, print after:</p>
+<pre><code>if (curr == nullptr) return;
+printReverse(curr-&gt;next);
+cout &lt;&lt; curr-&gt;data;</code></pre>
+<p>The whole lesson is that swapping those two lines prints forwards. The recursion is doing the reversing, not any code they wrote.</p>
+<p><strong>Then the recurrence, slowly, because it is the first one.</strong> <span class="math inline">\(T(n) = T(n-1) + \Theta(1)\)</span>, with <span class="math inline">\(T(0) = \Theta(1)\)</span>. Unroll it on the board: <span class="math inline">\(n\)</span> levels, constant work each, so <span class="math inline">\(\Theta(n)\)</span>.</p>
+<p>Worth saying out loud that the call stack is holding <span class="math inline">\(n\)</span> frames at the deepest point – the space is <span class="math inline">\(\Theta(n)\)</span> too, which an iterative version would not need. First time space and time come apart.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="example-3-printreverseodds" class="slide level2 smaller smallcode">
+<h2>Example 3: <code>printReverseOdds</code></h2>
+<svg class="nodefig" width="620" height="70">
+<g> <rect class="cell" x="10" y="14" width="40" height="40"></rect><text class="val" x="30" y="42" font-size="20" text-anchor="middle">8</text> <rect class="cell" x="110" y="14" width="40" height="40"></rect><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text> <rect class="cell" x="210" y="14" width="40" height="40"></rect><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text> <rect class="cell" x="310" y="14" width="40" height="40"></rect><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text> <rect class="cell" x="410" y="14" width="40" height="40"></rect><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text> <rect class="cell" x="510" y="14" width="40" height="40"></rect><text class="val" x="530" y="42" font-size="20" text-anchor="middle">1</text> </g> <g> <path class="wire" d="M50 34 L 100 34"></path><polygon points="110,34 98,28 98,40" fill="#1a1a1a"></polygon> <path class="wire" d="M150 34 L 200 34"></path><polygon points="210,34 198,28 198,40" fill="#1a1a1a"></polygon> <path class="wire" d="M250 34 L 300 34"></path><polygon points="310,34 298,28 298,40" fill="#1a1a1a"></polygon> <path class="wire" d="M350 34 L 400 34"></path><polygon points="410,34 398,28 398,40" fill="#1a1a1a"></polygon> <path class="wire" d="M450 34 L 500 34"></path><polygon points="510,34 498,28 498,40" fill="#1a1a1a"></polygon> </g>
+</svg>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> printReverseOdds<span class="op">(</span>Node <span class="op">*</span> curr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="co">// no items in list</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="co">// one item in list</span></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="co">// &gt;1 item in list</span></span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running time?</p>
+<aside class="notes">
+<p>Prints every other node, from the back: for <code>8 4 2 6 3 1</code> the odd-indexed values are 4, 6, 1, so it prints <code>1 6 4</code>.</p>
+<p><strong>Three cases, and that is the point of the slide.</strong> A recursion that steps by <em>two</em> needs two base cases, not one:</p>
 <ul>
-<li><strong>approximation</strong> — provably close, much faster</li>
-<li><strong>heuristics</strong> — usually good, no promise</li>
-<li><strong>randomized</strong> — correct with high probability</li>
-<li><strong>restricted inputs</strong> — correct on the data you actually have</li>
+<li><code>curr == nullptr</code> – nothing to do</li>
+<li><code>curr-&gt;next == nullptr</code> – one node left, and it is at an even index, so nothing to print either</li>
+<li>otherwise recurse on <code>curr-&gt;next-&gt;next</code>, then print <code>curr-&gt;next-&gt;data</code></li>
 </ul>
-<aside class="notes">
-<p>We spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened.</p>
+<p>Students who write only the first base case walk off the end of the list on lists of even length. Let that happen before fixing it.</p>
+<p>Running time: <span class="math inline">\(T(n) = T(n-2) + \Theta(1)\)</span>, so <span class="math inline">\(n/2\)</span> levels – still <span class="math inline">\(\Theta(n)\)</span>. Good place to note that halving the <em>work per level</em> does not change the growth rate.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -284,338 +365,27 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="measuring-the-value-of-algorithms" class="slide level2 smaller">
-<h2>Measuring the value of algorithms</h2>
-<p>Two algorithms solve the same problem. Which is better?</p>
-<ul>
-<li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
-<li>Express <span style="color: #e74c3c;">running time</span> as a (positive) <span style="color: #e74c3c;">function</span> of input size:</li>
-</ul>
-<p><span class="math display">\[T(n): \text{time to complete the operations on data of size } n\]</span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<ul>
-<li>The <strong>form</strong> of that function depends on the structure of the algorithm</li>
-</ul>
-</section>
-<section id="running-times" class="slide level2 smaller">
-<h2>Running times</h2>
-<p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
-<div class="shaded-table">
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>operations</th>
-<th>n=10</th>
-<th>n=100</th>
-<th>n=1000</th>
-<th>n=10,000</th>
-<th>n=<span class="math inline">\(10^{12}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td>1 s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n \log n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-7}\)</span> s</td>
-<td>40 s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(n^2\)</span></td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-4}\)</span> s</td>
-<td><span class="math inline">\(10^{12}\)</span> s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n^3\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-3}\)</span> s</td>
-<td>1 s</td>
-<td><span class="math inline">\(10^{24}\)</span> s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(2^n\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{18}\)</span> s</td>
-<td><span class="math inline">\(10^{289}\)</span> s</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Which of these are you willing to wait for?</p>
+<section id="example-4-reverse" class="slide level2 smaller smallcode">
+<h2>Example 4: <code>reverse</code></h2>
+<svg class="nodefig" width="520" height="70">
+<g> <rect class="cell" x="10" y="14" width="40" height="40"></rect><text class="val" x="30" y="42" font-size="20" text-anchor="middle">8</text> <rect class="cell" x="110" y="14" width="40" height="40"></rect><text class="val" x="130" y="42" font-size="20" text-anchor="middle">4</text> <rect class="cell" x="210" y="14" width="40" height="40"></rect><text class="val" x="230" y="42" font-size="20" text-anchor="middle">2</text> <rect class="cell" x="310" y="14" width="40" height="40"></rect><text class="val" x="330" y="42" font-size="20" text-anchor="middle">6</text> <rect class="cell" x="410" y="14" width="40" height="40"></rect><text class="val" x="430" y="42" font-size="20" text-anchor="middle">3</text> </g> <g> <path class="wire" d="M50 34 L 100 34"></path><polygon points="110,34 98,28 98,40" fill="#1a1a1a"></polygon> <path class="wire" d="M150 34 L 200 34"></path><polygon points="210,34 198,28 198,40" fill="#1a1a1a"></polygon> <path class="wire" d="M250 34 L 300 34"></path><polygon points="310,34 298,28 298,40" fill="#1a1a1a"></polygon> <path class="wire" d="M350 34 L 400 34"></path><polygon points="410,34 398,28 398,40" fill="#1a1a1a"></polygon> </g>
+</svg>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>Node <span class="op">*</span> reverse<span class="op">(</span>Node <span class="op">*</span> curr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>curr <span class="op">!=</span> <span class="kw">nullptr</span> <span class="op">&amp;&amp;</span> _________________<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>        Node <span class="op">*</span> revRest <span class="op">=</span> ______________________</span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb8-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ______________<span class="op">;</span></span>
+<span id="cb8-9"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Running time?</p>
 <aside class="notes">
-<p><strong>Anchor: the universe is about 4.4 x 10^17 seconds old.</strong></p>
-<ul>
-<li><strong>10^12 s</strong> (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.</li>
-<li><strong>10^18 s</strong> (2^n at n=100) — ~32 billion years. <strong>2.3x the age of the universe.</strong></li>
-<li><strong>10^24 s</strong> (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.</li>
-<li><strong>10^289 s</strong> (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.</li>
-</ul>
-<p>If you only use one line: <strong>2^n at n=100 already outruns the universe.</strong> Not a million. A hundred.</p>
-<p>Small end: 10^-9 s is one nanosecond, and light travels <strong>30 cm</strong> in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.</p>
-<p>Two framings if there is time:</p>
-<ul>
-<li><strong>The n^3 row is the scary one.</strong> 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.</li>
-<li><strong>Faster hardware does not save you.</strong> A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="algorithmic-analysis-example-1" class="slide level2 smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>C++ mysteries?</p>
-<ul>
-<li></li>
-<li></li>
-<li></li>
-</ul>
-</section>
-<section id="algorithmic-analysis-example-1-1" class="slide level2 activity smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p>What does it do? Describe it using a complete sentence. Give it a good name.</p>
-<countdown-timer id="timer_c20d3e8bafe5d4dde24013fdec259884af8510fb" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
- </countdown-timer>
-<aside class="notes">
-<p>I’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.</p>
-<p>Hold the silence. Three minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Form groups of size 3. Look at the group papers.</p>
-<p>How many written statements can you see in your group?</p>
-<aside class="notes">
-<p>Quick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-1" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Read your statement out loud, simultaneously on the count of 3.</p>
-<aside class="notes">
-<p>don’t fix it as you read! You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.</p>
-<p><strong>Resist that.</strong> You are reading it so that <em>you</em> can hear it.</p>
-<p>Let the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.</p>
-<p>Reading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.</p>
-<p>The instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-2" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Share your statements, and discuss them.</p>
-<p>Write a final description for your group.</p>
-<aside class="notes">
-<p>Circulate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.</p>
-<p>Useful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-3" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside class="notes">
-<p>Build it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.</p>
-<p>A version that survives all the attacks above:</p>
-<blockquote>
-<p>Given a vector of integers <code>arr</code> and an integer <code>q</code>, return the index of the <em>first</em> element of <code>arr</code> equal to <code>q</code>, scanning from index 0 upward. If no element equals <code>q</code>, return -1.</p>
-</blockquote>
-<p>Then the name falls out almost for free: <code>indexOfFirst</code>, <code>firstIndexOf</code>, <code>findFirstIndex</code>. Point out that “find” alone was never enough – a function called <code>find</code> could return a bool, a value, or an iterator.</p>
-<p>If somebody has instead <em>transcribed</em> the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-just-happened" class="slide level2 smaller">
-<h2>What just happened?</h2>
-<aside class="notes">
-<p>Deliberately bare – this part is talked, not projected. Prompts, in the order they tend to work:</p>
-<ul>
-<li>Twenty minutes ago almost nobody could write that sentence. Now almost all of you can.</li>
-<li><strong>And I never taught you anything about searching an array.</strong> Say it, then stop. Let them work out why. Nothing was transmitted from the front of the room – what changed is that they talked to each other.</li>
-<li>You needed each other. Not a lecture, not a recording, not a smarter person – two people who would not accept a vague sentence.</li>
-<li>The contract: when one of you says something fuzzy, any of the others gets to say <strong>“say that more precisely.”</strong> Not rude. The most useful thing you can say to someone trying to learn this. They will hear me say it all term.</li>
-<li>A recording gives you information. <strong>The room gives you feedback.</strong></li>
-</ul>
-<p>Do not add an attendance pitch. They just lived the argument; saying it a second time cheapens it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="algorithmic-analysis-running-time" class="slide level2">
-<h2>Algorithmic analysis — running time</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How long does it take?</p>
-<aside class="notes">
-<p>The blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called <code>find</code> could return a bool, a value or an iterator. A precise description hands you <code>idxFirst</code> almost for free.</p>
-<p>Take answers. Somebody will say “it depends” – that is the slide after this.</p>
+<p>Blanks: <code>curr-&gt;next != nullptr</code>; <code>revRest = reverse(curr-&gt;next);</code> then <code>curr-&gt;next-&gt;next = curr;</code> and <code>curr-&gt;next = nullptr;</code>; return <code>revRest</code>, or <code>curr</code> in the base case.</p>
+<p>The move that makes it work: <strong>after the recursive call, <code>curr-&gt;next</code> still points at the node that is now the tail of the reversed rest.</strong> So <code>curr</code> already has a handle on where to attach itself. Draw that – it is the only hard idea here.</p>
+<p>Then <code>curr-&gt;next = nullptr</code>, because <code>curr</code> is about to be the last node. Forget that line and the list has a cycle, and printing it never terminates.</p>
+<p><span class="math inline">\(T(n) = T(n-1) + \Theta(1) = \Theta(n)\)</span>, same shape as <code>printReverse</code>.</p>
+<p>This function returns the new head rather than taking <code>Node *&amp;</code>. Worth contrasting with <code>insertAtFront</code> – two different ways to let a function change what the caller’s pointer aims at.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
