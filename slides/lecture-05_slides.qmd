@@ -1,0 +1,265 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Loop Invariants"
+
+# Lecture 4 ran out of time partway through, so the correctness half was
+# carried into Friday's video. These slides are lecture 4's from "Intro to
+# algorithm correctness" onward, duplicated deliberately -- lecture 4's deck is
+# left whole as authored, and this is what was actually recorded.
+---
+## Intro to algorithm correctness {.smaller}
+
+```cpp
+int ____________ (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+Good name — what does it do?
+
+Running time?
+
+Does it work?
+
+::: notes
+Same three questions as lecture 2, now in one slide, because they know how to
+do the first two. Move fast on name and runtime -- the whole lecture is the
+third question.
+
+Name: it returns an **index**, not a value, so `idxOfMin` in the house style.
+Careful -- lecture 3's `findMin` returned the min *value*. Worth naming the
+difference out loud; it is the same distinction they fought over in lecture 2.
+
+Runtime: $\Theta(n)$, one pass, no early return.
+
+"Does it work?" is the new question. Nobody has an answer yet, which is the
+point.
+:::
+
+## Correctness: prelims {.smaller}
+
+```cpp
+int ____________ (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+What are the possible values of $i$?
+
+Stop the algorithm at some iteration $i$ — what do we know about the variables?
+
+::: notes
+Pen work on the array. Stop it at $i = 5$ and ask what `retloc` must be. Then
+$i = 9$. They will get there concretely before they can say it generally,
+which is the right order.
+
+$i$ ranges over $a{+}1 \ldots n{-}1$. The answer you are steering toward:
+`retloc` is the index of the smallest element seen *so far* -- and "so far"
+is the thing that needs pinning down precisely.
+:::
+
+## What are we trying to prove? {.smaller}
+
+```cpp
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+**Thm.** `idxOfMin(C, a)` returns the index of the minimum value in
+`C[a..n-1]`.
+
+::: notes
+The theorem comes first, deliberately. You cannot choose an invariant until you
+know what you are trying to deliver -- the invariant is *reverse-engineered*
+from the theorem, and doing it in this order is what makes the next slide feel
+inevitable rather than arbitrary.
+
+Ask: at the moment the loop exits, what would we need to be true?
+:::
+
+## The invariant {.smaller}
+
+We want, at exit: `retloc` is the index of the min of `C[a..n-1]`.
+
+\
+
+So carry that claim through the loop:
+
+::: {.callout-note appearance="minimal"}
+**Loop invariant.** At the start of iteration $i$, `retloc` is the index of the
+minimum value in `C[a..`\_\_\_`]`.
+:::
+
+::: notes
+The blank is `i-1`, and the whole exercise is getting it right.
+
+At the *top* of iteration $i$ we have not yet examined `C[i]`, so the range
+we can vouch for stops at $i-1$. Almost everyone writes `a..i`.
+
+Check it against the exit: the loop ends with $i = n$, so the invariant reads
+`C[a..n-1]` -- exactly the theorem. That is the test for whether you chose
+the right invariant, and it is worth doing out loud: a good invariant is one
+that *becomes* the theorem when the loop stops.
+:::
+
+## Proof Strategy {.smaller}
+
+::: {.callout-note appearance="minimal"}
+**Loop invariant.** At the start of iteration $i$, `retloc` is the index of the
+minimum value in `C[a..`\_\_\_`]`.
+:::
+
+Proving the Theorem requires three things:
+
+::: {.shaded-table}
+
+| | |
+|---|---|
+| **Initialization** | the invariant is true before the first iteration |
+| **Restoration** | if true at the start of iteration $i$, it is true at the start of $i+1$ |
+| **Termination** | the loop ends — and invariant + exit condition give the theorem |
+
+:::
+
+\
+
+What does this smell like?
+
+::: notes
+Say "this is induction" out loud. Initialization is the base case, restoration
+is the inductive step. They have the machinery from 121; naming it means they
+can reuse it instead of learning a ritual.
+
+Termination is the part that is *not* induction and the part they forget. It is
+where the invariant gets cashed in.
+:::
+
+## Initialization and restoration {.smaller}
+
+```cpp
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+**Initialization.** $i = a{+}1$:
+
+**Restoration.** Assume invariant holds at the top of $i$, and then run the body:
+
+::: notes
+Initialization: `retloc = a`, and the min of the one-element range
+`C[a..a]` is at index $a$. Holds.
+
+Restoration: the body compares `C[i]` with `C[retloc]` and moves
+`retloc` only if `C[i]` is strictly smaller. Either way `retloc` ends up
+the index of the min of `C[a..i]` -- which is the invariant at the top of
+$i{+}1$. Done.
+
+Worth naming: the invariant is *false in the middle of the body*, between the
+comparison and the assignment. It only has to hold at the top of each
+iteration. Students who think it must hold everywhere get stuck here.
+:::
+
+## Termination {.smaller}
+
+```cpp
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+**Does the loop stop?**
+
+**What is the state when it does?** 
+
+::: notes
+Stops: $i$ rises by one each pass against a fixed bound, so after $n-a-1$
+passes the guard fails.
+
+The second question is the one that matters and the one nobody writes down.
+Two facts combine:
+
+- the guard is false, so $i = n$
+- the invariant holds, so `retloc` indexes the min of `C[a..i-1]`
+
+Substitute: `C[a..n-1]`. That is the theorem, and the proof ends -- not
+with more argument, but by *reading* the invariant at exit.
+
+If the invariant had been `a..i`, this substitution would have given
+`C[a..n]`, which is out of bounds. The off-by-one from two slides ago shows
+up here as a proof that does not close.
+:::
+
+## The recipe {.smaller}
+
+::: {.shaded-table}
+
+| | |
+|---|---|
+| **1. Recognize the Claim** | the postcondition you are trying to reach |
+| **2. Find an invariant** | strong enough to give that at exit, and still true after one pass |
+| **3. Initialization** | true before the first iteration |
+| **4. Restoration** | start of $i$ $\Rightarrow$ start of $i{+}1$ |
+| **5. Termination** | the loop ends, and invariant gives result |
+
+:::
+
+\
+
+Here the invariant was the theorem with $n$ replaced by $i$. That is the easy
+case — often it has to say **more** than the theorem.
+
+\
+
+Proving correctness is only one use of invariants — they are also how you
+**design** a loop in the first place.
+
+::: notes
+Steps 1 and 2 are the ones this lecture added. Most students arrive able to do
+3, 4, 5 mechanically and with no idea where the invariant came from.
+
+Do not oversell step 2. `idxOfMin` is the easy case, where the invariant is the
+theorem with $n$ replaced by $i$. In general the invariant must be *stronger*
+than the postcondition, because a claim that barely implies the result will not
+survive an iteration -- binary search carries "if `q` is present it is in
+`[lo,hi]`", Euclid carries `gcd(x,y)` unchanged, the playlist partition carries
+three moving boundaries. None of those is the theorem with a substitution.
+
+That is strengthening the induction hypothesis, which they saw in 121. Worth
+naming if someone asks why their invariant will not go through -- usually it is
+too weak, not wrong.
+
+Land the last line. An invariant written *before* the body tells you what the
+body must do; written after, it is an audit. The first is the more valuable
+habit -- and it is what HW1 zone 3 is actually asking for.
+:::

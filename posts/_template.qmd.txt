@@ -1,0 +1,28 @@
+Copy this directory shape for a new announcement:
+
+    posts/NN_week-NN/index.qmd
+
+The listing on announcements.qmd picks it up automatically and sorts by date,
+newest first — the NN prefix is only to keep the directory readable.
+
+Posts are a dated list of what happens and when. The warmth goes in the Sunday
+email (weeklyemail.md at the repo root, not published); the post is the
+deadlines pulled out of it.
+
+---
+title: "Week N — Mon D to Sun D"
+description: "One line, shown under the title in the list."
+author: "{{< var instructor.name >}}"
+date: 2026-09-14
+categories:
+  - deadline        # deadline · lab · examlet · logistics · resource
+---
+
+All times 11:59 pm.
+
+| | |
+|---|---|
+| **09/14** | HW1 released |
+| **09/20** | Lab Intro **due** · Lab Debug released |
+
+Bold the word "due" — students scan for it.

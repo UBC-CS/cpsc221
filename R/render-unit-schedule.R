@@ -35,7 +35,7 @@ render_unit_schedule <- function() {
       ),
       resource_2 = resource_cell(
         id,
-        recording_url(id, date),
+        lookup_url(id, "recording"),
         "circle-play",
         "Recording"
       )
@@ -64,7 +64,7 @@ render_unit_schedule <- function() {
     \(id, date) {
       resource_cell(
         id,
-        prairielearn_url(id, date),
+        lookup_url(id, "prairielearn"),
         "calendar-week",
         "Lab on PrairieLearn"
       )
@@ -99,7 +99,7 @@ render_unit_schedule <- function() {
         id,
         lookup_url(id, "pre-activity"),
         "book",
-        "Examlet review material"
+        "Book your examlet seat (PrairieTest)"
       )
     },
     \(id, date) {
@@ -107,7 +107,7 @@ render_unit_schedule <- function() {
         id,
         lookup_url(id, "practice"),
         "pen-to-square",
-        "Examlet practice problems"
+        "Examlet practice problems (PrairieLearn)"
       )
     }
   )

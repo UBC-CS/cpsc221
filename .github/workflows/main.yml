@@ -7,8 +7,11 @@ on:
     branches:
     - main
   schedule:
-    - cron: '25 11 * * 1'
-    - cron: '25 11 * * 6'
+    # Daily, 11:25 UTC = 04:25 Pacific. The schedule table decides what is live
+    # by comparing against today's date -- the current-week highlight, the
+    # weekly lab reveal, and lecture recordings -- so it only advances when the
+    # site rebuilds. Twice a week meant a Friday video went live on Saturday.
+    - cron: '25 11 * * *'
 
 jobs:
   build-deploy:

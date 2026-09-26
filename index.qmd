@@ -11,8 +11,8 @@ execute:
 **Contact**\
 {{< var icon.mail >}} [{{< var instructor.email >}}](mailto:{{< var instructor.email >}}) ({{< var instructor.name >}})\
 {{< var icon.mail >}} [{{< var instructor2.email >}}](mailto:{{< var instructor2.email >}}) ({{< var instructor2.name >}})\
-{{< var icon.time >}} {{< var instructor.office-hours >}} ({{< var instructor.name >}})\
-{{< var icon.time >}} {{< var instructor2.office-hours >}} ({{< var instructor2.name >}})\
+{{< var icon.time >}} {{< var instructor.office-hours >}} {{< var icon.building >}} {{< var instructor.office >}} ({{< var instructor.name >}})\
+{{< var icon.time >}} {{< var instructor2.office-hours >}} {{< var icon.building >}} {{< var instructor2.office >}} ({{< var instructor2.name >}})\
 :::
 
 ::: {.column width="50%"}
@@ -67,8 +67,8 @@ unit_schedule |> dark_theme()
 {{< iconify fa6-solid window-maximize >}} slides &nbsp;
 {{< iconify fa6-solid circle-play >}} recording &nbsp;
 {{< iconify fa6-solid calendar-week >}} lab (PrairieLearn) &nbsp;
-{{< iconify fa6-solid book >}} examlet review &nbsp;
-{{< iconify fa6-solid pen-to-square >}} examlet practice
+{{< iconify fa6-solid book >}} book a seat (PrairieTest) &nbsp;
+{{< iconify fa6-solid pen-to-square >}} practice problems (PrairieLearn)
 
 Faded icons mark material that isn't posted yet.
 :::

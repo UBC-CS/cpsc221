@@ -1,0 +1,460 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Selection Sort"
+
+# Follows oldslides/lec091124-selection.pdf.
+#
+# This one is an async video, so there are no room questions that need an
+# answer back. Blanks are still there to fill in while recording -- pauses work
+# on video, and a viewer can stop the tape and try it.
+#
+# The spine: selection sort is the example where the obvious invariant is too
+# weak. That pays off lecture 4's closing claim that an invariant often has to
+# say more than the theorem.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **HW1 is due tonight**, 11:59 pm
+- **PA1 is out tonight**, due Oct 5
+- **Examlet 1 is this week** — Thursday through Sunday. Book your seat on
+  PrairieTest, and work PEX1
+- PEX2 releases Wednesday night
+
+\
+
+**Where we're going**
+
+- Warm-up
+- Selection sort — what it does, how long it takes
+- Selection sort — why it works
+
+## Warm-up {.smaller}
+
+My algorithm runs in time $\Omega(n \log n)$.
+
+Your algorithm runs in time $O(n!)$.
+
+\
+
+**Whose is better?**
+
+::: notes
+The answer is: you cannot tell, and that is the whole point.
+
+Mine is bounded *below* -- it takes at least $n\log n$, and might take
+$n^{100}$. Yours is bounded *above* -- it takes at most $n!$, and might take
+constant time. The two claims do not meet, so no comparison follows.
+
+Worth saying plainly on the recording: these are the two bounds pointing in
+opposite directions, and reading $\Omega$ as "best case" and $O$ as "worst
+case" is what makes people think a comparison is available here.
+
+Pause after the question. Viewers can stop and think.
+:::
+
+## Where we left off {.smaller}
+
+```cpp
+int idxOfMin (vector<int>& C, int a) {
+    int retloc = a;
+    for (int i = a+1; i < C.size(); i++)
+        if (C[i] < C[retloc]) {
+            retloc = i;
+        }
+    return retloc;
+}
+```
+
+We named it, evaluated its runtime, and proved it is correct.
+
+::: notes
+Thirty seconds of recap -- this is the function we proved on Wednesday.
+$\Theta(n)$, and the invariant was "`retloc` is the index of the min of
+`C[a..i-1]`".
+
+We are about to use it as a building block, which is the reason it was worth
+proving.
+:::
+
+## Another example {.smaller}
+
+```cpp
+void ____________ (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 11 | 73 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 15 | 79 | 44 |  7 | 45 |
+
+What does it do? &nbsp;&nbsp; How long does it take?
+
+::: notes
+Trace two iterations on the array with the pen before naming it. $i=0$ finds 7
+at index 14 and swaps it to the front; $i=1$ finds 11, already in place.
+
+Name: **selection sort**. It repeatedly *selects* the smallest remaining
+element.
+
+Running time: `idxOfMin(C, i)` costs $n-i$, so the total is
+$n + (n-1) + \cdots + 1 = \Theta(n^2)$. Note it does not care what the data
+looks like -- best and worst are the same, which is the `findMin` observation
+from lecture 3 one level up.
+:::
+
+## Selection sort {.smaller}
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|  7 | 11 | 15 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 73 | 79 | 44 | 32 | 45 |
+
+$T(n) = \Theta(n^2)$ 
+
+::: notes
+The array shown is mid-run, not sorted. Point at the boundary: everything left
+of index 5 is sorted and small; everything right of it is untouched original
+data. That picture *is* the invariant, and the next slide makes them read it.
+:::
+
+## Oops {.smaller}
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15 |
+|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+|  7 | 11 | 15 | 21 | 29 | 86 | 81 | 92 | 57 | 61 | 64 | 73 | 79 | 44 | 18 | 45 |
+
+**My code crashed partway through the loop.**
+
+What is the latest iteration I could have been on?
+
+::: notes
+This is the best slide in the lecture. Pause here.
+
+Answer: **$i = 3$.** How you get there is the point.
+
+The prefix looks sorted a long way -- 7, 11, 15, 21, 29 -- so the eyeball
+answer is 5. But 18 is sitting at index 14. For the invariant to hold at $i=5$
+the first five entries would have to be the five smallest, and they are not:
+18 belongs in there and 29 does not. Same failure at $i=4$.
+
+At $i=3$ it holds: 7, 11, 15 really are the three smallest values in the array,
+and they are sorted. So iteration 3 had begun and not finished -- it would have
+found 18 and swapped it into position 3.
+
+Two things to land:
+
+- **The weak invariant cannot answer this.** "The prefix is sorted" is true
+  through index 4 and gives the wrong answer. Only "and holds the $i$ smallest"
+  gets you there -- the clause we added one slide ago, doing work.
+- **You just read the state of a crashed program off the data.** That is what
+  invariants are for outside of proofs: they say what must be true at any
+  moment, which is exactly what debugging is.
+:::
+
+## What does it do? {.smaller}
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+**Thm.**
+
+::: notes
+Blank on purpose -- build the statement with the room, then write it.
+
+What they will offer: "C ends up sorted." Accept it, then break it: a function
+that overwrites every entry with 0 leaves C sorted. So does one that returns an
+empty array. Sortedness alone is not the claim.
+
+What is missing is that the *same values* are still there. That is the
+permutation clause, and this is the first time it appears -- it never came up
+for idxOfMin, which did not modify anything.
+
+A statement that survives:
+
+> After selectionSort(C) returns, C is a permutation of its original contents,
+> and C[0] <= C[1] <= ... <= C[n-1].
+
+Point back at the array on the previous slide if it helps: same sixteen values
+as we started with, in a different order. Nothing was invented and nothing was
+lost.
+
+This is the theorem the next three slides are working toward, so leave it on
+the board.
+:::
+
+## How long does it take? {.smaller}
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+::: notes
+Blank for annotation.
+
+The derivation: `idxOfMin(C, i)` scans `C[i..n-1]`, so it costs $n - i$. The
+swap is constant. So
+
+$$T(n) = \sum_{i=0}^{n-1} (n - i) = n + (n-1) + \cdots + 1 = \frac{n(n+1)}{2}
+= \Theta(n^2).$$
+
+The point worth making after the algebra: **nothing in that sum mentions the
+data.** Best case and worst case are the same, unlike `idxFirst`. Selection
+sort does the same work on a sorted array as on a shuffled one.
+:::
+
+## What is always true? {.smaller}
+
+At the start of iteration $i$:
+
+::: {.callout-note appearance="minimal"}
+`C[0..i-1]` is **sorted**.
+:::
+
+\
+
+Is that enough?
+
+::: notes
+Take this seriously for a moment -- it is the answer everyone gives, and it is
+true. It is just not *enough*.
+
+Try restoration with it: assume `C[0..i-1]` is sorted, run one iteration, and
+try to conclude `C[0..i]` is sorted. You cannot. Nothing stops the element we
+just dropped into position $i$ from being smaller than `C[i-1]` -- unless we
+already knew the prefix held the smallest elements.
+
+Let them sit with the failed attempt before the fix. The failure is the lesson.
+:::
+
+## Strengthen it {.smaller}
+
+::: {.callout-note appearance="minimal"}
+At the start of iteration $i$: &nbsp; `C` is a **permutation** of what we
+started with, `C[0..i-1]` is **sorted**, and holds the $i$ **smallest** values
+in `C`.
+:::
+
+
+::: notes
+This is lecture 4's closing point, arrived at the hard way: the invariant has
+to be *stronger* than the postcondition.
+
+The theorem only says the array ends up sorted. "Holds the $i$ smallest" never
+appears in it. But drop that clause and restoration fails, so the proof needs
+it -- carried through every iteration purely to make the induction go.
+
+Name it: strengthening the induction hypothesis. Same move as 121.
+
+The three clauses are there for three different reasons, and it is worth
+separating them:
+
+- **permutation** -- carries the first half of the theorem. Needed because
+  sortedness alone does not say the values are still ours.
+- **sorted prefix** -- the second half of the theorem, restricted to what has
+  been placed so far.
+- **the $i$ smallest** -- in the theorem nowhere. Purely to make restoration
+  go through.
+:::
+
+## Initialization {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+**$i = 0$:**
+
+::: notes
+Blank for annotation. All three clauses, and all three are easy:
+
+- **permutation** -- nothing has run, so `C` still holds exactly what it held
+  on entry. The identity is a permutation.
+- **sorted** -- `C[0..-1]` is empty, and the empty sequence is sorted.
+- **the 0 smallest** -- vacuous; there is no $k$ with $0 \le k < 0$.
+
+Do not rush past the empty-range cases. Students distrust them, and this is the
+cheapest place to get comfortable with "vacuously true".
+:::
+
+## Restoration {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+Assume the invariant at the start of iteration $i$. Run the body:
+
+\
+
+$m =$ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; after the swap:
+
+::: notes
+Blank for annotation. Set up the step before proving anything.
+
+By Lemma (`idxOfMin`), $i \le m < n$ and `C[m]` is the smallest value in
+`C[i..n-1]`. The call does not modify `C`.
+
+By Lemma (`swap`), afterwards `C'[i] = C[m]`, `C'[m] = C[i]`, and every other
+entry is untouched.
+
+**Permutation** falls out here: a swap is a transposition, and a composition of
+permutations is a permutation. One line, then move on -- the interesting work
+is the next slide.
+
+Worth pointing at: this proof *uses* Wednesday's result. That is what proving
+small things buys you.
+:::
+
+## Restoration, continued {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+Why is `C[0..i]` still **sorted**?
+
+\
+
+Why does it still hold the $i+1$ **smallest**?
+
+::: notes
+This is where the lecture actually lives. Two questions, two different
+arguments.
+
+**Sorted.** Since $m \ge i$, the swap touches nothing below $i$, so the old
+prefix is unchanged and still sorted. The only new comparison is
+`C'[i-1] <= C'[i]`, and it comes straight from the third clause:
+
+  `C[i-1]` $\le$ max of the prefix $\le$ min of the suffix $=$ `C[m]` $=$ `C'[i]`.
+
+**Without the "smallest" clause there is nothing here.** That is the payoff of
+two slides ago -- say it out loud.
+
+**Still the smallest.** Compare the suffixes as *sets*, not index by index. The
+swap moved `C[m]` out to position $i$ and `C[i]` in to position $m$, and both
+positions are in the range $[i, n)$. So the new suffix is the old suffix with
+`C[m]` removed. Everything in the old suffix was $\ge$ `C[m]`, and dropping one
+element cannot introduce anything smaller.
+
+Students reach for an index argument here and get tangled. The set framing is
+the whole trick.
+:::
+
+## Termination {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+Does the loop stop?
+
+What is the state when it does?
+
+::: notes
+Stops: $i$ rises by one against a fixed bound, so after $n$ iterations the
+guard fails.
+
+At exit $i = n$, so the invariant reads: `C[0..n-1]` is sorted and holds the
+$n$ smallest values -- which is the whole array. Sorted. That is the theorem.
+
+Note the second clause does nothing at all at this point. It existed only to
+get us here, and then it retires.
+:::

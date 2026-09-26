@@ -1,3 +1,24 @@
 ---
 title: "FAQ"
 ---
+
+## How do I save the lecture slides as a PDF?
+
+Open the slides, add **`?print-pdf`** to the end of the address, and press
+Enter. The deck redraws as a flat page, one slide per sheet. Then print
+(`Ctrl`/`Cmd` + `P`) and choose **Save as PDF**.
+
+So for lecture 6 you would visit:
+
+```
+.../slides/lecture-06_slides.html?print-pdf
+```
+
+Two things to set in the print dialog:
+
+- **Layout: Landscape**
+- **Margins: None**, and switch on **Background graphics** — without it the
+  code blocks print as white boxes.
+
+Speaker notes are not included, and neither is anything written on a slide
+with the pen during class.

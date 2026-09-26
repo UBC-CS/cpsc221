@@ -1,0 +1,450 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Insertion Sort"
+
+# Opens with the selection sort proof carried over from Monday -- lecture 6's
+# slides, trimmed to what the room did not reach.
+#
+# The new material follows oldslides/lec091624-insertion.pdf, with two changes:
+# slide() uses swaps rather than a temp variable, so C is a permutation after
+# every step rather than only at the end; and slide() gets its own correctness
+# proof, which the 2024 deck asserted rather than proved.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **PA1 is out**, due Monday Oct 5. It is linked lists all the way down
+- **Examlet 1 is Thursday through Sunday** — book your seat on PrairieTest
+- PEX2 releases tonight
+- HW1 closed Monday
+
+\
+
+**Where we're going**
+
+- Finishing selection sort
+- A mystery function
+- Insertion sort
+
+## Where we left off {.smaller .proof}
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+**Thm.** &nbsp; After `selectionSort(C)` returns, `C` is a permutation of $C_0$
+and $C[0] \le C[1] \le \cdots \le C[n-1]$.
+
+\
+
+**Loop invariant.** &nbsp; $P(i)$, at the start of iteration $i$: \
+&nbsp;&nbsp;**A.**&nbsp; $C$ is a permutation of $C_0$ \
+&nbsp;&nbsp;**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$ \
+&nbsp;&nbsp;**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+
+::: notes
+Where Monday ended. Read the theorem, read $P(i)$, then go.
+
+Two things worth re-saying before resuming, because they are the reasons the
+rest of the proof works:
+
+- **$C_0$ is the array we were handed.** Clause A is the first half of the
+  theorem, carried through every iteration. Sortedness alone would not say the
+  values are still ours -- zeroing the array leaves it sorted.
+- **Clause C is not in the theorem.** It is there purely to make restoration go
+  through. That was Monday's punchline: the invariant has to be *stronger* than
+  what you are trying to prove.
+
+Then: initialization, restoration, termination. Three obligations, and we are
+about to discharge them in order.
+:::
+
+## Initialization {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+Check that the loop invariant holds at the start of the loop:
+
+($i =$ \_\_\_)
+
+::: notes
+Blank for annotation. All three clauses, and all three are easy:
+
+- **permutation** -- nothing has run, so `C` still holds exactly what it held
+  on entry. The identity is a permutation.
+- **sorted** -- `C[0..-1]` is empty, and the empty sequence is sorted.
+- **the 0 smallest** -- vacuous; there is no $k$ with $0 \le k < 0$.
+
+Do not rush past the empty-range cases. Students distrust them, and this is the
+cheapest place to get comfortable with "vacuously true".
+:::
+
+## Restoration {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+Assume the invariant at the start of iteration $i$. 
+
+Run the body:
+
+&nbsp;&nbsp;Line 3: 
+
+&nbsp;&nbsp;Line 4:
+
+Check the invariants:
+
+&nbsp;&nbsp;A.
+
+&nbsp;&nbsp;B.
+
+&nbsp;&nbsp;C.
+
+::: notes
+Blank for annotation. Set up the step before proving anything.
+
+By Lemma (`idxOfMin`), $i \le m < n$ and `C[m]` is the smallest value in
+`C[i..n-1]`. The call does not modify `C`.
+
+By Lemma (`swap`), afterwards `C'[i] = C[m]`, `C'[m] = C[i]`, and every other
+entry is untouched.
+
+**Permutation** falls out here: a swap is a transposition, and a composition of
+permutations is a permutation. One line, then move on -- the interesting work
+is the next slide.
+
+Worth pointing at: this proof *uses* Wednesday's result. That is what proving
+small things buys you.
+:::
+
+
+## Termination {.smaller .proof}
+
+::: {.invariant}
+**P(i)** at the start of iteration $i$:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0] \le C[1] \le \cdots \le C[i-1]$
+
+**C.**&nbsp; $\max_{0 \le k < i} C[k] \;\le\; \min_{i \le j < n} C[j]$
+:::
+
+
+```cpp
+void selectionSort (vector<int>& C) {
+    for (int i = 0; i < C.size(); i++) {
+        int m = idxOfMin(C, i);
+        swap(C, m, i);
+    }
+}
+```
+
+Does the loop stop?
+
+What is the state when it does?
+
+::: notes
+Stops: $i$ rises by one against a fixed bound, so after $n$ iterations the
+guard fails.
+
+At exit $i = n$, so the invariant reads: `C[0..n-1]` is sorted and holds the
+$n$ smallest values -- which is the whole array. Sorted. That is the theorem.
+
+Note the second clause does nothing at all at this point. It existed only to
+get us here, and then it retires.
+:::
+## A mystery function {.smaller}
+
+```cpp
+void ________ (vector<int>& C, int loc) {
+// assumes C[0..loc-1] is sorted, loc valid
+    int j = loc;
+    while (j > 0 && C[j-1] > C[j]) {
+        swap(C, j-1, j);
+        j--;
+    }
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|  8 | 14 | 26 | 32 | 19 | 35 |  2 | 10 |
+
+What does it do? &nbsp;&nbsp; How long does it take? &nbsp;&nbsp; Is it correct?
+
+::: notes
+Trace it with `loc = 4`, the 19. It swaps left past 32, past 26, stops at 14.
+The sorted prefix grew by one.
+
+Name: `slide`, or `insert`. It takes one element and slides it back into a
+sorted prefix.
+
+Time: worst case `loc` swaps -- the element belongs at the front. Best case
+zero -- it is already in place. Worth noticing now, because it is where
+insertion sort's two cases come from.
+
+Note the precondition on line 2. Everything this function does is wrong if
+`C[0..loc-1]` is not already sorted. That is the first time a comment has been
+load-bearing.
+:::
+
+## Is `slide` correct? {.smaller .proof}
+
+```cpp
+void slide (vector<int>& C, int loc) {
+// assumes C[0..loc-1] is sorted, loc valid
+    int j = loc;
+    while (j > 0 && C[j-1] > C[j]) {
+        swap(C, j-1, j);
+        j--;
+    }
+}
+```
+
+**Thm.** &nbsp; If `C[0..loc-1]` is sorted, then afterwards `C` is a permutation
+of $C_0$ and `C[0..loc]` is sorted.
+
+- Variable: $j$, from \_\_\_ down to \_\_\_
+- Loop invariant $Q(j)$, at the top of the test: \
+&nbsp;&nbsp;**A.**&nbsp; `C` is a \_\_\_\_\_\_\_ of $C_0$ \
+&nbsp;&nbsp;**B.**&nbsp; `C[0..`\_\_\_`]` is sorted, and `C[`\_\_\_`..loc]` is sorted \
+&nbsp;&nbsp;**C.**&nbsp; $\max_{0 \le k < j} C[k] \;\le\; \min_{j < k \le \mathit{loc}} C[k]$
+
+::: notes
+Blanks: $j$ runs from `loc` down; **permutation**; `C[0..j-1]` and `C[j..loc]`.
+
+Say what the invariant is picturing: one value is in flight at position $j$,
+and everything on either side of it is already in its final relative order.
+
+- **A** -- the body is a `swap` and nothing else, so this is free. *This is what
+  we bought by not using a temp variable.* With `temp`, mid-loop the array holds
+  a duplicate and is missing a value, and clause A is simply false until the
+  last line.
+- **B** -- `C[0..j-1]` is an untouched piece of the sorted prefix. `C[j..loc]`
+  is sorted because the guard only swapped when `C[j-1] > C[j]`: everything we
+  pushed up is bigger than the value we are carrying.
+- **C** -- the strengthening clause, exactly as in selection sort. Second time
+  this move has come up, so name it again.
+:::
+
+## `slide`, continued {.smaller .proof}
+
+::: {.invariant}
+**Q(j)** at the top of the test:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0..j-1]$ and $C[j..\mathit{loc}]$ are each sorted
+
+**C.**&nbsp; $\max_{0 \le k < j} C[k] \;\le\; \min_{j < k \le \mathit{loc}} C[k]$
+:::
+
+
+```cpp
+void slide (vector<int>& C, int loc) {
+// assumes C[0..loc-1] is sorted, loc valid
+    int j = loc;
+    while (j > 0 && C[j-1] > C[j]) {
+        swap(C, j-1, j);
+        j--;
+    }
+}
+```
+
+Initialization: &nbsp; $j =$ \_\_\_
+
+\
+
+Restoration:
+
+::: notes
+Initialization: $j = loc$. A is trivial, B is the precondition plus a one-element
+suffix, C is vacuous on the right.
+
+Restoration: assume $Q(j)$ and that the guard passed, so `C[j-1] > C[j]`. The
+body swaps them and decrements. A survives because a swap is a transposition.
+B survives because the value we pushed up is bigger than the one we are
+carrying. C survives because both pieces only lost and gained the one element
+in flight.
+
+Termination is the interesting one and gets its own slide.
+:::
+
+## `slide`, termination {.smaller .proof}
+
+::: {.invariant}
+**Q(j)** at the top of the test:
+
+**A.**&nbsp; $C$ is a permutation of $C_0$
+
+**B.**&nbsp; $C[0..j-1]$ and $C[j..\mathit{loc}]$ are each sorted
+
+**C.**&nbsp; $\max_{0 \le k < j} C[k] \;\le\; \min_{j < k \le \mathit{loc}} C[k]$
+:::
+
+
+```cpp
+void slide (vector<int>& C, int loc) {
+// assumes C[0..loc-1] is sorted, loc valid
+    int j = loc;
+    while (j > 0 && C[j-1] > C[j]) {
+        swap(C, j-1, j);
+        j--;
+    }
+}
+```
+
+The loop exits when \_\_\_\_\_\_\_\_\_\_ &nbsp; **or** &nbsp; \_\_\_\_\_\_\_\_\_\_
+
+\
+
+Case 1:
+
+\
+
+Case 2:
+
+::: notes
+**Two ways out, and they are not the same argument.** The guard is
+`j > 0 && C[j-1] > C[j]`, so it fails if *either* conjunct fails.
+
+**Case 1: `C[j-1] <= C[j]`.** The value in flight is no smaller than its left
+neighbour. B already gives `C[0..j-1]` sorted and `C[j..loc]` sorted, and this
+is exactly the one comparison joining them. Plus C, so everything left of $j$
+is $\le$ everything right of it. `C[0..loc]` is sorted.
+
+**Case 2: $j = 0$.** There is nothing to the left at all. B's first piece is
+empty, so B alone gives it -- no join needed, and C is vacuous.
+
+Either way `C[0..loc]` is sorted, and A says the values are still ours. That is
+the theorem.
+
+Students want to handle only Case 1. Make them say why Case 2 is not a gap --
+and notice that it is the case that actually happens when the element belongs
+at the front, which is insertion sort's worst case.
+:::
+
+## Insertion sort {.smaller}
+
+```cpp
+void insertionSort (vector<int>& C) {
+    for (int i = 1; i < C.size(); i++)
+        slide(C, i);
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 32 | 14 | 26 |  8 | 19 | 35 |  2 | 10 |
+
+Worst case running time:
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|    |    |    |    |    |    |    |    |
+
+Best case?
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|    |    |    |    |    |    |    |    |
+
+::: notes
+Two lines, because `slide` did the work. Trace a couple of iterations on the
+top array before going near running time.
+
+Worst: fill the blank row reversed -- every element slides the whole way.
+$1 + 2 + \cdots + (n-1) = \Theta(n^2)$.
+
+Best: fill it already sorted. Every call to `slide` tests once and stops.
+$\Theta(n)$.
+
+**Stop and make the comparison.** Selection sort's best and worst were both
+$\Theta(n^2)$, because `idxOfMin` always scans everything. Insertion sort's
+differ by a growth rate -- the first algorithm all term where the data changes
+the answer.
+
+Worth asking out loud: if you knew your input was nearly sorted, which would
+you reach for?
+:::
+
+## Insertion sort --- correctness {.smaller .proof}
+
+```cpp
+void insertionSort (vector<int>& C) {
+    for (int i = 1; i < C.size(); i++)
+        slide(C, i);
+}
+```
+
+|  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|    |    |    |    |    |    |    |    |
+
+Correctness proof ---
+
+- Variable: $i \in \{1 \ldots n\}$
+- Loop invariant: at start of arb iter $i$, `C` is a \_\_\_\_\_\_\_ of the input, and `C[0..`\_\_\_`]` is sorted
+- Initialization: $i =$ \_\_\_ . &nbsp; `C[0..`\_\_\_`]` sorted?
+- Restoration: assume LI holds at start of iteration $i$.
+- Termination: $i =$ \_\_\_\_\_ , LI gives
+
+::: notes
+Blanks: **permutation** ... `C[0..i-1]` ... $i=1$, `C[0..0]` ... $i=n$.
+
+Two clauses only -- compare selection sort, which also needed "and holds the
+$i$ smallest". Insertion sort does not, because it never claims the prefix is
+final; placed elements still move. The invariant follows from what the
+algorithm guarantees, not from the theorem.
+
+Restoration: this is now one line, by the Lemma. `slide`'s precondition is
+`C[0..i-1]` sorted, which is exactly clause B of the invariant. Its conclusion
+is that `C` is still a permutation and `C[0..i]` is sorted -- which is $P(i+1)$.
+Nothing else to do.
+
+Say how short that was next to selection sort, and why: the work went into
+`slide`, and the loop took three lines because the building block was already
+proved. Same shape as `idxOfMin` and selection sort on Monday. **Prove the
+small thing, then the big thing is easy.**
+:::

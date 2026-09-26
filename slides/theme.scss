@@ -9,6 +9,7 @@ $code-keyword:       #2e75b6;   // int, for, if, return, vector
 $code-literal:       #c00000;   // numeric literals
 $code-plain:         #1a1a1a;   // identifiers, operators, punctuation
 $code-comment:       #5b7c86;
+$inline-code:        #1f4e79;   // inline `code` in prose -- same family, darker
 
 $code-line-height:   1.45;
 $code-gutter-width:  2.4em;
@@ -27,6 +28,10 @@ $tbl-header-fg:      #ffffff;
 $tbl-stripe:         #eef4f7;
 $tbl-label-bg:       #dbe9ee;   // first column -- the row's name, not its data
 $tbl-border:         #a8c3cd;
+
+// Memory diagrams: stack green and heap orange, taken off the 2024 slides.
+$mem-stack:          #b6f5cd;
+$mem-heap:           #fbe0c9;
 
 /*-- scss:rules --*/
 
@@ -139,12 +144,67 @@ $tbl-border:         #a8c3cd;
   code span.fu,
   code span.cn { color: $code-plain; }
 
-  // Inline code keeps the panel colour but stays compact
+  // Inline code: deep blue text, no panel. A shaded box behind every `C[0..i-1]`
+  // left the proof slides looking striped, and boxed the word in slide titles.
   code:not(.sourceCode) {
-    background: $code-panel-bg;
-    color: $code-plain;
-    border-radius: 4px;
-    padding: 0.05em 0.3em;
+    background: none;
+    color: $inline-code;
+    padding: 0;
+  }
+}
+
+// Proof slides: the code is reference, not the subject, so it shrinks to make
+// room for working. {.proof} on the heading turns this on. {.smallcode} is the
+// same shrink without the proof connotation -- for slides that are mostly
+// annotation space around a listing.
+.reveal section.proof,
+.reveal section.smallcode {
+  div.sourceCode code.sourceCode {
+    font-size: calc(var(--r-main-font-size) * 0.48);
+  }
+
+  div.sourceCode {
+    margin: 0.2em 0 0.4em 0;
+  }
+}
+
+// A standing reminder of the loop invariant, parked in the top-right corner of
+// each slide of a proof. Absolutely positioned so it costs no layout: the code
+// block and the space below it are left free to annotate.
+.reveal .invariant {
+  position: absolute;
+  top: 0.2em;
+  right: 0;
+  width: 48%;
+  font-size: 0.72em;
+  line-height: 1.3;
+  color: #5b7c86;
+  text-align: left;
+  border-left: 3px solid $tbl-border;
+  padding: 0.25em 0 0.25em 0.7em;
+
+  // one clause per line, no paragraph gaps between them
+  p { margin: 0 0 0.12em 0; }
+
+  strong { color: $tbl-header-bg; }
+}
+
+// ---- printing (?print-pdf) ------------------------------------------
+// Pandoc ships an @media print rule setting `text-indent: -5em` on every code
+// line. Combined with the panel's overflow:hidden that shears the first few
+// characters off each line -- `void selectionSort` prints as `lectionSort`.
+// CSS counters also do not survive Chrome's paged layout, so the gutter draws
+// empty. Both only show up in the PDF, never on screen.
+@media print {
+  .reveal div.sourceCode code.sourceCode > span {
+    text-indent: 0 !important;
+    padding-left: calc(#{$code-gutter-width} + 0.85em) !important;
+  }
+
+  // Re-seed the counter on the <pre>: when paginated, Chrome loses a reset that
+  // sits on the inner <code>, so the gutter prints empty.
+  .reveal pre.numberSource {
+    counter-reset: source-line 0 !important;
   }
 }
 
@@ -187,6 +247,46 @@ $text-colours: (
 @each $name, $colour in $text-colours {
   #{$name}, .#{$name} { color: $colour; }
 }
+
+// Callouts: rounded and roomy, so a boxed claim on a slide reads as a thing to
+// look at rather than a footnote. Quarto's default is a thin left rule at body
+// size, which disappears from the back of a lecture hall.
+.reveal div.callout,
+.reveal div.callout.callout-style-simple {
+  // Quarto's simple style sets a thick left rule and hairlines elsewhere, at
+  // higher specificity -- all four sides have to be forced to match.
+  border: 3px solid $tbl-border !important;
+  border-radius: 18px !important;
+  background: $tbl-stripe;
+  margin: 0.6em 0;
+  padding: 0.1em 0.2em;
+  box-shadow: 0 2px 10px rgba(44, 62, 80, 0.10);
+
+  .callout-body,
+  .callout-content {
+    background: none;
+    border: none;
+    padding: 0.35em 0.9em;
+  }
+
+  // Callout text is the point of the slide, so it sizes off the deck rather
+  // than off whatever the parent happens to be -- {.smaller} can't shrink it.
+  p {
+    font-size: calc(var(--r-main-font-size) * 0.92);
+    line-height: 1.35;
+    margin: 0.25em 0;
+  }
+
+  code {
+    font-size: 0.92em;
+  }
+}
+
+// Colour the border by callout type, keeping the fill neutral.
+.reveal div.callout-note      { border-color: $tbl-header-bg !important; }
+.reveal div.callout-tip       { border-color: #18bc9c !important; }
+.reveal div.callout-important { border-color: #c0392b !important; }
+.reveal div.callout-warning   { border-color: #f39c12 !important; }
 
 // Activity slide: {.activity} on the heading turns the whole slide blue.
 //
@@ -231,6 +331,50 @@ $text-colours: (
   :not(pre) > code {
     background-color: rgba(255, 255, 255, 0.18);
     color: #fff;
+  }
+}
+
+// Memory tables: the loc / name / val / type grids from the 2024 pointer
+// slides. Green is the stack, orange (::: {.memtable .heap}) the heap. Rows
+// are deliberately empty -- they get filled in live -- so the cells need a
+// height of their own or they collapse to nothing.
+//
+// Same <th> rewriting caveat as .shaded-table below.
+.reveal .memtable {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 0.6em;
+
+  table {
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.62em;
+    border: 1.5px solid #1a1a1a;   // the collapsed bottom edge otherwise clips
+  }
+
+  th,
+  td,
+  td[data-quarto-table-cell-role="th"] {
+    border: 1.5px solid #1a1a1a;
+    background: $mem-stack;
+    padding: 0.15em 0.55em;
+    height: 1.75em;
+    min-width: 3.1em;
+    text-align: center;
+    font-weight: 400;
+    color: $code-plain;
+  }
+
+  colgroup {
+    display: none;
+  }
+}
+
+.reveal .memtable.heap {
+  th,
+  td,
+  td[data-quarto-table-cell-role="th"] {
+    background: $mem-heap;
   }
 }
 

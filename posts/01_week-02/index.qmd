@@ -1,0 +1,22 @@
+---
+title: "Week 2 — Sep 14 to Sep 20"
+description: "HW1 out, labs begin, PEX1 Wednesday."
+author: "{{< var instructor.name >}}"
+date: 2026-09-14
+categories:
+  - deadline
+---
+
+All times 11:59 pm.
+
+| | |
+|---|---|
+| **09/14** | HW1 released — allow about 3 hours |
+| **09/16** | PEX1 released — practice for Examlet 1 |
+| **09/18** | Friday class is an async video, posted Thursday morning |
+| **09/20** | Lab Intro **due** · Lab Debug released |
+| **09/21** | HW1 **due** · PA1 released |
+
+Examlet 1 is next week, self-scheduled in ORCA for a session between Thursday
+09/24 and Sunday 09/27. It covers everything through week 2. Registration
+opens on PrairieTest — watch for the announcement.

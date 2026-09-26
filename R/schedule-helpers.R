@@ -49,71 +49,18 @@ course_variables <- function() {
   yaml::read_yaml(here::here("_variables.yml"))
 }
 
-# Recordings are the one resource with two of everything: each class day is
-# taught and recorded twice, once per section. Rather than splitting every
-# lecture cell in two, all of them point at the same gallery and students pick
-# the section they want.
+# Nothing on the schedule reveals itself on a date. A cell is live when, and
+# only when, there is a row for it in data/additional-resources.csv, because
+# the link is the signal that the thing exists -- and a calendar cannot know
+# whether a video got recorded or a lab got finished.
 #
-# The faded/live distinction is kept by asking the calendar instead of the CSV:
-# a class that has happened has a recording, so its icon goes live on its own.
-# A per-lecture row in additional-resources.csv still wins, for the occasional
-# day worth linking directly.
-recording_url <- function(id, class_date) {
-  gallery <- course_variables()$course$recordings
-  override <- lookup_url(id, "recording")
-
-  purrr::pmap_chr(
-    list(id, class_date, override),
-    \(this_id, this_date, this_override) {
-      if (is.na(this_id)) {
-        return(NA_character_)
-      }
-      if (!is.na(this_override)) {
-        return(this_override)
-      }
-      if (is.na(this_date) || this_date > lubridate::today()) {
-        return(NA_character_)
-      }
-      gallery
-    }
-  )
-}
-
-# Labs live on PrairieLearn, and are revealed one at a time rather than all at
-# once -- a student looking at the schedule in week 2 should see this week's
-# lab, not all ten.
+# Types used by the schedule, with the URL each row usually carries:
 #
-# PL addresses assessments by a numeric database id that exists nowhere in this
-# repo, so the link goes to the assessment list; the lab is at the top of it.
-# A row in additional-resources.csv wins, for a lab worth linking directly.
-#
-# The reveal follows PL's own pattern: a lab opens the weekend before the week
-# it belongs to, so the icon goes live on the Friday before. LAB_LEAD_DAYS is
-# the knob -- raise it to reveal labs earlier.
-LAB_LEAD_DAYS <- 3
-
-prairielearn_url <- function(id, week_starting) {
-  instance <- course_variables()$course$prairielearn
-  listing <- paste0(sub("/?$", "/", instance), "assessments")
-  override <- lookup_url(id, "prairielearn")
-
-  purrr::pmap_chr(
-    list(id, week_starting, override),
-    \(this_id, this_monday, this_override) {
-      if (is.na(this_id)) {
-        return(NA_character_)
-      }
-      if (!is.na(this_override)) {
-        return(this_override)
-      }
-      if (is.na(this_monday) ||
-          lubridate::today() < this_monday - LAB_LEAD_DAYS) {
-        return(NA_character_)
-      }
-      listing
-    }
-  )
-}
+#   <lecture-id>,recording,<canvas media gallery>     course.recordings
+#   <lab-id>,prairielearn,<PL assessment list>        course.prairielearn
+#   <HW/PA label>,prairielearn,<PL assessment list>
+#   <Examlet N>,pre-activity,<PrairieTest>            course.prairietest
+#   <Examlet N>,practice,<PL assessment list>
 
 # Slides are authored in this repo, so derive the link from the file itself:
 # the schedule links `lecture-07` to slides/lecture-07_slides.qmd when that
