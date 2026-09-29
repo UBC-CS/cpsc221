@@ -10,6 +10,7 @@ project:
   # to, and these are linked from slides as plain text, so name them here.
   resources:
     - slides/code/**
+    - slides/viz/**
 
 website:
   title: "{{< var course.full-title >}}"
