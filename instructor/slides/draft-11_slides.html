@@ -7,8 +7,6 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/quarto-contrib/countdown-0.6.0/countdown.js"></script>
-<link href="../site_libs/quarto-contrib/countdown-0.6.0/countdown.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
@@ -198,10 +196,10 @@
     }
   </style>
 <meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta property="og:description" content="Running Time">
+<meta property="og:description" content="Stacks">
 <meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:description" content="Running Time">
+<meta name="twitter:description" content="Stacks">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -210,7 +208,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Running Time</p>
+  <p class="subtitle">Stacks</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -220,30 +218,27 @@
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
 <ul>
-<li>HW1 is out — due Monday Sep 21</li>
-<li>Labs meet this week; Lab Intro is due Sunday</li>
-<li>PEX1 (practice for Examlet 1) releases Wednesday</li>
+<li><strong>PA1 is due tonight</strong>, 11:59 pm</li>
+<li>Examlet 3 is next week — book your seat on PrairieTest</li>
+<li>PEX3 is posted</li>
 </ul>
 <p><br>
 </p>
 <p><strong>Where we’re going</strong></p>
 <ul>
-<li>Finishing <em>how long does it take?</em></li>
-<li>Best, worst, average</li>
-<li>Asymptotics, reprised</li>
+<li>Stacks</li>
+<li>The Stack ADT</li>
+<li>Two implementations</li>
+<li>The Witch’s Potion Pantry</li>
 </ul>
 </section>
-<section id="where-we-stopped" class="slide level2 smaller">
-<h2>Where we stopped</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How long does it take?</p>
-<aside class="notes">
-<p>Thirty seconds. They named this function on Friday and got as far as the question. Do not re-open the naming discussion – point at it and move.</p>
+<section id="stacks" class="slide level2 smaller">
+<h2>Stacks</h2>
+
+<img data-src="images/lecture-11/stacks-collage.png" style="width:78.0%" class="r-stretch"><aside class="notes">
+<p>The spring-loaded plate dispenser (a real patent drawing): you only ever touch the top plate. That is the whole ADT.</p>
+<p>Then the call stack. Walk <code>main</code> → <code>studyHard</code> → <code>pas</code> → <code>plan</code>, and fill in the empty column as calls go on and come off. Every program they have ever run has used a stack.</p>
+<p>Two classic uses along the bottom, worth naming and leaving for later: balanced brackets, and evaluating postfix (<code>4 5 + 7 2 - * 3 - 6 /</code>).</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -256,29 +251,40 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="algorithmic-analysis-running-time" class="slide level2">
-<h2>Algorithmic analysis — running time</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How long does it take? <blue><em>It depends!</em> </blue></p>
-<p>What does it depend on?</p>
-<ul>
-<li></li>
-<li></li>
-<li></li>
-</ul>
+<section id="abstract-data-type" class="slide level2 smaller smallcode">
+<h2>Abstract Data Type:</h2>
+<div class="columns">
+<div class="column" style="width:62%;">
+<p><strong>Stack ADT:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Stack <span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    Stack<span class="op">();</span>  <span class="co">// ~Stack, cctor, op=?</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> empty<span class="op">()</span> <span class="at">const</span><span class="op">;</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> push<span class="op">(</span><span class="at">const</span> LIT <span class="op">&amp;</span> e<span class="op">);</span></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    LIT pop<span class="op">();</span></span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="co">//  ?</span></span>
+<span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:38%;">
+<pre><code>push(3)
+push(8)
+push(4)
+pop()
+pop()
+push(6)
+pop()
+push(2)
+pop()
+pop()</code></pre>
+</div></div>
+<p>Push 1, 2, 3 in order, with interleaved pops. What output is impossible?</p>
 <aside class="notes">
-<p>Blanks are for the pen. What the room should land on:</p>
-<ul>
-<li>the <strong>size</strong> of the array</li>
-<li><strong>where q is</strong> – or whether it is there at all</li>
-<li>the <strong>speed of the machine</strong></li>
-</ul>
-<p>The third one is the one to kill: we are not benchmarking, so machine speed has to go. That is what forces us to count operations instead of seconds – and the first two are what force us into cases.</p>
+<p>Trace the sequence on the right: the pops return <strong>4, 8, 6, 2, 3</strong>.</p>
+<p>The question at the bottom: pushing 1, 2, 3 in order, <strong>3 1 2</strong> is the only impossible output. Once 3 has come off, 2 is on top of 1, so 1 cannot come out before 2.</p>
+<p>The <code>private:</code> section is a question mark on purpose. The next two slides are two different answers to it.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -291,252 +297,53 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="algorithmic-analysis-running-time-1" class="slide level2 smaller">
-<h2>Algorithmic analysis — running time</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p>How many times does line 3 run if <span class="math inline">\(q\)</span> is 32? &nbsp; If <span class="math inline">\(q\)</span> is 45? &nbsp; If <span class="math inline">\(q\)</span> is 100?</p>
-<aside class="notes">
-<p>Concrete before abstract: 1 comparison, 16 comparisons, 16 comparisons. Use the array on screen – point at it with the pen.</p>
-<p>Then the abstraction: drop the clock, count the <em>operation that repeats</em>. Here that is the comparison on line 3.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="best-worst-average" class="slide level2 smaller">
-<h2>Best, worst, average</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>For an array of size <span class="math inline">\(n\)</span>:</p>
-<ul>
-<li>best case</li>
-<li>worst case</li>
-<li>average case</li>
-</ul>
-<aside class="notes">
-<p>Best: 1 – q is at index 0. Worst: n – q is last, or absent. Average: about n/2, and it is worth asking <em>average over what?</em> – you have to assume a distribution before “average” means anything. That assumption is where most average-case analysis quietly goes wrong.</p>
-<p>Which of the three do we usually report, and why? Worst case: it is a promise you can actually make.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="your-turn" class="slide level2 activity smaller">
-<h2>Your turn</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> findMin <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> temp <span class="op">=</span> arr<span class="op">[</span><span class="dv">0</span><span class="op">];</span></span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">&lt;</span> temp<span class="op">)</span></span>
-<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>            temp <span class="op">=</span> arr<span class="op">[</span>i<span class="op">];</span></span>
-<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> temp<span class="op">;</span></span>
-<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">45</td>
-</tr>
-</tbody>
-</table>
-<p>Best case</p>
-<p>Worst case</p>
-<countdown-timer id="timer_98ea87479b77e77a19b2a6709492e0c39d825d7b" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
- </countdown-timer>
-<aside class="notes">
-<p>The point of this one: <strong>there is no early return.</strong> Best and worst are the same – <span class="math inline">\(n-1\)</span> comparisons either way. The loop has to see every element to know it has the minimum.</p>
-<p>That is the contrast with <code>idxFirst</code>, where the cases genuinely differ. Some algorithms have cases; some don’t. Worth saying out loud.</p>
-<p>The array is rigged so the minimum is at index 0 – students who are pattern matching on <code>idxFirst</code> will call that the best case. It isn’t.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="examining-the-details" class="slide level2 smaller">
-<h2>Examining the details</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How many lines are executed in the worst case?</p>
-<p><span class="math inline">\(T(n) =\)</span></p>
-<p><br>
-</p>
-<p>Does the ___ matter?</p>
-<p>Does the ___ matter?</p>
-<aside class="notes">
-<p>Count it with them, line by line, with the pen. A defensible answer is <span class="math inline">\(T(n) = 2n + 2\)</span> – the loop test and the comparison each run about n times, plus the initialisation and the final return.</p>
-<p>Do not fight about the exact constant. Getting two different numbers from two students is the <em>setup</em> for the next question, not a problem.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="asymptotics-reprised" class="slide level2 smaller">
-<h2>Asymptotics, reprised</h2>
-<p><span class="math inline">\(T(n) = O(f(n))\)</span> if there are positive constants <span class="math inline">\(c\)</span> and <span class="math inline">\(n_0\)</span> such that</p>
-<p><span class="math display">\[T(n) \le c \cdot f(n) \quad \text{for all } n \ge n_0\]</span></p>
-<!-- Empty axes, to be drawn on with the pen: T(n), c*f(n), and n_0 where they
-     cross. Deliberately blank -- the picture is worth more built in front of
-     them than arriving finished. -->
-<!-- viewBox is ~3.3:1, matching the space left between the definition and the
-     closing line, so the axes fill the slide instead of floating in it. -->
-<svg viewbox="0 0 1100 330" style="width:100%; height:auto; display:block; margin:0;" role="img" aria-label="Empty coordinate axes for sketching T(n) against c f(n)">
-<defs> <marker id="ax-arrow" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"> <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"></path> </marker> </defs> <line x1="470" y1="278" x2="728" y2="278" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line> <line x1="470" y1="278" x2="470" y2="20" stroke="#1a1a1a" stroke-width="4" marker-end="url(#ax-arrow)"></line>
+<section id="stack-linked-memory-implementation" class="slide level2 smaller smallcode">
+<h2>Stack linked memory implementation:</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Stack <span class="op">{</span></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>    Stack<span class="op">();</span>  <span class="co">// ~Stack, cctor, op=?</span></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> empty<span class="op">()</span> <span class="at">const</span><span class="op">;</span></span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> push<span class="op">(</span><span class="at">const</span> LIT <span class="op">&amp;</span> e<span class="op">);</span></span>
+<span id="cb3-7"><a aria-hidden="true" tabindex="-1"></a>    LIT pop<span class="op">();</span></span>
+<span id="cb3-8"><a aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb3-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="kw">struct</span> Node <span class="op">{</span></span>
+<span id="cb3-10"><a aria-hidden="true" tabindex="-1"></a>        LIT data<span class="op">;</span></span>
+<span id="cb3-11"><a aria-hidden="true" tabindex="-1"></a>        Node <span class="op">*</span> next<span class="op">;</span></span>
+<span id="cb3-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">};</span></span>
+<span id="cb3-13"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*</span> top<span class="op">;</span></span>
+<span id="cb3-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> size<span class="op">;</span></span>
+<span id="cb3-15"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<svg class="nodefig" width="300" height="80">
+<text class="lbl" x="4" y="46" font-size="15">top</text> <path class="wire" d="M34 41 L 60 41"></path> <polygon points="70,41 58,35 58,47" fill="#1a1a1a"></polygon> <rect class="cell" x="72" y="18" width="40" height="46"></rect> <rect class="cell" x="112" y="18" width="22" height="46"></rect> <text class="val" x="92" y="48" font-size="20" text-anchor="middle">3</text> <circle cx="123" cy="41" r="4" fill="#1a1a1a"></circle> <path class="wire" d="M123 41 L 146 41"></path> <polygon points="156,41 144,35 144,47" fill="#1a1a1a"></polygon> <rect class="cell" x="158" y="18" width="40" height="46"></rect> <rect class="cell" x="198" y="18" width="22" height="46"></rect> <text class="val" x="178" y="48" font-size="20" text-anchor="middle">6</text> <circle cx="209" cy="41" r="4" fill="#1a1a1a"></circle> <path class="wire" d="M209 41 L 232 41"></path> <polygon points="242,41 230,35 230,47" fill="#1a1a1a"></polygon> <rect class="cell" x="244" y="18" width="40" height="46"></rect> <rect class="cell" x="284" y="18" width="14" height="46"></rect> <text class="val" x="264" y="48" font-size="20" text-anchor="middle">4</text> <line class="nullx" x1="286" y1="60" x2="296" y2="22"></line>
 </svg>
-<p>We typically use <span class="math inline">\(f(n)\)</span> to describe …</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>LIT Stack<span class="op">&lt;</span>LIT<span class="op">&gt;::</span>pop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Stack<span class="op">&lt;</span>LIT<span class="op">&gt;::</span>push<span class="op">(</span>LIT d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*</span> newN <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span>d<span class="op">);</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    newN<span class="op">-&gt;</span>next <span class="op">=</span> top<span class="op">;</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> newN<span class="op">;</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
 <aside class="notes">
-<p>Both quantifiers are load-bearing. c lets you ignore the machine; n_0 lets you ignore small inputs. Students who have seen this in 121 still tend to forget that n_0 exists, which is what makes them argue about small cases.</p>
+<p>The top of the stack is the <strong>front</strong> of the list. <code>push</code> is <code>insertAtFront</code> from lecture 9, almost word for word.</p>
+<p><code>pop</code>, filled in:</p>
+<pre><code>LIT retval = top-&gt;data;
+Node * old = top;
+top = top-&gt;next;
+delete old;
+size--;
+return retval;</code></pre>
+<p>Save the value <strong>before</strong> deleting the node. Both operations are <span class="math inline">\(\Theta(1)\)</span>: nothing is ever traversed.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -549,73 +356,45 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-reminder-page" class="slide level2 smaller">
-<h2>The reminder page</h2>
-<div class="shaded-table">
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>growth</th>
-<th>name</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(O(1)\)</span></td>
-<td>constant</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(O(\log n)\)</span></td>
-<td>logarithmic</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(O(\log^k n)\)</span></td>
-<td>poly-log</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(O(n)\)</span></td>
-<td>linear</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(O(n \log n)\)</span></td>
-<td>log-linear</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(O(n^{1+c})\)</span></td>
-<td>superlinear</td>
-<td><span class="math inline">\(c &gt; 0\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(O(n^2)\)</span></td>
-<td>quadratic</td>
-<td></td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(O(n^3)\)</span></td>
-<td>cubic</td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(O(n^k)\)</span></td>
-<td>polynomial</td>
-<td>“tractable”</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(O(c^n)\)</span></td>
-<td>exponential</td>
-<td>“intractable”</td>
-</tr>
-</tbody>
-</table>
-</div>
+<section id="stack-array-based-implementation" class="slide level2 smaller smallcode">
+<h2>Stack array based implementation:</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Stack <span class="op">{</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">public</span><span class="op">:</span></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>    Stack<span class="op">();</span>  <span class="co">// ~Stack, cctor, op=?</span></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> empty<span class="op">()</span> <span class="at">const</span><span class="op">;</span></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="dt">void</span> push<span class="op">(</span><span class="at">const</span> LIT <span class="op">&amp;</span> e<span class="op">);</span></span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>    LIT pop<span class="op">();</span></span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a><span class="kw">private</span><span class="op">:</span></span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>    vector<span class="op">&lt;</span>LIT<span class="op">&gt;</span> items<span class="op">;</span></span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a><span class="op">};</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:40%;">
+<svg class="nodefig" width="300" height="200">
+<line x1="40" y1="14" x2="92" y2="14" stroke="#1a1a1a" stroke-width="3"></line> <rect x="40" y="18" width="52" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <rect x="40" y="58" width="52" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <rect x="40" y="98" width="52" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <rect x="40" y="138" width="52" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="66" y="45" font-size="20" text-anchor="middle">3</text> <text class="val" x="66" y="85" font-size="20" text-anchor="middle">6</text> <text class="val" x="66" y="125" font-size="20" text-anchor="middle">8</text> <path class="wire" d="M140 118 L 102 118"></path> <polygon points="94,118 106,112 106,124" fill="#1a1a1a"></polygon> <text class="lbl" x="146" y="116" font-size="14">_______ of stack</text> <text class="val" x="146" y="140" font-size="14">items[_______]</text>
+</svg>
+</div></div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>LIT Stack<span class="op">&lt;</span>LIT<span class="op">&gt;::</span>pop<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a>    LIT retval <span class="op">=</span> items<span class="op">[</span>_____<span class="op">];</span></span>
+<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a>    items<span class="op">.</span>pop_back<span class="op">();</span></span>
+<span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> retval<span class="op">;</span></span>
+<span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> LIT<span class="op">&gt;</span></span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> Stack<span class="op">&lt;</span>LIT<span class="op">&gt;::</span>push<span class="op">(</span>LIT d<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>    items<span class="op">.</span>push_back<span class="op">(</span>d<span class="op">);</span></span>
+<span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
 <aside class="notes">
-<p>Point back at Friday’s running-times table – the tractable/intractable line is exactly where <span class="math inline">\(2^n\)</span> ran past the age of the universe.</p>
+<p>The top of the stack is the <strong>back</strong> of the vector. The blanks are <strong>top</strong> and <strong>items.size()-1</strong>.</p>
+<p><code>pop</code> is <span class="math inline">\(\Theta(1)\)</span>. <code>push</code> is <span class="math inline">\(\Theta(1)\)</span> as long as there is room, and “what happens when the array fills?” is the question that opens next time’s array resizing.</p>
+<p>The two implementations have the same interface and very different insides. That is the ADT point from the last slide, made concrete.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -628,17 +407,12 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="runtime-analysis-guidelines" class="slide level2 smaller">
-<h2>Runtime analysis guidelines</h2>
-<ul>
-<li>Single operations — <strong>constant</strong> time</li>
-<li>Consecutive operations — <strong>additive</strong></li>
-<li>Conditionals — constant for the test, plus the branch taken</li>
-<li>Loops — <strong>sum of the loop body</strong> times</li>
-<li>Function call — the time for that function</li>
-</ul>
+<section id="get-ready" class="slide level2 activity">
+<h2>Get ready</h2>
+<p><strong>Open PrairieLearn now:</strong> Class Activities → <em>The Witch’s Potion Pantry</em></p>
+<p>Click <strong>Open workspace</strong> — it takes a minute to start, so let it load while you watch the story.</p>
 <aside class="notes">
-<p>These are the rules they will use on every homework this term. Nothing here is surprising; the value is having them written down in one place.</p>
+<p>Doing this before the story matters. A whole section launching workspaces in the same minute is the slowest part of the activity, and the first launch has to pull the C++ image.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -651,21 +425,32 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="back-to-where-we-started" class="slide level2 smaller">
-<h2>Back to where we started</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>In the worst case, <span class="math inline">\(T(n) =\)</span></p>
-<p><br>
-</p>
-<p>Which should we use to describe it? &nbsp; <span class="math inline">\(o \quad O \quad \omega \quad \Omega \quad \theta \quad \Theta\)</span></p>
+<section id="section" class="slide level2" data-background-iframe="viz/potion_pantry_story.html" data-background-interactive="true">
+<h2></h2>
 <aside class="notes">
-<p>Worst case is <span class="math inline">\(\Theta(n)\)</span> – and the interesting part is <em>why not O(n)</em>. O is an upper bound and is true but weak: <span class="math inline">\(O(n^2)\)</span> is also a correct statement about this function. Theta is the one that says what you actually mean.</p>
-<p>This is the distinction that gets tested, and it is the one students most reliably fudge.</p>
+<p>Click into the story to give it focus, then → or Enter to advance. <code>?step=N</code> in the iframe URL jumps to scene N if you need to resume.</p>
+<p>The two halves are the two parts of the puzzle: the ghost carries <strong>one jar at a time</strong> (Part 1), the witch lifts <strong>the whole group at once</strong> (Part 2). Point at shelf 3 at the end of each half — K R <strong>B W</strong> versus K R <strong>W B</strong>. Same moves, the pair swaps order.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="your-turn" class="slide level2 activity">
+<h2>Your Turn</h2>
+<p>Every one of you has your own pantry and your own recipe.</p>
+<p>In <code>potions.cpp</code>, write <code>part1</code> and <code>part2</code> — using only <code>std::stack</code>.</p>
+<p><code>make example</code> should print <strong>CMZ</strong> and <strong>MCD</strong>. Then <code>make input</code> reveals your words.</p>
+<aside class="notes">
+<p><code>std::stack</code> splits our <code>pop</code> in two: <code>top()</code> reads the top item, and <code>pop()</code> removes it and returns nothing. Worth saying before they start, or the first ten minutes are compile errors.</p>
+<p>Part 1 is a direct translation. Part 2 is the point: a stack will not lift a block and set it down in order. The move is a second, temporary stack — pop the group into it, which reverses it, then pop it onto the destination, which reverses it back. Let them find it.</p>
+<p>Full credit 2:00–3:59 today (both sections); open afterwards for practice at zero credit.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;

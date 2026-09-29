@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Witch's Potion Pantry</title>
+  <!--
+    Story book for lecture 11's class activity. A Halloween port of DSCI 221's
+    Candy Hearts Factory story (dsci221/slides/viz/candy_hearts_story.html).
+
+    Three shelves, three moves. The ghost carries jars one at a time and the
+    tops spell EWW; the witch levitates each group at once and they spell WEB.
+    Letters were solved for, not hand-picked, so both words come out:
+
+        start (bottom -> top):  shelf 1 [W B]  shelf 2 [W E]  shelf 3 [K R]
+        move 2 from 1 to 3 / move 2 from 2 to 1 / move 1 from 1 to 2
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Fredoka:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Fredoka', sans-serif;
+      background: linear-gradient(135deg, #1b1030 0%, #0d0a18 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .title {
+      font-family: 'Creepster', cursive;
+      font-size: 40px;
+      color: #ff8c1a;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px rgba(255, 140, 26, 0.45), 2px 2px 4px rgba(0,0,0,0.5);
+      margin-bottom: 2px;
+    }
+    .subtitle {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 20px;
+      color: #b8e986;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+    .controls {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    button {
+      padding: 9px 24px;
+      font-size: 18px;
+      font-family: 'Fredoka', sans-serif;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .step-btn {
+      background: linear-gradient(135deg, #ff8c1a 0%, #e0650a 100%);
+      color: #1b1030;
+      box-shadow: 0 4px 15px rgba(255, 140, 26, 0.4);
+    }
+    .step-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 140, 26, 0.55); }
+    .reset-btn { background: linear-gradient(135deg, #5b4a78 0%, #463a5e 100%); color: white; }
+    .reset-btn:hover { transform: translateY(-2px); }
+    #canvas-container {
+      background: rgba(27, 16, 48, 0.85);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+    }
+    .hint {
+      font-family: 'Patrick Hand', cursive;
+      font-size: 14px;
+      color: #7d6b9a;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">The Witch's Potion Pantry</div>
+  <div class="subtitle">A tale of jars, stacks, and one very clumsy ghost...</div>
+  <div class="controls">
+    <button class="step-btn" id="stepBtn">Next →</button>
+    <button class="reset-btn" id="resetBtn">Restart</button>
+  </div>
+  <div id="canvas-container"></div>
+  <div class="hint">Press → to advance, R to restart</div>
+
+  <script>
+    const W = 700, H = 480;
+    let storyStep = 0;
+
+    let animating = false;
+    let animationProgress = 0;
+    let movingJars = [];
+    let mover = null;            // "ghost" or "witch" -- who is carrying
+
+    let stacks = [];
+
+    // Potion colours by label letter
+    const colors = {
+      'W': '#8e44ad',   // violet
+      'B': '#27ae60',   // green
+      'E': '#e67e22',   // orange
+      'K': '#c0392b',   // red
+      'R': '#2980b9',   // blue
+    };
+
+    const story = [
+      { text: "It was All Hallows' Eve...",
+        subtext: "...and you were the witch's apprentice, minding the potion pantry alone.",
+        action: "show_pantry" },
+      { text: "A ghost drifted through the wall.",
+        subtext: "\"The witch left a recipe,\" it moaned. \"The jars will spell the secret ingredient!\"",
+        action: "show_pantry" },
+      { text: "\"Follow the recipe exactly,\" said the ghost.",
+        subtext: "\"Move the jars, then read the labels on top.\"",
+        action: "show_pantry" },
+      { text: "You look at the pantry shelves...",
+        subtext: "Three stacks of potion jars, each with a letter on its label.",
+        action: "reset" },
+
+      // Part 1 -- the ghost, one jar at a time
+      { text: "The recipe says:", subtext: "\"Move 2 jars from shelf 1 to shelf 3.\"", action: "none" },
+      { text: "The ghost grabs the top jar...", subtext: "Carrying B to shelf 3",
+        action: "move_one", from: 0, to: 2 },
+      { text: "...then the next one.", subtext: "Carrying W to shelf 3",
+        action: "move_one", from: 0, to: 2 },
+      { text: "Next:", subtext: "\"Move 2 jars from shelf 2 to shelf 1.\"", action: "none" },
+      { text: "One jar...", subtext: "Carrying E to shelf 1",
+        action: "move_one", from: 1, to: 0 },
+      { text: "...and another.", subtext: "Carrying W to shelf 1",
+        action: "move_one", from: 1, to: 0 },
+      { text: "Last:", subtext: "\"Move 1 jar from shelf 1 to shelf 2.\"", action: "none" },
+      { text: "Easy enough!", subtext: "Carrying W to shelf 2",
+        action: "move_one", from: 0, to: 1 },
+      { text: "\"Now read the top jars!\"", subtext: "E... W... W...",
+        action: "highlight_tops" },
+      { text: "EWW?!", subtext: "That's not an ingredient. That's what you say ABOUT the ingredients!",
+        action: "show_result", result: "EWW", resultColor: '#9ccc3c' },
+
+      // Part 2 -- the witch, the whole group at once
+      { text: "The witch swoops in on her broom.",
+        subtext: "\"Did you let the ghost carry them ONE AT A TIME?\"", action: "none" },
+      { text: "The witch sighs.",
+        subtext: "\"Ghosts can only carry one jar. I levitate the whole group at once!\"", action: "none" },
+      { text: "The witch puts every jar back.",
+        subtext: "\"Watch closely.\"", action: "reset" },
+      { text: "\"Move 2 from shelf 1 to shelf 3!\"",
+        subtext: "W and B float over together, in the same order.",
+        action: "move_together", from: 0, to: 2, count: 2 },
+      { text: "\"Move 2 from shelf 2 to shelf 1!\"",
+        subtext: "W and E, still in order.",
+        action: "move_together", from: 1, to: 0, count: 2 },
+      { text: "\"Move 1 from shelf 1 to shelf 2.\"",
+        subtext: "Just the top jar: E",
+        action: "move_together", from: 0, to: 1, count: 1 },
+      { text: "Moment of truth... read the tops!", subtext: "W... E... B...",
+        action: "highlight_tops" },
+      { text: "WEB!", subtext: "\"Spider web -- the secret ingredient!\" cackles the witch.",
+        action: "show_result", result: "WEB", resultColor: '#ff8c1a' },
+      { text: "The End",
+        subtext: "Happy Halloween! Now go stack up YOUR potion pantry...",
+        action: "show_result", result: "🎃", resultColor: '#ff8c1a' },
+    ];
+
+    function resetStacks() {
+      const jar = (l) => ({ letter: l, color: colors[l] });
+      stacks = [
+        [jar('W'), jar('B')],
+        [jar('W'), jar('E')],
+        [jar('K'), jar('R')],
+      ];
+      movingJars = [];
+      animating = false;
+      mover = null;
+    }
+
+    function getStackX(i) { return 150 + i * 200; }
+    function getJarY(h)   { return 282 - h * 50; }
+
+    function executeAction(step) {
+      const a = story[step];
+      if (a.action === "reset") {
+        resetStacks();
+      } else if (a.action === "move_one") {
+        const from = stacks[a.from];
+        if (from.length > 0) {
+          const jar = from.pop();
+          movingJars = [{
+            jar, toStack: a.to,
+            fromX: getStackX(a.from), fromY: getJarY(from.length),
+            toX: getStackX(a.to),     toY: getJarY(stacks[a.to].length),
+          }];
+          mover = "ghost";
+          animating = true;
+          animationProgress = 0;
+        }
+      } else if (a.action === "move_together") {
+        const from = stacks[a.from];
+        const group = [];
+        for (let i = 0; i < a.count && from.length > 0; i++) group.unshift(from.pop());
+        movingJars = group.map((jar, i) => ({
+          jar, toStack: a.to,
+          fromX: getStackX(a.from), fromY: getJarY(from.length + i),
+          toX: getStackX(a.to),     toY: getJarY(stacks[a.to].length + i),
+        }));
+        mover = "witch";
+        animating = true;
+        animationProgress = 0;
+      }
+    }
+
+    function finishAnimation() {
+      for (const m of movingJars) stacks[m.toStack].push(m.jar);
+      movingJars = [];
+      animating = false;
+      mover = null;
+    }
+
+    function nextStep() {
+      if (animating) { finishAnimation(); return; }
+      if (storyStep < story.length - 1) {
+        storyStep++;
+        executeAction(storyStep);
+      }
+    }
+
+    function restart() { storyStep = 0; resetStacks(); }
+
+    const sketch = (p) => {
+      p.setup = () => {
+        p.createCanvas(W, H);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textFont('Fredoka');
+        resetStacks();
+        fastForward();          // must run after resetStacks, i.e. here
+      };
+
+      p.draw = () => {
+        const step = story[storyStep];
+
+        if (step.action === "show_pantry") {
+          drawPantryScene(p);
+          p.noStroke();
+          p.fill(0, 0, 0, 150);
+          p.rect(0, 0, W, 92);
+          p.fill(255);
+          p.textSize(26); p.textStyle(p.BOLD);
+          p.text(step.text, W / 2, 34);
+          p.textSize(17); p.textStyle(p.ITALIC); p.fill('#b8e986');
+          p.text(step.subtext, W / 2, 66);
+          p.textStyle(p.NORMAL);
+          drawStepCount(p);
+          return;
+        }
+
+        drawNightBackground(p);
+
+        if (step.action === "show_result") {
+          p.fill(step.resultColor);
+          p.textFont('Creepster');
+          p.textSize(step.result.length > 2 ? 150 : 130);
+          p.text(step.result, W / 2, 180);
+          p.textFont('Fredoka');
+          if (step.result !== "EWW") drawBats(p, 1);
+          else drawDrips(p);
+          drawCaption(p, step);
+          drawStepCount(p);
+          return;
+        }
+
+        // shelves
+        for (let i = 0; i < 3; i++) {
+          const x = getStackX(i);
+          p.noStroke();
+          p.fill('#5d3a1a');                     // plank
+          p.rect(x - 62, 306, 124, 12, 3);
+          p.fill('#3e2610');                     // brackets
+          p.rect(x - 52, 318, 8, 14, 2);
+          p.rect(x + 44, 318, 8, 14, 2);
+          p.fill('#a893c9');
+          p.textSize(16); p.textStyle(p.BOLD);
+          p.text(`Shelf ${i + 1}`, x, 346);
+          p.textStyle(p.NORMAL);
+        }
+
+        // stacks
+        for (let s = 0; s < 3; s++) {
+          for (let h = 0; h < stacks[s].length; h++) {
+            const top = h === stacks[s].length - 1;
+            drawJar(p, getStackX(s), getJarY(h), stacks[s][h],
+                    step.action === "highlight_tops" && top);
+          }
+        }
+
+        // jars in flight
+        if (animating) {
+          animationProgress += (mover === "ghost" ? 0.022 : 0.018);
+          if (animationProgress >= 1) {
+            finishAnimation();
+          } else {
+            const t = animationProgress;
+            for (const m of movingJars) {
+              const midY = Math.min(m.fromY, m.toY) - 80;
+              let x, y;
+              if (t < 0.33)      { x = m.fromX; y = p.lerp(m.fromY, midY, ease(t / 0.33)); }
+              else if (t < 0.66) { x = p.lerp(m.fromX, m.toX, ease((t - 0.33) / 0.33)); y = midY; }
+              else               { x = m.toX;   y = p.lerp(midY, m.toY, ease((t - 0.66) / 0.34)); }
+              if (mover === "witch") drawLevitation(p, x, y);
+              drawJar(p, x, y, m.jar, true);
+              if (mover === "ghost") drawGhost(p, x, y - 52, 0.55);
+            }
+          }
+        }
+
+        drawCaption(p, step);
+        drawStepCount(p);
+      };
+
+      function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+
+      function drawCaption(p, step) {
+        p.noStroke();
+        p.fill(255);
+        p.textSize(24); p.textStyle(p.BOLD);
+        p.text(step.text, W / 2, 392);
+        if (step.subtext) {
+          p.textSize(16); p.textStyle(p.ITALIC); p.fill('#b8e986');
+          p.text(step.subtext, W / 2, 422);
+        }
+        p.textStyle(p.NORMAL);
+      }
+
+      function drawStepCount(p) {
+        p.noStroke(); p.fill('#6d5a8a'); p.textSize(12);
+        p.text(`${storyStep + 1} / ${story.length}`, W / 2, 460);
+      }
+
+      function drawNightBackground(p) {
+        p.background('#1b1030');
+        p.noStroke();
+        p.fill(255, 255, 255, 70);                  // a few stars
+        for (let i = 0; i < 24; i++) {
+          const x = (i * 97) % W, y = (i * 53) % 150 + 8;
+          p.circle(x, y, 1.5 + (i % 3));
+        }
+      }
+
+      function drawJar(p, x, y, jar, glow) {
+        p.push();
+        if (glow) {
+          p.noStroke();
+          p.fill(255, 170, 60, 70);
+          p.rect(x - 32, y - 28, 64, 56, 14);
+        }
+        // cork and neck
+        p.noStroke();
+        p.fill('#c8a06a');
+        p.rect(x - 9, y - 26, 18, 8, 2);
+        p.fill(220, 230, 240, 110);
+        p.rect(x - 11, y - 19, 22, 8, 2);
+        // body
+        p.stroke(glow ? '#ffb347' : 'rgba(230,230,250,0.55)');
+        p.strokeWeight(glow ? 3 : 2);
+        p.fill(220, 230, 240, 60);
+        p.rect(x - 24, y - 12, 48, 36, 10);
+        // liquid
+        p.noStroke();
+        p.fill(jar.color);
+        p.rect(x - 22, y - 2, 44, 24, 0, 0, 8, 8);
+        // label
+        p.fill('#f5ecd7');
+        p.rect(x - 14, y - 9, 28, 22, 3);
+        p.fill('#2b1a3d');
+        p.textSize(19); p.textStyle(p.BOLD);
+        p.text(jar.letter, x, y + 2);
+        p.textStyle(p.NORMAL);
+        p.pop();
+      }
+
+      function drawGhost(p, x, y, s) {
+        p.push();
+        p.translate(x, y + Math.sin(p.millis() / 200) * 3);
+        p.scale(s);
+        p.noStroke();
+        p.fill(245, 245, 255, 235);
+        p.arc(0, 0, 70, 80, p.PI, 0);
+        p.rect(-35, 0, 70, 34);
+        for (let i = 0; i < 4; i++) p.circle(-26 + i * 17.3, 34, 18);
+        p.fill('#1b1030');
+        p.ellipse(-12, -6, 10, 14);
+        p.ellipse(12, -6, 10, 14);
+        p.ellipse(0, 12, 12, 10);
+        p.pop();
+      }
+
+      function drawLevitation(p, x, y) {
+        const t = p.millis() / 250;
+        p.noStroke();
+        for (let i = 0; i < 6; i++) {
+          const a = t + i * p.TWO_PI / 6;
+          p.fill(190, 120, 255, 170);
+          p.circle(x + Math.cos(a) * 34, y + Math.sin(a) * 22, 5);
+        }
+      }
+
+      function drawBats(p, scale) {
+        const t = p.millis() / 1000;
+        p.noStroke();
+        p.fill(20, 10, 30);
+        for (let i = 0; i < 6; i++) {
+          const a = (i / 6) * p.TWO_PI + t * 0.7;
+          const bx = W / 2 + Math.cos(a) * 190;
+          const by = 180 + Math.sin(a) * 95;
+          const flap = Math.sin(t * 10 + i) * 6;
+          p.push(); p.translate(bx, by); p.scale(scale);
+          p.fill(90, 60, 130);
+          p.triangle(-16, -flap, 0, 4, -4, -2);
+          p.triangle(16, -flap, 0, 4, 4, -2);
+          p.circle(0, 0, 9);
+          p.pop();
+        }
+      }
+
+      function drawDrips(p) {
+        const t = p.millis() / 1000;
+        p.noStroke();
+        p.fill(156, 204, 60, 190);
+        for (let i = 0; i < 7; i++) {
+          const x = 205 + i * 48;
+          const len = 18 + ((t * 30 + i * 13) % 50);
+          p.rect(x, 250, 8, len, 4);
+          p.circle(x + 4, 250 + len, 12);
+        }
+      }
+
+      function drawPantryScene(p) {
+        drawNightBackground(p);
+        // window with full moon
+        p.noStroke();
+        p.fill('#2e1f4a');
+        p.rect(470, 120, 170, 180, 80, 80, 6, 6);
+        p.fill('#f7e9b0');
+        p.circle(555, 190, 90);
+        p.fill('#e8d898');
+        p.circle(540, 178, 14); p.circle(570, 205, 10);
+        p.stroke('#1b1030'); p.strokeWeight(6);
+        p.line(555, 120, 555, 300); p.line(470, 210, 640, 210);
+        p.noStroke();
+        drawBats(p, 0.8);
+        // pantry shelves silhouette
+        const palette = ['#8e44ad', '#27ae60', '#e67e22', '#c0392b', '#2980b9'];
+        for (let r = 0; r < 3; r++) {
+          p.fill('#4a2c12');
+          p.rect(40, 170 + r * 80, 330, 10, 2);
+          for (let j = 0; j < 6; j++) {
+            p.fill(palette[(r * 2 + j) % 5]);
+            p.rect(56 + j * 52, 140 + r * 80, 28, 30, 6);
+            p.fill('#c8a06a');
+            p.rect(62 + j * 52, 132 + r * 80, 16, 8, 2);
+          }
+        }
+        // cauldron with bubbles
+        const t = p.millis() / 1000;
+        p.fill('#39ff88');
+        for (let i = 0; i < 5; i++) {
+          const by = 400 - ((t * 40 + i * 22) % 70);
+          p.fill(57, 255, 136, 160);
+          p.circle(440 + i * 16, by, 8 + (i % 2) * 4);
+        }
+        p.fill('#1a1a1a');
+        p.arc(480, 410, 150, 110, 0, p.PI);
+        p.rect(400, 395, 160, 16, 8);
+        p.fill(57, 255, 136, 120);
+        p.ellipse(480, 398, 140, 14);
+        // the ghost, on steps 2 and 3
+        if (storyStep >= 1) drawGhost(p, 300, 330 + Math.sin(t * 2) * 6, 0.9);
+      }
+    };
+
+    new p5(sketch, 'canvas-container');
+
+    // ?step=N opens the story at scene N (1-based), with all earlier moves
+    // already made -- for resuming mid-story, or checking a single scene.
+    // Called from p.setup, because setup resets the shelves.
+    function fastForward() {
+      const params = new URLSearchParams(location.search);
+      const startAt = parseInt(params.get('step'), 10);
+      if (!(startAt > 1)) return;
+      while (storyStep < Math.min(startAt, story.length) - 1) {
+        storyStep++;
+        executeAction(storyStep);
+        // &play=1 leaves the final move in flight, to watch it animate
+        const last = storyStep === Math.min(startAt, story.length) - 1;
+        if (animating && !(last && params.get('play'))) finishAnimation();
+      }
+    }
+
+    document.getElementById('stepBtn').addEventListener('click', nextStep);
+    document.getElementById('resetBtn').addEventListener('click', restart);
+
+    // Keyboard (space is left alone -- Reveal.js uses it)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'Enter') { nextStep(); e.stopPropagation(); }
+      else if (e.key === 'r' || e.key === 'R')          { restart();  e.stopPropagation(); }
+    });
+  </script>
+</body>
+</html>
