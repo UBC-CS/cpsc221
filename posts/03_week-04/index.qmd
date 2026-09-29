@@ -1,0 +1,27 @@
+---
+title: "Week 4 — Sep 28 to Oct 4"
+description: "Examlet 2 week. No class Wednesday. Lab 3 open, PEX3 Wednesday, PA1 due Monday."
+author: "{{< var instructor.name >}}"
+date: 2026-09-28
+categories:
+  - deadline
+  - examlet
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **09/30** | **No class** — National Day for Truth and Reconciliation · PEX3 released |
+| **10/01 – 10/04** | **Examlet 2** — self-scheduled in ORCA |
+| **10/04** | Lab 3 (Linked Lists) **due** |
+| **10/05** | PA1 **due** |
+
+\
+
+**PEX2 has grown.** It now includes pointer puzzles and new sorting questions,
+and most of them regenerate with **New variant**, so you can keep practising.
+
+**PA1 Gallery.** The zero-point Gallery question in the PA1 assessment is your
+chance to build a transformation of your own. There are prizes, and winners go
+up on this site.

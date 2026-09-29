@@ -16,8 +16,62 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 | Canvas | <https://canvas.ubc.ca/courses/190808> |
 | Recordings | Canvas → Media Gallery (both sections, by date) |
 | Class | MWF, FSC 1005 — 101 at 2:00, 102 at 3:00. Fri is async video from week 2 |
-| Office hours | Cinda: Tue 2–4. Nathan: Mon 4–5. |
+| Office hours | Cinda: Tue 10:30–11:30, ICCS 233. Nathan: Mon 4–5, ICCS X465. |
 | Admin / accommodations | cpsc221-admin@cs.ubc.ca (Anca Barbu) |
+
+---
+
+## Week 4 — Mon Sep 28 to Sun Oct 4
+
+*Draft. Lab 3, PEX3 and PA1 dates checked against PrairieLearn. The Examlet 2
+window in item 1 is assumed from Examlet 1's pattern — confirm in ORCA.*
+
+---
+
+Hi everyone,
+
+Welcome to week 4! I hope you had a great weekend, working
+on your todo **lists** and making **links** with the humans
+around you.
+
+The tidbits:
+
+1. **Examlet 2 is this week**, self-scheduled in ORCA for a session between Thu 10/1, and Sun 10/5. 
+
+2. **No class Wednesday (9/30)** — it's the National Day for Truth and Reconciliation. I hope you'll take time in the day to go for a coffee with your classmates! 
+
+3. **PA1 is due Monday 10/05, 11:59p.** If you'd like
+to build an artistic transformation of your own, have a look at the (zero-point!) **Gallery** question in the PA1 assessment. Nathan and I will pick favourites, there are prizes, and winners go up on the course website.
+
+4. **Lab 3 (Linked Lists) is open now**, due Sunday 10/04.
+
+5. **PEX2 has grown.** Since it came out we've added a set of pointer puzzles and some new sorting questions. Most of them give you a fresh version every time you click "New variant", so you can practise as long as
+you like. **PEX3** comes out Wednesday evening, 9/30.
+
+As always, email us (cheeren@cs.ubc.ca, or nharms@cs.ubc.ca) or post on Piazza
+(https://piazza.com/ubc.ca/winterterm12026/cpsc221), and the website is
+https://ubc-cs.github.io/cpsc221.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+⚠ **Before sending**
+
+1. **Examlet window** — Thu 10/01 to Sun 10/04 is carried over from Examlet 1's
+   Thursday-to-Sunday pattern, not read from anywhere. Confirm in ORCA.
+   PrairieLearn also has a separate password-protected sitting on **Fri 10/02,
+   13:00–14:35**. The email leaves it out; mention it if it's for everyone
+   rather than accommodations.
+2. **Wednesday 9/30** — confirm UBC is closed for the National Day for Truth and
+   Reconciliation. The schedule has no Wednesday lecture this week, which fits.
+3. **Coverage** — Examlet 2 includes linked-list modification and runtime
+   questions. Monday's lecture and Lab 3 cover those before the window opens;
+   Friday's List ADT video lands during it.
+4. **TA names** — still not in any email.
+
+After it goes out, the facts go up as `posts/03_week-04/`.
 
 ---
 
