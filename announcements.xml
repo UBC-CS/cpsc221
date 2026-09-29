@@ -11,7 +11,55 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 21 Sep 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 28 Sep 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 4 — Sep 28 to Oct 4</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/03_week-04/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>09/30</strong></td>
+<td><strong>No class</strong> — National Day for Truth and Reconciliation · PEX3 released</td>
+</tr>
+<tr class="even">
+<td><strong>10/01 – 10/04</strong></td>
+<td><strong>Examlet 2</strong> — self-scheduled in ORCA</td>
+</tr>
+<tr class="odd">
+<td><strong>10/04</strong></td>
+<td>Lab 3 (Linked Lists) <strong>due</strong></td>
+</tr>
+<tr class="even">
+<td><strong>10/05</strong></td>
+<td>PA1 <strong>due</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<p><strong>PEX2 has grown.</strong> It now includes pointer puzzles and new sorting questions, and most of them regenerate with <strong>New variant</strong>, so you can keep practising.</p>
+<p><strong>PA1 Gallery.</strong> The zero-point Gallery question in the PA1 assessment is your chance to build a transformation of your own. There are prizes, and winners go up on this site.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/03_week-04/</guid>
+  <pubDate>Mon, 28 Sep 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 3 — Sep 21 to Sep 27</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
