@@ -33,6 +33,8 @@ read_additional_resources <- function() {
 }
 
 # Look up a URL for a given (id, type); NA when it isn't published yet.
+# Several rows for the same (id, type) -- two videos for one lecture, say --
+# come back space-separated, and resource_cell draws one icon per URL.
 lookup_url <- function(id, type) {
   additional <- read_additional_resources()
   purrr::map_chr(id, \(this_id) {
@@ -41,7 +43,7 @@ lookup_url <- function(id, type) {
     }
     match <- additional |>
       dplyr::filter(id == this_id, type == .env$type)
-    if (nrow(match) == 0) NA_character_ else match$resource[[1]]
+    if (nrow(match) == 0) NA_character_ else paste(match$resource, collapse = " ")
   })
 }
 
@@ -99,9 +101,12 @@ resource_cell <- function(anchor, url, icon, label) {
           "</span>"
         )))
       }
-      as.character(glue::glue(
-        '<a href="{this_url}" title="{label}">{fontawesome::fa(icon)}</a>'
-      ))
+      urls <- strsplit(this_url, " ", fixed = TRUE)[[1]]
+      titles <- if (length(urls) > 1) paste(label, seq_along(urls)) else label
+      paste(
+        glue::glue('<a href="{urls}" title="{titles}">{fontawesome::fa(icon)}</a>'),
+        collapse = " "
+      )
     }
   )
 }
