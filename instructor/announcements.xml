@@ -11,7 +11,64 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Mon, 28 Sep 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 05 Oct 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 5 — Oct 5 to Oct 11</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/04_week-05/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>10/05</strong></td>
+<td><strong>Class activity:</strong> The Witch’s Potion Pantry — bring a laptop · PA1 <strong>due</strong> · Homework Two released</td>
+</tr>
+<tr class="even">
+<td><strong>10/07</strong></td>
+<td>Examlet 2 questions visible</td>
+</tr>
+<tr class="odd">
+<td><strong>10/08 – 10/11</strong></td>
+<td><strong>Examlet 3</strong> — self-scheduled in PrairieTest; covers everything through Friday 10/02’s lesson</td>
+</tr>
+<tr class="even">
+<td><strong>10/11</strong></td>
+<td>Lab Quacks <strong>due</strong></td>
+</tr>
+<tr class="odd">
+<td><strong>10/12</strong></td>
+<td><strong>No class</strong> — Thanksgiving</td>
+</tr>
+<tr class="even">
+<td><strong>10/19</strong></td>
+<td>Homework Two <strong>due</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<p><strong>Examlet 2.</strong> The class average was 91%. One question (<code>selection_sort_analysis</code>) had errors in its answer key, so everyone has received full credit for it. Thank you to those who reported it.</p>
+<p><strong>PEX3</strong> is up, and now includes array resizing from Friday’s video.</p>
+<p><strong>Next week is quiet.</strong> The week of 10/12 has no labs, no class meetings, no examlets, no homework and no programming assignments — just two video lessons to watch.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/04_week-05/</guid>
+  <pubDate>Mon, 05 Oct 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 4 — Sep 28 to Oct 4</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
