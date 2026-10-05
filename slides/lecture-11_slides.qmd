@@ -7,15 +7,15 @@ subtitle: "Stacks"
 # Hearts Factory).
 #
 # Not carried: pages 2-5, which repeat lecture 10's List ADT slides, and pages
-# 10-13, array resizing -- the activity needs the time, so those are
-# earmarked for lecture 12.
+# 10-13, array resizing -- Nathan covered resizing on paper in Friday's
+# (lecture 10) video.
 ---
 ## Today {.smaller}
 
 **Announcements**
 
 - **PA1 is due tonight**, 11:59 pm
-- Examlet 3 is next week — book your seat on PrairieTest
+- Examlet 3 runs **Thursday to Sunday** — book your seat on PrairieTest
 - PEX3 is posted
 
 \
@@ -154,6 +154,7 @@ void Stack<LIT>::push(LIT d) {
     Node * newN = new Node(d);
     newN->next = top;
     top = newN;
+    size++;
 }
 ```
 :::
@@ -240,9 +241,9 @@ void Stack<LIT>::push(LIT d) {
 The top of the stack is the **back** of the vector. The blanks are
 **top** and **items.size()-1**.
 
-`pop` is $\Theta(1)$. `push` is $\Theta(1)$ as long as there is room, and
-"what happens when the array fills?" is the question that opens next time's
-array resizing.
+`pop` is $\Theta(1)$. `push` is $\Theta(1)$ as long as there is room. When
+the array fills, the vector resizes, which is Nathan's video from Friday:
+double the capacity and `push` is still $\Theta(1)$ on average.
 
 The two implementations have the same interface and very different insides.
 That is the ADT point from the last slide, made concrete.
@@ -261,7 +262,7 @@ the same minute is the slowest part of the activity, and the first launch
 has to pull the C++ image.
 :::
 
-## {background-iframe="viz/potion_pantry_story.html" background-interactive="true"}
+## {background-iframe="viz/potion_pantry_story.html?v=2" background-interactive="true"}
 
 ::: notes
 Click into the story to give it focus, then → or Enter to advance.
@@ -275,12 +276,14 @@ Same moves, the pair swaps order.
 
 ## Your Turn {.activity}
 
-Every one of you has your own pantry and your own recipe.
+Every one of you has your own pantry and your own recipe!
 
-In `potions.cpp`, write `part1` and `part2` — using only `std::stack`.
+- In `potions.cpp`, write `part1` and `part2` — using `std::stack`.
 
-`make example` should print **CMZ** and **MCD**. Then `make input` reveals
-your words.
+- `make example` should print **CMZ** and **MCD**. 
+
+- `make input` reveals your words! 
+
 
 ::: notes
 `std::stack` splits our `pop` in two: `top()` reads the top item, and
@@ -294,4 +297,22 @@ which reverses it back. Let them find it.
 
 Full credit 2:00–3:59 today (both sections); open afterwards for practice at
 zero credit.
+:::
+
+## Today, you built a data structure {.smaller}
+
+| | |
+|:-----|:-------------------------|
+| **Defined** | the Stack ADT: `push`, `pop`, `empty`. Last in, first out |
+| **Implemented** | two ways: linked list and vector |
+| **Analyzed** | `push` and `pop` are $\Theta(1)$ for linked list. For the vector, doubling on resize keeps the functions $\Theta(1)$ on average. |
+| **Applied** | Potion Pantry: use a stack to reverse the pile! |
+
+::: notes
+Point at the four verbs. That is the life cycle of every structure for the
+rest of the term: define the ADT, implement it, analyze it, use it.
+
+The Part 2 trick is worth one more sentence: popping a group into a
+temporary stack reverses it; popping it onto the destination reverses it
+back. Two reversals, original order.
 :::
