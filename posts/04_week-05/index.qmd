@@ -1,0 +1,32 @@
+---
+title: "Week 5 — Oct 5 to Oct 11"
+description: "Examlet 3 week. Potion Pantry in class Monday, PA1 due Monday, Homework Two out, Lab Quacks open. Thanksgiving next Monday."
+author: "{{< var instructor.name >}}"
+date: 2026-10-05
+categories:
+  - deadline
+  - examlet
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **10/05** | **Class activity:** The Witch's Potion Pantry — bring a laptop · PA1 **due** · Homework Two released |
+| **10/07** | Examlet 2 questions visible |
+| **10/08 – 10/11** | **Examlet 3** — self-scheduled in PrairieTest; covers everything through Friday 10/02's lesson |
+| **10/11** | Lab Quacks **due** |
+| **10/12** | **No class** — Thanksgiving |
+| **10/19** | Homework Two **due** |
+
+\
+
+**Examlet 2.** The class average was 91%. One question
+(`selection_sort_analysis`) had errors in its answer key, so everyone has
+received full credit for it. Thank you to those who reported it.
+
+**PEX3** is up, and now includes array resizing from Friday's video.
+
+**Next week is quiet.** The week of 10/12 has no labs, no class meetings, no
+examlets, no homework and no programming assignments — just two video lessons
+to watch.

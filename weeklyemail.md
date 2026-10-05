@@ -21,6 +21,68 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 5 — Mon Oct 5 to Sun Oct 11
+
+*Sent Sun Oct 4 (late). Text below is the draft plus Cinda's edits; the EX2
+average line was added in the mail client.*
+
+---
+
+Hi everyone,
+
+Welcome to week 5! We've spent two weeks making **lists**; this week we start
+**stacking** things up.
+
+The tidbits:
+
+1. **PA1 is due tonight, Monday 10/05, 11:59p.** Don't forget the (zero-point!)
+   **Gallery** question if you've made something beautiful.
+
+2. **Class activity today.** Monday's class is *The Witch's Potion Pantry*: a
+   short C++ puzzle you solve with stacks, in a PrairieLearn workspace. Bring a
+   laptop! 
+
+3. **Examlet 3 is this week**, self-scheduled in PrairieTest for a session
+   between **Thursday 10/08 and Sunday 10/11**. It covers all material through last Friday's lesson. Please book your
+   seat if you haven't already! **PEX3** (practice) is up, and now includes array
+   resizing from Friday's video.
+
+4. **Examlet 2:** one question (`selection_sort_analysis`) had errors in its
+   answer key, so **everyone has received full credit for it**. Thank you to
+   those of you who reported it. Examlet 2 questions become visible to you on
+   Wednesday 10/07. *(As sent, Cinda added: the Examlet 2 average was 91%.)*
+
+5. **Homework Two** comes out Monday, due **Monday 10/19, 11:59p**.
+
+6. **Lab Quacks** is open now, due **Sunday 10/11**.
+
+7. **Next Monday (10/12) is Thanksgiving** which marks the first of our two _quiet_ weeks in the course. There will be no labs, no class meetings, no examlets, no homework, no programming assignments. There will be two video lessons
+for you to watch!
+
+As always, email us (cheeren@cs.ubc.ca, or nharms@cs.ubc.ca) or post on Piazza
+(https://piazza.com/ubc.ca/winterterm12026/cpsc221), and the website is
+https://ubc-cs.github.io/cpsc221.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+⚠ **Before sending**
+
+1. **Examlet 3 coverage** — item 3 matches its current zones (linked lists only).
+   Array resizing is in PEX3 but *not* on Examlet 3 yet; the parked Array
+   Resizing zone can go back in before Wednesday night if you want it tested.
+   Adjust item 3 either way.
+2. **Potion Pantry credit** — 2:00–3:59 covers both sections. If 101 students
+   shouldn't be able to earn it during 102's hour, say so.
+3. **Friday 10/09** is an async video (lecture 13), as usual — not mentioned.
+4. **TA names** — still not in any email.
+
+After it goes out, the facts go up as `posts/04_week-05/`.
+
+---
+
 ## Week 4 — Mon Sep 28 to Sun Oct 4
 
 *Draft. Lab 3, PEX3 and PA1 dates checked against PrairieLearn. The Examlet 2
