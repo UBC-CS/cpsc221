@@ -14,6 +14,9 @@
 
         start (bottom -> top):  shelf 1 [W B]  shelf 2 [W E]  shelf 3 [K R]
         move 2 from 1 to 3 / move 2 from 2 to 1 / move 1 from 1 to 2
+
+    Written to be read aloud in three parts -- Narrator, Ghost, Witch. Every
+    caption line starts with its speaker's name, in that part's colour.
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +38,7 @@
     }
     .title {
       font-family: 'Creepster', cursive;
-      font-size: 40px;
+      font-size: clamp(40px, 6vh, 72px);
       color: #ff8c1a;
       letter-spacing: 2px;
       text-shadow: 0 0 12px rgba(255, 140, 26, 0.45), 2px 2px 4px rgba(0,0,0,0.5);
@@ -43,7 +46,7 @@
     }
     .subtitle {
       font-family: 'Patrick Hand', cursive;
-      font-size: 20px;
+      font-size: clamp(20px, 2.8vh, 34px);
       color: #b8e986;
       margin-bottom: 8px;
       font-style: italic;
@@ -55,8 +58,8 @@
       margin-bottom: 8px;
     }
     button {
-      padding: 9px 24px;
-      font-size: 18px;
+      padding: 0.45em 1.3em;
+      font-size: clamp(18px, 2.4vh, 28px);
       font-family: 'Fredoka', sans-serif;
       border: none;
       border-radius: 25px;
@@ -79,7 +82,7 @@
     }
     .hint {
       font-family: 'Patrick Hand', cursive;
-      font-size: 14px;
+      font-size: clamp(14px, 1.8vh, 22px);
       color: #7d6b9a;
       margin-top: 8px;
     }
@@ -105,6 +108,7 @@
     let mover = null;            // "ghost" or "witch" -- who is carrying
 
     let stacks = [];
+    let stepStartedAt = 0;        // ms, for the witch's entrance
 
     // Potion colours by label letter
     const colors = {
@@ -115,63 +119,74 @@
       'R': '#2980b9',   // blue
     };
 
+    // Three parts to read aloud: N = Narrator, G = Ghost, W = Witch.
+    // Each line is [speaker, words]. Ghost and Witch lines are exactly what
+    // that student says; the narrator carries everything else.
+    const N = "Narrator", G = "Ghost", Wi = "Witch";
     const story = [
-      { text: "It was All Hallows' Eve...",
-        subtext: "...and you were the witch's apprentice, minding the potion pantry alone.",
+      { lines: [[N, "It was All Hallows' Eve. You were the witch's apprentice, minding the potion pantry alone."]],
         action: "show_pantry" },
-      { text: "A ghost drifted through the wall.",
-        subtext: "\"The witch left a recipe,\" it moaned. \"The jars will spell the secret ingredient!\"",
+      { lines: [[N, "A ghost drifted through the wall."],
+                [G, "The witch left a recipe! The jars will spell the secret ingredient!"]],
         action: "show_pantry" },
-      { text: "\"Follow the recipe exactly,\" said the ghost.",
-        subtext: "\"Move the jars, then read the labels on top.\"",
+      { lines: [[G, "Follow the recipe exactly."],
+                [G, "Move the jars, then read the labels on top."]],
         action: "show_pantry" },
-      { text: "You look at the pantry shelves...",
-        subtext: "Three stacks of potion jars, each with a letter on its label.",
+      { lines: [[N, "Three shelves of potion jars, each with a letter on its label."]],
         action: "reset" },
 
       // Part 1 -- the ghost, one jar at a time
-      { text: "The recipe says:", subtext: "\"Move 2 jars from shelf 1 to shelf 3.\"", action: "none" },
-      { text: "The ghost grabs the top jar...", subtext: "Carrying B to shelf 3",
+      { cast: "ghost", lines: [[G, "The recipe says: move 2 jars from shelf 1 to shelf 3."]], action: "none" },
+      { cast: "ghost", lines: [[G, "I'll take the top jar. B goes to shelf 3..."]],
         action: "move_one", from: 0, to: 2 },
-      { text: "...then the next one.", subtext: "Carrying W to shelf 3",
+      { cast: "ghost", lines: [[G, "...and the next one. W goes to shelf 3."]],
         action: "move_one", from: 0, to: 2 },
-      { text: "Next:", subtext: "\"Move 2 jars from shelf 2 to shelf 1.\"", action: "none" },
-      { text: "One jar...", subtext: "Carrying E to shelf 1",
+      { cast: "ghost", lines: [[G, "Next: move 2 jars from shelf 2 to shelf 1."]], action: "none" },
+      { cast: "ghost", lines: [[G, "E goes to shelf 1..."]],
         action: "move_one", from: 1, to: 0 },
-      { text: "...and another.", subtext: "Carrying W to shelf 1",
+      { cast: "ghost", lines: [[G, "...and W goes to shelf 1."]],
         action: "move_one", from: 1, to: 0 },
-      { text: "Last:", subtext: "\"Move 1 jar from shelf 1 to shelf 2.\"", action: "none" },
-      { text: "Easy enough!", subtext: "Carrying W to shelf 2",
+      { cast: "ghost", lines: [[G, "Last: move 1 jar from shelf 1 to shelf 2."]], action: "none" },
+      { cast: "ghost", lines: [[G, "Easy! W goes to shelf 2."]],
         action: "move_one", from: 0, to: 1 },
-      { text: "\"Now read the top jars!\"", subtext: "E... W... W...",
+      { cast: "ghost", lines: [[G, "Now read the tops: E... W... W..."]],
         action: "highlight_tops" },
-      { text: "EWW?!", subtext: "That's not an ingredient. That's what you say ABOUT the ingredients!",
+      { cast: "ghost", lines: [[G, "EWW?!"],
+                [N, "That's not an ingredient. That's what you say ABOUT the ingredients!"]],
         action: "show_result", result: "EWW", resultColor: '#9ccc3c' },
 
       // Part 2 -- the witch, the whole group at once
-      { text: "The witch swoops in on her broom.",
-        subtext: "\"Did you let the ghost carry them ONE AT A TIME?\"", action: "none" },
-      { text: "The witch sighs.",
-        subtext: "\"Ghosts can only carry one jar. I levitate the whole group at once!\"", action: "none" },
-      { text: "The witch puts every jar back.",
-        subtext: "\"Watch closely.\"", action: "reset" },
-      { text: "\"Move 2 from shelf 1 to shelf 3!\"",
-        subtext: "W and B float over together, in the same order.",
+      { cast: "witch", enter: true,
+        lines: [[N, "The witch swoops in on her broom."],
+                [Wi, "Did you let the ghost carry them ONE AT A TIME?"]], action: "none" },
+      { cast: "witch", lines: [[Wi, "Ghosts can only carry one jar."],
+                [Wi, "I levitate the whole group at once!"]], action: "none" },
+      { cast: "witch", lines: [[N, "The witch puts every jar back."],
+                [Wi, "Watch closely."]], action: "reset" },
+      { cast: "witch", lines: [[Wi, "Move 2 from shelf 1 to shelf 3!"],
+                [N, "W and B float over together, in the same order."]],
         action: "move_together", from: 0, to: 2, count: 2 },
-      { text: "\"Move 2 from shelf 2 to shelf 1!\"",
-        subtext: "W and E, still in order.",
+      { cast: "witch", lines: [[Wi, "Move 2 from shelf 2 to shelf 1!"],
+                [N, "W and E, still in order."]],
         action: "move_together", from: 1, to: 0, count: 2 },
-      { text: "\"Move 1 from shelf 1 to shelf 2.\"",
-        subtext: "Just the top jar: E",
+      { cast: "witch", lines: [[Wi, "Move 1 from shelf 1 to shelf 2."],
+                [N, "Just the top jar: E."]],
         action: "move_together", from: 0, to: 1, count: 1 },
-      { text: "Moment of truth... read the tops!", subtext: "W... E... B...",
+      { cast: "witch", lines: [[Wi, "Moment of truth. Read the tops: W... E... B..."]],
         action: "highlight_tops" },
-      { text: "WEB!", subtext: "\"Spider web -- the secret ingredient!\" cackles the witch.",
+      { cast: "witch", lines: [[Wi, "WEB! Spider web -- the secret ingredient!"],
+                [N, "The witch cackles."]],
         action: "show_result", result: "WEB", resultColor: '#ff8c1a' },
-      { text: "The End",
-        subtext: "Happy Halloween! Now go stack up YOUR potion pantry...",
+      { lines: [[N, "The End. Happy Halloween!"],
+                [N, "Now go stack up YOUR potion pantry..."]],
         action: "show_result", result: "🎃", resultColor: '#ff8c1a' },
     ];
+
+    const voice = {
+      Narrator: '#c3b3e0',
+      Ghost:    '#dfe8ff',
+      Witch:    '#ff8c1a',
+    };
 
     function resetStacks() {
       const jar = (l) => ({ letter: l, color: colors[l] });
@@ -231,6 +246,7 @@
       if (animating) { finishAnimation(); return; }
       if (storyStep < story.length - 1) {
         storyStep++;
+        stepStartedAt = performance.now();
         executeAction(storyStep);
       }
     }
@@ -239,12 +255,27 @@
 
     const sketch = (p) => {
       p.setup = () => {
+        p.pixelDensity(Math.max(2, window.devicePixelRatio || 1));
         p.createCanvas(W, H);
+        fitCanvas();
         p.textAlign(p.CENTER, p.CENTER);
         p.textFont('Fredoka');
         resetStacks();
         fastForward();          // must run after resetStacks, i.e. here
       };
+
+      p.windowResized = fitCanvas;
+
+      // Draw at 700x480, display as large as the window allows.
+      function fitCanvas() {
+        const c = document.querySelector('#canvas-container canvas');
+        if (!c) return;
+        const chrome = ['.title', '.subtitle', '.controls', '.hint']
+          .reduce((h, sel) => h + document.querySelector(sel).offsetHeight, 0) + 40;
+        const k = Math.min((window.innerWidth * 0.96) / W, (window.innerHeight - chrome) / H);
+        c.style.width = (W * k) + 'px';
+        c.style.height = (H * k) + 'px';
+      }
 
       p.draw = () => {
         const step = story[storyStep];
@@ -254,12 +285,7 @@
           p.noStroke();
           p.fill(0, 0, 0, 150);
           p.rect(0, 0, W, 92);
-          p.fill(255);
-          p.textSize(26); p.textStyle(p.BOLD);
-          p.text(step.text, W / 2, 34);
-          p.textSize(17); p.textStyle(p.ITALIC); p.fill('#b8e986');
-          p.text(step.subtext, W / 2, 66);
-          p.textStyle(p.NORMAL);
+          drawLines(p, step.lines, step.lines.length > 1 ? 30 : 46);
           drawStepCount(p);
           return;
         }
@@ -274,6 +300,8 @@
           p.textFont('Fredoka');
           if (step.result !== "EWW") drawBats(p, 1);
           else drawDrips(p);
+          if (step.cast === "ghost") drawGhost(p, 600, 120, 0.8);
+          if (step.cast === "witch") drawWitch(p, 590, 110, 0.9);
           drawCaption(p, step);
           drawStepCount(p);
           return;
@@ -305,7 +333,7 @@
 
         // jars in flight
         if (animating) {
-          animationProgress += (mover === "ghost" ? 0.022 : 0.018);
+          animationProgress += (mover === "ghost" ? 0.010 : 0.008);
           if (animationProgress >= 1) {
             finishAnimation();
           } else {
@@ -320,7 +348,23 @@
               drawJar(p, x, y, m.jar, true);
               if (mover === "ghost") drawGhost(p, x, y - 52, 0.55);
             }
+            if (mover === "witch") {               // she rides beside the group
+              const m = movingJars[movingJars.length - 1];
+              const midY = Math.min(m.fromY, m.toY) - 80;
+              let x, y;
+              if (t < 0.33)      { x = m.fromX; y = p.lerp(m.fromY, midY, ease(t / 0.33)); }
+              else if (t < 0.66) { x = p.lerp(m.fromX, m.toX, ease((t - 0.33) / 0.33)); y = midY; }
+              else               { x = m.toX;   y = p.lerp(midY, m.toY, ease((t - 0.66) / 0.34)); }
+              drawWitch(p, x + 70, y - 46, 0.75);
+            }
           }
+        }
+
+        // whoever is on stage waits at the edge between moves
+        if (!animating && step.cast === "ghost") drawGhost(p, 46, 96, 0.55);
+        if (!animating && step.cast === "witch") {
+          const k = step.enter ? Math.min(1, (performance.now() - stepStartedAt) / 1400) : 1;
+          drawWitch(p, p.lerp(W + 100, 630, ease(k)), p.lerp(40, 96, ease(k)), 0.8);
         }
 
         drawCaption(p, step);
@@ -330,15 +374,36 @@
       function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
 
       function drawCaption(p, step) {
+        drawLines(p, step.lines, step.lines.length > 1 ? 390 : 405);
+      }
+
+      // One line per speaker: the name in that part's colour, then the words.
+      // Narration is italic; Ghost and Witch lines are what the student says.
+      function drawLines(p, lines, y0) {
+        p.push();
         p.noStroke();
-        p.fill(255);
-        p.textSize(24); p.textStyle(p.BOLD);
-        p.text(step.text, W / 2, 392);
-        if (step.subtext) {
-          p.textSize(16); p.textStyle(p.ITALIC); p.fill('#b8e986');
-          p.text(step.subtext, W / 2, 422);
-        }
-        p.textStyle(p.NORMAL);
+        p.textAlign(p.LEFT, p.CENTER);
+        lines.forEach(([who, words], k) => {
+          const tag = who.toUpperCase();
+          let size = 20;
+          const spoken = who !== "Narrator";
+          const width = () => {
+            p.textSize(size * 0.72); p.textStyle(p.BOLD);
+            const tw = p.textWidth(tag) + 12;
+            p.textSize(size); p.textStyle(spoken ? p.BOLD : p.ITALIC);
+            return [tw, p.textWidth(words)];
+          };
+          let [tw, ww] = width();
+          while (tw + ww > W - 36 && size > 13) { size -= 1; [tw, ww] = width(); }
+          const x0 = (W - tw - ww) / 2, y = y0 + k * 32;
+          p.fill(voice[who]);
+          p.textSize(size * 0.72); p.textStyle(p.BOLD);
+          p.text(tag, x0, y);
+          p.fill(spoken ? voice[who] : '#f2ecff');
+          p.textSize(size); p.textStyle(spoken ? p.BOLD : p.ITALIC);
+          p.text(words, x0 + tw, y);
+        });
+        p.pop();
       }
 
       function drawStepCount(p) {
@@ -401,6 +466,42 @@
         p.ellipse(-12, -6, 10, 14);
         p.ellipse(12, -6, 10, 14);
         p.ellipse(0, 12, 12, 10);
+        p.pop();
+      }
+
+      // A witch on a broom, facing left, bobbing a little.
+      function drawWitch(p, x, y, s) {
+        p.push();
+        p.translate(x, y + Math.sin(p.millis() / 260) * 4);
+        p.scale(s);
+        p.noStroke();
+        // broom: handle, then bristles off the back
+        p.stroke('#7a4a1f'); p.strokeWeight(5);
+        p.line(-62, 34, 46, 34);
+        p.noStroke(); p.fill('#d9a441');
+        p.triangle(42, 34, 82, 18, 82, 50);
+        p.stroke('#a87a28'); p.strokeWeight(2);
+        p.line(48, 34, 80, 24); p.line(48, 34, 80, 44);
+        p.noStroke();
+        // cloak
+        p.fill('#2a1840');
+        p.triangle(-14, -6, 20, -6, 30, 36);
+        p.triangle(-14, -6, 4, 36, 30, 36);
+        // face and nose
+        p.fill('#8fd16a');
+        p.circle(-2, -16, 26);
+        p.triangle(-14, -16, -26, -10, -12, -10);
+        p.fill('#1b1030');
+        p.circle(-7, -19, 4);
+        // hat: brim, cone, band
+        p.fill('#3d2266');
+        p.ellipse(0, -28, 52, 10);
+        p.triangle(-14, -28, 16, -28, 14, -66);
+        p.fill('#ff8c1a');
+        p.rect(-12, -34, 26, 5, 2);
+        // hair
+        p.fill('#c0392b');
+        p.triangle(4, -26, 22, -26, 24, -2);
         p.pop();
       }
 

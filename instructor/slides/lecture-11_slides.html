@@ -10,7 +10,7 @@
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.18">
 
-  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -195,10 +195,10 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta property="og:description" content="Stacks">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta name="twitter:description" content="Stacks">
 <meta name="twitter:card" content="summary">
 </head>
@@ -219,7 +219,7 @@
 <p><strong>Announcements</strong></p>
 <ul>
 <li><strong>PA1 is due tonight</strong>, 11:59 pm</li>
-<li>Examlet 3 is next week — book your seat on PrairieTest</li>
+<li>Examlet 3 runs <strong>Thursday to Sunday</strong> — book your seat on PrairieTest</li>
 <li>PEX3 is posted</li>
 </ul>
 <p><br>
@@ -332,7 +332,8 @@ pop()</code></pre>
 <span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*</span> newN <span class="op">=</span> <span class="kw">new</span> Node<span class="op">(</span>d<span class="op">);</span></span>
 <span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    newN<span class="op">-&gt;</span>next <span class="op">=</span> top<span class="op">;</span></span>
 <span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    top <span class="op">=</span> newN<span class="op">;</span></span>
-<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    size<span class="op">++;</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 <aside class="notes">
 <p>The top of the stack is the <strong>front</strong> of the list. <code>push</code> is <code>insertAtFront</code> from lecture 9, almost word for word.</p>
@@ -393,7 +394,7 @@ return retval;</code></pre>
 </div></div>
 <aside class="notes">
 <p>The top of the stack is the <strong>back</strong> of the vector. The blanks are <strong>top</strong> and <strong>items.size()-1</strong>.</p>
-<p><code>pop</code> is <span class="math inline">\(\Theta(1)\)</span>. <code>push</code> is <span class="math inline">\(\Theta(1)\)</span> as long as there is room, and “what happens when the array fills?” is the question that opens next time’s array resizing.</p>
+<p><code>pop</code> is <span class="math inline">\(\Theta(1)\)</span>. <code>push</code> is <span class="math inline">\(\Theta(1)\)</span> as long as there is room. When the array fills, the vector resizes, which is Nathan’s video from Friday: double the capacity and <code>push</code> is still <span class="math inline">\(\Theta(1)\)</span> on average.</p>
 <p>The two implementations have the same interface and very different insides. That is the ADT point from the last slide, made concrete.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -425,7 +426,7 @@ return retval;</code></pre>
           display:block!important;
       }</style></aside>
 </section>
-<section id="section" class="slide level2" data-background-iframe="viz/potion_pantry_story.html" data-background-interactive="true">
+<section id="section" class="slide level2" data-background-iframe="viz/potion_pantry_story.html?v=2" data-background-interactive="true">
 <h2></h2>
 <aside class="notes">
 <p>Click into the story to give it focus, then → or Enter to advance. <code>?step=N</code> in the iframe URL jumps to scene N if you need to resume.</p>
@@ -444,13 +445,57 @@ return retval;</code></pre>
 </section>
 <section id="your-turn" class="slide level2 activity">
 <h2>Your Turn</h2>
-<p>Every one of you has your own pantry and your own recipe.</p>
-<p>In <code>potions.cpp</code>, write <code>part1</code> and <code>part2</code> — using only <code>std::stack</code>.</p>
-<p><code>make example</code> should print <strong>CMZ</strong> and <strong>MCD</strong>. Then <code>make input</code> reveals your words.</p>
+<p>Every one of you has your own pantry and your own recipe!</p>
+<ul>
+<li><p>In <code>potions.cpp</code>, write <code>part1</code> and <code>part2</code> — using <code>std::stack</code>.</p></li>
+<li><p><code>make example</code> should print <strong>CMZ</strong> and <strong>MCD</strong>.</p></li>
+<li><p><code>make input</code> reveals your words!</p></li>
+</ul>
 <aside class="notes">
 <p><code>std::stack</code> splits our <code>pop</code> in two: <code>top()</code> reads the top item, and <code>pop()</code> removes it and returns nothing. Worth saying before they start, or the first ten minutes are compile errors.</p>
 <p>Part 1 is a direct translation. Part 2 is the point: a stack will not lift a block and set it down in order. The move is a second, temporary stack — pop the group into it, which reverses it, then pop it onto the destination, which reverses it back. Let them find it.</p>
 <p>Full credit 2:00–3:59 today (both sections); open afterwards for practice at zero credit.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="today-you-built-a-data-structure" class="slide level2 smaller">
+<h2>Today, you built a data structure</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 81%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Defined</strong></td>
+<td style="text-align: left;">the Stack ADT: <code>push</code>, <code>pop</code>, <code>empty</code>. Last in, first out</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Implemented</strong></td>
+<td style="text-align: left;">two ways: linked list and vector</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Analyzed</strong></td>
+<td style="text-align: left;"><code>push</code> and <code>pop</code> are <span class="math inline">\(\Theta(1)\)</span> for linked list. For the vector, doubling on resize keeps the functions <span class="math inline">\(\Theta(1)\)</span> on average.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Applied</strong></td>
+<td style="text-align: left;">Potion Pantry: use a stack to reverse the pile!</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Point at the four verbs. That is the life cycle of every structure for the rest of the term: define the ADT, implement it, analyze it, use it.</p>
+<p>The Part 2 trick is worth one more sentence: popping a group into a temporary stack reverses it; popping it onto the destination reverses it back. Two reversals, original order.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
