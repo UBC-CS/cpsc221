@@ -10,7 +10,7 @@
 <atom:link href="https://ubc-cs.github.io/cpsc221/announcements.xml" rel="self" type="application/rss+xml"/>
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
-<generator>quarto-1.10.18</generator>
+<generator>quarto-1.10.19</generator>
 <lastBuildDate>Mon, 05 Oct 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Week 5 — Oct 5 to Oct 11</title>
