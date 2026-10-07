@@ -1,0 +1,357 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Merge Sort"
+
+# Friday's video (recorded Wednesday). From oldslides/lec100724-mergeSort-1.pdf,
+# pages 4-10; pages 2-3 (merge, "sort this array") ended lecture 12, so they
+# come back here as one recap slide.
+#
+# The 2024 deck's visualizer link, toptal.com/developers/sorting-algorithms,
+# still answers 403 "blocked" from this machine (2026-10-06), so the last slide
+# uses VisuAlgo instead.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 3** is this weekend, Thursday to Sunday
+- Next week is quiet: no class meetings, labs or examlets — two video lessons
+- **Homework Two** is due Monday 10/19
+
+\
+
+**Where we're going**
+
+- Merge sort
+- Its running time, two ways
+- A proof of the closed form
+- Why it's correct
+
+## Where we left off {.smaller}
+
+<svg class="nodefig" width="864" height="355">
+<g transform="scale(1.6)">
+<rect x="110" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="28.0" font-size="17" text-anchor="middle">7</text>
+<rect x="150" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="28.0" font-size="17" text-anchor="middle">1</text>
+<rect x="190" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="210.0" y="28.0" font-size="17" text-anchor="middle">6</text>
+<rect x="230" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="250.0" y="28.0" font-size="17" text-anchor="middle">4</text>
+<rect x="270" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="290.0" y="28.0" font-size="17" text-anchor="middle">5</text>
+<rect x="310" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="330.0" y="28.0" font-size="17" text-anchor="middle">3</text>
+<rect x="350" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="28.0" font-size="17" text-anchor="middle">2</text>
+<rect x="390" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="28.0" font-size="17" text-anchor="middle">8</text>
+<rect x="30" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="50.0" y="88.0" font-size="17" text-anchor="middle">7</text>
+<rect x="70" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="90.0" y="88.0" font-size="17" text-anchor="middle">1</text>
+<rect x="110" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="88.0" font-size="17" text-anchor="middle">6</text>
+<rect x="150" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="88.0" font-size="17" text-anchor="middle">4</text>
+<rect x="350" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="88.0" font-size="17" text-anchor="middle">5</text>
+<rect x="390" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="88.0" font-size="17" text-anchor="middle">3</text>
+<rect x="430" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="450.0" y="88.0" font-size="17" text-anchor="middle">2</text>
+<rect x="470" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="490.0" y="88.0" font-size="17" text-anchor="middle">8</text>
+<rect x="30" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="50.0" y="148.0" font-size="17" text-anchor="middle">1</text>
+<rect x="70" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="90.0" y="148.0" font-size="17" text-anchor="middle">4</text>
+<rect x="110" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="148.0" font-size="17" text-anchor="middle">6</text>
+<rect x="150" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="148.0" font-size="17" text-anchor="middle">7</text>
+<rect x="350" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="148.0" font-size="17" text-anchor="middle">2</text>
+<rect x="390" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="148.0" font-size="17" text-anchor="middle">3</text>
+<rect x="430" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="450.0" y="148.0" font-size="17" text-anchor="middle">5</text>
+<rect x="470" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="490.0" y="148.0" font-size="17" text-anchor="middle">8</text>
+<rect x="110" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="208.0" font-size="17" text-anchor="middle">1</text>
+<rect x="150" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="208.0" font-size="17" text-anchor="middle">2</text>
+<rect x="190" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="210.0" y="208.0" font-size="17" text-anchor="middle">3</text>
+<rect x="230" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="250.0" y="208.0" font-size="17" text-anchor="middle">4</text>
+<rect x="270" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="290.0" y="208.0" font-size="17" text-anchor="middle">5</text>
+<rect x="310" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="330.0" y="208.0" font-size="17" text-anchor="middle">6</text>
+<rect x="350" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="208.0" font-size="17" text-anchor="middle">7</text>
+<rect x="390" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="208.0" font-size="17" text-anchor="middle">8</text>
+</g>
+</svg>
+
+**merge** two sorted halves into one sorted array: $\Theta(n)$.
+
+Split in half, sort each half, merge. But how do the halves get sorted?
+
+::: notes
+Recap from Wednesday. Merge walks a finger along each half and copies the
+smaller item each time; every item is copied once, so it's linear.
+
+The question we left hanging: the halves. Answer: the same way. Sort each
+half by splitting it in half…
+:::
+
+## mergeSort {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="45%"}
+1. If the array has 0 or 1 elements, it's sorted.
+2. Split the array into halves.
+3. Sort each half recursively.
+4. Merge the two halves.
+:::
+::: {.column width="55%"}
+```cpp
+void mergeSort(vector<T> & A, int lo, int hi) {
+    if (hi > lo) {
+        int mid = (hi + lo)/2;
+        mergeSort(A, lo, mid);
+        mergeSort(A, mid+1, hi);
+        merge(A, lo, mid, hi);
+    }
+}
+```
+:::
+::::
+
+RT:
+
+::: notes
+Write the recurrence beside RT. With $T(n)$ the time to sort $n$ items:
+
+$$T(1) = b, \qquad T(n) = 2\,T(n/2) + cn$$
+
+Two recursive calls on half the input, plus a linear merge. The split itself
+is constant. Assume $n$ is a power of 2 so the halves are exact.
+:::
+
+## Closed form 1: expand and generalize {.smaller}
+
+$T(n) = 2\,T(n/2) + cn, \quad T(1) = b$
+
+::: notes
+$$
+\begin{aligned}
+T(n) &= 2T(n/2) + cn \\
+     &= 4T(n/4) + 2cn \\
+     &= 8T(n/8) + 3cn \\
+     &\;\;\vdots \\
+     &= 2^k\,T(n/2^k) + kcn
+\end{aligned}
+$$
+
+The base case is reached when $n/2^k = 1$, i.e. $k = \log n$:
+
+$$T(n) = n\,T(1) + cn\log n = cn\log n + bn.$$
+:::
+
+## Closed form 2: recursion tree {.smaller}
+
+<svg class="nodefig" width="910" height="372">
+<g transform="scale(1.3)">
+<line x1="340.0" y1="106" x2="395.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="340.0" y1="106" x2="285.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="120.0" y1="106" x2="175.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="120.0" y1="106" x2="65.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="230.0" y1="42" x2="340.0" y2="72" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="230.0" y1="42" x2="120.0" y2="72" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="36.4" y="8" width="387.2" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="230.0" y="31" font-size="17" text-anchor="middle">n</text>
+<rect x="23.2" y="72" width="193.6" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="120.0" y="95" font-size="17" text-anchor="middle">n/2</text>
+<rect x="243.2" y="72" width="193.6" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="340.0" y="95" font-size="17" text-anchor="middle">n/2</text>
+<rect x="16.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="65.0" y="159" font-size="17" text-anchor="middle">n/4</text>
+<rect x="126.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="175.0" y="159" font-size="17" text-anchor="middle">n/4</text>
+<rect x="236.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="285.0" y="159" font-size="17" text-anchor="middle">n/4</text>
+<rect x="346.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="395.0" y="159" font-size="17" text-anchor="middle">n/4</text>
+<text class="val" x="65.0" y="200" font-size="20" text-anchor="middle">⋮</text>
+<text class="val" x="175.0" y="200" font-size="20" text-anchor="middle">⋮</text>
+<text class="val" x="285.0" y="200" font-size="20" text-anchor="middle">⋮</text>
+<text class="val" x="395.0" y="200" font-size="20" text-anchor="middle">⋮</text>
+<rect x="18.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="46.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="73.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="101.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="128.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="156.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="183.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="211.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="238.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="266.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="293.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="321.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="348.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="376.2" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="403.8" y="222" width="10" height="10" fill="#c0392b"/>
+<rect x="431.2" y="222" width="10" height="10" fill="#c0392b"/>
+<text class="lbl" x="480" y="20" font-size="15">work at this level</text>
+<line x1="480" y1="40" x2="630" y2="40" stroke="#8b96a5" stroke-width="1.5"/>
+<line x1="480" y1="104" x2="630" y2="104" stroke="#8b96a5" stroke-width="1.5"/>
+<line x1="480" y1="168" x2="630" y2="168" stroke="#8b96a5" stroke-width="1.5"/>
+<line x1="480" y1="234" x2="630" y2="234" stroke="#8b96a5" stroke-width="1.5"/>
+<text class="lbl" x="480" y="270" font-size="15">number of levels:</text>
+<line x1="610" y1="276" x2="690" y2="276" stroke="#8b96a5" stroke-width="1.5"/>
+</g>
+</svg>
+
+::: notes
+Each level does a total of $cn$ work: one $n$, two $n/2$'s, four $n/4$'s…
+The leaves are $n$ base cases at $b$ each.
+
+The tree has $\log n$ levels of merging, so the total is
+$cn\log n + bn$ — the same answer as expanding.
+:::
+
+## Proving the closed form is correct: {.smaller}
+
+**Thm:** $\forall n \ge 1,\; T(n) \le cn\log n + bn.$
+
+::: notes
+By induction on $n$ (powers of 2).
+
+**Base case**, $n = 1$: $T(1) = b \le c \cdot 1 \cdot 0 + b \cdot 1 = b$. ✓
+
+**IH:** assume $T(j) \le cj\log j + bj$ for all $j < n$.
+
+**Inductive step**, $n > 1$:
+
+$$
+\begin{aligned}
+T(n) &= 2T(n/2) + cn \\
+     &\le 2\left(c\tfrac{n}{2}\log\tfrac{n}{2} + b\tfrac{n}{2}\right) + cn \\
+     &= cn(\log n - 1) + bn + cn \\
+     &= cn\log n + bn.
+\end{aligned}
+$$
+:::
+
+## MergeSort correctness: {.smaller .proof}
+
+Call mergeSort: `mergeSort(A, 0, A.size()-1);`
+
+```cpp
+void mergeSort(vector<T> & A, int lo, int hi) {
+    if (hi > lo) {
+        int mid = (hi + lo)/2;
+        mergeSort(A, lo, mid);
+        mergeSort(A, mid+1, hi);
+        merge(A, lo, mid, hi);
+    }
+}
+```
+
+Claim: `mergeSort` correctly sorts `A[lo..hi]` for any `(hi-lo+1)` \_\_\_\_\_\_\_\_
+
+Let $n$ = `(hi - lo + 1)`, arbitrary.
+
+$n \le 1$: (Base Case)
+
+$n > 1$: IH: Assume `mergeSort` correctly sorts a slice of size $j$, for any $j < n$.
+
+`int mid = (hi + lo)/2;`
+
+`mergeSort(A, lo, mid);` <br> `mergeSort(A, mid+1, hi);`
+
+::: notes
+The blank: **$\ge 0$**. The empty slice counts.
+
+**Base case**, $n \le 1$: `hi > lo` is false, nothing happens, and a slice
+of 0 or 1 items is already sorted.
+
+**$n > 1$:** because `lo < hi`, `mid` satisfies `lo ≤ mid < hi`. Why:
+
+- **lo ≤ mid:** the average of lo and something at least lo is at least
+  lo, and rounding down can't take it below lo, because lo is a whole
+  number.
+- **mid < hi:** since lo ≤ hi − 1, the average is at most hi − ½, and
+  rounding down keeps it below hi.
+
+It only works because lo < hi, which is why the 0-or-1 case has to be the
+base case: with lo = hi, mid = hi and the first call would be the same call
+again.
+
+So both
+`A[lo..mid]` and `A[mid+1..hi]` have at least one item and **fewer than
+$n$**. That's exactly what the IH needs: both recursive calls sort their
+halves.
+:::
+
+## MergeSort correctness, continued: {.smaller}
+
+`merge(A, lo, mid, hi);`
+
+\
+
+Conclusion:
+
+\
+
+\
+
+**To contemplate:**
+
+- does the value of `mid` matter in the correctness proof?
+- does the value of `mid` matter in the analysis of the runtime?
+- could we do a $k$-way merge sort?
+
+::: notes
+`merge` takes two sorted slices that sit side by side and produces one
+sorted slice of the same items. (Its own correctness is a loop invariant:
+the output so far is sorted and holds the smallest items seen.)
+
+**Conclusion:** `A[lo..hi]` is sorted. Since $n$ was arbitrary,
+`mergeSort` sorts every slice, and in particular the call
+`mergeSort(A, 0, A.size()-1)` sorts the whole array.
+
+To contemplate:
+
+- **Correctness:** no. Any `mid` with `lo ≤ mid < hi` works — the proof
+  only needs both halves to be smaller.
+- **Runtime:** yes. Split off one item at a time (`mid = lo`) and the
+  recurrence becomes $T(n) = T(n-1) + cn$, which is $\Theta(n^2)$.
+- **$k$-way:** yes. $\log_k n$ levels, but each merge now picks the
+  smallest of $k$ fronts. Still $\Theta(n \log n)$.
+:::
+
+## Where are we in the sorting picture? {.smaller}
+
+| | Best case | Worst case |
+|---|:---:|:---:|
+| **Insertion** | $O(n)$ | $O(n^2)$ |
+| **Selection** | $O(n^2)$ | $O(n^2)$ |
+| **Merge** | $O(n\log n)$ | $O(n\log n)$ |
+
+\
+
+Watch them race: <https://visualgo.net/en/sorting>
+
+::: notes
+Merge sort doesn't care about the input order, like selection sort — but it
+sits at $n \log n$ instead of $n^2$.
+
+Next: is $n \log n$ the best a comparison sort can do?
+:::
