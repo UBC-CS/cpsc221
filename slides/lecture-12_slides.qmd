@@ -1,0 +1,499 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Queues"
+
+# From oldslides/lec100224-queues.pdf, pages 2-8. Page 1's warm-up (the
+# impossible stack output) was already lecture 11's Stack ADT slide, so it is
+# not repeated. Pages 7-8 start merge sort as a teaser; lecture 13 (Friday's
+# video) picks up at mergeSort.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 3** runs Thursday to Sunday — book your seat on PrairieTest
+- Examlet 2 questions are visible to you now
+- **Homework Two** is out, due Monday 10/19
+- Lab Quacks is due Sunday
+
+\
+
+**Where we're going**
+
+- Queues
+- Two implementations, and a circular array
+- A sorting puzzle
+
+## Queues {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+**Queue ADT:**
+
+- `enqueue`
+- `dequeue`
+- `isEmpty`
+
+**Applications:**
+
+- Hold jobs for a printer
+- Store packets on network routers
+- Make waitlists fair
+- Breadth first search
+:::
+::: {.column width="50%"}
+![](images/lecture-12/penguins.png){width=62%}
+
+::: {.ops}
+```
+enqueue(1)
+enqueue(2)
+enqueue(3)
+dequeue()
+dequeue()
+enqueue(4)
+```
+:::
+:::
+::::
+
+::: notes
+First in, first out. The penguins go off the ice in the order they lined up.
+
+The trace: the two dequeues return **1, then 2**. What's left, front to
+back, is **3, 4**.
+
+Compare with the stack: same three operations in spirit, but you add at one
+end and remove at the *other*.
+:::
+
+## Queue — linked memory implementation: {.smaller .smallcode}
+
+<svg class="nodefig" width="705" height="144">
+<g transform="scale(1.5)">
+<rect class="cell" x="70" y="40" width="40" height="46"/>
+<rect class="cell" x="110" y="40" width="22" height="46"/>
+<text class="val" x="90" y="70" font-size="20" text-anchor="middle">8</text>
+<circle cx="121" cy="63" r="4" fill="#1a1a1a"/>
+<path class="wire" d="M121 63 L 156.0 63.0"/>
+<polygon points="168,63 156.0,69.0 156.0,57.0" fill="#1a1a1a"/>
+<rect class="cell" x="170" y="40" width="40" height="46"/>
+<rect class="cell" x="210" y="40" width="22" height="46"/>
+<text class="val" x="190" y="70" font-size="20" text-anchor="middle">3</text>
+<circle cx="221" cy="63" r="4" fill="#1a1a1a"/>
+<path class="wire" d="M221 63 L 256.0 63.0"/>
+<polygon points="268,63 256.0,69.0 256.0,57.0" fill="#1a1a1a"/>
+<rect class="cell" x="270" y="40" width="40" height="46"/>
+<rect class="cell" x="310" y="40" width="22" height="46"/>
+<text class="val" x="290" y="70" font-size="20" text-anchor="middle">6</text>
+<circle cx="321" cy="63" r="4" fill="#1a1a1a"/>
+<path class="wire" d="M321 63 L 356.0 63.0"/>
+<polygon points="368,63 356.0,69.0 356.0,57.0" fill="#1a1a1a"/>
+<rect class="cell" x="370" y="40" width="40" height="46"/>
+<rect class="cell" x="410" y="40" width="22" height="46"/>
+<text class="val" x="390" y="70" font-size="20" text-anchor="middle">4</text>
+<line class="nullx" x1="413" y1="82" x2="429" y2="44"/>
+<path class="wire" d="M10 63 L 56.0 63.0"/>
+<polygon points="68,63 56.0,69.0 56.0,57.0" fill="#1a1a1a"/>
+<path class="wire" d="M455 8 C 455 22, 401 14, 401 26"/>
+<polygon points="401,38 395,25 407,25" fill="#1a1a1a"/>
+</g>
+</svg>
+
+:::: {.columns}
+::: {.column width="55%"}
+```cpp
+template<class SIT>
+class Queue {
+public:
+    // ctors dtor
+    bool empty() const;
+    void enqueue(const SIT & e);
+    SIT dequeue();
+private:
+    struct queueNode {
+        SIT data;
+        queueNode * next;
+    };
+    queueNode * entry;
+    queueNode * exit;
+    int size;
+};
+```
+:::
+::: {.column width="45%"}
+Which pointer is `entry`, and which is `exit`?
+
+\
+
+What is the running time of `enqueue`?
+
+\
+
+What is the running time of `dequeue`?
+:::
+::::
+
+::: notes
+**exit** points at the front (8), **entry** at the back (4).
+
+- `enqueue` adds after the back node and moves `entry`: $\Theta(1)$.
+- `dequeue` removes the front node and moves `exit`: $\Theta(1)$.
+
+Ask what happens if they are the other way round. Adding at the front is
+fine, but removing from the back of a *singly* linked list means walking to
+the node before it: $\Theta(n)$. So the direction of the arrows decides which
+end is which.
+:::
+
+## Queue — array based implementation: {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="42%"}
+```cpp
+template<class SIT>
+class Queue {
+public:
+    // ctors dtor
+    bool empty() const;
+    void enqueue(const SIT & e);
+    SIT dequeue();
+private:
+    vector<SIT> items;
+};
+```
+:::
+::: {.column width="58%"}
+::: {.ops}
+```
+enqueue(3);       enqueue(2);
+enqueue(8);       enqueue(1);
+enqueue(4);       enqueue(3);
+dequeue();        enqueue(5);
+enqueue(7);       dequeue();
+dequeue();        enqueue(9);
+dequeue();
+```
+:::
+
+<svg class="nodefig" width="398" height="214">
+<g transform="scale(1.15)">
+<rect x="4" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="46" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="88" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="130" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="172" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="214" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="256" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="298" y="6" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="4" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="46" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="88" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="130" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="172" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="214" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="256" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="298" y="68" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="4" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="46" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="88" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="130" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="172" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="214" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="256" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="298" y="130" width="42" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+</g>
+</svg>
+:::
+::::
+
+::: notes
+Trace it with two indices, front and back, instead of shifting anything.
+
+After the first column the queue is just **7**, sitting at index 3. After
+`enqueue` 2, 1, 3, 5 it fills indices 3–7: the end of the array. One more
+`dequeue` leaves **2 1 3 5** in indices 4–7.
+
+Now `enqueue(9)`: there's no room at the end, but indices 0–3 are empty.
+Shifting everything left would cost $\Theta(n)$ per `dequeue`. The better
+idea: wrap around and put 9 at index 0. That's the next slide.
+:::
+
+## Queue — a circular array: {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+```cpp
+template<class SIT>
+class Queue {
+public:
+    bool empty() const;
+    void enqueue(const SIT & e);
+    SIT dequeue();
+private:
+    int capacity;
+    vector<SIT> items;
+
+
+
+};
+```
+:::
+::: {.column width="50%"}
+<svg class="nodefig" width="480" height="115">
+<g transform="scale(1.2)">
+<text class="lbl" x="225" y="16" font-size="15" text-anchor="middle">exit</text>
+<path class="wire" d="M225 22 L 225.0 34.0"/>
+<polygon points="225,46 219.0,34.0 231.0,34.0" fill="#1a1a1a"/>
+<rect x="18" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="64" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="110" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="156" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="202" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="225.0" y="75.0" font-size="20" text-anchor="middle">m</text>
+<rect x="248" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="271.0" y="75.0" font-size="20" text-anchor="middle">o</text>
+<rect x="294" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="317.0" y="75.0" font-size="20" text-anchor="middle">n</text>
+<rect x="340" y="48" width="46" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+</g>
+</svg>
+
+::: {.ops}
+```
+...                   enqueue(y);
+enqueue(m);           enqueue(i);
+enqueue(o);           enqueue(s);
+enqueue(n);           dequeue();
+...                   enqueue(h);
+enqueue(d);           enqueue(a);
+enqueue(a);
+```
+:::
+:::
+::::
+
+<svg class="nodefig" width="796" height="65">
+<g transform="scale(1.3)">
+<rect x="4" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="41" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="78" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="115" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="152" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="189" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="226" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="263" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="300" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="337" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="374" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="411" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="448" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="485" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="522" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="559" y="4" width="37" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+</g>
+</svg>
+
+::: notes
+The blank lines in `private:` are for the class to fill in: **`int exit;`**
+and **`int size;`**. The back of the queue isn't stored — it's
+`(exit + size) % capacity`.
+
+Trace: m o n d a y fill 4–7 and wrap to 0–1; i s fill 2–3. The array is
+full: **m o n d a y i s**. `dequeue` returns **m** and moves exit to 5.
+`enqueue(h)` goes in the slot m left, index 4. Now `enqueue(a)` finds it full
+again, so resize: copy into the long array **in queue order, starting at
+exit** — o n d a y i s h — and then add a. Exit becomes 0.
+
+Same doubling as Friday's video, so both operations are $\Theta(1)$ on
+average.
+:::
+
+## Summary: {.smaller}
+
+**Linked list based implementation of a stack:**
+
+Constant time `push` and `pop`.
+
+\
+
+**Array based implementation of a stack:**
+
+\_\_\_\_\_\_\_\_\_\_ time `pop`.
+
+\_\_\_\_\_\_\_\_\_\_ time `push` if capacity exists.
+
+Cost over $O(n)$ pushes is \_\_\_\_\_\_\_\_ for an AVERAGE of \_\_\_\_\_\_\_\_ per push.
+
+\
+
+**Why consider an array?**
+
+::: notes
+Blanks: **constant**, **constant**, **$O(n)$**, **$O(1)$**. That last pair
+is Nathan's resizing video in one line: doubling makes the total cost of $n$
+pushes linear, so each push is constant on average.
+
+Why an array at all: no pointer stored with every item, so less memory; the
+items sit next to each other, so the cache helps; and you can index into the
+middle in constant time. The queue gets all the same answers.
+:::
+
+## A puzzle: {.smaller}
+
+Given: an array \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+Output: a sorted list
+
+<svg class="nodefig" width="574" height="176">
+<g transform="scale(1.4)">
+<rect x="4" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="29.0" y="31.0" font-size="20" text-anchor="middle">-4</text>
+<rect x="54" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="79.0" y="31.0" font-size="20" text-anchor="middle">3</text>
+<rect x="104" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="129.0" y="31.0" font-size="20" text-anchor="middle">5</text>
+<rect x="154" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="179.0" y="31.0" font-size="20" text-anchor="middle">7</text>
+<rect x="204" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="229.0" y="31.0" font-size="20" text-anchor="middle">1</text>
+<rect x="254" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="279.0" y="31.0" font-size="20" text-anchor="middle">2</text>
+<rect x="304" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="329.0" y="31.0" font-size="20" text-anchor="middle">6</text>
+<rect x="354" y="4" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="379.0" y="31.0" font-size="20" text-anchor="middle">9</text>
+<rect x="4" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="54" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="104" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="154" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="204" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="254" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="304" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<rect x="354" y="80" width="50" height="40" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+</g>
+</svg>
+
+Running time?
+
+::: notes
+The blank: an array **whose two halves are each sorted**.
+
+Walk two fingers, one at the start of each half. Copy the smaller of the
+two into the output and advance that finger. When one half runs out, copy
+the rest of the other.
+
+Every element is copied exactly once, so this is **merge**, and it is
+$\Theta(n)$.
+:::
+
+## OK, then sort this array: {.smaller}
+
+<svg class="nodefig" width="864" height="355">
+<g transform="scale(1.6)">
+<rect x="110" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="28.0" font-size="17" text-anchor="middle">7</text>
+<rect x="150" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="28.0" font-size="17" text-anchor="middle">1</text>
+<rect x="190" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="210.0" y="28.0" font-size="17" text-anchor="middle">6</text>
+<rect x="230" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="250.0" y="28.0" font-size="17" text-anchor="middle">4</text>
+<rect x="270" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="290.0" y="28.0" font-size="17" text-anchor="middle">5</text>
+<rect x="310" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="330.0" y="28.0" font-size="17" text-anchor="middle">3</text>
+<rect x="350" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="28.0" font-size="17" text-anchor="middle">2</text>
+<rect x="390" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="28.0" font-size="17" text-anchor="middle">8</text>
+<rect x="30" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="50.0" y="88.0" font-size="17" text-anchor="middle">7</text>
+<rect x="70" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="90.0" y="88.0" font-size="17" text-anchor="middle">1</text>
+<rect x="110" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="88.0" font-size="17" text-anchor="middle">6</text>
+<rect x="150" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="88.0" font-size="17" text-anchor="middle">4</text>
+<rect x="350" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="88.0" font-size="17" text-anchor="middle">5</text>
+<rect x="390" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="88.0" font-size="17" text-anchor="middle">3</text>
+<rect x="430" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="450.0" y="88.0" font-size="17" text-anchor="middle">2</text>
+<rect x="470" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="490.0" y="88.0" font-size="17" text-anchor="middle">8</text>
+<rect x="30" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="50.0" y="148.0" font-size="17" text-anchor="middle">1</text>
+<rect x="70" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="90.0" y="148.0" font-size="17" text-anchor="middle">4</text>
+<rect x="110" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="148.0" font-size="17" text-anchor="middle">6</text>
+<rect x="150" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="148.0" font-size="17" text-anchor="middle">7</text>
+<rect x="350" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="148.0" font-size="17" text-anchor="middle">2</text>
+<rect x="390" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="148.0" font-size="17" text-anchor="middle">3</text>
+<rect x="430" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="450.0" y="148.0" font-size="17" text-anchor="middle">5</text>
+<rect x="470" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="490.0" y="148.0" font-size="17" text-anchor="middle">8</text>
+<rect x="110" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="130.0" y="208.0" font-size="17" text-anchor="middle">1</text>
+<rect x="150" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="170.0" y="208.0" font-size="17" text-anchor="middle">2</text>
+<rect x="190" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="210.0" y="208.0" font-size="17" text-anchor="middle">3</text>
+<rect x="230" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="250.0" y="208.0" font-size="17" text-anchor="middle">4</text>
+<rect x="270" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="290.0" y="208.0" font-size="17" text-anchor="middle">5</text>
+<rect x="310" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="330.0" y="208.0" font-size="17" text-anchor="middle">6</text>
+<rect x="350" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="370.0" y="208.0" font-size="17" text-anchor="middle">7</text>
+<rect x="390" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"/>
+<text class="val" x="410.0" y="208.0" font-size="17" text-anchor="middle">8</text>
+</g>
+</svg>
+
+::: notes
+Split it in half. *If* each half were sorted, one merge would finish the
+job in linear time.
+
+So how did the halves get sorted? Leave them hanging: that's merge sort, in
+Friday's video.
+:::
+
+## mergeSort {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="45%"}
+1. If the array has 0 or 1 elements, it's sorted.
+2. Split the array into halves.
+3. Sort each half recursively.
+4. Merge the two halves.
+:::
+::: {.column width="55%"}
+```cpp
+void mergeSort(vector<T> & A, int lo, int hi) {
+    if (hi > lo) {
+        int mid = (hi + lo)/2;
+        mergeSort(A, lo, mid);
+        mergeSort(A, mid+1, hi);
+        merge(A, lo, mid, hi);
+    }
+}
+```
+:::
+::::
+
+RT:
+
+::: notes
+If there's time: the four steps, and the code. Point at the two recursive
+calls -- that's how the halves got sorted.
+
+Leave RT blank. Writing the recurrence and solving it is Friday's video.
+:::
