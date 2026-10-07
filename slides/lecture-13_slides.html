@@ -7,12 +7,10 @@
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/quarto-contrib/countdown-0.6.0/countdown.js"></script>
-<link href="../site_libs/quarto-contrib/countdown-0.6.0/countdown.css" rel="stylesheet">
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.10.19">
 
-  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -197,11 +195,11 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta property="og:description" content="Reasoning About Algorithms">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
-<meta name="twitter:description" content="Reasoning About Algorithms">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:description" content="Merge Sort">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:description" content="Merge Sort">
 <meta name="twitter:card" content="summary">
 </head>
 <body class="quarto-light">
@@ -210,7 +208,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">CPSC 221</h1>
-  <p class="subtitle">Reasoning About Algorithms</p>
+  <p class="subtitle">Merge Sort</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -220,30 +218,30 @@
 <h2>Today</h2>
 <p><strong>Announcements</strong></p>
 <ul>
-<li>Labs start next week</li>
-<li>HW1 available Monday Sep 14, due Sep 21</li>
-<li>Registration for EX1 will be soon!</li>
+<li><strong>Examlet 3</strong> is this weekend, Thursday to Sunday</li>
+<li>Next week is quiet: no class meetings, labs or examlets — two video lessons</li>
+<li><strong>Homework Two</strong> is due Monday 10/19</li>
 </ul>
 <p><br>
 </p>
 <p><strong>Where we’re going</strong></p>
 <ul>
-<li>The value of an algorithm</li>
-<li>The abstraction of <em>running time</em></li>
-<li>What it takes to describe an algorithm precisely</li>
+<li>Merge sort</li>
+<li>Its running time, two ways</li>
+<li>A proof of the closed form</li>
+<li>Why it’s correct</li>
 </ul>
 </section>
-<section id="algorithm-analysis" class="slide level2 smaller">
-<h2>Algorithm analysis</h2>
-<p>Analysis of an algorithm gives insight into</p>
-<ul>
-<li>whether it is <strong>correct</strong></li>
-<li>how long it runs — <em>time complexity</em></li>
-<li>how much memory it uses — <em>space complexity</em></li>
-</ul>
-<p>All with the aim of making comparisons between different approaches to solving the same problem analytically, not experimentally.</p>
+<section id="where-we-left-off" class="slide level2 smaller">
+<h2>Where we left off</h2>
+<svg class="nodefig" width="864" height="355">
+<g transform="scale(1.6)"> <rect x="110" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="130.0" y="28.0" font-size="17" text-anchor="middle">7</text> <rect x="150" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="170.0" y="28.0" font-size="17" text-anchor="middle">1</text> <rect x="190" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="210.0" y="28.0" font-size="17" text-anchor="middle">6</text> <rect x="230" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="250.0" y="28.0" font-size="17" text-anchor="middle">4</text> <rect x="270" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="290.0" y="28.0" font-size="17" text-anchor="middle">5</text> <rect x="310" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="330.0" y="28.0" font-size="17" text-anchor="middle">3</text> <rect x="350" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="370.0" y="28.0" font-size="17" text-anchor="middle">2</text> <rect x="390" y="4" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="410.0" y="28.0" font-size="17" text-anchor="middle">8</text> <rect x="30" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="50.0" y="88.0" font-size="17" text-anchor="middle">7</text> <rect x="70" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="90.0" y="88.0" font-size="17" text-anchor="middle">1</text> <rect x="110" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="130.0" y="88.0" font-size="17" text-anchor="middle">6</text> <rect x="150" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="170.0" y="88.0" font-size="17" text-anchor="middle">4</text> <rect x="350" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="370.0" y="88.0" font-size="17" text-anchor="middle">5</text> <rect x="390" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="410.0" y="88.0" font-size="17" text-anchor="middle">3</text> <rect x="430" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="450.0" y="88.0" font-size="17" text-anchor="middle">2</text> <rect x="470" y="64" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="490.0" y="88.0" font-size="17" text-anchor="middle">8</text> <rect x="30" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="50.0" y="148.0" font-size="17" text-anchor="middle">1</text> <rect x="70" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="90.0" y="148.0" font-size="17" text-anchor="middle">4</text> <rect x="110" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="130.0" y="148.0" font-size="17" text-anchor="middle">6</text> <rect x="150" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="170.0" y="148.0" font-size="17" text-anchor="middle">7</text> <rect x="350" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="370.0" y="148.0" font-size="17" text-anchor="middle">2</text> <rect x="390" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="410.0" y="148.0" font-size="17" text-anchor="middle">3</text> <rect x="430" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="450.0" y="148.0" font-size="17" text-anchor="middle">5</text> <rect x="470" y="124" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="490.0" y="148.0" font-size="17" text-anchor="middle">8</text> <rect x="110" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="130.0" y="208.0" font-size="17" text-anchor="middle">1</text> <rect x="150" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="170.0" y="208.0" font-size="17" text-anchor="middle">2</text> <rect x="190" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="210.0" y="208.0" font-size="17" text-anchor="middle">3</text> <rect x="230" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="250.0" y="208.0" font-size="17" text-anchor="middle">4</text> <rect x="270" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="290.0" y="208.0" font-size="17" text-anchor="middle">5</text> <rect x="310" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="330.0" y="208.0" font-size="17" text-anchor="middle">6</text> <rect x="350" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="370.0" y="208.0" font-size="17" text-anchor="middle">7</text> <rect x="390" y="184" width="40" height="34" fill="#fffba8" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="410.0" y="208.0" font-size="17" text-anchor="middle">8</text> </g>
+</svg>
+<p><strong>merge</strong> two sorted halves into one sorted array: <span class="math inline">\(\Theta(n)\)</span>.</p>
+<p>Split in half, sort each half, merge. But how do the halves get sorted?</p>
 <aside class="notes">
-<p>Thirty seconds. This is a framing slide, not a content slide.</p>
+<p>Recap from Wednesday. Merge walks a finger along each half and copies the smaller item each time; every item is copied once, so it’s linear.</p>
+<p>The question we left hanging: the halves. Answer: the same way. Sort each half by splitting it in half…</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -256,130 +254,181 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="where-we-stopped" class="slide level2 smaller">
-<h2>Where we stopped</h2>
-<blockquote>
-<p>If an algorithm is not <span style="color: #3498db;">correct</span>, is its value 0?</p>
-</blockquote>
+<section id="mergesort" class="slide level2 smaller smallcode">
+<h2>mergeSort</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<ol type="1">
+<li>If the array has 0 or 1 elements, it’s sorted.</li>
+<li>Split the array into halves.</li>
+<li>Sort each half recursively.</li>
+<li>Merge the two halves.</li>
+</ol>
+</div><div class="column" style="width:55%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> mergeSort<span class="op">(</span>vector<span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="op">&amp;</span> A<span class="op">,</span> <span class="dt">int</span> lo<span class="op">,</span> <span class="dt">int</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>hi <span class="op">&gt;</span> lo<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>hi <span class="op">+</span> lo<span class="op">)/</span><span class="dv">2</span><span class="op">;</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>        mergeSort<span class="op">(</span>A<span class="op">,</span> lo<span class="op">,</span> mid<span class="op">);</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>        mergeSort<span class="op">(</span>A<span class="op">,</span> mid<span class="op">+</span><span class="dv">1</span><span class="op">,</span> hi<span class="op">);</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>        merge<span class="op">(</span>A<span class="op">,</span> lo<span class="op">,</span> mid<span class="op">,</span> hi<span class="op">);</span></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<p>RT:</p>
+<aside class="notes">
+<p>Write the recurrence beside RT. With <span class="math inline">\(T(n)\)</span> the time to sort <span class="math inline">\(n\)</span> items:</p>
+<p><span class="math display">\[T(1) = b, \qquad T(n) = 2\,T(n/2) + cn\]</span></p>
+<p>Two recursive calls on half the input, plus a linear merge. The split itself is constant. Assume <span class="math inline">\(n\)</span> is a power of 2 so the halves are exact.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="closed-form-1-expand-and-generalize" class="slide level2 smaller">
+<h2>Closed form 1: expand and generalize</h2>
+<p><span class="math inline">\(T(n) = 2\,T(n/2) + cn, \quad T(1) = b\)</span></p>
+<aside class="notes">
+<p><span class="math display">\[
+\begin{aligned}
+T(n) &amp;= 2T(n/2) + cn \\
+     &amp;= 4T(n/4) + 2cn \\
+     &amp;= 8T(n/8) + 3cn \\
+     &amp;\;\;\vdots \\
+     &amp;= 2^k\,T(n/2^k) + kcn
+\end{aligned}
+\]</span></p>
+<p>The base case is reached when <span class="math inline">\(n/2^k = 1\)</span>, i.e.&nbsp;<span class="math inline">\(k = \log n\)</span>:</p>
+<p><span class="math display">\[T(n) = n\,T(1) + cn\log n = cn\log n + bn.\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="closed-form-2-recursion-tree" class="slide level2 smaller">
+<h2>Closed form 2: recursion tree</h2>
+<svg class="nodefig" width="910" height="372">
+<g transform="scale(1.3)"> <line x1="340.0" y1="106" x2="395.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="340.0" y1="106" x2="285.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="120.0" y1="106" x2="175.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="120.0" y1="106" x2="65.0" y2="136" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="230.0" y1="42" x2="340.0" y2="72" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="230.0" y1="42" x2="120.0" y2="72" stroke="#1a1a1a" stroke-width="1.5"></line> <rect x="36.4" y="8" width="387.2" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="230.0" y="31" font-size="17" text-anchor="middle">n</text> <rect x="23.2" y="72" width="193.6" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="120.0" y="95" font-size="17" text-anchor="middle">n/2</text> <rect x="243.2" y="72" width="193.6" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="340.0" y="95" font-size="17" text-anchor="middle">n/2</text> <rect x="16.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="65.0" y="159" font-size="17" text-anchor="middle">n/4</text> <rect x="126.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="175.0" y="159" font-size="17" text-anchor="middle">n/4</text> <rect x="236.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="285.0" y="159" font-size="17" text-anchor="middle">n/4</text> <rect x="346.6" y="136" width="96.8" height="34" rx="5" fill="#e6eef9" stroke="#1a1a1a" stroke-width="2"></rect> <text class="val" x="395.0" y="159" font-size="17" text-anchor="middle">n/4</text> <text class="val" x="65.0" y="200" font-size="20" text-anchor="middle">⋮</text> <text class="val" x="175.0" y="200" font-size="20" text-anchor="middle">⋮</text> <text class="val" x="285.0" y="200" font-size="20" text-anchor="middle">⋮</text> <text class="val" x="395.0" y="200" font-size="20" text-anchor="middle">⋮</text> <rect x="18.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="46.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="73.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="101.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="128.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="156.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="183.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="211.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="238.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="266.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="293.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="321.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="348.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="376.2" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="403.8" y="222" width="10" height="10" fill="#c0392b"></rect> <rect x="431.2" y="222" width="10" height="10" fill="#c0392b"></rect> <text class="lbl" x="480" y="20" font-size="15">work at this level</text> <line x1="480" y1="40" x2="630" y2="40" stroke="#8b96a5" stroke-width="1.5"></line> <line x1="480" y1="104" x2="630" y2="104" stroke="#8b96a5" stroke-width="1.5"></line> <line x1="480" y1="168" x2="630" y2="168" stroke="#8b96a5" stroke-width="1.5"></line> <line x1="480" y1="234" x2="630" y2="234" stroke="#8b96a5" stroke-width="1.5"></line> <text class="lbl" x="480" y="270" font-size="15">number of levels:</text> <line x1="610" y1="276" x2="690" y2="276" stroke="#8b96a5" stroke-width="1.5"></line> </g>
+</svg>
+<aside class="notes">
+<p>Each level does a total of <span class="math inline">\(cn\)</span> work: one <span class="math inline">\(n\)</span>, two <span class="math inline">\(n/2\)</span>’s, four <span class="math inline">\(n/4\)</span>’s… The leaves are <span class="math inline">\(n\)</span> base cases at <span class="math inline">\(b\)</span> each.</p>
+<p>The tree has <span class="math inline">\(\log n\)</span> levels of merging, so the total is <span class="math inline">\(cn\log n + bn\)</span> — the same answer as expanding.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="proving-the-closed-form-is-correct" class="slide level2 smaller">
+<h2>Proving the closed form is correct:</h2>
+<p><strong>Thm:</strong> <span class="math inline">\(\forall n \ge 1,\; T(n) \le cn\log n + bn.\)</span></p>
+<aside class="notes">
+<p>By induction on <span class="math inline">\(n\)</span> (powers of 2).</p>
+<p><strong>Base case</strong>, <span class="math inline">\(n = 1\)</span>: <span class="math inline">\(T(1) = b \le c \cdot 1 \cdot 0 + b \cdot 1 = b\)</span>. ✓</p>
+<p><strong>IH:</strong> assume <span class="math inline">\(T(j) \le cj\log j + bj\)</span> for all <span class="math inline">\(j &lt; n\)</span>.</p>
+<p><strong>Inductive step</strong>, <span class="math inline">\(n &gt; 1\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T(n) &amp;= 2T(n/2) + cn \\
+     &amp;\le 2\left(c\tfrac{n}{2}\log\tfrac{n}{2} + b\tfrac{n}{2}\right) + cn \\
+     &amp;= cn(\log n - 1) + bn + cn \\
+     &amp;= cn\log n + bn.
+\end{aligned}
+\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="mergesort-correctness" class="slide level2 smaller proof">
+<h2>MergeSort correctness:</h2>
+<p>Call mergeSort: <code>mergeSort(A, 0, A.size()-1);</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> mergeSort<span class="op">(</span>vector<span class="op">&lt;</span>T<span class="op">&gt;</span> <span class="op">&amp;</span> A<span class="op">,</span> <span class="dt">int</span> lo<span class="op">,</span> <span class="dt">int</span> hi<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>hi <span class="op">&gt;</span> lo<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="dt">int</span> mid <span class="op">=</span> <span class="op">(</span>hi <span class="op">+</span> lo<span class="op">)/</span><span class="dv">2</span><span class="op">;</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>        mergeSort<span class="op">(</span>A<span class="op">,</span> lo<span class="op">,</span> mid<span class="op">);</span></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>        mergeSort<span class="op">(</span>A<span class="op">,</span> mid<span class="op">+</span><span class="dv">1</span><span class="op">,</span> hi<span class="op">);</span></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a>        merge<span class="op">(</span>A<span class="op">,</span> lo<span class="op">,</span> mid<span class="op">,</span> hi<span class="op">);</span></span>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Claim: <code>mergeSort</code> correctly sorts <code>A[lo..hi]</code> for any <code>(hi-lo+1)</code> ________</p>
+<p>Let <span class="math inline">\(n\)</span> = <code>(hi - lo + 1)</code>, arbitrary.</p>
+<p><span class="math inline">\(n \le 1\)</span>: (Base Case)</p>
+<p><span class="math inline">\(n &gt; 1\)</span>: IH: Assume <code>mergeSort</code> correctly sorts a slice of size <span class="math inline">\(j\)</span>, for any <span class="math inline">\(j &lt; n\)</span>.</p>
+<p><code>int mid = (hi + lo)/2;</code></p>
+<p><code>mergeSort(A, lo, mid);</code> <br> <code>mergeSort(A, mid+1, hi);</code></p>
+<aside class="notes">
+<p>The blank: <strong><span class="math inline">\(\ge 0\)</span></strong>. The empty slice counts.</p>
+<p><strong>Base case</strong>, <span class="math inline">\(n \le 1\)</span>: <code>hi &gt; lo</code> is false, nothing happens, and a slice of 0 or 1 items is already sorted.</p>
+<p><strong><span class="math inline">\(n &gt; 1\)</span>:</strong> because <code>lo &lt; hi</code>, <code>mid</code> satisfies <code>lo ≤ mid &lt; hi</code>. Why:</p>
+<ul>
+<li><strong>lo ≤ mid:</strong> the average of lo and something at least lo is at least lo, and rounding down can’t take it below lo, because lo is a whole number.</li>
+<li><strong>mid &lt; hi:</strong> since lo ≤ hi − 1, the average is at most hi − ½, and rounding down keeps it below hi.</li>
+</ul>
+<p>It only works because lo &lt; hi, which is why the 0-or-1 case has to be the base case: with lo = hi, mid = hi and the first call would be the same call again.</p>
+<p>So both <code>A[lo..mid]</code> and <code>A[mid+1..hi]</code> have at least one item and <strong>fewer than <span class="math inline">\(n\)</span></strong>. That’s exactly what the IH needs: both recursive calls sort their halves.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="mergesort-correctness-continued" class="slide level2 smaller">
+<h2>MergeSort correctness, continued:</h2>
+<p><code>merge(A, lo, mid, hi);</code></p>
 <p><br>
 </p>
-<p>No — and the exceptions are important and worth considering:</p>
+<p>Conclusion:</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><strong>To contemplate:</strong></p>
 <ul>
-<li><strong>approximation</strong> — provably close, much faster</li>
-<li><strong>heuristics</strong> — usually good, no promise</li>
-<li><strong>randomized</strong> — correct with high probability</li>
-<li><strong>restricted inputs</strong> — correct on the data you actually have</li>
+<li>does the value of <code>mid</code> matter in the correctness proof?</li>
+<li>does the value of <code>mid</code> matter in the analysis of the runtime?</li>
+<li>could we do a <span class="math inline">\(k\)</span>-way merge sort?</li>
 </ul>
 <aside class="notes">
-<p>We spent Wednesday on this. Land the answer and move – do not re-run the discussion, it already happened.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="measuring-the-value-of-algorithms" class="slide level2 smaller">
-<h2>Measuring the value of algorithms</h2>
-<p>Two algorithms solve the same problem. Which is better?</p>
+<p><code>merge</code> takes two sorted slices that sit side by side and produces one sorted slice of the same items. (Its own correctness is a loop invariant: the output so far is sorted and holds the smallest items seen.)</p>
+<p><strong>Conclusion:</strong> <code>A[lo..hi]</code> is sorted. Since <span class="math inline">\(n\)</span> was arbitrary, <code>mergeSort</code> sorts every slice, and in particular the call <code>mergeSort(A, 0, A.size()-1)</code> sorts the whole array.</p>
+<p>To contemplate:</p>
 <ul>
-<li>Use different metrics — <span style="color: #3498db;">time</span>, <span style="color: #3498db;">space</span> most common</li>
-<li>Express <span style="color: #e74c3c;">running time</span> as a (positive) <span style="color: #e74c3c;">function</span> of input size:</li>
-</ul>
-<p><span class="math display">\[T(n): \text{time to complete the operations on data of size } n\]</span></p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<ul>
-<li>The <strong>form</strong> of that function depends on the structure of the algorithm</li>
-</ul>
-</section>
-<section id="running-times" class="slide level2 smaller">
-<h2>Running times</h2>
-<p>Suppose a computer executes <span class="math inline">\(10^{12}\)</span> operations per sec.</p>
-<div class="shaded-table">
-<table class="caption-top" style="width:100%;">
-<colgroup>
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-<col style="width: 16%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>operations</th>
-<th>n=10</th>
-<th>n=100</th>
-<th>n=1000</th>
-<th>n=10,000</th>
-<th>n=<span class="math inline">\(10^{12}\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td>1 s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n \log n\)</span></td>
-<td><span class="math inline">\(10^{-11}\)</span> s</td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-7}\)</span> s</td>
-<td>40 s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(n^2\)</span></td>
-<td><span class="math inline">\(10^{-10}\)</span> s</td>
-<td><span class="math inline">\(10^{-8}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-4}\)</span> s</td>
-<td><span class="math inline">\(10^{12}\)</span> s</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(n^3\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{-6}\)</span> s</td>
-<td><span class="math inline">\(10^{-3}\)</span> s</td>
-<td>1 s</td>
-<td><span class="math inline">\(10^{24}\)</span> s</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(2^n\)</span></td>
-<td><span class="math inline">\(10^{-9}\)</span> s</td>
-<td><span class="math inline">\(10^{18}\)</span> s</td>
-<td><span class="math inline">\(10^{289}\)</span> s</td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Which of these are you willing to wait for?</p>
-<aside class="notes">
-<p><strong>Anchor: the universe is about 4.4 x 10^17 seconds old.</strong></p>
-<ul>
-<li><strong>10^12 s</strong> (n^2 at n=10^12) — ~32,000 years. About 5x all of recorded history; back to the Chauvet cave paintings.</li>
-<li><strong>10^18 s</strong> (2^n at n=100) — ~32 billion years. <strong>2.3x the age of the universe.</strong></li>
-<li><strong>10^24 s</strong> (n^3 at n=10^12) — ~32 quadrillion years. 2.3 million x the age of the universe.</li>
-<li><strong>10^289 s</strong> (2^n at n=1000) — 10^271 x the age of the universe. There are only ~10^80 atoms in the observable universe; this exceeds that by 10^209.</li>
-</ul>
-<p>If you only use one line: <strong>2^n at n=100 already outruns the universe.</strong> Not a million. A hundred.</p>
-<p>Small end: 10^-9 s is one nanosecond, and light travels <strong>30 cm</strong> in it – Grace Hopper handed out 11.8-inch wires so engineers would stop asking why satellite calls were slow. At 10^-11 s light travels 3 mm.</p>
-<p>Two framings if there is time:</p>
-<ul>
-<li><strong>The n^3 row is the scary one.</strong> 2^n is easy to dismiss as pathological, but n^3 is an innocent triple loop – and at n=10,000 it is already 1 second while n is still at 10^-8.</li>
-<li><strong>Faster hardware does not save you.</strong> A machine 1000x faster turns 10^289 into 10^286. The exponential eats all of hardware progress and doesn’t notice. That is why this is a math course, not a benchmarking course.</li>
+<li><strong>Correctness:</strong> no. Any <code>mid</code> with <code>lo ≤ mid &lt; hi</code> works — the proof only needs both halves to be smaller.</li>
+<li><strong>Runtime:</strong> yes. Split off one item at a time (<code>mid = lo</code>) and the recurrence becomes <span class="math inline">\(T(n) = T(n-1) + cn\)</span>, which is <span class="math inline">\(\Theta(n^2)\)</span>.</li>
+<li><strong><span class="math inline">\(k\)</span>-way:</strong> yes. <span class="math inline">\(\log_k n\)</span> levels, but each merge now picks the smallest of <span class="math inline">\(k\)</span> fronts. Still <span class="math inline">\(\Theta(n \log n)\)</span>.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -393,229 +442,40 @@
           display:block!important;
       }</style></aside>
 </section>
-<section id="algorithmic-analysis-example-1" class="slide level2 smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>C++ mysteries?</p>
-<ul>
-<li></li>
-<li></li>
-<li></li>
-</ul>
-</section>
-<section id="algorithmic-analysis-example-1-1" class="slide level2 activity smaller">
-<h2>Algorithmic analysis — example 1</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="where-are-we-in-the-sorting-picture" class="slide level2 smaller">
+<h2>Where are we in the sorting picture?</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-<col style="width: 6%">
-</colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: right;">0</th>
-<th style="text-align: right;">1</th>
-<th style="text-align: right;">2</th>
-<th style="text-align: right;">3</th>
-<th style="text-align: right;">4</th>
-<th style="text-align: right;">5</th>
-<th style="text-align: right;">6</th>
-<th style="text-align: right;">7</th>
-<th style="text-align: right;">8</th>
-<th style="text-align: right;">9</th>
-<th style="text-align: right;">10</th>
-<th style="text-align: right;">11</th>
-<th style="text-align: right;">12</th>
-<th style="text-align: right;">13</th>
-<th style="text-align: right;">14</th>
-<th style="text-align: right;">15</th>
+<th></th>
+<th style="text-align: center;">Best case</th>
+<th style="text-align: center;">Worst case</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">11</td>
-<td style="text-align: right;">73</td>
-<td style="text-align: right;">21</td>
-<td style="text-align: right;">29</td>
-<td style="text-align: right;">86</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">57</td>
-<td style="text-align: right;">61</td>
-<td style="text-align: right;">64</td>
-<td style="text-align: right;">15</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">7</td>
-<td style="text-align: right;">45</td>
+<td><strong>Insertion</strong></td>
+<td style="text-align: center;"><span class="math inline">\(O(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n^2)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Selection</strong></td>
+<td style="text-align: center;"><span class="math inline">\(O(n^2)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Merge</strong></td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(O(n\log n)\)</span></td>
 </tr>
 </tbody>
 </table>
-<p>What does it do? Describe it using a complete sentence. Give it a good name.</p>
-<countdown-timer id="timer_c25c3c79094a089c7137fd9103e7f4c98b1e8cf8" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 0;">
- </countdown-timer>
+<p><br>
+</p>
+<p>Watch them race: <a href="https://visualgo.net/en/sorting" class="uri">https://visualgo.net/en/sorting</a></p>
 <aside class="notes">
-<p>I’m going to start the activity by asking for total silence – this is going to be a meditative exercise. a moment of reflection. take a couple minutes to write down what this function does. you’re going to need your actual sentence, so PLEASE actually write it.</p>
-<p>Hold the silence. Three minutes feels long and some will finish in ninety seconds – let them sit with it rather than moving on early. The students who finish fast are usually the ones about to discover they were imprecise.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Form groups of size 3. Look at the group papers.</p>
-<p>How many written statements can you see in your group?</p>
-<aside class="notes">
-<p>Quick scan of the room. This is a compliance check that costs ten seconds and requires collecting nothing. Groups police themselves.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-1" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Read your statement out loud, simultaneously on the count of 3.</p>
-<aside class="notes">
-<p>don’t fix it as you read! You are going to want to. You will see the gap about half a second before you reach it, and your instinct will be to quietly patch it as you speak.</p>
-<p><strong>Resist that.</strong> You are reading it so that <em>you</em> can hear it.</p>
-<p>Let the whole room read at once – it takes about thirty seconds and the wall of sound is worth having. Two hundred people saying different sentences about the same four lines of code makes the point before anyone discusses anything.</p>
-<p>Reading simultaneously does three things a round-robin cannot: it removes all performance anxiety in week 1 among strangers, it guarantees every single student actually does it, and it means no confident voice anchors the group before the others have spoken.</p>
-<p>The instruction not to self-repair is the important one. Say it twice. Students patching their own sentences mid-read is automatic and it is exactly what destroys the effect.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-2" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<p>Share your statements, and discuss them.</p>
-<p>Write a final description for your group.</p>
-<aside class="notes">
-<p>Circulate. Listen for the argument – the groups doing this properly get loud. Silent groups usually accepted the first statement without testing it.</p>
-<p>Useful nudge if a group is stuck agreeing: “read me the shortest one, and I’ll tell you how I’d break it.”</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="example-1-continued-3" class="slide level2 activity">
-<h2>Example 1, continued</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> ____________ <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<aside class="notes">
-<p>Build it live from the room’s own words. Take pieces from different groups so the final sentence visibly belongs to everyone.</p>
-<p>A version that survives all the attacks above:</p>
-<blockquote>
-<p>Given a vector of integers <code>arr</code> and an integer <code>q</code>, return the index of the <em>first</em> element of <code>arr</code> equal to <code>q</code>, scanning from index 0 upward. If no element equals <code>q</code>, return -1.</p>
-</blockquote>
-<p>Then the name falls out almost for free: <code>indexOfFirst</code>, <code>firstIndexOf</code>, <code>findFirstIndex</code>. Point out that “find” alone was never enough – a function called <code>find</code> could return a bool, a value, or an iterator.</p>
-<p>If somebody has instead <em>transcribed</em> the code line by line (“it loops from 0 to size, and if arr[i] equals q it returns i”), that technically passes the reimplementation test, which makes it a great 90 seconds: it tells you what the code says, never what it is for, and it is no shorter than just reading the code. The giveaway is that a transcription cannot name the function.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="what-just-happened" class="slide level2 smaller">
-<h2>What just happened?</h2>
-<aside class="notes">
-<p>Deliberately bare – this part is talked, not projected. Prompts, in the order they tend to work:</p>
-<ul>
-<li>Twenty minutes ago almost nobody could write that sentence. Now almost all of you can.</li>
-<li><strong>And I never taught you anything about searching an array.</strong> Say it, then stop. Let them work out why. Nothing was transmitted from the front of the room – what changed is that they talked to each other.</li>
-<li>You needed each other. Not a lecture, not a recording, not a smarter person – two people who would not accept a vague sentence.</li>
-<li>The contract: when one of you says something fuzzy, any of the others gets to say <strong>“say that more precisely.”</strong> Not rude. The most useful thing you can say to someone trying to learn this. They will hear me say it all term.</li>
-<li>A recording gives you information. <strong>The room gives you feedback.</strong></li>
-</ul>
-<p>Do not add an attendance pitch. They just lived the argument; saying it a second time cheapens it.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="algorithmic-analysis-running-time" class="slide level2">
-<h2>Algorithmic analysis — running time</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> idxFirst <span class="op">(</span>vector<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> arr<span class="op">,</span> <span class="dt">int</span> q<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span><span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> arr<span class="op">.</span>size<span class="op">();</span> i<span class="op">++)</span></span>
-<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>arr<span class="op">[</span>i<span class="op">]</span> <span class="op">==</span> q<span class="op">)</span></span>
-<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> i<span class="op">;</span></span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="op">-</span><span class="dv">1</span><span class="op">;</span></span>
-<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>How long does it take?</p>
-<aside class="notes">
-<p>The blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called <code>find</code> could return a bool, a value or an iterator. A precise description hands you <code>idxFirst</code> almost for free.</p>
-<p>Take answers. Somebody will say “it depends” – that is the slide after this.</p>
+<p>Merge sort doesn’t care about the input order, like selection sort — but it sits at <span class="math inline">\(n \log n\)</span> instead of <span class="math inline">\(n^2\)</span>.</p>
+<p>Next: is <span class="math inline">\(n \log n\)</span> the best a comparison sort can do?</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
