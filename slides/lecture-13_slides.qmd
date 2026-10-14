@@ -5,10 +5,6 @@ subtitle: "Merge Sort"
 # Friday's video (recorded Wednesday). From oldslides/lec100724-mergeSort-1.pdf,
 # pages 4-10; pages 2-3 (merge, "sort this array") ended lecture 12, so they
 # come back here as one recap slide.
-#
-# The 2024 deck's visualizer link, toptal.com/developers/sorting-algorithms,
-# still answers 403 "blocked" from this machine (2026-10-06), so the last slide
-# uses VisuAlgo instead.
 ---
 ## Today {.smaller}
 
@@ -347,7 +343,7 @@ To contemplate:
 
 \
 
-Watch them race: <https://visualgo.net/en/sorting>
+Watch them race: <https://www.toptal.com/developers/sorting-algorithms>
 
 ::: notes
 Merge sort doesn't care about the input order, like selection sort — but it
