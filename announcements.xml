@@ -11,7 +11,60 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.10.19</generator>
-<lastBuildDate>Mon, 05 Oct 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 6 — Oct 12 to Oct 18</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/05_week-06/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>10/12</strong></td>
+<td><strong>No class</strong> — Thanksgiving</td>
+</tr>
+<tr class="even">
+<td><strong>10/14</strong></td>
+<td>Video lesson · Examlet 3 questions visible · PEX4 released</td>
+</tr>
+<tr class="odd">
+<td><strong>10/16</strong></td>
+<td>Video lesson</td>
+</tr>
+<tr class="even">
+<td><strong>10/19</strong></td>
+<td>Homework Two <strong>due</strong> · PA2 released (due 11/02)</td>
+</tr>
+<tr class="odd">
+<td><strong>10/22 – 10/25</strong></td>
+<td><strong>Examlet 4</strong> — self-scheduled in PrairieTest</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<p><strong>A quiet week.</strong> No class meetings, no labs, no examlets — just two video lessons.</p>
+<p><strong>Labs now include office hours.</strong> For the rest of the term, starting the week of 10/19, lab sections replace TA office hours. The TAs will still work through the lab exercise, and you’re welcome to bring any other questions too.</p>
+<p><strong>Plan for PAs to take up to 20 hours.</strong> Start PA2 early.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/05_week-06/</guid>
+  <pubDate>Tue, 13 Oct 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 5 — Oct 5 to Oct 11</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
