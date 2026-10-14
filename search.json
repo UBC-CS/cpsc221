@@ -1208,7 +1208,7 @@
     "href": "slides/lecture-13_slides.html#where-are-we-in-the-sorting-picture",
     "title": "CPSC 221",
     "section": "Where are we in the sorting picture?",
-    "text": "Where are we in the sorting picture?\n\n\n\n\nBest case\nWorst case\n\n\n\n\nInsertion\n\\(O(n)\\)\n\\(O(n^2)\\)\n\n\nSelection\n\\(O(n^2)\\)\n\\(O(n^2)\\)\n\n\nMerge\n\\(O(n\\log n)\\)\n\\(O(n\\log n)\\)\n\n\n\n\n\nWatch them race: https://www.toptal.com/developers/sorting-algorithms\n\nMerge sort doesn’t care about the input order, like selection sort — but it sits at \\(n \\log n\\) instead of \\(n^2\\).\nNext: is \\(n \\log n\\) the best a comparison sort can do?"
+    "text": "Where are we in the sorting picture?\n\n\n\n\nBest case\nWorst case\n\n\n\n\nInsertion\n\\(O(n)\\)\n\\(O(n^2)\\)\n\n\nSelection\n\\(O(n^2)\\)\n\\(O(n^2)\\)\n\n\nMerge\n\\(O(n\\log n)\\)\n\\(O(n\\log n)\\)\n\n\n\n\n\nhttps://www.toptal.com/developers/sorting-algorithms\n\nMerge sort doesn’t care about the input order, like selection sort — but it sits at \\(n \\log n\\) instead of \\(n^2\\).\nNext: is \\(n \\log n\\) the best a comparison sort can do?"
   },
   {
     "objectID": "summaries/lecture-01_summary.html",
