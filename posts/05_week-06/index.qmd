@@ -1,0 +1,30 @@
+---
+title: "Week 6 — Oct 12 to Oct 18"
+description: "Quiet week: two video lessons. Labs now include office hours. HW2 due and PA2 out Monday 10/19."
+author: "{{< var instructor.name >}}"
+date: 2026-10-13
+categories:
+  - deadline
+  - examlet
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **10/12** | **No class** — Thanksgiving |
+| **10/14** | Video lesson · Examlet 3 questions visible · PEX4 released |
+| **10/16** | Video lesson |
+| **10/19** | Homework Two **due** · PA2 released (due 11/02) |
+| **10/22 – 10/25** | **Examlet 4** — self-scheduled in PrairieTest |
+
+\
+
+**A quiet week.** No class meetings, no labs, no examlets — just two video
+lessons.
+
+**Labs now include office hours.** For the rest of the term, starting the week
+of 10/19, lab sections replace TA office hours. The TAs will still work through
+the lab exercise, and you're welcome to bring any other questions too.
+
+**Plan for PAs to take up to 20 hours.** Start PA2 early.

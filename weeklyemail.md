@@ -21,6 +21,46 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 6 — Mon Oct 12 to Sun Oct 18
+
+*Sent Tue 10/13. Short on purpose: quiet week.*
+
+---
+
+Hi everyone,
+
+Happy (belated) Thanksgiving! This is a **quiet week**: no class meetings, no
+labs, no examlets. Just two video lessons, Wednesday's and Friday's, on the
+course website.
+
+1. **Cinda's office hour today (Tue 10/13) is cancelled.**
+
+2. **Labs now include office hours.** For the rest of the term, starting next
+   week, lab sections replace TA office hours. The TAs will still work through
+   the lab exercise, and you're welcome to bring any other questions, too.
+
+3. **Homework Two is due Monday 10/19.** **PA2** comes out the same day, due
+   Monday 11/02. Plan for PAs to take up to **20 hours**, so start early!
+
+4. **Examlet 4** is next week, Thursday to Sunday. Registration opens on
+   PrairieTest this week, and **PEX4** comes out Wednesday evening.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+⚠ **Before sending**
+
+1. **"Starting next week"** — labs don't meet this week, so the first lab run
+   with office hours is the week of 10/19. Right?
+2. **Examlet 4 coverage** — still to check (Complexity, Tree Functions, Tree
+   Counting, Review). Trees start in this week's videos at the earliest.
+
+After it goes out, the facts go up as `posts/05_week-06/`.
+
+---
+
 ## Week 5 — Mon Oct 5 to Sun Oct 11
 
 *Sent Sun Oct 4 (late). Text below is the draft plus Cinda's edits; the EX2
