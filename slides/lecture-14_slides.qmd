@@ -1,0 +1,208 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Sorting Complexity"
+
+# Wednesday's video (quiet week). From oldslides/lec100924-sortComplexity.pdf,
+# all seven pages. The decision tree has a DELIBERATE bug, kept from 2024:
+# the leaf for p2 < p1 < p3 reads p2 p3 p1 (it should be p2 p1 p3), so that
+# leaf appears twice. Students find it by working out how the tree works.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- Quiet week: no class meetings, labs or examlets
+- **Homework Two** is due Monday 10/19; **PA2** comes out the same day
+- **Examlet 4** is next week — book your seat on PrairieTest
+
+\
+
+**Where we're going**
+
+- How fast can *any* sorting algorithm be?
+- Decision trees
+- A lower bound for comparison based sorting
+
+## Where are we in the sorting picture? {.smaller}
+
+| | Best case | Worst case |
+|---|:---:|:---:|
+| **Insertion** | $O(n)$ | $O(n^2)$ |
+| **Selection** | $O(n^2)$ | $O(n^2)$ |
+| **Merge** | $O(n\log n)$ | $O(n\log n)$ |
+
+\
+
+<https://www.toptal.com/developers/sorting-algorithms>
+
+::: notes
+Where lecture 13 left us. Merge sort is $n \log n$ no matter what. Can
+anything beat it? Today's answer: not if all you can do is compare.
+:::
+
+## Complexity of the sorting problem {.smaller}
+
+The ***complexity*** of a problem is the runtime of the ***fastest***
+algorithm that solves it.
+
+Today: the complexity of **comparison based sorting**.
+
+- The only thing we can do with two elements is ask $a < b$ — in constant time.
+- No peeking inside: no arithmetic, no digits.
+
+\
+
+Insertion, &nbsp; Merge, &nbsp; Quick, &nbsp; Radix, &nbsp; Selection: which are comparison based sorts?
+
+::: notes
+Note the shift: not the cost of an *algorithm*, but of the *problem* — the
+best any algorithm could ever do.
+
+The list at the bottom: which of these are comparison based? Insertion,
+merge, quick and selection all are. **Radix sort is not** — it looks at the
+digits of the keys. We haven't seen quick or radix sort; just name them.
+:::
+
+## Decision-tree encoding of a sorting algorithm {.smaller}
+
+Suppose you have an unsorted array of length $n$: $p_1\,p_2 \ldots p_n$.
+We need to produce a result for every possible arrangement.
+
+Fundamental operation: compare 2 elements using $<$.
+
+<svg class="nodefig" width="1131" height="371">
+<g transform="scale(1.45)">
+<line x1="360" y1="39" x2="180" y2="75" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="256.0" y="61.0" font-size="15" text-anchor="middle">yes</text>
+<line x1="360" y1="39" x2="540" y2="75" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="464.0" y="61.0" font-size="15" text-anchor="middle">no</text>
+<line x1="180" y1="109" x2="80" y2="145" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="116.0" y="131.0" font-size="15" text-anchor="middle">yes</text>
+<line x1="180" y1="109" x2="280" y2="145" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="244.0" y="131.0" font-size="15" text-anchor="middle">no</text>
+<line x1="540" y1="109" x2="440" y2="145" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="476.0" y="131.0" font-size="15" text-anchor="middle">yes</text>
+<line x1="540" y1="109" x2="640" y2="145" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="604.0" y="131.0" font-size="15" text-anchor="middle">no</text>
+<line x1="280" y1="179" x2="210" y2="215" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="231.0" y="201.0" font-size="15" text-anchor="middle">yes</text>
+<line x1="280" y1="179" x2="350" y2="215" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="329.0" y="201.0" font-size="15" text-anchor="middle">no</text>
+<line x1="640" y1="179" x2="570" y2="215" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="591.0" y="201.0" font-size="15" text-anchor="middle">yes</text>
+<line x1="640" y1="179" x2="710" y2="215" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="689.0" y="201.0" font-size="15" text-anchor="middle">no</text>
+<ellipse cx="360" cy="22" rx="46.0" ry="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="360" y="28" font-size="16" text-anchor="middle">p₁ < p₂</text>
+<ellipse cx="180" cy="92" rx="46.0" ry="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="180" y="98" font-size="16" text-anchor="middle">p₂ < p₃</text>
+<ellipse cx="540" cy="92" rx="46.0" ry="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="540" y="98" font-size="16" text-anchor="middle">p₁ < p₃</text>
+<ellipse cx="80" cy="162" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="168" font-size="16" text-anchor="middle">p₁ p₂ p₃</text>
+<ellipse cx="280" cy="162" rx="46.0" ry="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="168" font-size="16" text-anchor="middle">p₁ < p₃</text>
+<ellipse cx="440" cy="162" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="440" y="168" font-size="16" text-anchor="middle">p₂ p₃ p₁</text>
+<ellipse cx="640" cy="162" rx="46.0" ry="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="640" y="168" font-size="16" text-anchor="middle">p₂ < p₃</text>
+<ellipse cx="210" cy="232" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="210" y="238" font-size="16" text-anchor="middle">p₁ p₃ p₂</text>
+<ellipse cx="350" cy="232" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="350" y="238" font-size="16" text-anchor="middle">p₃ p₁ p₂</text>
+<ellipse cx="570" cy="232" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="570" y="238" font-size="16" text-anchor="middle">p₂ p₃ p₁</text>
+<ellipse cx="710" cy="232" rx="50.0" ry="17" fill="#fffba8" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="710" y="238" font-size="16" text-anchor="middle">p₃ p₂ p₁</text>
+</g>
+</svg>
+
+::: notes
+This is insertion sort on three items, drawn as the comparisons it makes.
+Each internal node is a comparison; go left on yes, right on no. Each leaf
+is a final order.
+
+**Nothing moves along the way.** In code, the array gets rearranged as the
+algorithm runs — a swap here, a shift there. In the tree, the comparisons
+only *gather information*: the path you take **encodes** the reordering, and
+the leaf announces it all at once. The tree is a record of what the
+algorithm learns, not of what it does to the array.
+
+**There's a bug on purpose.** Ask: is every leaf right? To answer, you have
+to understand how the tree works. Trace the path $p_1 > p_2$, then
+$p_1 < p_3$: that means $p_2 < p_1 < p_3$, so the leaf should be
+$p_2\,p_1\,p_3$ — but it says $p_2\,p_3\,p_1$, which also appears at the
+far right. One arrangement is missing and another is listed twice.
+
+Once fixed: **6 = 3!** leaves, one for every arrangement. The longest path
+has **3 comparisons** — that's the worst-case running time.
+:::
+
+## Lower bound on sorting ($n$ items) {.smaller}
+
+Consider a decision tree that arises from a comparison based sorting
+algorithm on $n$ items:
+
+- Every permutation must be differentiated by the algorithm.
+- There are \_\_\_\_\_\_ permutations.
+- Comparisons induce a *binary tree* whose **height** determines the running
+  time of the algorithm. (A path is a sequence of comparisons.)
+- A binary tree of height $k$ has at most \_\_\_\_ leaves.
+
+We need the shortest tree whose number of leaves is $\ge$ the number of
+permutations.
+
+What is the minimum height of a comparison tree for sorting input of size $n$?
+
+::: notes
+Blanks: **$n!$** permutations, at most **$2^k$** leaves.
+
+If two different inputs landed on the same leaf, the algorithm would do the
+same thing to both and get one of them wrong. So every permutation needs its
+own leaf: leaves $\ge n!$.
+:::
+
+## Lower bound on sorting ($n$ items) {.smaller}
+
+Find the smallest $k$ so that $2^k \ge n!$
+
+::: notes
+Take logs: $k \ge \log(n!)$.
+
+Now bound $\log(n!)$ from below. Half of the factors in
+$n! = n(n-1)\cdots 1$ are at least $n/2$, so
+
+$$n! \ge \left(\tfrac{n}{2}\right)^{n/2}
+\quad\Rightarrow\quad
+\log(n!) \ge \tfrac{n}{2}\log\tfrac{n}{2} = \Omega(n\log n).$$
+
+And from above, $n! \le n^n$, so $\log(n!) \le n\log n$. So
+$\log(n!) = \Theta(n\log n)$.
+:::
+
+## Punchline {.smaller}
+
+Lower bound on comparison based sorting ($n$ items)…
+
+\
+
+**Minimum** height of a comparison tree for sorting input of size $n$…
+
+\
+
+\
+
+How tall are the trees for selection and insertion sort?
+
+::: notes
+**Any comparison based sort needs $\Omega(n\log n)$ comparisons in the worst
+case.** The minimum height is $\lceil\log_2 n!\rceil = \Theta(n\log n)$.
+
+So merge sort is **optimal** among comparison based sorts — asymptotically, you
+cannot do better.
+
+Selection and insertion sort: their trees have height $\Theta(n^2)$ —
+$n(n-1)/2$ comparisons in the worst case. Selection sort's tree is that tall
+on *every* path; insertion sort's has a short path, $n - 1$ comparisons, for
+already-sorted input. That's the best case in the table.
+:::
