@@ -343,7 +343,7 @@ To contemplate:
 
 \
 
-Watch them race: <https://www.toptal.com/developers/sorting-algorithms>
+<https://www.toptal.com/developers/sorting-algorithms>
 
 ::: notes
 Merge sort doesn't care about the input order, like selection sort — but it
