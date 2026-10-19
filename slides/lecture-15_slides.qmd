@@ -2,10 +2,10 @@
 title: "{{< var course.code >}}"
 subtitle: "Trees"
 
-# Friday's video (quiet week). From oldslides/lec100924-trees.pdf, all 13
+# Monday 10/19 in class (moved from Friday's video). From oldslides/lec100924-trees.pdf, all 13
 # pages. In 2024 this deck spilled over into two more classes (7.1 and the
 # start of 7.2 repeated its last six slides); as a video it runs in one
-# sitting, which frees a lecture. The "puzzle" link on the Mario family tree
+# sitting, which frees a lecture -- the slot this move used up. The "puzzle" link on the Mario family tree
 # (usgamer.net) is dead -- usgamer shut down -- so the image stays, unlinked.
 ---
 ## Today {.smaller}
@@ -14,9 +14,9 @@ subtitle: "Trees"
 ::: {.column width="55%"}
 **Announcements**
 
-- **Homework Two** is due Monday 10/19; **PA2** comes out the same day
-- **Examlet 4** is next week — book your seat on PrairieTest
-- Starting next week, labs include office hours
+- **Homework Two** is due tonight; **PA2** comes out tonight
+- **Examlet 4** runs Thursday to Sunday — book your seat on PrairieTest
+- Starting this week, labs include office hours
 
 \
 
@@ -482,7 +482,7 @@ $2n - (n - 1) = n + 1$ null.
 1) Draw a FULL tree with 9 nodes. Is it the same as your neighbour's?
 
 ::: notes
-Pause the video and try. It needn't be the same — there are several full
+Give them a minute with a neighbour. It needn't be the same — there are several full
 binary trees with 9 nodes. Every one has **4 internal nodes and 5 leaves**,
 though: in a full binary tree, leaves = internal + 1.
 :::
