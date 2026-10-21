@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
+
+  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-bae4879b06e3934071db1f39280ad658.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:description" content="Level Order, and Dictionaries">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta name="twitter:description" content="Level Order, and Dictionaries">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">CPSC 221</h1>
+  <p class="subtitle">Level Order, and Dictionaries</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="today" class="slide level2 smaller">
+<h2>Today</h2>
+<p><strong>Announcements</strong></p>
+<ul>
+<li><strong>Examlet 4</strong> is open until Sunday</li>
+<li><strong>PEX5</strong> (trees and traversals) is up</li>
+</ul>
+<p><br>
+</p>
+<p><strong>Where we’re going</strong></p>
+<ul>
+<li>Traversal running time</li>
+<li>Level-order traversal (or how to do PA2)</li>
+<li>ADT Dictionary</li>
+</ul>
+</section>
+<section id="traversal-running-time" class="slide level2 smaller smallcode">
+<h2>Traversal — running time</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="math inline">\(T(n)\)</span>: running time of a traversal on a tree with <span class="math inline">\(n\)</span> nodes.</p>
+<p><span class="math inline">\(T(0) = 1\)</span></p>
+<p><span class="math inline">\(T(n) = T(n_L) + T(n_R) + 1,\; n &gt; 0.\)</span></p>
+<p><strong>Thm:</strong> <span class="math inline">\(T(n) = 2n + 1,\; n \ge 0.\)</span></p>
+</div><div class="column" style="width:50%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> tree<span class="op">&lt;</span>T<span class="op">&gt;::</span>preOrder<span class="op">(</span>Node <span class="op">*</span> croot<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>croot <span class="op">!=</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>        cout <span class="op">&lt;&lt;</span> croot<span class="op">-&gt;</span>data<span class="op">;</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>        preOrder<span class="op">(</span>croot<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>        preOrder<span class="op">(</span>croot<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<svg class="nodefig" width="357" height="202">
+<g transform="scale(1.05)"> <line x1="137.0" y1="29.3" x2="93.0" y2="60.7" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="93.0,60.7 98.3,50.8 104.1,59.0" fill="#1a1a1a"></polygon> <line x1="163.6" y1="28.5" x2="216.4" y2="61.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="216.4,61.5 205.3,60.5 210.6,52.0" fill="#1a1a1a"></polygon> <line x1="70.0" y1="82.5" x2="50.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="50.0,107.5 52.3,96.6 60.1,102.8" fill="#1a1a1a"></polygon> <line x1="90.0" y1="82.5" x2="110.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="110.0,107.5 99.9,102.8 107.7,96.6" fill="#1a1a1a"></polygon> <line x1="130.0" y1="132.5" x2="150.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="150.0,157.5 139.9,152.8 147.7,146.6" fill="#1a1a1a"></polygon> <line x1="240.0" y1="82.5" x2="260.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="260.0,107.5 249.9,102.8 257.7,96.6" fill="#1a1a1a"></polygon> <line x1="260.0" y1="132.5" x2="240.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="240.0,157.5 242.3,146.6 250.1,152.8" fill="#1a1a1a"></polygon> <line x1="280.0" y1="132.5" x2="300.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="300.0,157.5 289.9,152.8 297.7,146.6" fill="#1a1a1a"></polygon> <circle cx="150" cy="20" r="16" fill="#a9cdf0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="150" y="25.4" font-size="14" text-anchor="middle">10</text> <circle cx="80" cy="70" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="75.4" font-size="14" text-anchor="middle">12</text> <circle cx="230" cy="70" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="230" y="75.4" font-size="14" text-anchor="middle">15</text> <circle cx="40" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="40" y="125.4" font-size="14" text-anchor="middle">3</text> <circle cx="120" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="120" y="125.4" font-size="14" text-anchor="middle">9</text> <circle cx="160" cy="170" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="160" y="175.4" font-size="14" text-anchor="middle">7</text> <circle cx="270" cy="120" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="270" y="125.4" font-size="14" text-anchor="middle">20</text> <circle cx="230" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="230" y="175.4" font-size="14" text-anchor="middle">30</text> <circle cx="310" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="310" y="175.4" font-size="14" text-anchor="middle">8</text> </g>
+</svg>
+</div></div>
+<aside class="notes">
+<p><span class="math inline">\(n_L\)</span> and <span class="math inline">\(n_R\)</span> are the sizes of the left and right subtrees, so <span class="math inline">\(n_L + n_R = n - 1\)</span>. Note <span class="math inline">\(T(0) = 1\)</span>: calling on an empty tree still costs one check.</p>
+<p><strong>Proof</strong>, by strong induction on <span class="math inline">\(n\)</span>.</p>
+<p><strong>Base case</strong>, <span class="math inline">\(n = 0\)</span>: <span class="math inline">\(T(0) = 1 = 2 \cdot 0 + 1\)</span>. ✓</p>
+<p><strong>IH:</strong> <span class="math inline">\(T(j) = 2j + 1\)</span> for all <span class="math inline">\(j &lt; n\)</span>.</p>
+<p><strong>Step</strong>, <span class="math inline">\(n &gt; 0\)</span>: both subtrees are smaller than <span class="math inline">\(n\)</span>, so</p>
+<p><span class="math display">\[T(n) = (2n_L + 1) + (2n_R + 1) + 1 = 2(n_L + n_R + 1) + 1 = 2n + 1.\]</span></p>
+<p>Where does the “<span class="math inline">\(+1\)</span>” come from? The <span class="math inline">\(n + 1\)</span> calls on empty subtrees — the null pointers from Monday’s theorem. <span class="math inline">\(n\)</span> real calls plus <span class="math inline">\(n + 1\)</span> empty ones is <span class="math inline">\(2n + 1\)</span>. Any traversal is <span class="math inline">\(\Theta(n)\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="traversals-something-totally-different" class="slide level2 smaller smallcode">
+<h2>Traversals: something totally different…</h2>
+<div class="columns">
+<div class="column" style="width:44%;">
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)"> <line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"></polygon> <line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"></polygon> <line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"></polygon> <line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"></polygon> <line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"></polygon> <line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"></polygon> <line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"></polygon> <circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text> <circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text> <circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text> <circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text> <circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text> <circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text> <circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text> <circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text> </g>
+</svg>
+<ol type="1">
+<li></li>
+<li></li>
+</ol>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;a)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;b)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii.</p>
+</div><div class="column" style="width:8%;">
+<p><br>
+</p>
+<p><br>
+</p>
+<svg class="nodefig" width="100" height="30">
+<line x1="5" y1="15" x2="80" y2="15" stroke="#1a1a1a" stroke-width="2"></line> <polygon points="95,15 80,9 80,21" fill="#1a1a1a"></polygon>
+</svg>
+</div><div class="column" style="width:48%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">template</span><span class="op">&lt;</span><span class="kw">class</span> T<span class="op">&gt;</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> tree<span class="op">&lt;</span>T<span class="op">&gt;::</span>levelOrder<span class="op">(</span>Node <span class="op">*</span> croot<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<aside class="notes">
+<p>Level order: <code>+ - * / d e b c</code>. Top to bottom, left to right — so it can’t follow the recursion. It needs a <strong>queue</strong>.</p>
+<ol type="1">
+<li>Make a queue; enqueue the root (if it isn’t null).</li>
+<li>While the queue isn’t empty:
+<ol type="a">
+<li>dequeue a node, <code>t</code>;</li>
+<li>visit <code>t</code>, then
+<ol type="i">
+<li>enqueue <code>t-&gt;left</code> if it isn’t null;</li>
+<li>enqueue <code>t-&gt;right</code> if it isn’t null.</li>
+</ol></li>
+</ol></li>
+</ol>
+<pre><code>Queue&lt;Node *&gt; q;
+if (croot != nullptr) q.push(croot);
+while (!q.isEmpty()) {
+    Node * t = q.pop();
+    cout &lt;&lt; t-&gt;data;
+    if (t-&gt;left  != nullptr) q.push(t-&gt;left);
+    if (t-&gt;right != nullptr) q.push(t-&gt;right);
+}</code></pre>
+<p><strong>This is PA2.</strong> <code>components()</code> and <code>computeDistances()</code> are this loop, with “neighbours on the map” in place of “children”. Enqueue something only the first time you see it — a map, unlike a tree, can lead you back to a node.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="traversals-summary" class="slide level2 smaller">
+<h2>Traversals summary</h2>
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)"> <line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"></polygon> <line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"></polygon> <line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"></polygon> <line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"></polygon> <line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"></polygon> <line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"></polygon> <line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"></line> <polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"></polygon> <circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text> <circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text> <circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text> <circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text> <circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text> <circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text> <circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text> <circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text> </g>
+</svg>
+<ol type="1">
+<li>We’ve studied 4 but…</li>
+</ol>
+<p><br>
+</p>
+<ol start="2" type="1">
+<li>Running time</li>
+</ol>
+<aside class="notes">
+<ol type="1">
+<li><strong>…really two kinds.</strong> Pre-, in- and postorder all go <em>deep</em> first: they ride the call stack (a stack!). Level order goes <em>wide</em> first: it rides a queue. Depth-first vs breadth-first — the same split we’ll meet again on graphs.</li>
+<li>All four visit each node once: <span class="math inline">\(\Theta(n)\)</span>.</li>
+</ol>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adt-dictionary" class="slide level2 smaller smallcode">
+<h2>ADT Dictionary</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Suppose we have the following data…</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>locker #</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>103</td>
+<td>Jay Hathaway</td>
+</tr>
+<tr class="even">
+<td>92</td>
+<td>Linda Stencel</td>
+</tr>
+<tr class="odd">
+<td>330</td>
+<td>Bonnie Cook</td>
+</tr>
+<tr class="even">
+<td>46</td>
+<td>Rick Brown</td>
+</tr>
+<tr class="odd">
+<td>124</td>
+<td>Kim Petersen</td>
+</tr>
+<tr class="even">
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody>
+</table>
+<p>…and we want to be able to retrieve a name, given a locker number.</p>
+</div><div class="column" style="width:50%;">
+<p>More examples of key/value pairs:</p>
+<ul>
+<li>CWL → Advising record</li>
+<li>Course number → Schedule info</li>
+<li>Color → PNG</li>
+<li>Vertex → Set of incident edges</li>
+<li>Flight number → Arrival information</li>
+<li>URL → html page</li>
+</ul>
+<p><br>
+</p>
+<p>A dictionary is a structure supporting:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> insert<span class="op">(</span>kType <span class="op">&amp;</span> k<span class="op">,</span> dType <span class="op">&amp;</span> d<span class="op">)</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> remove<span class="op">(</span>kType <span class="op">&amp;</span> k<span class="op">)</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>dType find<span class="op">(</span>kType <span class="op">&amp;</span> k<span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<aside class="notes">
+<p>Keys are unique; each one maps to its data. Every example on the right is a real system’s core: a CWL lookup, a flight board, the web itself.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="adt-dictionary-implementation-options" class="slide level2 smaller">
+<h2>ADT Dictionary: implementation options…</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">insert</th>
+<th style="text-align: center;">find</th>
+<th style="text-align: center;">(find +) remove</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>linked list</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n) + \Theta(1)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>unsorted array</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(n) + \Theta(1)\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>sorted array</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(\log n) + \Theta(n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(\log n)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\Theta(\log n) + \Theta(n)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Binary Tree?</strong></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>Linked list and unsorted array: insert anywhere, but find has to look at everything. Sorted array: binary search finds in <span class="math inline">\(\log n\)</span>, but inserting and removing shift everything over. Nothing is fast at all three.</p>
+<p>The last row is the question for next time: can a tree get <span class="math inline">\(\log n\)</span> for all three? (Sometimes. That “sometimes” is the next two weeks.)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CPSC 221</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/ubc-cs\.github\.io\/cpsc221\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
