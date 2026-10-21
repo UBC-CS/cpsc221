@@ -159,18 +159,11 @@
     "text": "Practice 4\n\nGive upper and lower bounds for the number of nodes in a complete tree of height h:\n\n\nMost: a perfect tree of height \\(h\\), \\(2^{h+1} - 1\\).\nFewest: a perfect tree of height \\(h-1\\) plus one node starting the next level: \\((2^h - 1) + 1 = 2^h\\).\nSo \\(2^h \\le n \\le 2^{h+1} - 1\\), and a complete tree’s height is exactly \\(\\lfloor \\log_2 n \\rfloor\\)."
   },
   {
-    "objectID": "slides/lecture-16_slides.html#tree-traversal-a-scheme-for-visiting-every-node",
-    "href": "slides/lecture-16_slides.html#tree-traversal-a-scheme-for-visiting-every-node",
+    "objectID": "slides/lecture-16_slides.html#tree-traversal",
+    "href": "slides/lecture-16_slides.html#tree-traversal",
     "title": "CPSC 221",
-    "section": "Tree traversal: a scheme for visiting every node",
-    "text": "Tree traversal: a scheme for visiting every node\n\n                +  -  /  b  c  *  d  e \n\n\nEvery node, exactly once — in what order? On this expression tree the three classic orders give three classic notations:\n\npreorder: + - / b c * d e (prefix)\ninorder: - b / c + d * e (infix — the expression as written)\npostorder: b c / - d e * + (postfix, a stack machine’s order)\n\nThe - has only a right child here: it’s a unary minus."
-  },
-  {
-    "objectID": "slides/lecture-16_slides.html#level-order-traversal-later",
-    "href": "slides/lecture-16_slides.html#level-order-traversal-later",
-    "title": "CPSC 221",
-    "section": "Level order traversal (later)",
-    "text": "Level order traversal (later)\n\n                +  -  /  b  c  *  d  e \n\n\nTop to bottom, left to right: + - * / d e b c. It doesn’t follow the recursive shape, so it needs a different tool — a queue. That’s Friday."
+    "section": "Tree traversal:",
+    "text": "Tree traversal:\n… a scheme for visiting every node\n\n                +  -  /  b  c  *  d  e \n\n\nEvery node, exactly once — in what order? On this expression tree the three classic orders give three classic notations:\n\npreorder: + - / b c * d e (prefix)\ninorder: - b / c + d * e (infix — the expression as written)\npostorder: b c / - d e * + (postfix, a stack machine’s order)\n\nThe - has only a right child here: it’s a unary minus."
   },
   {
     "objectID": "slides/lecture-16_slides.html#section",
@@ -184,7 +177,7 @@
     "href": "slides/lecture-16_slides.html#traversal-a-scheme-for-visiting-every-node",
     "title": "CPSC 221",
     "section": "Traversal: a scheme for visiting every node",
-    "text": "Traversal: a scheme for visiting every node\n\n\n\n                  10  12  15  3  9  7  20  30  8 \n\n_____Order:   3, 12, 9, 7, 10, 15, 30, 20, 8\n_____Order:\n_____Order:\n\ntemplate&lt;class T&gt;\nvoid tree&lt;T&gt;::_______Order(Node * croot) {\n    if (croot != nullptr) {\n\n\n        ___Order(croot-&gt;left);\n\n\n        ___Order(croot-&gt;right);\n\n\n    }\n}\n\n\nThe given order is inorder: 3, 12, 9, 7, 10, 15, 30, 20, 8.\n\nPreorder: 10, 12, 3, 9, 7, 15, 20, 30, 8\nPostorder: 3, 7, 9, 12, 30, 8, 20, 15, 10\n\nThe code: one line, visit(croot) (say, cout &lt;&lt; croot-&gt;data), goes in one of three places — before both calls (pre), between them (in), or after both (post). Same skeleton, three traversals.\nRunning time: each node is visited once, so \\(\\Theta(n)\\). (The proof is next lecture.)"
+    "text": "Traversal: a scheme for visiting every node\n\n\n\n                  10  12  15  3  9  7  20  30  8 \n\n_____Order:   3, 12, 9, 7, 10, 15, 30, 20, 8\n_____Order:\n_____Order:\ntemplate&lt;class T&gt;\nvoid tree&lt;T&gt;::_______Order(Node * croot) {\n    if (croot != nullptr) {\n\n        ___Order(croot-&gt;left);\n\n        ___Order(croot-&gt;right);\n\n    }\n}\n\ntemplate&lt;class T&gt;\nvoid tree&lt;T&gt;::_______Order(Node * croot) {\n    if (croot != nullptr) {\n\n        ___Order(croot-&gt;left);\n\n        ___Order(croot-&gt;right);\n\n    }\n}\ntemplate&lt;class T&gt;\nvoid tree&lt;T&gt;::_______Order(Node * croot) {\n    if (croot != nullptr) {\n\n        ___Order(croot-&gt;left);\n\n        ___Order(croot-&gt;right);\n\n    }\n}\n\n\nThe given order is inorder: 3, 12, 9, 7, 10, 15, 30, 20, 8.\n\nPreorder: 10, 12, 3, 9, 7, 15, 20, 30, 8\nPostorder: 3, 7, 9, 12, 30, 8, 20, 15, 10\n\nThe code: one line, visit(croot) (say, cout &lt;&lt; croot-&gt;data), goes in one of three places — before both calls (pre), between them (in), or after both (post). Same skeleton, three traversals.\nRunning time: each node is visited once, so \\(\\Theta(n)\\). (The proof is next lecture.)"
   },
   {
     "objectID": "slides/lecture-16_slides.html#traversal-shortcuts-euler-tour",
