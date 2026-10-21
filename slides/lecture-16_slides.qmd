@@ -1,0 +1,632 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Tree Traversals"
+
+# Wednesday 10/21 in class. Lecture 15 stopped at the implementation slide,
+# so this opens with the rest of it (implementation, null pointers, Practice
+# 1-4), copied from lecture-15_slides.qmd -- which is exactly how the 2024
+# traversal lecture opened. Then oldslides/lec101624-traversal.pdf pages 6-11.
+#
+# The mystery function sets croot = nullptr on a pointer passed BY VALUE, as
+# the 2024 slide did; that may be a planted bug, so it is kept.
+# The 2024 Euler-tour slide had a hand-drawn dashed tour around the tree; that
+# is left for live annotation.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 4** runs Thursday to Sunday: stacks and queues, array resizing,
+  merge sort and recurrences, the sorting lower bound. **No trees.**
+- **PEX5** (trees and traversals) comes out tonight
+
+\
+
+**Where we're going**
+
+- Finishing up: implementation, null pointers, bounds
+- Traversals
+
+## Contemplating implementation {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+<svg class="nodefig" width="412" height="312">
+<g transform="scale(1.25)">
+<rect x="166" y="4" width="48" height="22" fill="#b6f5cd" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="222" y="20" font-size="14">root</text>
+<circle cx="190" cy="15" r="3" fill="#1a1a1a"/>
+<line x1="190" y1="15" x2="190" y2="60" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="166" y="60" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="76" font-size="14" text-anchor="middle">5</text>
+<rect x="166" y="82" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="190" y="82" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="76" y="130" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="146" font-size="14" text-anchor="middle">3</text>
+<rect x="76" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="100" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="256" y="130" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="146" font-size="14" text-anchor="middle">9</text>
+<rect x="256" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="280" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="31" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="216" font-size="14" text-anchor="middle">1</text>
+<rect x="31" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="55" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="121" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="145" y="216" font-size="14" text-anchor="middle">4</text>
+<rect x="121" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="145" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="221" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="245" y="216" font-size="14" text-anchor="middle">6</text>
+<rect x="221" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="245" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="178" cy="91" r="3" fill="#1a1a1a"/>
+<line x1="178" y1="91" x2="100" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="202" cy="91" r="3" fill="#1a1a1a"/>
+<line x1="202" y1="91" x2="280" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="88" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="88" y1="161" x2="55" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="112" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="112" y1="161" x2="145" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="268" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="268" y1="161" x2="245" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="282" y1="168" x2="302" y2="154" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="33" y1="238" x2="53" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="57" y1="238" x2="77" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="123" y1="238" x2="143" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="147" y1="238" x2="167" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="223" y1="238" x2="243" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="247" y1="238" x2="267" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+</g>
+</svg>
+
+**Tree ADT:**
+
+- insert
+- remove
+- traverse
+:::
+::: {.column width="50%"}
+```cpp
+template<class T>
+class tree {
+public:  // discuss later
+private:
+    struct Node {
+        T data;
+        Node * left;
+        Node * right;
+    };
+    Node * root;  // + more?
+};
+```
+:::
+::::
+
+::: notes
+Each node holds its data and two pointers. Compare the list node: one
+`next`, now a `left` and a `right`. The tree itself is just a `root`
+pointer — `nullptr` for the empty tree.
+:::
+
+## Theorem {.smaller}
+
+**Theorem:** Our implementation of an $n$ item binary tree has \_\_\_\_\_\_\_ null pointers.
+
+<svg class="nodefig" width="412" height="312">
+<g transform="scale(1.25)">
+<rect x="166" y="4" width="48" height="22" fill="#b6f5cd" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="222" y="20" font-size="14">root</text>
+<circle cx="190" cy="15" r="3" fill="#1a1a1a"/>
+<line x1="190" y1="15" x2="190" y2="60" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="166" y="60" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="76" font-size="14" text-anchor="middle">5</text>
+<rect x="166" y="82" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="190" y="82" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="76" y="130" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="146" font-size="14" text-anchor="middle">3</text>
+<rect x="76" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="100" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="256" y="130" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="146" font-size="14" text-anchor="middle">9</text>
+<rect x="256" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="280" y="152" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="31" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="216" font-size="14" text-anchor="middle">1</text>
+<rect x="31" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="55" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="121" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="145" y="216" font-size="14" text-anchor="middle">4</text>
+<rect x="121" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="145" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="221" y="200" width="48" height="22" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="245" y="216" font-size="14" text-anchor="middle">6</text>
+<rect x="221" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="245" y="222" width="24" height="18" fill="#fbe0c9" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="178" cy="91" r="3" fill="#1a1a1a"/>
+<line x1="178" y1="91" x2="100" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="202" cy="91" r="3" fill="#1a1a1a"/>
+<line x1="202" y1="91" x2="280" y2="130" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="88" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="88" y1="161" x2="55" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="112" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="112" y1="161" x2="145" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="268" cy="161" r="3" fill="#1a1a1a"/>
+<line x1="268" y1="161" x2="245" y2="200" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="282" y1="168" x2="302" y2="154" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="33" y1="238" x2="53" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="57" y1="238" x2="77" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="123" y1="238" x2="143" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="147" y1="238" x2="167" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="223" y1="238" x2="243" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="247" y1="238" x2="267" y2="224" stroke="#1a1a1a" stroke-width="1.5"/>
+</g>
+</svg>
+
+::: notes
+**$n + 1$.** Count it: the picture has 6 nodes and 7 null pointers.
+
+Proof: there are $2n$ pointer fields in all. Every node except the root has
+exactly one pointer aimed at it, so $n - 1$ of them are used. That leaves
+$2n - (n - 1) = n + 1$ null.
+:::
+
+## Practice 1 {.smaller}
+
+1) Draw a FULL tree with 9 nodes. Is it the same as your neighbour's?
+
+::: notes
+Give them a minute with a neighbour. It needn't be the same — there are several full
+binary trees with 9 nodes. Every one has **4 internal nodes and 5 leaves**,
+though: in a full binary tree, leaves = internal + 1.
+:::
+
+## Practice 2 {.smaller}
+
+2) Draw a COMPLETE tree with 12 nodes. Is it the same as your neighbour's?
+
+::: notes
+This time it **is** the same as your neighbour's: a complete tree's shape is
+fixed by its size. Levels of 1, 2, 4, and then 5 nodes on the bottom level,
+filled from the left.
+:::
+
+## Practice 3 {.smaller}
+
+3a) Give an *upper bound* for the number of nodes in a tree of height h:
+
+\
+
+\
+
+3b) Give a *lower bound* for the height of a tree containing n nodes:
+
+::: notes
+3a) At most a perfect tree: $n \le 2^{h+1} - 1$.
+
+3b) Turn it around: $2^{h+1} \ge n + 1$, so
+$h \ge \log_2(n+1) - 1$. A binary tree with $n$ nodes has height
+$\Omega(\log n)$ — this will matter for every search tree we build.
+:::
+
+## Practice 4 {.smaller}
+
+4) Give upper and lower bounds for the number of nodes in a complete tree of
+height h:
+
+::: notes
+**Most:** a perfect tree of height $h$, $2^{h+1} - 1$.
+
+**Fewest:** a perfect tree of height $h-1$ plus one node starting the next
+level: $(2^h - 1) + 1 = 2^h$.
+
+So $2^h \le n \le 2^{h+1} - 1$, and a complete tree's height is exactly
+$\lfloor \log_2 n \rfloor$.
+:::
+
+## Tree traversal: a scheme for visiting every node {.smaller}
+
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)">
+<line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"/>
+<line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"/>
+<line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"/>
+<line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"/>
+<line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"/>
+<line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"/>
+<line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"/>
+<circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text>
+<circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text>
+<circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text>
+<circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text>
+<circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text>
+<circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text>
+<circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text>
+<circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text>
+</g>
+</svg>
+
+::: notes
+Every node, exactly once — in what order? On this expression tree the
+three classic orders give three classic notations:
+
+- **pre**order: `+ - / b c * d e` (prefix)
+- **in**order: `- b / c + d * e` (infix — the expression as written)
+- **post**order: `b c / - d e * +` (postfix, a stack machine's order)
+
+The `-` has only a right child here: it's a unary minus.
+:::
+
+## Level order traversal (later) {.smaller}
+
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)">
+<line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"/>
+<line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"/>
+<line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"/>
+<line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"/>
+<line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"/>
+<line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"/>
+<line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"/>
+<circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text>
+<circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text>
+<circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text>
+<circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text>
+<circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text>
+<circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text>
+<circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text>
+<circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text>
+</g>
+</svg>
+
+::: notes
+Top to bottom, left to right: `+ - * / d e b c`. It doesn't follow the
+recursive shape, so it needs a different tool — a queue. That's Friday.
+:::
+
+## {background-iframe="viz/traversal_tour.html" background-interactive="true"}
+
+::: notes
+Click into it first. **1 / 2 / 3** pick pre / in / post, **P** plays, **→**
+steps, **T** changes tree, **R** resets.
+
+The pointer passes every node three times — left side, underneath, right
+side. Pick a pass and the node squawks there. Same walk, three orders: the
+only thing that changes is *when you speak up*. That's the one line that
+moves in the code.
+
+Ask before playing: on the a–j tree, which letter squawks third in inorder?
+(f: d, b, f…)
+:::
+
+## Traversal: a scheme for visiting every node {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="55%"}
+<svg class="nodefig" width="357" height="202">
+<g transform="scale(1.05)">
+<line x1="137.0" y1="29.3" x2="93.0" y2="60.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="93.0,60.7 98.3,50.8 104.1,59.0" fill="#1a1a1a"/>
+<line x1="163.6" y1="28.5" x2="216.4" y2="61.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="216.4,61.5 205.3,60.5 210.6,52.0" fill="#1a1a1a"/>
+<line x1="70.0" y1="82.5" x2="50.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="50.0,107.5 52.3,96.6 60.1,102.8" fill="#1a1a1a"/>
+<line x1="90.0" y1="82.5" x2="110.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,107.5 99.9,102.8 107.7,96.6" fill="#1a1a1a"/>
+<line x1="130.0" y1="132.5" x2="150.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="150.0,157.5 139.9,152.8 147.7,146.6" fill="#1a1a1a"/>
+<line x1="240.0" y1="82.5" x2="260.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="260.0,107.5 249.9,102.8 257.7,96.6" fill="#1a1a1a"/>
+<line x1="260.0" y1="132.5" x2="240.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="240.0,157.5 242.3,146.6 250.1,152.8" fill="#1a1a1a"/>
+<line x1="280.0" y1="132.5" x2="300.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="300.0,157.5 289.9,152.8 297.7,146.6" fill="#1a1a1a"/>
+<circle cx="150" cy="20" r="16" fill="#a9cdf0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="150" y="25.4" font-size="14" text-anchor="middle">10</text>
+<circle cx="80" cy="70" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="75.4" font-size="14" text-anchor="middle">12</text>
+<circle cx="230" cy="70" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="230" y="75.4" font-size="14" text-anchor="middle">15</text>
+<circle cx="40" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="40" y="125.4" font-size="14" text-anchor="middle">3</text>
+<circle cx="120" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="120" y="125.4" font-size="14" text-anchor="middle">9</text>
+<circle cx="160" cy="170" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="160" y="175.4" font-size="14" text-anchor="middle">7</text>
+<circle cx="270" cy="120" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="270" y="125.4" font-size="14" text-anchor="middle">20</text>
+<circle cx="230" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="230" y="175.4" font-size="14" text-anchor="middle">30</text>
+<circle cx="310" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="310" y="175.4" font-size="14" text-anchor="middle">8</text>
+</g>
+</svg>
+
+\_\_\_\_\_Order: &nbsp; 3, 12, 9, 7, 10, 15, 30, 20, 8
+
+\_\_\_\_\_Order:
+
+\_\_\_\_\_Order:
+:::
+::: {.column width="45%"}
+```cpp
+template<class T>
+void tree<T>::_______Order(Node * croot) {
+    if (croot != nullptr) {
+
+
+        ___Order(croot->left);
+
+
+        ___Order(croot->right);
+
+
+    }
+}
+```
+:::
+::::
+
+::: notes
+The given order is **in**order: 3, 12, 9, 7, 10, 15, 30, 20, 8.
+
+- **Pre**order: 10, 12, 3, 9, 7, 15, 20, 30, 8
+- **Post**order: 3, 7, 9, 12, 30, 8, 20, 15, 10
+
+The code: one line, `visit(croot)` (say, `cout << croot->data`), goes in one
+of three places — before both calls (pre), between them (in), or after both
+(post). Same skeleton, three traversals.
+
+Running time: each node is visited once, so $\Theta(n)$. (The proof is
+next lecture.)
+:::
+
+## Traversal shortcuts… Euler tour {.smaller}
+
+:::: {.columns}
+::: {.column width="45%"}
+<svg class="nodefig" width="242" height="165">
+<g transform="scale(1.1)">
+<circle cx="110" cy="40" r="22" fill="#fff" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="40" y1="40" x2="88" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="132" y1="40" x2="180" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="110" y1="62" x2="110" y2="82" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="lbl" x="34" y="45" font-size="16" text-anchor="end">Pre</text>
+<text class="lbl" x="186" y="45" font-size="16">Post</text>
+<text class="lbl" x="110" y="100" font-size="16" text-anchor="middle">In</text>
+<polygon points="55,115 30,145 80,145" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="165,115 140,145 190,145" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="95" y1="58" x2="62" y2="112" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="125" y1="58" x2="158" y2="112" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="140" font-size="12" text-anchor="middle">TL</text>
+<text class="val" x="165" y="140" font-size="12" text-anchor="middle">TR</text>
+</g>
+</svg>
+:::
+::: {.column width="55%"}
+<svg class="nodefig" width="348" height="288">
+<g transform="scale(1.2)">
+<line x1="118.9" y1="30.1" x2="86.1" y2="59.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="86.1,59.9 90.1,49.5 96.9,56.9" fill="#1a1a1a"/>
+<line x1="141.1" y1="30.1" x2="173.9" y2="59.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="173.9,59.9 163.1,56.9 169.9,49.5" fill="#1a1a1a"/>
+<line x1="66.4" y1="82.3" x2="48.6" y2="107.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="48.6,107.7 50.2,96.7 58.4,102.4" fill="#1a1a1a"/>
+<line x1="83.6" y1="82.3" x2="101.4" y2="107.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="101.4,107.7 91.6,102.4 99.8,96.7" fill="#1a1a1a"/>
+<line x1="193.6" y1="82.3" x2="211.4" y2="107.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="211.4,107.7 201.6,102.4 209.8,96.7" fill="#1a1a1a"/>
+<line x1="211.4" y1="132.3" x2="193.6" y2="157.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="193.6,157.7 195.2,146.7 203.4,152.4" fill="#1a1a1a"/>
+<line x1="228.6" y1="132.3" x2="246.4" y2="157.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="246.4,157.7 236.6,152.4 244.8,146.7" fill="#1a1a1a"/>
+<line x1="193.3" y1="182.5" x2="206.7" y2="202.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="206.7,202.5 197.0,197.0 205.3,191.4" fill="#1a1a1a"/>
+<circle cx="130" cy="20" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="130" y="25.8" font-size="15" text-anchor="middle">a</text>
+<circle cx="75" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="75" y="75.8" font-size="15" text-anchor="middle">b</text>
+<circle cx="185" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="185" y="75.8" font-size="15" text-anchor="middle">c</text>
+<circle cx="40" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="40" y="125.8" font-size="15" text-anchor="middle">d</text>
+<circle cx="110" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="110" y="125.8" font-size="15" text-anchor="middle">f</text>
+<circle cx="220" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="220" y="125.8" font-size="15" text-anchor="middle">e</text>
+<circle cx="185" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="185" y="175.8" font-size="15" text-anchor="middle">i</text>
+<circle cx="255" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="255" y="175.8" font-size="15" text-anchor="middle">h</text>
+<circle cx="215" cy="215" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="215" y="220.8" font-size="15" text-anchor="middle">j</text>
+</g>
+</svg>
+:::
+::::
+
+::: notes
+Draw a path that hugs the tree, starting left of the root and keeping the
+tree on your left-hand side. You pass each node three times: on its left
+(**pre**), underneath (**in**), and on its right (**post**). Read off the
+nodes at the first, second or third pass to get each order.
+
+- Pre: a b d f c e i j h
+- In: d b f a c i j e h
+- Post: d f b j i h e c a
+:::
+
+## Mystery function: what's a good name? {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+<svg class="nodefig" width="400" height="245">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="25.0" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="75.0" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="75.0" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="125.0" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="125.0" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="125.0" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="125.0" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="175.0" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="175.0" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="175.0" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="175.0" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="225.0" font-size="13" text-anchor="middle">95</text>
+</svg>
+
+RT:
+:::
+::: {.column width="50%"}
+```cpp
+template<class T>
+void tree<T>::__________(Node * croot) {
+    if (croot != nullptr) {
+        __________(croot->left);
+        __________(croot->right);
+        delete croot;
+        croot = nullptr;
+    }
+}
+```
+:::
+::::
+
+::: notes
+It deletes both subtrees, then the node: **a postorder traversal** that
+frees the whole tree — call it `clear` or `destroy`. It has to be post:
+delete the node first and `croot->left` is gone.
+
+RT: $\Theta(n)$, one visit per node.
+
+Look at the last line: `croot` is a *copy* of the caller's pointer, so
+setting it to `nullptr` changes nothing outside. The caller's `root` still
+points at freed memory. Fix: take `Node *& croot`.
+:::
+
+## Traversals: a broader view… {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+<svg class="nodefig" width="400" height="245">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="25.0" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="75.0" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="75.0" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="125.0" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="125.0" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="125.0" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="125.0" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="175.0" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="175.0" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="175.0" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="175.0" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="225.0" font-size="13" text-anchor="middle">95</text>
+</svg>
+:::
+::: {.column width="50%"}
+```cpp
+template<class T>
+Node * tree<T>::copy(Node * croot) {
+
+
+
+
+
+
+
+
+}
+```
+:::
+::::
+
+::: notes
+```
+if (croot == nullptr) return nullptr;
+Node * t = new Node(croot->data);
+t->left  = copy(croot->left);
+t->right = copy(croot->right);
+return t;
+```
+
+Make the node first, then its subtrees: a **pre**order traversal. (Building
+the children first and the node last — postorder — works too.) Traversal is
+a pattern for *any* whole-tree job, not just printing.
+:::

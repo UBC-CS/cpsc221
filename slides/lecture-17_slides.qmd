@@ -1,0 +1,329 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Level Order, and Dictionaries"
+
+# Friday 10/23 video (recorded Wednesday). From oldslides/lec101724-levelOrder.pdf,
+# all four pages, then the first two pages of lec102124-BST.pdf (ADT
+# Dictionary, implementation options) -- 2024's 7.3 agenda listed "ADT
+# Dictionary" but the slides lived in the next deck. Lecture 18 starts at the
+# BST definition.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 4** is open until Sunday
+- **PEX5** (trees and traversals) is up
+
+\
+
+**Where we're going**
+
+- Traversal running time
+- Level-order traversal (or how to do PA2)
+- ADT Dictionary
+
+## Traversal — running time {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+$T(n)$: running time of a traversal on a tree with $n$ nodes.
+
+$T(0) = 1$
+
+$T(n) = T(n_L) + T(n_R) + 1,\; n > 0.$
+
+**Thm:** $T(n) = 2n + 1,\; n \ge 0.$
+:::
+::: {.column width="50%"}
+```cpp
+template<class T>
+void tree<T>::preOrder(Node * croot) {
+    if (croot != nullptr) {
+        cout << croot->data;
+        preOrder(croot->left);
+        preOrder(croot->right);
+    }
+}
+```
+
+<svg class="nodefig" width="357" height="202">
+<g transform="scale(1.05)">
+<line x1="137.0" y1="29.3" x2="93.0" y2="60.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="93.0,60.7 98.3,50.8 104.1,59.0" fill="#1a1a1a"/>
+<line x1="163.6" y1="28.5" x2="216.4" y2="61.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="216.4,61.5 205.3,60.5 210.6,52.0" fill="#1a1a1a"/>
+<line x1="70.0" y1="82.5" x2="50.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="50.0,107.5 52.3,96.6 60.1,102.8" fill="#1a1a1a"/>
+<line x1="90.0" y1="82.5" x2="110.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,107.5 99.9,102.8 107.7,96.6" fill="#1a1a1a"/>
+<line x1="130.0" y1="132.5" x2="150.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="150.0,157.5 139.9,152.8 147.7,146.6" fill="#1a1a1a"/>
+<line x1="240.0" y1="82.5" x2="260.0" y2="107.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="260.0,107.5 249.9,102.8 257.7,96.6" fill="#1a1a1a"/>
+<line x1="260.0" y1="132.5" x2="240.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="240.0,157.5 242.3,146.6 250.1,152.8" fill="#1a1a1a"/>
+<line x1="280.0" y1="132.5" x2="300.0" y2="157.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="300.0,157.5 289.9,152.8 297.7,146.6" fill="#1a1a1a"/>
+<circle cx="150" cy="20" r="16" fill="#a9cdf0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="150" y="25.4" font-size="14" text-anchor="middle">10</text>
+<circle cx="80" cy="70" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="75.4" font-size="14" text-anchor="middle">12</text>
+<circle cx="230" cy="70" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="230" y="75.4" font-size="14" text-anchor="middle">15</text>
+<circle cx="40" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="40" y="125.4" font-size="14" text-anchor="middle">3</text>
+<circle cx="120" cy="120" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="120" y="125.4" font-size="14" text-anchor="middle">9</text>
+<circle cx="160" cy="170" r="16" fill="#f2a888" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="160" y="175.4" font-size="14" text-anchor="middle">7</text>
+<circle cx="270" cy="120" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="270" y="125.4" font-size="14" text-anchor="middle">20</text>
+<circle cx="230" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="230" y="175.4" font-size="14" text-anchor="middle">30</text>
+<circle cx="310" cy="170" r="16" fill="#ffd666" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="310" y="175.4" font-size="14" text-anchor="middle">8</text>
+</g>
+</svg>
+:::
+::::
+
+::: notes
+$n_L$ and $n_R$ are the sizes of the left and right subtrees, so
+$n_L + n_R = n - 1$. Note $T(0) = 1$: calling on an empty tree still costs
+one check.
+
+**Proof**, by strong induction on $n$.
+
+**Base case**, $n = 0$: $T(0) = 1 = 2 \cdot 0 + 1$. ✓
+
+**IH:** $T(j) = 2j + 1$ for all $j < n$.
+
+**Step**, $n > 0$: both subtrees are smaller than $n$, so
+
+$$T(n) = (2n_L + 1) + (2n_R + 1) + 1 = 2(n_L + n_R + 1) + 1 = 2n + 1.$$
+
+Where does the "$+1$" come from? The $n + 1$ calls on empty subtrees — the
+null pointers from Monday's theorem. $n$ real calls plus $n + 1$ empty ones
+is $2n + 1$. Any traversal is $\Theta(n)$.
+:::
+
+## Traversals: something totally different… {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="44%"}
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)">
+<line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"/>
+<line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"/>
+<line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"/>
+<line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"/>
+<line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"/>
+<line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"/>
+<line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"/>
+<circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text>
+<circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text>
+<circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text>
+<circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text>
+<circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text>
+<circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text>
+<circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text>
+<circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text>
+</g>
+</svg>
+
+1.
+
+2.
+
+&nbsp;&nbsp;&nbsp;&nbsp;a)
+
+&nbsp;&nbsp;&nbsp;&nbsp;b)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ii.
+:::
+::: {.column width="8%"}
+\
+
+\
+
+<svg class="nodefig" width="100" height="30">
+<line x1="5" y1="15" x2="80" y2="15" stroke="#1a1a1a" stroke-width="2"/>
+<polygon points="95,15 80,9 80,21" fill="#1a1a1a"/>
+</svg>
+:::
+::: {.column width="48%"}
+```cpp
+template<class T>
+void tree<T>::levelOrder(Node * croot) {
+
+
+
+
+
+
+
+
+
+
+}
+```
+:::
+::::
+
+::: notes
+Level order: `+ - * / d e b c`. Top to bottom, left to right — so it can't
+follow the recursion. It needs a **queue**.
+
+1. Make a queue; enqueue the root (if it isn't null).
+2. While the queue isn't empty:
+   a) dequeue a node, `t`;
+   b) visit `t`, then
+      i. enqueue `t->left` if it isn't null;
+      ii. enqueue `t->right` if it isn't null.
+
+```
+Queue<Node *> q;
+if (croot != nullptr) q.push(croot);
+while (!q.isEmpty()) {
+    Node * t = q.pop();
+    cout << t->data;
+    if (t->left  != nullptr) q.push(t->left);
+    if (t->right != nullptr) q.push(t->right);
+}
+```
+
+**This is PA2.** `components()` and `computeDistances()` are this loop, with
+"neighbours on the map" in place of "children". Enqueue something only the
+first time you see it — a map, unlike a tree, can lead you back to a node.
+:::
+
+## Traversals summary {.smaller}
+
+<svg class="nodefig" width="488" height="262">
+<g transform="scale(1.25)">
+<line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"/>
+<line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"/>
+<line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"/>
+<line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"/>
+<line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"/>
+<line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"/>
+<line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"/>
+<circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text>
+<circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text>
+<circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text>
+<circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text>
+<circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text>
+<circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text>
+<circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text>
+<circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text>
+</g>
+</svg>
+
+1. We've studied 4 but…
+
+\
+
+2. Running time
+
+::: notes
+1. **…really two kinds.** Pre-, in- and postorder all go *deep* first: they
+   ride the call stack (a stack!). Level order goes *wide* first: it rides a
+   queue. Depth-first vs breadth-first — the same split we'll meet again on
+   graphs.
+2. All four visit each node once: $\Theta(n)$.
+:::
+
+## ADT Dictionary {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="50%"}
+Suppose we have the following data…
+
+| locker # | Name |
+|---|---|
+| 103 | Jay Hathaway |
+| 92 | Linda Stencel |
+| 330 | Bonnie Cook |
+| 46 | Rick Brown |
+| 124 | Kim Petersen |
+| … | … |
+
+…and we want to be able to retrieve a name, given a locker number.
+:::
+::: {.column width="50%"}
+More examples of key/value pairs:
+
+- CWL → Advising record
+- Course number → Schedule info
+- Color → PNG
+- Vertex → Set of incident edges
+- Flight number → Arrival information
+- URL → html page
+
+\
+
+A dictionary is a structure supporting:
+
+```cpp
+void insert(kType & k, dType & d)
+void remove(kType & k)
+dType find(kType & k)
+```
+:::
+::::
+
+::: notes
+Keys are unique; each one maps to its data. Every example on the right is a
+real system's core: a CWL lookup, a flight board, the web itself.
+:::
+
+## ADT Dictionary: implementation options… {.smaller}
+
+| | insert | find | (find +) remove |
+|---|:---:|:---:|:---:|
+| **linked list** | $\Theta(1)$ | $\Theta(n)$ | $\Theta(n) + \Theta(1)$ |
+| **unsorted array** | $\Theta(1)$ | $\Theta(n)$ | $\Theta(n) + \Theta(1)$ |
+| **sorted array** | $\Theta(\log n) + \Theta(n)$ | $\Theta(\log n)$ | $\Theta(\log n) + \Theta(n)$ |
+| **Binary Tree?** | | | |
+
+::: notes
+Linked list and unsorted array: insert anywhere, but find has to look at
+everything. Sorted array: binary search finds in $\log n$, but inserting and
+removing shift everything over. Nothing is fast at all three.
+
+The last row is the question for next time: can a tree get $\log n$ for all
+three? (Sometimes. That "sometimes" is the next two weeks.)
+:::

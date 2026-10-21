@@ -21,6 +21,48 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 7 — Mon Oct 19 to Sun Oct 25
+
+*Sent Mon 10/19.*
+
+---
+
+Hi everyone,
+
+Welcome back from the quiet week! Classes and labs resume today.
+
+1. **Homework Two is due tonight, Monday 10/19, 11:59p.** **PA2** comes out
+   **tomorrow night (Tuesday 10/20)**, due **Monday 11/02**. Plan for up to 20
+   hours.
+
+2. **Examlet 4 is this week**, Thursday to Sunday, in PrairieTest. It covers
+   **stacks and queues, array resizing, merge sort and recurrences**, and the
+   sorting lower bound, plus a review coding question on linked lists.
+   **Trees are not on Examlet 4** — they move to Examlet 5. **PEX4** is the
+   practice for this one.
+
+3. **Labs are back, and now include office hours.** Lab Trees is open, due
+   Sunday 10/25. Bring your other questions, too!
+
+4. **PEX5** (trees) comes out Wednesday evening.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+⚠ **Before sending**
+
+1. **PA2 dates** — release and due are placeholders (Dec 31 / Jan 14) and
+   the assessment is unlisted. Set real dates once the write-up and pa2.zip
+   are done, then update this item.
+2. **Lab Trees** opens with trees taught only today. If it's meant for this
+   week, fine; if not, its dates in PrairieLearn need moving.
+
+After it goes out, the facts go up as `posts/06_week-07/`.
+
+---
+
 ## Week 6 — Mon Oct 12 to Sun Oct 18
 
 *Sent Tue 10/13. Short on purpose: quiet week.*
