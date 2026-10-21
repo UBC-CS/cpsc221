@@ -481,3 +481,14 @@ mark, .hl {
     padding: 0.2em 0.4em;
   }
 }
+
+// {.tinycode}: like {.smallcode} but smaller still, for slides that need
+// several listings side by side (e.g. three traversal skeletons).
+.reveal section.tinycode {
+  div.sourceCode code.sourceCode {
+    font-size: calc(var(--r-main-font-size) * 0.4);
+  }
+  div.sourceCode {
+    margin: 0.15em 0 0.3em 0;
+  }
+}

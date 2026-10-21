@@ -225,7 +225,9 @@ So $2^h \le n \le 2^{h+1} - 1$, and a complete tree's height is exactly
 $\lfloor \log_2 n \rfloor$.
 :::
 
-## Tree traversal: a scheme for visiting every node {.smaller}
+## Tree traversal: {.smaller}
+
+... a scheme for visiting every node 
 
 <svg class="nodefig" width="488" height="262">
 <g transform="scale(1.25)">
@@ -273,47 +275,6 @@ three classic orders give three classic notations:
 The `-` has only a right child here: it's a unary minus.
 :::
 
-## Level order traversal (later) {.smaller}
-
-<svg class="nodefig" width="488" height="262">
-<g transform="scale(1.25)">
-<line x1="194.3" y1="26.6" x2="95.7" y2="68.4" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="95.7,68.4 102.9,59.9 106.8,69.1" fill="#1a1a1a"/>
-<line x1="225.2" y1="27.6" x2="304.8" y2="67.4" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="304.8,67.4 293.6,67.4 298.1,58.5" fill="#1a1a1a"/>
-<line x1="92.5" y1="86.5" x2="127.5" y2="118.5" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="127.5,118.5 116.7,115.4 123.5,108.1" fill="#1a1a1a"/>
-<line x1="130.0" y1="143.7" x2="110.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="110.0,171.3 111.8,160.2 119.9,166.1" fill="#1a1a1a"/>
-<line x1="150.0" y1="143.7" x2="170.0" y2="171.3" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="170.0,171.3 160.1,166.1 168.2,160.2" fill="#1a1a1a"/>
-<line x1="310.0" y1="88.7" x2="290.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="290.0,116.3 291.8,105.2 299.9,111.1" fill="#1a1a1a"/>
-<line x1="330.0" y1="88.7" x2="350.0" y2="116.3" stroke="#1a1a1a" stroke-width="1.5"/>
-<polygon points="350.0,116.3 340.1,111.1 348.2,105.2" fill="#1a1a1a"/>
-<circle cx="210" cy="20" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="210" y="26.5" font-size="17" text-anchor="middle">+</text>
-<circle cx="80" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="80" y="81.5" font-size="17" text-anchor="middle">-</text>
-<circle cx="140" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="140" y="136.5" font-size="17" text-anchor="middle">/</text>
-<circle cx="100" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="100" y="191.5" font-size="17" text-anchor="middle">b</text>
-<circle cx="180" cy="185" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="180" y="191.5" font-size="17" text-anchor="middle">c</text>
-<circle cx="320" cy="75" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="320" y="81.5" font-size="17" text-anchor="middle">*</text>
-<circle cx="280" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="280" y="136.5" font-size="17" text-anchor="middle">d</text>
-<circle cx="360" cy="130" r="17" fill="#ffffff" stroke="#1a1a1a" stroke-width="1.5"/>
-<text class="val" x="360" y="136.5" font-size="17" text-anchor="middle">e</text>
-</g>
-</svg>
-
-::: notes
-Top to bottom, left to right: `+ - * / d e b c`. It doesn't follow the
-recursive shape, so it needs a different tool — a queue. That's Friday.
-:::
 
 ## {background-iframe="viz/traversal_tour.html" background-interactive="true"}
 
@@ -330,10 +291,10 @@ Ask before playing: on the a–j tree, which letter squawks third in inorder?
 (f: d, b, f…)
 :::
 
-## Traversal: a scheme for visiting every node {.smaller .smallcode}
+## Traversal: a scheme for visiting every node {.smaller .tinycode}
 
 :::: {.columns}
-::: {.column width="55%"}
+::: {.column width="50%"}
 <svg class="nodefig" width="357" height="202">
 <g transform="scale(1.05)">
 <line x1="137.0" y1="29.3" x2="93.0" y2="60.7" stroke="#1a1a1a" stroke-width="1.5"/>
@@ -378,19 +339,42 @@ Ask before playing: on the a–j tree, which letter squawks third in inorder?
 \_\_\_\_\_Order:
 
 \_\_\_\_\_Order:
-:::
-::: {.column width="45%"}
+
 ```cpp
 template<class T>
 void tree<T>::_______Order(Node * croot) {
     if (croot != nullptr) {
 
-
         ___Order(croot->left);
-
 
         ___Order(croot->right);
 
+    }
+}
+```
+:::
+::: {.column width="50%"}
+```cpp
+template<class T>
+void tree<T>::_______Order(Node * croot) {
+    if (croot != nullptr) {
+
+        ___Order(croot->left);
+
+        ___Order(croot->right);
+
+    }
+}
+```
+
+```cpp
+template<class T>
+void tree<T>::_______Order(Node * croot) {
+    if (croot != nullptr) {
+
+        ___Order(croot->left);
+
+        ___Order(croot->right);
 
     }
 }
