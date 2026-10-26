@@ -841,14 +841,14 @@
     "href": "slides/lecture-18_slides.html#today",
     "title": "CPSC 221",
     "section": "Today",
-    "text": "Today\nAnnouncements\n\nPA2 is due next Monday, 11/02\nExamlet 5 is this week — book your seat on PrairieTest\n\n\n\nWhere we’re going\n\nA tree that knows where its keys go\nBST find and insert\nBST remove: the easy cases\nHow fast?"
+    "text": "Today\nAnnouncements\n\nPA2 is due next Monday, 11/02\nExamlet 5 is this week — book your seat on PrairieTest\n\n\n\nToday:\n\nAn ordered tree\nBST find and insert\nBST remove: introduction\nEfficiency"
   },
   {
     "objectID": "slides/lecture-18_slides.html#where-is-25",
     "href": "slides/lecture-18_slides.html#where-is-25",
     "title": "CPSC 221",
     "section": "Where is 25?",
-    "text": "Where is 25?\n\n\nA dictionary stores keys so we can find, insert, and remove them.\nHere is a binary tree holding some keys.\n\n\nWhere would you look for 25?\nWhere would you put 37?\n\n\n       42  17  8  99  3  56 \n\n\n\nFrom DSCI 221’s “The Dictionary Problem” slide.\nThere’s no answer: in an arbitrary tree, 25 could be anywhere, so find has to look at every node – Θ(n), no better than a list. And 37 could go anywhere, which is the same problem in reverse.\nSo the tree needs a rule about where keys live. Next slide: a tree that has one – see if you can work out what it is."
+    "text": "Where is 25?\n\n\nA dictionary stores keys so we can find, insert, and remove them.\n\n\nWhere would you look for 25?\nWhere would you put 37?\n\n\n       42  17  8  99  3  56 \n\n\n\nFrom DSCI 221’s “The Dictionary Problem” slide.\nThere’s no answer: in an arbitrary tree, 25 could be anywhere, so find has to look at every node – Θ(n), no better than a list. And 37 could go anywhere, which is the same problem in reverse.\nSo the tree needs a rule about where keys live. Next slide: a tree that has one – see if you can work out what it is."
   },
   {
     "objectID": "slides/lecture-18_slides.html#what-do-you-notice",
