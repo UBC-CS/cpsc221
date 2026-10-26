@@ -27,20 +27,18 @@ subtitle: "Binary Search Trees"
 
 \
 
-**Where we're going**
+**Today:**
 
-- A tree that knows where its keys go
+- An ordered tree
 - BST find and insert
-- BST remove: the easy cases
-- How fast?
+- BST remove: introduction
+- Efficiency
 
 ## Where is 25? {.smaller}
 
 :::: {.columns}
 ::: {.column width="50%"}
 A dictionary stores keys so we can `find`, `insert`, and `remove` them.
-
-Here is a binary tree holding some keys.
 
 \
 
