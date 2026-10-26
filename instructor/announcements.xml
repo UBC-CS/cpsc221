@@ -11,7 +11,50 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.10.19</generator>
-<lastBuildDate>Tue, 13 Oct 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 26 Oct 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 8 — Oct 26 to Nov 1</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/07_week-08/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>10/26</strong></td>
+<td>PA2 submissions open · Lab Dict open</td>
+</tr>
+<tr class="even">
+<td><strong>10/29 – 11/01</strong></td>
+<td><strong>Examlet 5</strong> — self-scheduled in PrairieTest</td>
+</tr>
+<tr class="odd">
+<td><strong>11/02</strong></td>
+<td>PA2 <strong>due</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<p><strong>PA2 submissions are open.</strong> Upload your six files to PA2 on PrairieLearn and the autograder scores them in a few minutes. Submit as often as you like.</p>
+<p><strong>Examlet 5</strong> covers tree definitions and tree traversals. <strong>PEX5</strong> is the practice for it, linked on the schedule.</p>
+<p><strong>Labs include office hours</strong>, so bring your PA2 questions too.</p>
+<p><strong>Examlet 4:</strong> the median was 81.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <category>lab</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/07_week-08/</guid>
+  <pubDate>Mon, 26 Oct 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 6 — Oct 12 to Oct 18</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
