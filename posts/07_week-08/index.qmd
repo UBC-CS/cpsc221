@@ -1,0 +1,30 @@
+---
+title: "Week 8 — Oct 26 to Nov 1"
+description: "PA2 submissions open, due 11/02. Examlet 5 Thursday to Sunday: tree definitions and traversals. Lab Dict open."
+author: "{{< var instructor.name >}}"
+date: 2026-10-26
+categories:
+  - deadline
+  - examlet
+  - lab
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **10/26** | PA2 submissions open · Lab Dict open |
+| **10/29 – 11/01** | **Examlet 5** — self-scheduled in PrairieTest |
+| **11/02** | PA2 **due** |
+
+\
+
+**PA2 submissions are open.** Upload your six files to PA2 on PrairieLearn and
+the autograder scores them in a few minutes. Submit as often as you like.
+
+**Examlet 5** covers tree definitions and tree traversals. **PEX5** is the
+practice for it, linked on the schedule.
+
+**Labs include office hours**, so bring your PA2 questions too.
+
+**Examlet 4:** the median was 81.

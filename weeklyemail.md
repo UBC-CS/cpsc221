@@ -21,6 +21,42 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 8 — Mon Oct 26 to Sun Nov 1
+
+*Sent Mon 10/26, as below (two items numbered 4).*
+
+---
+
+Hi everyone,
+
+Can you believe we've made it to week 8? I feel like we still have a lot more to learn...
+
+The news:
+
+1. **PA2 submissions are open.** Upload your six files to PA2 on
+   PrairieLearn and the autograder will score them in a few minutes. Submit
+   as often as you like! PA2 is due **Monday 11/02, 11:59p**.
+
+2. **Examlet 5 is this week**, Thursday to Sunday, in PrairieTest. It covers
+   **trees definitions, and tree traversals**. **PEX5** is the
+   practice for it, and it's linked on the schedule.
+
+3. **Lab Dict** is open, and labs include office hours, so bring your PA2
+   questions, too.
+
+4. **Examlet 4** median was 81. A little more challenging! The sorting lower bounds may bear some revisiting for many of you.
+
+4. Please try to come to class this week! The material is fun, and all your friends will be there. :)
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+After it goes out, the facts go up as `posts/07_week-08/`.
+
+---
+
 ## Week 7 — Mon Oct 19 to Sun Oct 25
 
 *Sent Mon 10/19.*
