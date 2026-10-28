@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
+
+  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f21e49c81f3d4d2c0a7090435216d9c5.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta property="og:description" content="BST Removal, and Why Balance Matters">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:description" content="BST Removal, and Why Balance Matters">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">CPSC 221</h1>
+  <p class="subtitle">BST Removal, and Why Balance Matters</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="today" class="slide level2 smaller">
+<h2>Today</h2>
+<p><strong>Announcements</strong></p>
+<ul>
+<li><strong>Examlet 5</strong> starts tomorrow: tree definitions and traversals</li>
+<li><strong>PA2</strong> is due Monday 11/02</li>
+</ul>
+<p><br>
+</p>
+<p><strong>Today:</strong></p>
+<ul>
+<li>BST remove: the code</li>
+<li>BST remove: the hard case</li>
+<li>How tall is a BST?</li>
+<li>Which tree makes you happiest?</li>
+</ul>
+</section>
+<section id="where-were-we" class="slide level2 smaller">
+<h2>Where were we?</h2>
+<iframe src="viz/bst_explorer.html" width="100%" height="560" style="border: none; border-radius: 8px;"></iframe>
+<aside class="notes">
+<p>Monday’s tree (no 40). Quick replay, asking the room what will happen before each click:</p>
+<ol type="1">
+<li><strong>Delete 37</strong>, a leaf: it just disappears. Its parent’s pointer becomes null.</li>
+<li><strong>Delete 51</strong>, one child: 84 moves up into its place. Everything under 84 is still bigger than 38, so the tree is still a BST.</li>
+</ol>
+<p>The point to land: in both cases, <strong>one pointer in the tree changes</strong> — the one that used to point at the doomed node. That’s the hook for the code.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="binary-search-tree-remove" class="slide level2 smaller smallcode">
+<h2>Binary search tree — remove</h2>
+<div class="columns">
+<div class="column" style="width:38%;">
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)"> <line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text> <circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text> <circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text> <circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text> <circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text> <circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text> <circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text> <circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text> <circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text> <circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text> <circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text> <circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text> </g>
+</svg>
+<p>Remember: <code>find_</code> returns the pointer <blue>in the tree</blue>, by reference.</p>
+</div><div class="column" style="width:62%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>Node <span class="op">*&amp;</span> <span class="va">find_</span><span class="op">(</span><span class="at">const</span> K <span class="op">&amp;</span> key<span class="op">,</span> Node <span class="op">*&amp;</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>r <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>r<span class="op">-&gt;</span>key <span class="op">==</span> key<span class="op">)</span> <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>key <span class="op">&lt;</span> r<span class="op">-&gt;</span>key<span class="op">)</span> <span class="cf">return</span> <span class="va">find_</span><span class="op">(</span>key<span class="op">,</span> r<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">return</span> <span class="va">find_</span><span class="op">(</span>key<span class="op">,</span> r<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> remove<span class="op">(</span><span class="at">const</span> K <span class="op">&amp;</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*&amp;</span> p <span class="op">=</span> ______________________<span class="op">;</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>_______________<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>______________________________<span class="op">)</span></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a>            twoChildRemove<span class="op">(</span>p<span class="op">);</span></span>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb2-8"><a aria-hidden="true" tabindex="-1"></a>            zeroOneChildRemove<span class="op">(</span>p<span class="op">);</span></span>
+<span id="cb2-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-10"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<aside class="notes">
+<pre><code>Node *&amp; p = find_(key, root);
+if (p != nullptr)                                  // found it (else: nothing to do)
+if (p-&gt;left != nullptr &amp;&amp; p-&gt;right != nullptr)     // two children</code></pre>
+<p>The whole idea: <strong>find it, then fix up the pointer you found.</strong> Because <code>find_</code> returns <code>Node *&amp;</code>, <code>p</code> <em>is</em> the parent’s <code>left</code> or <code>right</code> (or <code>root</code> itself), not a copy. Assigning to <code>p</code> rewires the tree.</p>
+<p>Same trick as insert on Monday: <code>Node *&amp; p = find_(key, root); if (p == nullptr) p = new Node(key, data);</code>. Insert fixes up a null pointer; remove fixes up a non-null one.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="bst-remove" class="slide level2 smaller smallcode">
+<h2>BST — remove</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)"> <line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text> <circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text> <circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text> <circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text> <circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text> <circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text> <circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text> <circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text> <circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text> <circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text> <circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text> <circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text> </g>
+</svg>
+</div><div class="column" style="width:55%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> zeroOneChildRemove<span class="op">(</span>Node <span class="op">*&amp;</span> p<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*</span> temp <span class="op">=</span> p<span class="op">;</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>p<span class="op">-&gt;</span>left <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> p <span class="op">=</span> p<span class="op">-&gt;</span>right<span class="op">;</span></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>                    p <span class="op">=</span> p<span class="op">-&gt;</span>left<span class="op">;</span></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="kw">delete</span> temp<span class="op">;</span></span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>remove(37)</code>: &nbsp; <code>p</code> is 25’s <code>right</code></p>
+<p><code>remove(89)</code>: &nbsp; <code>p</code> is 84’s <code>right</code></p>
+</div></div>
+<aside class="notes">
+<p><code>p</code> is a reference to the parent’s pointer, so reassigning it splices the node out:</p>
+<ul>
+<li>37 is a leaf: <code>p-&gt;left</code> is null, so <code>p = p-&gt;right</code>, which is also null. 25’s right pointer becomes null. The leaf case comes for free.</li>
+<li>89 has one child: its left is null, so <code>p = p-&gt;right</code>, and 84’s right pointer now points at 95.</li>
+</ul>
+<p><code>temp</code> keeps the old address so we can free the node <em>after</em> rewiring. Ask: what goes wrong if we <code>delete p</code> first? (Then <code>p-&gt;right</code> reads freed memory.)</p>
+<p>Both the zero- and one-child cases in four lines, and <strong>Θ(h)</strong>: the cost is the <code>find_</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="child-remove" class="slide level2 activity">
+<h2>2-child remove</h2>
+<p><code>T.remove(38);</code> How should we implement this?</p>
+<svg class="nodefig" width="437" height="276">
+<g transform="scale(1.15)"> <line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.45"></line> <line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.45"></line> <line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="190" cy="20" r="15" fill="white" stroke="#888" stroke-width="1.5" stroke-dasharray="4 3"></circle> <text class="val" x="190" y="24.9" font-size="13" text-anchor="middle" fill="#888">?</text> <circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text> <circle cx="280" cy="70" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text> <circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text> <circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text> <circle cx="240" cy="120" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text> <circle cx="320" cy="120" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text> <circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text> <circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text> <circle cx="295" cy="170" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text> <circle cx="345" cy="170" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text> <circle cx="365" cy="220" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text> </g>
+</svg>
+<p>How can you rearrange what’s left into a BST? &nbsp; Describe as many ways as you can.</p>
+<aside class="notes">
+<p>About 3 minutes in pairs, then collect answers on the board. Expect:</p>
+<ol type="1">
+<li><strong>Hang T<sub>R</sub> under the largest key in T<sub>L</sub></strong>: 13 becomes the root, and 51’s whole subtree goes on 37’s right. Legal — every key in T<sub>R</sub> is bigger than everything in T<sub>L</sub>. Height: <strong>6</strong>.</li>
+<li><strong>Hang T<sub>L</sub> under the smallest key in T<sub>R</sub></strong>: 51 becomes the root, 13’s subtree goes on 40’s left. Legal. Height <strong>4</strong> here, but only by luck: in general the heights add.</li>
+<li><strong>Promote 37</strong>, the largest key on the left (in-order <strong>predecessor</strong>), into the hole. Height <strong>4</strong>.</li>
+<li><strong>Promote 40</strong>, the smallest key on the right (in-order <strong>successor</strong>). Height <strong>4</strong>.</li>
+</ol>
+<p>All four are correct BSTs. Which do we want? Everything costs Θ(h), and 1 and 2 can make the tree taller (heights add); 3 and 4 never do, since only one node moves. Wrong-but-common guesses: “13 or 51 moves up” with nothing else changed — 13 at the root would leave 25 and 37 on its left, 51 would leave 40 on its right.</p>
+<p>We’ll use the predecessor. Where is it? Go left once, then right as far as you can. Note that 37 and 40 sit on either side of 38 in the inorder traversal: …, 25, 37, <strong>38</strong>, 40, 51, …</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="watch" class="slide level2 smaller">
+<h2>Watch:</h2>
+<iframe src="viz/bst_explorer.html?keys=38,13,51,10,25,40,84,12,37,66,89,95&amp;step=1" width="100%" height="560" style="border: none; border-radius: 8px;"></iframe>
+<aside class="notes">
+<p>Step mode is already on, and the tree has 40 in it. Delete 38, and press Step at each move: the search finds 38, then walks <strong>left once, right to the end</strong> to 37, copies 37 up into the root, and removes the old 37 node, a leaf, the easy case.</p>
+<p>Ask before each step: where does it go next?</p>
+<p>Then keep removing the root: delete <strong>37</strong> (predecessor 25), then <strong>25</strong>. That third one is the tricky case: go left to 13, and 13 has <strong>no right child</strong>, so 13 <em>is</em> the rightmost node of the left subtree. The root becomes 13, and 13’s old node is spliced out: 10 moves up. In the code (next slide), <code>rightMost_(p-&gt;left)</code> returns <code>p-&gt;left</code> itself, and <code>zeroOneChildRemove</code> rewires it. No special case.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="binary-search-tree-remove-1" class="slide level2 smaller smallcode">
+<h2>Binary search tree — remove</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)"> <line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text> <circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text> <circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text> <circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text> <circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text> <circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text> <circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text> <circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text> <circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text> <circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text> <circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text> <circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text> </g>
+</svg>
+</div><div class="column" style="width:55%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> twoChildRemove<span class="op">(</span>Node <span class="op">*&amp;</span> p<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    Node <span class="op">*&amp;</span> iop <span class="op">=</span> <span class="va">rightMost_</span><span class="op">(</span>p<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    p<span class="op">-&gt;</span>key  <span class="op">=</span> iop<span class="op">-&gt;</span>key<span class="op">;</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    p<span class="op">-&gt;</span>data <span class="op">=</span> iop<span class="op">-&gt;</span>data<span class="op">;</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    zeroOneChildRemove<span class="op">(</span>iop<span class="op">);</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>Node <span class="op">*&amp;</span> <span class="va">rightMost_</span><span class="op">(</span>Node <span class="op">*&amp;</span> r<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>r<span class="op">-&gt;</span>right <span class="op">==</span> <span class="kw">nullptr</span><span class="op">)</span> <span class="cf">return</span> r<span class="op">;</span></span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="cf">return</span> <span class="va">rightMost_</span><span class="op">(</span>r<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<aside class="notes">
+<p><code>iop</code> = <strong>in-order predecessor</strong>. <code>rightMost_</code> is a find, too: it returns the pointer <em>in the tree</em> that points at the rightmost node: 25’s <code>right</code>, here.</p>
+<p>Copy the predecessor’s key and data up into <code>p</code>’s node, then remove the predecessor’s node. It’s a rightmost node, so it has <strong>no right child</strong>: it’s always the easy case. One call, never a chain.</p>
+<p>Running time: down to 38, then down to its predecessor: one path, still <strong>Θ(h)</strong>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="recap" class="slide level2 smaller smallcode">
+<h2>Recap</h2>
+<p>A <em>dictionary</em> is a structure supporting <code>insert</code>, <code>find</code>, and <code>remove</code>.</p>
+<p>B_______ S_______ T_____ implementation of a dictionary incurs running time ________ for all of these.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>dict<span class="op">&lt;</span><span class="dt">int</span><span class="op">&gt;</span> myT<span class="op">;</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>myT<span class="op">.</span>insert<span class="op">(</span><span class="dv">2</span><span class="op">);</span></span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>myT<span class="op">.</span>insert<span class="op">(</span><span class="dv">7</span><span class="op">);</span></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>myT<span class="op">.</span>insert<span class="op">(</span><span class="dv">15</span><span class="op">);</span></span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>myT<span class="op">.</span>insert<span class="op">(</span><span class="dv">22</span><span class="op">);</span></span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>myT<span class="op">.</span>insert<span class="op">(</span><span class="dv">28</span><span class="op">);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:60%;">
+<svg class="nodefig" width="120" height="240">
+<g transform="scale(1.2)"> <line x1="36.1" y1="20.2" x2="63.9" y2="43.8" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="63.9" y1="54.2" x2="36.1" y2="77.8" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="36.1" y1="88.2" x2="63.9" y2="111.8" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="63.9" y1="122.2" x2="36.1" y2="145.8" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="36.1" y1="156.2" x2="63.9" y2="179.8" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="30" cy="15" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="70" cy="49" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="30" cy="83" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="70" cy="117" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="30" cy="151" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="70" cy="185" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"></circle> </g>
+</svg>
+<p>How many “bad” <span class="math inline">\(n\)</span>-item trees are there?</p>
+</div></div>
+<aside class="notes">
+<p><strong>Binary Search Tree</strong> … running time <strong>Θ(h)</strong>.</p>
+<p>Inserting keys in sorted order — 2, 7, 15, 22, 28 — builds a stick: every key goes right. (Monday’s list B.) Live: in the explorer, Clear and insert them, and watch the height readout climb with n.&nbsp;Height <span class="math inline">\(n - 1\)</span>, so every operation is <span class="math inline">\(\Theta(n)\)</span>. Our “fast” dictionary is a linked list.</p>
+<p>“Bad” trees: any shape where every node has at most one child, like the zig-zag. Each of the <span class="math inline">\(n - 1\)</span> links below the root goes left or right: <strong><span class="math inline">\(2^{n-1}\)</span></strong> of them.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="binary-search-tree-height" class="slide level2 smaller">
+<h2>Binary search tree — height</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)"> <line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text> <circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text> <circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text> <circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text> <circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text> <circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text> <circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text> <circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text> <circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text> <circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text> <circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text> <circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text> </g>
+</svg>
+<p>Reminder: height(T) is</p>
+<ul>
+<li>______ if T is empty</li>
+<li>1 + max(height(T<sub>L</sub>), height(T<sub>R</sub>)), otherwise</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p>The <em>algorithms</em> on BST depend on the height (<span class="math inline">\(h\)</span>) of the tree.</p>
+<p>The <em>analysis</em> should be in terms of the amount of data (<span class="math inline">\(n\)</span>) the tree contains.</p>
+<p>So we need relationships between <span class="math inline">\(h\)</span> and <span class="math inline">\(n\)</span>:</p>
+<p><span class="math inline">\(h \ge f(n)\)</span></p>
+<p><span class="math inline">\(h \le g(n)\)</span></p>
+</div></div>
+<aside class="notes">
+<p>Empty tree: height <strong>−1</strong>.</p>
+<p>We know find/insert/remove cost <span class="math inline">\(\Theta(h)\)</span>. To say anything in terms of <span class="math inline">\(n\)</span>, we need to pin <span class="math inline">\(h\)</span> between two functions of <span class="math inline">\(n\)</span> — that’s the next slide.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="binary-tree-theory-moments" class="slide level2 smaller">
+<h2>Binary tree (theory moments)</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>#1</strong></p>
+<svg class="nodefig" width="336" height="180">
+<g transform="scale(1.2)"> <line x1="134.1" y1="15.8" x2="81.9" y2="50.2" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="145.9" y1="15.8" x2="198.1" y2="50.2" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="71.8" y1="59.6" x2="48.2" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="80.2" y1="59.6" x2="103.8" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="199.8" y1="59.6" x2="176.2" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="208.2" y1="59.6" x2="231.8" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="41.5" y1="102.5" x2="30.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="46.5" y1="102.5" x2="57.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="105.5" y1="102.5" x2="94.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="110.5" y1="102.5" x2="121.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="169.5" y1="102.5" x2="158.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="174.5" y1="102.5" x2="185.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="233.5" y1="102.5" x2="222.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="238.5" y1="102.5" x2="249.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="140.0" cy="12" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="76.0" cy="54" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="204.0" cy="54" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="44.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="108.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="172.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="236.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="28.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="60.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="92.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="124.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="156.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="188.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="220.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="252.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> </g>
+</svg>
+<p>What is the max number of nodes in a tree of height <span class="math inline">\(h\)</span>?</p>
+<p>What is the min height (<span class="math inline">\(h\)</span>) for a tree of <span class="math inline">\(n\)</span> nodes?</p>
+</div><div class="column" style="width:40%;">
+<p><strong>#2</strong></p>
+<svg class="nodefig" width="144" height="180">
+<g transform="scale(1.2)"> <line x1="23.8" y1="17.9" x2="42.2" y2="46.1" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="49.8" y1="57.9" x2="68.2" y2="86.1" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="75.8" y1="97.9" x2="94.2" y2="126.1" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="20" cy="12" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="46" cy="52" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="72" cy="92" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <circle cx="98" cy="132" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> </g>
+</svg>
+<p>What is the max height (<span class="math inline">\(h\)</span>) for a tree of <span class="math inline">\(n\)</span> nodes?</p>
+</div></div>
+<p>Thus: lower bound on height ______, upper bound on height ______ — good news or bad (what’s the context?)</p>
+<aside class="notes">
+<p>#1: at most <span class="math inline">\(2^{h+1} - 1\)</span> nodes (perfect tree), so <span class="math inline">\(n \le 2^{h+1} - 1\)</span> and <span class="math inline">\(h \ge \log_2(n+1) - 1\)</span>: <strong><span class="math inline">\(h = \Omega(\log n)\)</span></strong>.</p>
+<p>#2: a stick has height <strong><span class="math inline">\(n - 1\)</span></strong>: <span class="math inline">\(h = O(n)\)</span>.</p>
+<p>Lower bound <span class="math inline">\(\Omega(\log n)\)</span>, upper bound <span class="math inline">\(O(n)\)</span>. For a <strong>dictionary</strong> that’s bad news: the worst case is a linked list.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="your-turn" class="slide level2 activity">
+<h2>Your Turn</h2>
+<p>There are 7! = <strong>5040</strong> ways to insert the keys 1, 2, …, 7 into an empty BST.</p>
+<p><br>
+</p>
+<p>How many of them build the <strong>perfect</strong> tree (height 2)?</p>
+<p>How many build a <strong>stick</strong> (height 6)?</p>
+<p>&nbsp;</p>
+<p>Guess what fraction for each.</p>
+<aside class="notes">
+<p>About 1 minute. Take guesses. Most people guess the perfect tree is common and sticks are rare. Then the next slide.</p>
+<p>Answers: <strong>80</strong> perfect, <strong>64</strong> sticks. Sticks: each of the 2^(n−1) = 64 “bad” shapes from the recap is built by exactly one insertion order.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="all-5040" class="slide level2 smaller">
+<h2>All 5040</h2>
+<iframe src="viz/bst_heights.html" width="100%" height="520" style="border: none; border-radius: 8px;"></iframe>
+<aside class="notes">
+<p>Press <strong>Build the trees</strong> at n = 7: every insertion order, exactly.</p>
+<p>80 perfect, 64 sticks: both rare. Most land in the middle, height 3 or 4. Average 3.67.</p>
+<p>Then n = 100, 1,000, 10,000 (1,000 random orders each). The tallest possible height runs off the chart (99, 999, 9,999), but the trees pile up at a few times log n: around 12 for n = 100, 21 for 1,000, 30 for 10,000. Random BSTs are short. <strong>On average</strong> the height is Θ(log n).</p>
+<p>The catch: the stick isn’t rare in real life. Sorted input, the most common input there is, builds it every time.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="average-case" class="slide level2 smaller">
+<h2>Average case!</h2>
+<p>The height of a BST depends on the order in which the data is inserted into it.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;ex. &nbsp;1 3 2 4 5 7 6 &nbsp;&nbsp;vs.&nbsp;&nbsp; 4 2 3 6 7 1 5</p>
+<p>How many different ways are there to insert <span class="math inline">\(n\)</span> keys into a tree?</p>
+<p>Avg height, over all arrangements of <span class="math inline">\(n\)</span> keys, is ________.</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>operation</th>
+<th style="text-align: center;">avg case</th>
+<th style="text-align: center;">worst case</th>
+<th style="text-align: center;">sorted array</th>
+<th style="text-align: center;">sorted list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>find</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(\log n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\log n\)</span></td>
+</tr>
+<tr class="even">
+<td>insert</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="odd">
+<td>delete</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+<tr class="even">
+<td>traverse</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n\)</span></td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<p>1 3 2 4 5 7 6 builds a tall, stringy tree (height 4); 4 2 3 6 7 1 5 builds a bushy one (height 2). Same keys, different order.</p>
+<p>There are <strong><span class="math inline">\(n!\)</span></strong> insertion orders. Averaged over all of them, the height is <strong><span class="math inline">\(\Theta(\log n)\)</span></strong> (a classic result we won’t prove).</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>avg</th>
+<th>worst</th>
+<th>sorted array</th>
+<th>sorted list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>find</td>
+<td>log n</td>
+<td>n</td>
+<td>log n</td>
+<td>n</td>
+</tr>
+<tr class="even">
+<td>insert</td>
+<td>log n</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr class="odd">
+<td>delete</td>
+<td>log n</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+<tr class="even">
+<td>traverse</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+<td>n</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Planted error:</strong> sorted list <em>find</em> is shown as <span class="math inline">\(\log n\)</span>. It’s <span class="math inline">\(n\)</span>: no binary search without random access, so you walk the list. (Sorted array find really is <span class="math inline">\(\log n\)</span>.) Ask: “one of these is wrong — which?”</p>
+<p>So BSTs are great <em>on average</em> — but the worst case is exactly what sorted input produces. Can we make the worst case <span class="math inline">\(\log n\)</span> too?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="foreshadowing-friday" class="slide level2 smaller">
+<h2>Foreshadowing Friday</h2>
+<svg class="nodefig" width="440" height="182">
+<g transform="scale(1.1)"> <line x1="40.9" y1="35.1" x2="69.1" y2="68.9" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="90.9" y1="95.1" x2="119.1" y2="128.9" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="30" cy="22" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="30" y="27.3" font-size="14" text-anchor="middle">50</text> <circle cx="80" cy="82" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="80" y="87.3" font-size="14" text-anchor="middle">70</text> <circle cx="130" cy="142" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="130" y="147.3" font-size="14" text-anchor="middle">90</text> <line x1="298.5" y1="64.5" x2="266.5" y2="99.5" stroke="#1a1a1a" stroke-width="1.5"></line> <line x1="321.5" y1="64.5" x2="353.5" y2="99.5" stroke="#1a1a1a" stroke-width="1.5"></line> <circle cx="310" cy="52" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="310" y="57.3" font-size="14" text-anchor="middle">70</text> <circle cx="255" cy="112" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="255" y="117.3" font-size="14" text-anchor="middle">50</text> <circle cx="365" cy="112" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"></circle> <text class="val" x="365" y="117.3" font-size="14" text-anchor="middle">90</text> </g>
+</svg>
+<p><strong>Idea:</strong> &nbsp; _____________________________________________________________</p>
+<p>The “height balance” of a tree T is: &nbsp;&nbsp; <span class="math inline">\(b = \text{height}(T_R) - \text{height}(T_L)\)</span></p>
+<p>A tree T is “height balanced” if:</p>
+<ul>
+<li>&nbsp;</li>
+<li>&nbsp;</li>
+</ul>
+<aside class="notes">
+<p>The right one — same three keys, height 1 instead of 2.</p>
+<p>Idea line: change insert and remove so the tree on the left can never happen.</p>
+<p>A tree is height balanced if - it’s <strong>empty</strong>, or - <strong><span class="math inline">\(|b| \le 1\)</span></strong> at the root, <strong>and</strong> both subtrees are height balanced.</p>
+<p>The recursion matters: the root being balanced isn’t enough. A BST that is height balanced everywhere is an <strong>AVL tree</strong> — Friday’s video: how to keep it balanced as keys come and go, and why that guarantees <span class="math inline">\(O(\log n)\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CPSC 221</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/ubc-cs\.github\.io\/cpsc221\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

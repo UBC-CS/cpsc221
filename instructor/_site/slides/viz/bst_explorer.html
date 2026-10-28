@@ -970,7 +970,12 @@
       let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
       canvas.parent('canvas-container');
       textAlign(CENTER, CENTER);
-      createExampleTree();
+      // Optional URL parameters, for embedding in slides:
+      //   ?keys=38,13,51  start from these keys (inserted in order)
+      //   &step=1         start with Step mode on
+      const params = new URLSearchParams(window.location.search);
+      createExampleTree(params.get('keys'));
+      if (params.get('step') === '1') document.getElementById('stepMode').checked = true;
     }
 
     function draw() {
@@ -1044,15 +1049,29 @@
         noStroke();
         text("Enter a value and click Insert to build a tree", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
       }
+
+      // Size and height, so a growing stick is visible as numbers too
+      push();
+      fill(120);
+      noStroke();
+      textSize(14);
+      textAlign(LEFT, TOP);
+      text(`n = ${countNodes(bst.root)}    height = ${getTreeDepth(bst.root) - 1}`, 12, 10);
+      pop();
     }
 
-    function createExampleTree() {
+    function countNodes(node) {
+      return node ? 1 + countNodes(node.left) + countNodes(node.right) : 0;
+    }
+
+    function createExampleTree(keyList) {
       bst.clear();
       clearVisuals();
       bounceState = null;
       removeState = null;
 
-      const values = [38, 13, 51, 10, 25, 84, 12, 37, 66, 89, 95];
+      const parsed = (keyList || '').split(',').filter(t => t.trim() !== '').map(Number).filter(Number.isFinite);
+      const values = parsed.length ? parsed : [38, 13, 51, 10, 25, 84, 12, 37, 66, 89, 95];
       for (const v of values) {
         bst.insert(v);
       }
@@ -1060,7 +1079,7 @@
       updateAllPositions();
       snapAllPositions(bst.root);
 
-      showInfo('Try: remove(37), remove(51), remove(38)');
+      showInfo(parsed.length ? '' : 'Try: remove(37), remove(51), remove(38)');
       document.getElementById('traversalOutput').textContent = '';
     }
 
