@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BST Heights</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    button {
+      padding: 10px 18px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+      background: #607d8b;
+      color: white;
+    }
+    button:hover { background: #546e7a; }
+    button.selected { background: #4a90d9; }
+    .go-btn { background: #5cb85c; }
+    .go-btn:hover { background: #4cae4c; }
+    #chart {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .info {
+      margin-top: 8px;
+      font-size: 15px;
+      color: #555;
+      text-align: center;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <span style="color:#444">n =</span>
+    <button class="n-btn selected" data-n="7">7</button>
+    <button class="n-btn" data-n="100">100</button>
+    <button class="n-btn" data-n="1000">1,000</button>
+    <button class="n-btn" data-n="10000">10,000</button>
+    <button class="go-btn" id="goBtn">Build the trees</button>
+  </div>
+  <canvas id="chart" width="900" height="400"></canvas>
+  <div class="info" id="info"></div>
+
+<script>
+// For n = 7, every one of the 7! = 5040 insertion orders is built (exact).
+// For larger n, random insertion orders: inserting n random keys is the same
+// as inserting a random permutation of n keys.
+const canvas = document.getElementById('chart');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+const PAD = { left: 60, right: 30, top: 40, bottom: 60 };
+const EXACT_N = 7;
+const RANDOM_TRIALS = 1000;
+
+let n = 7;
+let counts = [];
+let built = 0, total = 0, running = false, gen = null;
+
+function permutations(a) {
+  // Heap's algorithm, as a generator
+  const c = new Array(a.length).fill(0);
+  const out = [a.slice()];
+  let i = 0;
+  while (i < a.length) {
+    if (c[i] < i) {
+      if (i % 2 === 0) [a[0], a[i]] = [a[i], a[0]];
+      else [a[c[i]], a[i]] = [a[i], a[c[i]]];
+      out.push(a.slice());
+      c[i]++;
+      i = 0;
+    } else { c[i] = 0; i++; }
+  }
+  return out;
+}
+
+function heightOf(keys) {
+  // Array-backed BST: insert keys in order, return the deepest depth reached
+  const m = keys.length;
+  const key = new Float64Array(m), left = new Int32Array(m).fill(-1), right = new Int32Array(m).fill(-1);
+  let h = 0;
+  key[0] = keys[0];
+  for (let i = 1; i < m; i++) {
+    const k = keys[i];
+    key[i] = k;
+    let cur = 0, d = 1;
+    for (;;) {
+      if (k < key[cur]) {
+        if (left[cur] < 0) { left[cur] = i; break; }
+        cur = left[cur];
+      } else {
+        if (right[cur] < 0) { right[cur] = i; break; }
+        cur = right[cur];
+      }
+      d++;
+    }
+    if (d > h) h = d;
+  }
+  return h;
+}
+
+function* exactTrials() {
+  const all = permutations([1, 2, 3, 4, 5, 6, 7]);
+  // Shuffle, so the bars grow evenly instead of in Heap's-algorithm order
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  for (const p of all) yield heightOf(p);
+}
+
+function* randomTrials() {
+  for (let t = 0; t < RANDOM_TRIALS; t++) {
+    const keys = new Float64Array(n);
+    for (let i = 0; i < n; i++) keys[i] = Math.random();
+    yield heightOf(keys);
+  }
+}
+
+function minHeight(n) { return Math.ceil(Math.log2(n + 1)) - 1; }
+
+function xRange() {
+  if (n === EXACT_N) return [0, n - 1];
+  return [0, Math.ceil(3.2 * Math.log2(n))];
+}
+
+function reset() {
+  const [, hi] = xRange();
+  counts = new Array(hi + 1).fill(0);
+  built = 0;
+  total = n === EXACT_N ? 5040 : RANDOM_TRIALS;
+  running = false;
+  gen = null;
+  draw();
+  document.getElementById('info').textContent = n === EXACT_N
+    ? 'All 7! = 5040 ways to insert the keys 1..7'
+    : `${RANDOM_TRIALS.toLocaleString()} random insertion orders of ${n.toLocaleString()} keys`;
+}
+
+function step() {
+  if (!running) return;
+  const batch = n === EXACT_N ? 40 : (n >= 10000 ? 8 : 40);
+  for (let b = 0; b < batch; b++) {
+    const r = gen.next();
+    if (r.done) { running = false; break; }
+    const h = Math.min(r.value, counts.length - 1);
+    counts[h]++;
+    built++;
+  }
+  draw();
+  if (running) requestAnimationFrame(step);
+  else finish();
+}
+
+function finish() {
+  let sum = 0;
+  counts.forEach((c, h) => sum += c * h);
+  const avg = sum / built;
+  document.getElementById('info').textContent = n === EXACT_N
+    ? `Average height ${avg.toFixed(2)} — shortest possible ${minHeight(n)}, tallest possible ${n - 1}`
+    : `Average height ${avg.toFixed(1)} — shortest possible ${minHeight(n)}, tallest possible ${(n - 1).toLocaleString()}`;
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+  const [lo, hi] = xRange();
+  const bins = hi - lo + 1;
+  const plotW = W - PAD.left - PAD.right, plotH = H - PAD.top - PAD.bottom;
+  const bw = plotW / bins;
+  const maxC = Math.max(1, ...counts);
+  const scaleMax = n === EXACT_N ? 2400 : Math.max(maxC, 10);
+
+  // axes
+  ctx.strokeStyle = '#999';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(PAD.left, PAD.top);
+  ctx.lineTo(PAD.left, H - PAD.bottom);
+  ctx.lineTo(W - PAD.right, H - PAD.bottom);
+  ctx.stroke();
+
+  ctx.fillStyle = '#555';
+  ctx.font = '13px -apple-system, sans-serif';
+  ctx.textAlign = 'center';
+  const tickEvery = bins > 30 ? 5 : (bins > 15 ? 2 : 1);
+  for (let h = lo; h <= hi; h++) {
+    if ((h - lo) % tickEvery === 0) ctx.fillText(h, PAD.left + (h - lo + 0.5) * bw, H - PAD.bottom + 18);
+  }
+  ctx.fillText('height of the tree', PAD.left + plotW / 2, H - 15);
+  ctx.save();
+  ctx.translate(18, PAD.top + plotH / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('number of insertion orders', 0, 0);
+  ctx.restore();
+
+  // shortest possible height
+  const mh = minHeight(n);
+  const mx = PAD.left + (mh - lo + 0.5) * bw;
+  ctx.strokeStyle = '#5cb85c';
+  ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  ctx.moveTo(mx, PAD.top - 10);
+  ctx.lineTo(mx, H - PAD.bottom);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#3d8b3d';
+  ctx.textAlign = 'left';
+  ctx.fillText(`shortest possible: ${mh}`, mx + 4, PAD.top - 14);
+
+  // tallest possible, off the chart for big n
+  if (n !== EXACT_N) {
+    ctx.fillStyle = '#d9534f';
+    ctx.textAlign = 'right';
+    ctx.font = '600 14px -apple-system, sans-serif';
+    ctx.fillText(`tallest possible: ${(n - 1).toLocaleString()} →`, W - PAD.right, PAD.top - 14);
+    ctx.font = '13px -apple-system, sans-serif';
+  }
+
+  // bars
+  for (let h = lo; h <= hi; h++) {
+    const c = counts[h - lo];
+    if (!c) continue;
+    const bh = plotH * c / scaleMax;
+    const x = PAD.left + (h - lo) * bw;
+    let color = '#7fd3f7';
+    if (n === EXACT_N && h === n - 1) color = '#e74c3c';
+    if (n === EXACT_N && h === mh) color = '#5cb85c';
+    ctx.fillStyle = color;
+    ctx.strokeStyle = '#1a1a1a';
+    ctx.fillRect(x + bw * 0.12, H - PAD.bottom - bh, bw * 0.76, bh);
+    ctx.strokeRect(x + bw * 0.12, H - PAD.bottom - bh, bw * 0.76, bh);
+    if (n === EXACT_N) {
+      ctx.fillStyle = '#222';
+      ctx.textAlign = 'center';
+      ctx.font = '600 15px -apple-system, sans-serif';
+      ctx.fillText(c, x + bw / 2, H - PAD.bottom - bh - 8);
+      ctx.font = '13px -apple-system, sans-serif';
+    }
+  }
+
+  if (n === EXACT_N && !running && built === total) {
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#3d8b3d';
+    ctx.fillText('perfect', PAD.left + (mh - lo + 0.5) * bw, H - PAD.bottom + 36);
+    ctx.fillStyle = '#c0392b';
+    ctx.fillText('stick', PAD.left + (n - 1 - lo + 0.5) * bw, H - PAD.bottom + 36);
+  }
+
+  ctx.fillStyle = '#888';
+  ctx.textAlign = 'right';
+  ctx.fillText(`trees built: ${built.toLocaleString()} / ${total.toLocaleString()}`, W - PAD.right, H - PAD.bottom - plotH + 10);
+}
+
+document.querySelectorAll('.n-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.n-btn').forEach(x => x.classList.remove('selected'));
+  b.classList.add('selected');
+  n = Number(b.dataset.n);
+  reset();
+}));
+
+document.getElementById('goBtn').addEventListener('click', () => {
+  reset();
+  gen = n === EXACT_N ? exactTrials() : randomTrials();
+  running = true;
+  requestAnimationFrame(step);
+});
+
+reset();
+</script>
+</body>
+</html>

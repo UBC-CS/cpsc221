@@ -1,0 +1,712 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "BST Removal, and Why Balance Matters"
+
+# Wednesday 10/28 in class (an evaluator may visit). Lecture 18 ran out
+# during the easy removals: the explorer was played with, the code was not
+# touched. So this starts there.
+#
+# Removal is written on top of lecture 18's find_, which returns Node *&, the
+# pointer IN THE TREE: remove = find it, then fix up that pointer. This
+# replaces the 2024 deck's doRemoval/remove(croot, k) version
+# (oldslides/lec102224-BSTRemove.pdf).
+#
+# Then pages 7-10 of that deck (recap/"bad tree", theory moments, average
+# case) and lec102324-AVLIntro page 5 (height balance), leading into Friday's
+# all-of-AVL video.
+#
+# Live pieces: viz/bst_explorer.html (?keys=..., &step=1 turns on Step mode)
+# and viz/bst_heights.html (new: exact height histogram for all 5040 orders
+# of 1..7, then random orders for n up to 10,000).
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 5** starts tomorrow: tree definitions and traversals
+- **PA2** is due Monday 11/02
+
+\
+
+**Today:**
+
+- BST remove: the code
+- BST remove: the hard case
+- How tall is a BST?
+- Which tree makes you happiest?
+
+## Where were we? {.smaller}
+
+```{=html}
+<iframe src="viz/bst_explorer.html" width="100%" height="560" style="border: none; border-radius: 8px;"></iframe>
+```
+
+::: notes
+Monday's tree (no 40). Quick replay, asking the room what will happen
+before each click:
+
+1. **Delete 37**, a leaf: it just disappears. Its parent's pointer becomes null.
+2. **Delete 51**, one child: 84 moves up into its place. Everything under 84
+   is still bigger than 38, so the tree is still a BST.
+
+The point to land: in both cases, **one pointer in the tree changes** —
+the one that used to point at the doomed node. That's the hook for the code.
+:::
+
+## Binary search tree — remove {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="38%"}
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text>
+</g>
+</svg>
+
+Remember: `find_` returns the pointer <blue>in the tree</blue>, by reference.
+:::
+::: {.column width="62%"}
+```cpp
+Node *& find_(const K & key, Node *& r) {
+    if (r == nullptr) return r;
+    else if (r->key == key) return r;
+    else if (key < r->key) return find_(key, r->left);
+    else return find_(key, r->right);
+}
+```
+
+```cpp
+void remove(const K & key) {
+    Node *& p = ______________________;
+
+    if (_______________) {
+        if (______________________________)
+            twoChildRemove(p);
+        else
+            zeroOneChildRemove(p);
+    }
+}
+```
+:::
+::::
+
+::: notes
+```
+Node *& p = find_(key, root);
+if (p != nullptr)                                  // found it (else: nothing to do)
+if (p->left != nullptr && p->right != nullptr)     // two children
+```
+
+The whole idea: **find it, then fix up the pointer you found.** Because
+`find_` returns `Node *&`, `p` *is* the parent's `left` or `right` (or
+`root` itself), not a copy. Assigning to `p` rewires the tree.
+
+Same trick as insert on Monday: `Node *& p = find_(key, root); if (p ==
+nullptr) p = new Node(key, data);`. Insert fixes up a null pointer; remove
+fixes up a non-null one.
+:::
+
+## BST — remove {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="45%"}
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text>
+</g>
+</svg>
+:::
+::: {.column width="55%"}
+```cpp
+void zeroOneChildRemove(Node *& p) {
+    Node * temp = p;
+    if (p->left == nullptr) p = p->right;
+    else                    p = p->left;
+    delete temp;
+}
+```
+
+`remove(37)`: &nbsp; `p` is 25's `right`
+
+`remove(89)`: &nbsp; `p` is 84's `right`
+:::
+::::
+
+::: notes
+`p` is a reference to the parent's pointer, so reassigning it splices the
+node out:
+
+- 37 is a leaf: `p->left` is null, so `p = p->right`, which is also null.
+  25's right pointer becomes null. The leaf case comes for free.
+- 89 has one child: its left is null, so `p = p->right`, and 84's right
+  pointer now points at 95.
+
+`temp` keeps the old address so we can free the node *after* rewiring.
+Ask: what goes wrong if we `delete p` first? (Then `p->right` reads freed
+memory.)
+
+Both the zero- and one-child cases in four lines, and **Θ(h)**: the cost is
+the `find_`.
+:::
+
+## 2-child remove {.activity}
+
+`T.remove(38);` How should we implement this?
+
+<svg class="nodefig" width="437" height="276">
+<g transform="scale(1.15)">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.45"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.45"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="white" stroke="#888" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text class="val" x="190" y="24.9" font-size="13" text-anchor="middle" fill="#888">?</text>
+<circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#f7c97f" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text>
+</g>
+</svg>
+
+How can you rearrange what's left into a BST? &nbsp; Describe as many ways as you can.
+
+::: notes
+About 3 minutes in pairs, then collect answers on the board. Expect:
+
+1. **Hang T<sub>R</sub> under the largest key in T<sub>L</sub>**: 13 becomes
+   the root, and 51's whole subtree goes on 37's right. Legal — every key in
+   T<sub>R</sub> is bigger than everything in T<sub>L</sub>. Height: **6**.
+2. **Hang T<sub>L</sub> under the smallest key in T<sub>R</sub>**: 51 becomes
+   the root, 13's subtree goes on 40's left. Legal. Height **4** here, but
+   only by luck: in general the heights add.
+3. **Promote 37**, the largest key on the left (in-order **predecessor**),
+   into the hole. Height **4**.
+4. **Promote 40**, the smallest key on the right (in-order **successor**).
+   Height **4**.
+
+All four are correct BSTs. Which do we want? Everything costs Θ(h), and
+1 and 2 can make the tree taller (heights add); 3 and 4 never do, since
+only one node moves. Wrong-but-common guesses: "13 or 51 moves up" with
+nothing else changed — 13 at the root would leave 25 and 37 on its left,
+51 would leave 40 on its right.
+
+We'll use the predecessor. Where is it? Go left once, then right as far as
+you can. Note that 37 and 40 sit on either side of 38 in the inorder
+traversal: …, 25, 37, **38**, 40, 51, …
+:::
+
+## Watch: {.smaller}
+
+```{=html}
+<iframe src="viz/bst_explorer.html?keys=38,13,51,10,25,40,84,12,37,66,89,95&step=1" width="100%" height="560" style="border: none; border-radius: 8px;"></iframe>
+```
+
+::: notes
+Step mode is already on, and the tree has 40 in it. Delete 38, and press
+Step at each move: the search finds 38, then walks **left once, right to
+the end** to 37, copies 37 up into the root, and removes the old 37 node,
+a leaf, the easy case.
+
+Ask before each step: where does it go next?
+
+Then keep removing the root: delete **37** (predecessor 25), then **25**.
+That third one is the tricky case: go left to 13, and 13 has **no right
+child**, so 13 *is* the rightmost node of the left subtree. The root
+becomes 13, and 13's old node is spliced out: 10 moves up. In the code
+(next slide), `rightMost_(p->left)` returns `p->left` itself, and
+`zeroOneChildRemove` rewires it. No special case.
+:::
+
+## Binary search tree — remove {.smaller .smallcode}
+
+:::: {.columns}
+::: {.column width="45%"}
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text>
+</g>
+</svg>
+:::
+::: {.column width="55%"}
+```cpp
+void twoChildRemove(Node *& p) {
+    Node *& iop = rightMost_(p->left);
+    p->key  = iop->key;
+    p->data = iop->data;
+    zeroOneChildRemove(iop);
+}
+```
+
+```cpp
+Node *& rightMost_(Node *& r) {
+    if (r->right == nullptr) return r;
+    else return rightMost_(r->right);
+}
+```
+:::
+::::
+
+::: notes
+`iop` = **in-order predecessor**. `rightMost_` is a find, too: it returns
+the pointer *in the tree* that points at the rightmost node: 25's `right`,
+here.
+
+Copy the predecessor's key and data up into `p`'s node, then remove the
+predecessor's node. It's a rightmost node, so it has **no right child**:
+it's always the easy case. One call, never a chain.
+
+Running time: down to 38, then down to its predecessor: one path, still
+**Θ(h)**.
+:::
+
+## Recap {.smaller .smallcode}
+
+A *dictionary* is a structure supporting `insert`, `find`, and `remove`.
+
+B\_\_\_\_\_\_\_ S\_\_\_\_\_\_\_ T\_\_\_\_\_ implementation of a dictionary incurs running time \_\_\_\_\_\_\_\_ for all of these.
+
+:::: {.columns}
+::: {.column width="40%"}
+```cpp
+dict<int> myT;
+myT.insert(2);
+myT.insert(7);
+myT.insert(15);
+myT.insert(22);
+myT.insert(28);
+```
+:::
+::: {.column width="60%"}
+<svg class="nodefig" width="120" height="240">
+<g transform="scale(1.2)">
+<line x1="36.1" y1="20.2" x2="63.9" y2="43.8" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="63.9" y1="54.2" x2="36.1" y2="77.8" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="36.1" y1="88.2" x2="63.9" y2="111.8" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="63.9" y1="122.2" x2="36.1" y2="145.8" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="36.1" y1="156.2" x2="63.9" y2="179.8" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="30" cy="15" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="70" cy="49" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="30" cy="83" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="70" cy="117" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="30" cy="151" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="70" cy="185" r="8" fill="#e74c3c" stroke="#1a1a1a" stroke-width="1.5"/>
+</g>
+</svg>
+
+How many "bad" $n$-item trees are there?
+:::
+::::
+
+::: notes
+**Binary Search Tree** … running time **Θ(h)**.
+
+Inserting keys in sorted order — 2, 7, 15, 22, 28 — builds a stick: every
+key goes right. (Monday's list B.) Live: in the explorer, Clear and insert
+them, and watch the height readout climb with n. Height $n - 1$, so every operation is $\Theta(n)$. Our
+"fast" dictionary is a linked list.
+
+"Bad" trees: any shape where every node has at most one child, like the
+zig-zag. Each of the $n - 1$ links below the root goes left or right:
+**$2^{n-1}$** of them.
+:::
+
+## Binary search tree — height {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
+<svg class="nodefig" width="380" height="240">
+<g transform="scale(1.0)">
+<line x1="176.9" y1="27.3" x2="113.1" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="203.1" y1="27.3" x2="266.9" y2="62.7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.0" y1="81.1" x2="65.0" y2="108.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="109.4" y1="81.7" x2="130.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="61.7" y1="133.4" x2="73.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="146.7" y1="133.4" x2="158.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="270.6" y1="81.7" x2="249.4" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="289.4" y1="81.7" x2="310.6" y2="108.3" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="313.3" y1="133.4" x2="301.7" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="326.7" y1="133.4" x2="338.3" y2="156.6" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="350.6" y1="183.9" x2="359.4" y2="206.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="190" cy="20" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="190" y="24.9" font-size="13" text-anchor="middle">38</text>
+<circle cx="100" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="100" y="74.9" font-size="13" text-anchor="middle">13</text>
+<circle cx="280" cy="70" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="280" y="74.9" font-size="13" text-anchor="middle">51</text>
+<circle cx="55" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="55" y="124.9" font-size="13" text-anchor="middle">10</text>
+<circle cx="140" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="140" y="124.9" font-size="13" text-anchor="middle">25</text>
+<circle cx="240" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="240" y="124.9" font-size="13" text-anchor="middle">40</text>
+<circle cx="320" cy="120" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="320" y="124.9" font-size="13" text-anchor="middle">84</text>
+<circle cx="80" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="174.9" font-size="13" text-anchor="middle">12</text>
+<circle cx="165" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="165" y="174.9" font-size="13" text-anchor="middle">37</text>
+<circle cx="295" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="295" y="174.9" font-size="13" text-anchor="middle">66</text>
+<circle cx="345" cy="170" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="345" y="174.9" font-size="13" text-anchor="middle">89</text>
+<circle cx="365" cy="220" r="15" fill="#7fd3f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="224.9" font-size="13" text-anchor="middle">95</text>
+</g>
+</svg>
+
+Reminder: height(T) is
+
+- \_\_\_\_\_\_ if T is empty
+- 1 + max(height(T<sub>L</sub>), height(T<sub>R</sub>)), otherwise
+:::
+::: {.column width="50%"}
+The *algorithms* on BST depend on the height ($h$) of the tree.
+
+The *analysis* should be in terms of the amount of data ($n$) the tree contains.
+
+So we need relationships between $h$ and $n$:
+
+$h \ge f(n)$
+
+$h \le g(n)$
+:::
+::::
+
+::: notes
+Empty tree: height **−1**.
+
+We know find/insert/remove cost $\Theta(h)$. To say anything in terms of
+$n$, we need to pin $h$ between two functions of $n$ — that's the next
+slide.
+:::
+
+## Binary tree (theory moments) {.smaller}
+
+:::: {.columns}
+::: {.column width="60%"}
+**#1**
+
+<svg class="nodefig" width="336" height="180">
+<g transform="scale(1.2)">
+<line x1="134.1" y1="15.8" x2="81.9" y2="50.2" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="145.9" y1="15.8" x2="198.1" y2="50.2" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="71.8" y1="59.6" x2="48.2" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="80.2" y1="59.6" x2="103.8" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="199.8" y1="59.6" x2="176.2" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="208.2" y1="59.6" x2="231.8" y2="90.4" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="41.5" y1="102.5" x2="30.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="46.5" y1="102.5" x2="57.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="105.5" y1="102.5" x2="94.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="110.5" y1="102.5" x2="121.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="169.5" y1="102.5" x2="158.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="174.5" y1="102.5" x2="185.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="233.5" y1="102.5" x2="222.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="238.5" y1="102.5" x2="249.5" y2="131.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="140.0" cy="12" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="76.0" cy="54" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="204.0" cy="54" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="44.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="108.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="172.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="236.0" cy="96" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="28.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="60.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="92.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="124.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="156.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="188.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="220.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="252.0" cy="138" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+</g>
+</svg>
+
+What is the max number of nodes in a tree of height $h$?
+
+What is the min height ($h$) for a tree of $n$ nodes?
+:::
+::: {.column width="40%"}
+**#2**
+
+<svg class="nodefig" width="144" height="180">
+<g transform="scale(1.2)">
+<line x1="23.8" y1="17.9" x2="42.2" y2="46.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="49.8" y1="57.9" x2="68.2" y2="86.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="75.8" y1="97.9" x2="94.2" y2="126.1" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="20" cy="12" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="46" cy="52" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="72" cy="92" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="98" cy="132" r="7" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+</g>
+</svg>
+
+What is the max height ($h$) for a tree of $n$ nodes?
+:::
+::::
+
+Thus: lower bound on height \_\_\_\_\_\_, upper bound on height \_\_\_\_\_\_ — good news or bad (what's the context?)
+
+::: notes
+#1: at most $2^{h+1} - 1$ nodes (perfect tree), so $n \le 2^{h+1} - 1$ and
+$h \ge \log_2(n+1) - 1$: **$h = \Omega(\log n)$**.
+
+#2: a stick has height **$n - 1$**: $h = O(n)$.
+
+Lower bound $\Omega(\log n)$, upper bound $O(n)$. For a **dictionary**
+that's bad news: the worst case is a linked list.
+:::
+
+## Your Turn {.activity}
+
+There are 7! = **5040** ways to insert the keys 1, 2, …, 7 into an empty BST.
+
+\
+
+How many of them build the **perfect** tree (height 2)?
+
+How many build a **stick** (height 6)?
+
+\ 
+
+Guess what fraction for each.
+
+::: notes
+About 1 minute. Take guesses. Most people guess the perfect tree is
+common and sticks are rare. Then the next slide.
+
+Answers: **80** perfect, **64** sticks. Sticks: each of the 2^(n−1) = 64
+"bad" shapes from the recap is built by exactly one insertion order.
+:::
+
+## All 5040 {.smaller}
+
+```{=html}
+<iframe src="viz/bst_heights.html" width="100%" height="520" style="border: none; border-radius: 8px;"></iframe>
+```
+
+::: notes
+Press **Build the trees** at n = 7: every insertion order, exactly.
+
+80 perfect, 64 sticks: both rare. Most land in the middle, height 3 or 4.
+Average 3.67.
+
+Then n = 100, 1,000, 10,000 (1,000 random orders each). The tallest
+possible height runs off the chart (99, 999, 9,999), but the trees pile
+up at a few times log n: around 12 for n = 100, 21 for 1,000, 30 for
+10,000. Random BSTs are short. **On average** the height is Θ(log n).
+
+The catch: the stick isn't rare in real life. Sorted input, the most
+common input there is, builds it every time.
+:::
+
+## Average case! {.smaller}
+
+The height of a BST depends on the order in which the data is inserted into it.
+
+&nbsp;&nbsp;&nbsp;&nbsp;ex. &nbsp;1 3 2 4 5 7 6 &nbsp;&nbsp;vs.&nbsp;&nbsp; 4 2 3 6 7 1 5
+
+How many different ways are there to insert $n$ keys into a tree?
+
+Avg height, over all arrangements of $n$ keys, is \_\_\_\_\_\_\_\_.
+
+| operation | avg case | worst case | sorted array | sorted list |
+|---|:---:|:---:|:---:|:---:|
+| find | | | $\log n$ | $\log n$ |
+| insert | | | $n$ | $n$ |
+| delete | | | $n$ | $n$ |
+| traverse | | | $n$ | $n$ |
+
+::: notes
+1 3 2 4 5 7 6 builds a tall, stringy tree (height 4); 4 2 3 6 7 1 5 builds a
+bushy one (height 2). Same keys, different order.
+
+There are **$n!$** insertion orders. Averaged over all of them, the height
+is **$\Theta(\log n)$** (a classic result we won't prove).
+
+| | avg | worst | sorted array | sorted list |
+|---|---|---|---|---|
+| find | log n | n | log n | n |
+| insert | log n | n | n | n |
+| delete | log n | n | n | n |
+| traverse | n | n | n | n |
+
+**Planted error:** sorted list *find* is shown as $\log n$. It's $n$: no
+binary search without random access, so you walk the list. (Sorted array
+find really is $\log n$.) Ask: "one of these is wrong — which?"
+
+So BSTs are great *on average* — but the worst case is exactly what sorted
+input produces. Can we make the worst case $\log n$ too?
+:::
+
+## Foreshadowing Friday {.smaller}
+
+<svg class="nodefig" width="440" height="182">
+<g transform="scale(1.1)">
+<line x1="40.9" y1="35.1" x2="69.1" y2="68.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="90.9" y1="95.1" x2="119.1" y2="128.9" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="30" cy="22" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="30" y="27.3" font-size="14" text-anchor="middle">50</text>
+<circle cx="80" cy="82" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="80" y="87.3" font-size="14" text-anchor="middle">70</text>
+<circle cx="130" cy="142" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="130" y="147.3" font-size="14" text-anchor="middle">90</text>
+<line x1="298.5" y1="64.5" x2="266.5" y2="99.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="321.5" y1="64.5" x2="353.5" y2="99.5" stroke="#1a1a1a" stroke-width="1.5"/>
+<circle cx="310" cy="52" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="310" y="57.3" font-size="14" text-anchor="middle">70</text>
+<circle cx="255" cy="112" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="255" y="117.3" font-size="14" text-anchor="middle">50</text>
+<circle cx="365" cy="112" r="17" fill="#d6eef0" stroke="#1a1a1a" stroke-width="1.5"/>
+<text class="val" x="365" y="117.3" font-size="14" text-anchor="middle">90</text>
+</g>
+</svg>
+
+**Idea:** &nbsp; _____________________________________________________________
+
+The "height balance" of a tree T is: &nbsp;&nbsp; $b = \text{height}(T_R) - \text{height}(T_L)$
+
+A tree T is "height balanced" if:
+
+- &nbsp;
+- &nbsp;
+
+::: notes
+The right one — same three keys, height 1 instead of 2.
+
+Idea line: change insert and remove so the tree on the left can never
+happen.
+
+A tree is height balanced if
+- it's **empty**, or
+- **$|b| \le 1$** at the root, **and** both subtrees are height balanced.
+
+The recursion matters: the root being balanced isn't enough. A BST that is
+height balanced everywhere is an **AVL tree** — Friday's video: how to keep
+it balanced as keys come and go, and why that guarantees $O(\log n)$.
+:::
