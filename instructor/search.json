@@ -880,236 +880,6 @@
     "text": "Today, you built a data structure\n\n\n\n\n\n\n\nDefined\nthe Stack ADT: push, pop, empty. Last in, first out\n\n\nImplemented\ntwo ways: linked list and vector\n\n\nAnalyzed\npush and pop are \\(\\Theta(1)\\) for linked list. For the vector, doubling on resize keeps the functions \\(\\Theta(1)\\) on average.\n\n\nApplied\nPotion Pantry: use a stack to reverse the pile!\n\n\n\n\nPoint at the four verbs. That is the life cycle of every structure for the rest of the term: define the ADT, implement it, analyze it, use it.\nThe Part 2 trick is worth one more sentence: popping a group into a temporary stack reverses it; popping it onto the destination reverses it back. Two reversals, original order."
   },
   {
-    "objectID": "lesson-plans/selection-sort-proof.html",
-    "href": "lesson-plans/selection-sort-proof.html",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "",
-    "text": "Written to be worked at the board. It leans on two results rather than reproving them: idxOfMin, proved in lecture 4/5, and swap, assumed."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#the-code",
-    "href": "lesson-plans/selection-sort-proof.html#the-code",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "The code",
-    "text": "The code\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWrite \\(n\\) for C.size(), and \\(C_0\\) for the contents of C on entry. Note \\(n\\) does not change: nothing in the loop resizes C."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
-    "href": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "What we are allowed to assume",
-    "text": "What we are allowed to assume\n\n\n\n\n\n\nLemma 1 (idxOfMin). For \\(0 \\le a &lt; n\\), idxOfMin(C, a) returns an index \\(\\ell\\) with \\(a \\le \\ell &lt; n\\) and \\[C[\\ell] \\;=\\; \\min_{a \\le j &lt; n} C[j],\\] and does not modify C.\n\n\n\n\n\n\n\n\n\nLemma 2 (swap). swap(C, p, q) leaves C with \\(C'[p] = C[q]\\), \\(C'[q] = C[p]\\), and \\(C'[k] = C[k]\\) for every \\(k \\notin \\{p, q\\}\\). In particular it is a transposition, so it permutes the contents of C."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
-    "href": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "What we are proving",
-    "text": "What we are proving\n\n\n\n\n\n\nTheorem. After selectionSort(C) returns, C is a permutation of \\(C_0\\) and \\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\).\n\n\n\nBoth halves are needed. Sortedness alone is satisfied by a function that overwrites the array with zeroes."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#the-invariant",
-    "href": "lesson-plans/selection-sort-proof.html#the-invariant",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "The invariant",
-    "text": "The invariant\nAt the top of iteration \\(i\\) — meaning just before the guard is tested with the loop variable equal to \\(i\\) — for \\(0 \\le i \\le n\\):\n\n\n\n\n\n\n\\(P(i)\\):\n\nC is a permutation of \\(C_0\\);\n\\(C[0] \\le C[1] \\le \\cdots \\le C[i-1]\\);\n\\(\\displaystyle\\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\\).\n\n\n\n\nClauses (b) and (c) are vacuous when \\(i = 0\\); (c) is also vacuous when \\(i = n\\).\nClause (c) is the one that does not appear in the theorem. It is carried purely to make the induction go through — see the remark at the end."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#a-initialization",
-    "href": "lesson-plans/selection-sort-proof.html#a-initialization",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "a) Initialization",
-    "text": "a) Initialization\nTake \\(i = 0\\).\n\nNo statement has executed, so C holds \\(C_0\\), and the identity is a permutation.\nThe range \\(C[0..{-1}]\\) is empty, and the empty sequence is sorted.\nThere is no \\(k\\) with \\(0 \\le k &lt; 0\\), so the maximum is over an empty set and the claim is vacuous.\n\nHence \\(P(0)\\). \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#b-restoration",
-    "href": "lesson-plans/selection-sort-proof.html#b-restoration",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "b) Restoration",
-    "text": "b) Restoration\nAssume \\(P(i)\\) holds at the top of iteration \\(i\\), and that the guard passed, so \\(i &lt; n\\). Let C denote the contents at the top of the iteration and \\(C'\\) the contents after the body runs. We show \\(P(i+1)\\) holds of \\(C'\\).\nThe body does two things:\n\\[m \\;=\\; \\texttt{idxOfMin(C, i)}, \\qquad \\texttt{swap(C, m, i)}.\\]\nBy Lemma 1, \\(i \\le m &lt; n\\) and \\[C[m] \\;=\\; \\min_{i \\le j &lt; n} C[j], \\tag{$\\star$}\\] and C is unchanged by the call. By Lemma 2, \\[C'[i] = C[m], \\qquad C'[m] = C[i], \\qquad C'[k] = C[k] \\text{ otherwise.}\\]\n(a) Permutation. idxOfMin does not modify C, and swap is a transposition. A composition of permutations is a permutation, so by the inductive hypothesis \\(C'\\) is a permutation of \\(C_0\\).\n(b) The prefix is sorted. We must show \\(C'[0] \\le \\cdots \\le C'[i]\\).\nSince \\(m \\ge i\\), the swap touches only indices \\(\\ge i\\), so \\[C'[k] = C[k] \\quad \\text{for all } k &lt; i,\\] and by the inductive hypothesis (b) this prefix is sorted. It remains to check the join, that \\(C'[i-1] \\le C'[i]\\), and only when \\(i \\ge 1\\).\nBy the inductive hypothesis (c), \\[C[i-1] \\;\\le\\; \\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\n\\;\\overset{(\\star)}{=}\\; C[m] \\;=\\; C'[i],\\] and \\(C'[i-1] = C[i-1]\\), so \\(C'[i-1] \\le C'[i]\\) as required.\nWhen \\(i = 0\\) the range \\(C'[0..0]\\) is a single element and is sorted trivially.\n(c) The prefix stays below the suffix. We must show \\[\\max_{0 \\le k &lt; i+1} C'[k] \\;\\le\\; \\min_{i+1 \\le j &lt; n} C'[j].\\]\nBy part (b) just proved, \\(C'[0..i]\\) is sorted, so its maximum is its last entry: \\[\\max_{0 \\le k \\le i} C'[k] \\;=\\; C'[i] \\;=\\; C[m].\\]\nFor the right-hand side, compare the two suffixes as multisets. The swap moves \\(C[m]\\) to position \\(i\\) and \\(C[i]\\) to position \\(m\\), and both \\(i\\) and \\(m\\) lie in \\([i, n)\\), so \\[\\{\\, C'[j] : i+1 \\le j &lt; n \\,\\} \\;=\\; \\{\\, C[j] : i \\le j &lt; n \\,\\} \\setminus \\{ C[m] \\}.\\]\nEvery element of \\(\\{C[j] : i \\le j &lt; n\\}\\) is \\(\\ge C[m]\\) by \\((\\star)\\), since \\(C[m]\\) is the minimum of exactly that set. Removing one element cannot introduce anything smaller, so every remaining element is \\(\\ge C[m] = C'[i]\\), which is the claim.\nHence \\(P(i+1)\\). \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#c-termination",
-    "href": "lesson-plans/selection-sort-proof.html#c-termination",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "c) Termination",
-    "text": "c) Termination\nThe loop variable starts at \\(0\\), increases by exactly \\(1\\) per iteration, and is tested against the fixed bound \\(n\\). So after \\(n\\) iterations the guard fails and control leaves the loop with \\(i = n\\).\n\\(P(n)\\) therefore holds, and reading it off:\n\n\nC is a permutation of \\(C_0\\);\n\n\n\\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\) — the whole array is sorted;\n\n\nvacuous.\n\n\nTogether, (a) and (b) are exactly the theorem. \\(\\qquad\\blacksquare\\)"
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
-    "href": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "Remark: why clause (c) is there",
-    "text": "Remark: why clause (c) is there\nDrop (c) and the proof fails at one specific line. In part (b) we needed \\(C'[i-1] \\le C'[i]\\), and the only thing that delivers it is knowing that everything already placed is no larger than anything still to come. Sortedness of the prefix alone says nothing about how the prefix compares to the rest, so the newly placed element could land below its predecessor.\nSo (c) is not part of what we set out to prove, and it is not used at termination — it retires there, vacuous. It exists solely so that the inductive step can be taken. That is strengthening the induction hypothesis: the statement you can prove is sometimes stronger than the one you want."
-  },
-  {
-    "objectID": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
-    "href": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
-    "title": "Selection sort — a formal proof of correctness",
-    "section": "Remark: the last iteration",
-    "text": "Remark: the last iteration\nThe loop runs to \\(i = n-1\\), where idxOfMin(C, n-1) must return \\(n-1\\) and the swap exchanges an element with itself. It is harmless, and the proof covers it without a special case, but the loop could equally run to \\(n-2\\). Worth a sentence if someone asks — it is the same observation as the final pass of a bubble sort doing nothing."
-  },
-  {
-    "objectID": "faq.html",
-    "href": "faq.html",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "posts/04_week-05/index.html",
-    "href": "posts/04_week-05/index.html",
-    "title": "Week 5 — Oct 5 to Oct 11",
-    "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n10/05\nClass activity: The Witch’s Potion Pantry — bring a laptop · PA1 due · Homework Two released\n\n\n10/07\nExamlet 2 questions visible\n\n\n10/08 – 10/11\nExamlet 3 — self-scheduled in PrairieTest; covers everything through Friday 10/02’s lesson\n\n\n10/11\nLab Quacks due\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/19\nHomework Two due\n\n\n\n\n\nExamlet 2. The class average was 91%. One question (selection_sort_analysis) had errors in its answer key, so everyone has received full credit for it. Thank you to those who reported it.\nPEX3 is up, and now includes array resizing from Friday’s video.\nNext week is quiet. The week of 10/12 has no labs, no class meetings, no examlets, no homework and no programming assignments — just two video lessons to watch."
-  },
-  {
-    "objectID": "posts/01_week-02/index.html",
-    "href": "posts/01_week-02/index.html",
-    "title": "Week 2 — Sep 14 to Sep 20",
-    "section": "",
-    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
-  },
-  {
-    "objectID": "posts/05_week-06/index.html",
-    "href": "posts/05_week-06/index.html",
-    "title": "Week 6 — Oct 12 to Oct 18",
-    "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/14\nVideo lesson · PEX4 released\n\n\n10/16\nVideo lesson\n\n\n10/19\nHomework Two due · PA2 released (due 11/02)\n\n\n10/22 – 10/25\nExamlet 4 — self-scheduled in PrairieTest\n\n\n\n\n\nA quiet week. No class meetings, no labs, no examlets — just two video lessons.\nLabs now include office hours. For the rest of the term, starting the week of 10/19, lab sections replace TA office hours. The TAs will still work through the lab exercise, and you’re welcome to bring any other questions too.\nPlan for PAs to take up to 20 hours. Start PA2 early."
-  },
-  {
-    "objectID": "posts/03_week-04/index.html",
-    "href": "posts/03_week-04/index.html",
-    "title": "Week 4 — Sep 28 to Oct 4",
-    "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n09/30\nNo class — National Day for Truth and Reconciliation · PEX3 released\n\n\n10/01 – 10/04\nExamlet 2 — self-scheduled in ORCA\n\n\n10/04\nLab 3 (Linked Lists) due\n\n\n10/05\nPA1 due\n\n\n\n\n\nPEX2 has grown. It now includes pointer puzzles and new sorting questions, and most of them regenerate with New variant, so you can keep practising.\nPA1 Gallery. The zero-point Gallery question in the PA1 assessment is your chance to build a transformation of your own. There are prizes, and winners go up on this site."
-  },
-  {
-    "objectID": "posts/02_week-03/index.html",
-    "href": "posts/02_week-03/index.html",
-    "title": "Week 3 — Sep 21 to Sep 27",
-    "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n09/21\nHW1 due · PA1 released, due 10/05\n\n\n09/23\nPEX2 released\n\n\n09/24 – 09/27\nExamlet 1 — self-scheduled in ORCA\n\n\n09/27\nLab Debug due\n\n\n\nExamlet 1 covers everything through week 2: asymptotics, running times, best and worst cases, and loop invariants. Check your ORCA reservation.\n\n\nOffice hours have changed. Cinda is now Tuesdays 10:30–11:30 am, ICCS 233. Nathan is unchanged, Mondays 4–5 pm, ICCS X465."
-  },
-  {
-    "objectID": "posts/07_week-08/index.html",
-    "href": "posts/07_week-08/index.html",
-    "title": "Week 8 — Oct 26 to Nov 1",
-    "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n10/26\nPA2 submissions open · Lab Dict open\n\n\n10/29 – 11/01\nExamlet 5 — self-scheduled in PrairieTest\n\n\n11/02\nPA2 due\n\n\n\n\n\nPA2 submissions are open. Upload your six files to PA2 on PrairieLearn and the autograder scores them in a few minutes. Submit as often as you like.\nExamlet 5 covers tree definitions and tree traversals. PEX5 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA2 questions too.\nExamlet 4: the median was 81."
-  },
-  {
-    "objectID": "posts/00_welcome/index.html",
-    "href": "posts/00_welcome/index.html",
-    "title": "Welcome to CPSC 221",
-    "section": "",
-    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html",
-    "href": "lesson-plans/lecture-02_lesson-plan.html",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "",
-    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "",
-    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Why this slot",
-    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term, and it follows the introduction to running-time analysis. The same function appears in lecture 1 with its name blanked out; here the question is asked live, answered casually, and then handed straight back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Carryover from Wednesday",
-    "text": "Carryover from Wednesday\nWednesday (Sep 9) ended on “Measuring the value of algorithms”, right after the opening question “if an algorithm is not correct, is its value 0?”.\nThat turns out to be exactly where the 2024W1 deck’s Lesson 1.2 begins (oldslides/lec090624-reasoning.pdf), so the carryover has been folded into the front of Friday’s deck rather than left in lecture 1. Slides 1–6:\n\n\n\n\n\n\n\nToday\nannouncements, where we’re going\n\n\nAlgorithm analysis\ncorrect / time / space — 30 seconds, framing only\n\n\nWhere we stopped\nlands the answer to Wednesday’s question, doesn’t re-run it\n\n\nMeasuring the value\nwhich is better? metrics, \\(T(n)\\) as a positive function\n\n\nRunning times\nthe orders-of-magnitude table\n\n\nExample 1\nthe activity starts here\n\n\n\nBudget twelve minutes to reach example 1 and keep it moving — none of it is new material except the last line of the running-times slide, which is the hinge: before we can say how long an algorithm takes, we have to say what it does.\nExample 1 is this activity’s function, verbatim and already name-blanked, so it does double duty: it is the last lecture slide and the activity’s opening “ask it live, take answers” move. Nothing runs twice.\nDo not ask “how long does it take?” on that slide. The 2024 deck does, but it is Monday’s opening — asking it Friday telegraphs that the description is the hard part.\nThat leaves the activity about 38 of its 50 minutes. If it runs tight, cut from the breaking phase, not from the group argument."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-function",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The function",
-    "text": "The function\nThe same one from lecture 1, name still blank:\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIt is deliberately trivial. Nobody can hide behind complexity, so the only thing that can fail is the precision of their words.\nA description that survives everything below:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Timing (50 minutes)",
-    "text": "Timing (50 minutes)\nStarting from example 1, i.e. twelve minutes into the class:\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nAsk it live, take answers\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The three moves that make this work",
-    "text": "The three moves that make this work\n\n1. Simultaneous reading, not round-robin\nEverybody reads their own statement aloud at the same time, whole room, about thirty seconds. This is better than taking turns for four reasons: no performance anxiety among strangers in week 1, every single student actually does it, no confident voice anchors the group before others have spoken, and it is fast.\nThe purpose is for the speaker to hear themselves, not for anyone else to listen. Say that explicitly — “nobody is listening to you, that’s the point.”\nTell them twice not to fix the sentence as they read it. Students patch their own wording mid-sentence automatically, half a second before they reach the gap, and it destroys the entire effect. Naming it is the only defence.\nAfterwards, ask “did it sound like you expected?” and wait. Laughter and groans here are the lesson landing.\n\n\n2. An adjudication test, not a vote\n“Whose is correct?” needs a criterion or groups just pick the one that sounds nicest:\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\n3. You play the pedantic genie\nTake real statements from the room and satisfy them legally but wrongly. Playful, not punitive — you are a malicious implementer, not a judge.\n\n\n\n\n\n\n\nTheir words\nWhat you hand back\n\n\n\n\n“finds the key in the list”\nReturns true. I found it.\n\n\n“returns the position of the key”\n[5,3,5], key 5 → returns 2. Also a position.\n\n\n“returns the index of the key”\nKey absent → returns 0. You didn’t say.\n\n\n“returns where the key is”\nA 1-based index. You didn’t say.\n\n\n“searches for the key and returns it”\nReturns 5. You said return it.\n\n\n“returns the index of the key, or -1”\nReturns any matching index. You never said first.\n\n\n\nThat last row is the important one: it catches students who were already being careful, so nobody in the room gets to feel exempt."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Watch for: transcription",
-    "text": "Watch for: transcription\nSomeone will narrate the code instead of describing it — “it loops from 0 to size, and if arr[i] equals q it returns i.” That technically passes the reimplementation test, which makes it a good ninety seconds if it comes up naturally: it tells you what the code says, never what it is for, and it is no shorter than just reading the code.\nThe giveaway is the blank in the function name. A transcription cannot name the function; a real description hands you the name almost for free.\nKeep this in your pocket rather than on a slide — take it only if a student raises it."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The naming payoff",
-    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to fill in the blanked-out name."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The AI moment — generate it live",
-    "text": "The AI moment — generate it live\nPaste the function into whichever tool you like, in front of them, and let the room watch it produce a clean, correct description in about three seconds. Live is far better than a screenshot: it is more honest, it removes any suspicion of cherry-picking, and the speed is the point.\nIt will be correct. Do not pretend otherwise — the lesson does not depend on AI being wrong, and students will disengage instantly if you overstate it.\nThe line that matters:\n\nYou are nodding, because it looks right. You would have nodded twenty minutes ago too — before you knew what you were missing.\n\nThen: recognizing a correct answer and being able to produce one feel identical from the inside, and only one of them is what an examlet tests."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "The closing contract",
-    "text": "The closing contract\nThree people who just succeeded together agree on one shared phrase:\n\n“Say that more precisely.”\n\nAimed at the practice, not the relationship — so it costs nothing personal, requires no exchange of contact details, and works on a partner, a TA, a future study group, or yourself.\nThen start using it from the front of the room constantly, all term. Heard in week 1 and then every week after, it stops being an event and becomes how this course talks.\n\nOn the optional contact swap\nOffer it, then say “or nothing at all” clearly and move on fast.\nIn a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago. If the whole room is exchanging while you watch, declining becomes conspicuous — naming the opt-out out loud is what makes it free.\nCollect nothing, build no roster, and do not ask next week who is still meeting. Any follow-up makes the opt-out visible again."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "Known risks",
-    "text": "Known risks\n\nSome students finish writing in ninety seconds. They are usually the ones about to discover they were imprecise. Hold the full five minutes.\nA group agrees immediately and goes quiet. They accepted the first statement without testing it. Nudge: “read me the shortest one and I’ll tell you how I’d break it.”\nTone in the breaking phase. Pedantic genie, not judge. If it reads as mockery in week 1, you lose volunteers for the term.\nDo not add an attendance pitch at the end. The students in the room just lived the argument. Saying it out loud a second time cheapens it."
-  },
-  {
-    "objectID": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
-    "href": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
-    "title": "Lesson plan — What Does It Do?",
-    "section": "For later: the AI comparison",
-    "text": "For later: the AI comparison\nCut from this lesson deliberately — a tool producing the sentence in three seconds argues against the point, which is that they needed each other. It belongs in a lecture where assessment is the subject.\nWorth keeping when that lecture happens (tested 2026-09-11): asked what the function does, Gemini omitted “first”; ChatGPT got it right. That is the demonstration in one line — the word the whole room fights over is the word a widely-used tool drops, and you cannot tell which you got without already knowing the answer.\nA local chat window for doing this live, driven by the claude CLI so no API key is involved, is in tools/aidemo/server.py at the root of the superproject."
-  },
-  {
     "objectID": "syllabus.html",
     "href": "syllabus.html",
     "title": "Syllabus",
@@ -1218,6 +988,390 @@
       "Course information",
       "Syllabus"
     ]
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html",
+    "href": "lesson-plans/lecture-02_lesson-plan.html",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "",
+    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-sensation-we-are-going-for",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "",
+    "text": "Students should feel, in their own mouths, that a sentence they were confident about does not survive being said out loud — and then watch the room build a correct one together in twenty minutes, from nothing but conversation.\nThe lesson is not “you all failed” and it is not “AI will ruin you.” The arc is generous on purpose:\n\nIndividually, almost nobody writes a precise description.\nThrough conversation, almost everybody gets there.\nTherefore: the conversation was the thing that worked.\n\nThat last step is the argument for being in the room, and it is demonstrated rather than asserted — which matters, because attendance is not required in this course and the lesson must not quietly contradict that."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#why-this-slot",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Why this slot",
+    "text": "Why this slot\nFriday of week 1 is the only in-person Friday of the term, and it follows the introduction to running-time analysis. The same function appears in lecture 1 with its name blanked out; here the question is asked live, answered casually, and then handed straight back to them.\nIt also lands before HW1 and Examlet 1 in week 3. Habits form in week 1."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#carryover-from-wednesday",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Carryover from Wednesday",
+    "text": "Carryover from Wednesday\nWednesday (Sep 9) ended on “Measuring the value of algorithms”, right after the opening question “if an algorithm is not correct, is its value 0?”.\nThat turns out to be exactly where the 2024W1 deck’s Lesson 1.2 begins (oldslides/lec090624-reasoning.pdf), so the carryover has been folded into the front of Friday’s deck rather than left in lecture 1. Slides 1–6:\n\n\n\n\n\n\n\nToday\nannouncements, where we’re going\n\n\nAlgorithm analysis\ncorrect / time / space — 30 seconds, framing only\n\n\nWhere we stopped\nlands the answer to Wednesday’s question, doesn’t re-run it\n\n\nMeasuring the value\nwhich is better? metrics, \\(T(n)\\) as a positive function\n\n\nRunning times\nthe orders-of-magnitude table\n\n\nExample 1\nthe activity starts here\n\n\n\nBudget twelve minutes to reach example 1 and keep it moving — none of it is new material except the last line of the running-times slide, which is the hinge: before we can say how long an algorithm takes, we have to say what it does.\nExample 1 is this activity’s function, verbatim and already name-blanked, so it does double duty: it is the last lecture slide and the activity’s opening “ask it live, take answers” move. Nothing runs twice.\nDo not ask “how long does it take?” on that slide. The 2024 deck does, but it is Monday’s opening — asking it Friday telegraphs that the description is the hard part.\nThat leaves the activity about 38 of its 50 minutes. If it runs tight, cut from the breaking phase, not from the group argument."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-function",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-function",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The function",
+    "text": "The function\nThe same one from lecture 1, name still blank:\nint ____________ (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nIt is deliberately trivial. Nobody can hide behind complexity, so the only thing that can fail is the precision of their words.\nA description that survives everything below:\n\nGiven a vector of integers arr and an integer q, return the index of the first element of arr equal to q, scanning from index 0 upward. If no element equals q, return -1."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#timing-50-minutes",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Timing (50 minutes)",
+    "text": "Timing (50 minutes)\nStarting from example 1, i.e. twelve minutes into the class:\n\n\n\n\n\n\n\n\nTime\nPhase\nNotes\n\n\n\n\n0:00–0:03\nAsk it live, take answers\n“Somebody said: it finds the key”\n\n\n0:03–0:08\nWrite, silent, alone\nHold the silence\n\n\n0:08–0:09\nGroups of 3, hold up fingers\nCompliance check, collect nothing\n\n\n0:09–0:10\nEveryone reads aloud at once\n~30s, whole room\n\n\n0:10–0:18\nShare and adjudicate in groups\n“Whose, if any, is correct?”\n\n\n0:18–0:30\nI try to break them\nUse real statements from the room\n\n\n0:30–0:36\nBuild one together on the board\nFrom the room’s own words\n\n\n0:36–0:40\n“What just happened”\nThe convergence point — the real lesson\n\n\n0:40–0:46\nGenerate the AI description live\nRecognizing ≠ producing\n\n\n0:46–0:50\nThe contract, and close\n“Say that more precisely”\n\n\n\nProtect the group phase and the board-building. If you are running long, cut the number of descriptions you break, not the time groups spend arguing."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-three-moves-that-make-this-work",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The three moves that make this work",
+    "text": "The three moves that make this work\n\n1. Simultaneous reading, not round-robin\nEverybody reads their own statement aloud at the same time, whole room, about thirty seconds. This is better than taking turns for four reasons: no performance anxiety among strangers in week 1, every single student actually does it, no confident voice anchors the group before others have spoken, and it is fast.\nThe purpose is for the speaker to hear themselves, not for anyone else to listen. Say that explicitly — “nobody is listening to you, that’s the point.”\nTell them twice not to fix the sentence as they read it. Students patch their own wording mid-sentence automatically, half a second before they reach the gap, and it destroys the entire effect. Naming it is the only defence.\nAfterwards, ask “did it sound like you expected?” and wait. Laughter and groans here are the lesson landing.\n\n\n2. An adjudication test, not a vote\n“Whose is correct?” needs a criterion or groups just pick the one that sounds nicest:\n\nCould a stranger reimplement this function correctly, from these words alone?\n\n\n\n3. You play the pedantic genie\nTake real statements from the room and satisfy them legally but wrongly. Playful, not punitive — you are a malicious implementer, not a judge.\n\n\n\n\n\n\n\nTheir words\nWhat you hand back\n\n\n\n\n“finds the key in the list”\nReturns true. I found it.\n\n\n“returns the position of the key”\n[5,3,5], key 5 → returns 2. Also a position.\n\n\n“returns the index of the key”\nKey absent → returns 0. You didn’t say.\n\n\n“returns where the key is”\nA 1-based index. You didn’t say.\n\n\n“searches for the key and returns it”\nReturns 5. You said return it.\n\n\n“returns the index of the key, or -1”\nReturns any matching index. You never said first.\n\n\n\nThat last row is the important one: it catches students who were already being careful, so nobody in the room gets to feel exempt."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#watch-for-transcription",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Watch for: transcription",
+    "text": "Watch for: transcription\nSomeone will narrate the code instead of describing it — “it loops from 0 to size, and if arr[i] equals q it returns i.” That technically passes the reimplementation test, which makes it a good ninety seconds if it comes up naturally: it tells you what the code says, never what it is for, and it is no shorter than just reading the code.\nThe giveaway is the blank in the function name. A transcription cannot name the function; a real description hands you the name almost for free.\nKeep this in your pocket rather than on a slide — take it only if a student raises it."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-naming-payoff",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The naming payoff",
+    "text": "The naming payoff\n“Find” was never enough — a function called find could return a bool, a value, or an iterator. A precise description yields indexOfFirst / firstIndexOf almost automatically. Use this to fill in the blanked-out name."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-ai-moment-generate-it-live",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The AI moment — generate it live",
+    "text": "The AI moment — generate it live\nPaste the function into whichever tool you like, in front of them, and let the room watch it produce a clean, correct description in about three seconds. Live is far better than a screenshot: it is more honest, it removes any suspicion of cherry-picking, and the speed is the point.\nIt will be correct. Do not pretend otherwise — the lesson does not depend on AI being wrong, and students will disengage instantly if you overstate it.\nThe line that matters:\n\nYou are nodding, because it looks right. You would have nodded twenty minutes ago too — before you knew what you were missing.\n\nThen: recognizing a correct answer and being able to produce one feel identical from the inside, and only one of them is what an examlet tests."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#the-closing-contract",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "The closing contract",
+    "text": "The closing contract\nThree people who just succeeded together agree on one shared phrase:\n\n“Say that more precisely.”\n\nAimed at the practice, not the relationship — so it costs nothing personal, requires no exchange of contact details, and works on a partner, a TA, a future study group, or yourself.\nThen start using it from the front of the room constantly, all term. Heard in week 1 and then every week after, it stops being an event and becomes how this course talks.\n\nOn the optional contact swap\nOffer it, then say “or nothing at all” clearly and move on fast.\nIn a room this size there will be a few students with real reasons not to hand their number to two people they met twenty minutes ago. If the whole room is exchanging while you watch, declining becomes conspicuous — naming the opt-out out loud is what makes it free.\nCollect nothing, build no roster, and do not ask next week who is still meeting. Any follow-up makes the opt-out visible again."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#known-risks",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "Known risks",
+    "text": "Known risks\n\nSome students finish writing in ninety seconds. They are usually the ones about to discover they were imprecise. Hold the full five minutes.\nA group agrees immediately and goes quiet. They accepted the first statement without testing it. Nudge: “read me the shortest one and I’ll tell you how I’d break it.”\nTone in the breaking phase. Pedantic genie, not judge. If it reads as mockery in week 1, you lose volunteers for the term.\nDo not add an attendance pitch at the end. The students in the room just lived the argument. Saying it out loud a second time cheapens it."
+  },
+  {
+    "objectID": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
+    "href": "lesson-plans/lecture-02_lesson-plan.html#for-later-the-ai-comparison",
+    "title": "Lesson plan — What Does It Do?",
+    "section": "For later: the AI comparison",
+    "text": "For later: the AI comparison\nCut from this lesson deliberately — a tool producing the sentence in three seconds argues against the point, which is that they needed each other. It belongs in a lecture where assessment is the subject.\nWorth keeping when that lecture happens (tested 2026-09-11): asked what the function does, Gemini omitted “first”; ChatGPT got it right. That is the demonstration in one line — the word the whole room fights over is the word a widely-used tool drops, and you cannot tell which you got without already knowing the answer.\nA local chat window for doing this live, driven by the claude CLI so no API key is involved, is in tools/aidemo/server.py at the root of the superproject."
+  },
+  {
+    "objectID": "posts/00_welcome/index.html",
+    "href": "posts/00_welcome/index.html",
+    "title": "Welcome to CPSC 221",
+    "section": "",
+    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
+  },
+  {
+    "objectID": "posts/07_week-08/index.html",
+    "href": "posts/07_week-08/index.html",
+    "title": "Week 8 — Oct 26 to Nov 1",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n10/26\nPA2 submissions open · Lab Dict open\n\n\n10/29 – 11/01\nExamlet 5 — self-scheduled in PrairieTest\n\n\n11/02\nPA2 due\n\n\n\n\n\nPA2 submissions are open. Upload your six files to PA2 on PrairieLearn and the autograder scores them in a few minutes. Submit as often as you like.\nExamlet 5 covers tree definitions and tree traversals. PEX5 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA2 questions too.\nExamlet 4: the median was 81."
+  },
+  {
+    "objectID": "posts/02_week-03/index.html",
+    "href": "posts/02_week-03/index.html",
+    "title": "Week 3 — Sep 21 to Sep 27",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n09/21\nHW1 due · PA1 released, due 10/05\n\n\n09/23\nPEX2 released\n\n\n09/24 – 09/27\nExamlet 1 — self-scheduled in ORCA\n\n\n09/27\nLab Debug due\n\n\n\nExamlet 1 covers everything through week 2: asymptotics, running times, best and worst cases, and loop invariants. Check your ORCA reservation.\n\n\nOffice hours have changed. Cinda is now Tuesdays 10:30–11:30 am, ICCS 233. Nathan is unchanged, Mondays 4–5 pm, ICCS X465."
+  },
+  {
+    "objectID": "posts/03_week-04/index.html",
+    "href": "posts/03_week-04/index.html",
+    "title": "Week 4 — Sep 28 to Oct 4",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n09/30\nNo class — National Day for Truth and Reconciliation · PEX3 released\n\n\n10/01 – 10/04\nExamlet 2 — self-scheduled in ORCA\n\n\n10/04\nLab 3 (Linked Lists) due\n\n\n10/05\nPA1 due\n\n\n\n\n\nPEX2 has grown. It now includes pointer puzzles and new sorting questions, and most of them regenerate with New variant, so you can keep practising.\nPA1 Gallery. The zero-point Gallery question in the PA1 assessment is your chance to build a transformation of your own. There are prizes, and winners go up on this site."
+  },
+  {
+    "objectID": "posts/05_week-06/index.html",
+    "href": "posts/05_week-06/index.html",
+    "title": "Week 6 — Oct 12 to Oct 18",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/14\nVideo lesson · PEX4 released\n\n\n10/16\nVideo lesson\n\n\n10/19\nHomework Two due · PA2 released (due 11/02)\n\n\n10/22 – 10/25\nExamlet 4 — self-scheduled in PrairieTest\n\n\n\n\n\nA quiet week. No class meetings, no labs, no examlets — just two video lessons.\nLabs now include office hours. For the rest of the term, starting the week of 10/19, lab sections replace TA office hours. The TAs will still work through the lab exercise, and you’re welcome to bring any other questions too.\nPlan for PAs to take up to 20 hours. Start PA2 early."
+  },
+  {
+    "objectID": "posts/01_week-02/index.html",
+    "href": "posts/01_week-02/index.html",
+    "title": "Week 2 — Sep 14 to Sep 20",
+    "section": "",
+    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
+  },
+  {
+    "objectID": "posts/04_week-05/index.html",
+    "href": "posts/04_week-05/index.html",
+    "title": "Week 5 — Oct 5 to Oct 11",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n10/05\nClass activity: The Witch’s Potion Pantry — bring a laptop · PA1 due · Homework Two released\n\n\n10/07\nExamlet 2 questions visible\n\n\n10/08 – 10/11\nExamlet 3 — self-scheduled in PrairieTest; covers everything through Friday 10/02’s lesson\n\n\n10/11\nLab Quacks due\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/19\nHomework Two due\n\n\n\n\n\nExamlet 2. The class average was 91%. One question (selection_sort_analysis) had errors in its answer key, so everyone has received full credit for it. Thank you to those who reported it.\nPEX3 is up, and now includes array resizing from Friday’s video.\nNext week is quiet. The week of 10/12 has no labs, no class meetings, no examlets, no homework and no programming assignments — just two video lessons to watch."
+  },
+  {
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "title": "FAQ",
+    "section": "",
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html",
+    "href": "lesson-plans/selection-sort-proof.html",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "",
+    "text": "Written to be worked at the board. It leans on two results rather than reproving them: idxOfMin, proved in lecture 4/5, and swap, assumed."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-code",
+    "href": "lesson-plans/selection-sort-proof.html#the-code",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The code",
+    "text": "The code\nvoid selectionSort (vector&lt;int&gt;& C) {\n    for (int i = 0; i &lt; C.size(); i++) {\n        int m = idxOfMin(C, i);\n        swap(C, m, i);\n    }\n}\nWrite \\(n\\) for C.size(), and \\(C_0\\) for the contents of C on entry. Note \\(n\\) does not change: nothing in the loop resizes C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-allowed-to-assume",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are allowed to assume",
+    "text": "What we are allowed to assume\n\n\n\n\n\n\nLemma 1 (idxOfMin). For \\(0 \\le a &lt; n\\), idxOfMin(C, a) returns an index \\(\\ell\\) with \\(a \\le \\ell &lt; n\\) and \\[C[\\ell] \\;=\\; \\min_{a \\le j &lt; n} C[j],\\] and does not modify C.\n\n\n\n\n\n\n\n\n\nLemma 2 (swap). swap(C, p, q) leaves C with \\(C'[p] = C[q]\\), \\(C'[q] = C[p]\\), and \\(C'[k] = C[k]\\) for every \\(k \\notin \\{p, q\\}\\). In particular it is a transposition, so it permutes the contents of C."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "href": "lesson-plans/selection-sort-proof.html#what-we-are-proving",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "What we are proving",
+    "text": "What we are proving\n\n\n\n\n\n\nTheorem. After selectionSort(C) returns, C is a permutation of \\(C_0\\) and \\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\).\n\n\n\nBoth halves are needed. Sortedness alone is satisfied by a function that overwrites the array with zeroes."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "href": "lesson-plans/selection-sort-proof.html#the-invariant",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "The invariant",
+    "text": "The invariant\nAt the top of iteration \\(i\\) — meaning just before the guard is tested with the loop variable equal to \\(i\\) — for \\(0 \\le i \\le n\\):\n\n\n\n\n\n\n\\(P(i)\\):\n\nC is a permutation of \\(C_0\\);\n\\(C[0] \\le C[1] \\le \\cdots \\le C[i-1]\\);\n\\(\\displaystyle\\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\\).\n\n\n\n\nClauses (b) and (c) are vacuous when \\(i = 0\\); (c) is also vacuous when \\(i = n\\).\nClause (c) is the one that does not appear in the theorem. It is carried purely to make the induction go through — see the remark at the end."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "href": "lesson-plans/selection-sort-proof.html#a-initialization",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "a) Initialization",
+    "text": "a) Initialization\nTake \\(i = 0\\).\n\nNo statement has executed, so C holds \\(C_0\\), and the identity is a permutation.\nThe range \\(C[0..{-1}]\\) is empty, and the empty sequence is sorted.\nThere is no \\(k\\) with \\(0 \\le k &lt; 0\\), so the maximum is over an empty set and the claim is vacuous.\n\nHence \\(P(0)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "href": "lesson-plans/selection-sort-proof.html#b-restoration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "b) Restoration",
+    "text": "b) Restoration\nAssume \\(P(i)\\) holds at the top of iteration \\(i\\), and that the guard passed, so \\(i &lt; n\\). Let C denote the contents at the top of the iteration and \\(C'\\) the contents after the body runs. We show \\(P(i+1)\\) holds of \\(C'\\).\nThe body does two things:\n\\[m \\;=\\; \\texttt{idxOfMin(C, i)}, \\qquad \\texttt{swap(C, m, i)}.\\]\nBy Lemma 1, \\(i \\le m &lt; n\\) and \\[C[m] \\;=\\; \\min_{i \\le j &lt; n} C[j], \\tag{$\\star$}\\] and C is unchanged by the call. By Lemma 2, \\[C'[i] = C[m], \\qquad C'[m] = C[i], \\qquad C'[k] = C[k] \\text{ otherwise.}\\]\n(a) Permutation. idxOfMin does not modify C, and swap is a transposition. A composition of permutations is a permutation, so by the inductive hypothesis \\(C'\\) is a permutation of \\(C_0\\).\n(b) The prefix is sorted. We must show \\(C'[0] \\le \\cdots \\le C'[i]\\).\nSince \\(m \\ge i\\), the swap touches only indices \\(\\ge i\\), so \\[C'[k] = C[k] \\quad \\text{for all } k &lt; i,\\] and by the inductive hypothesis (b) this prefix is sorted. It remains to check the join, that \\(C'[i-1] \\le C'[i]\\), and only when \\(i \\ge 1\\).\nBy the inductive hypothesis (c), \\[C[i-1] \\;\\le\\; \\max_{0 \\le k &lt; i} C[k] \\;\\le\\; \\min_{i \\le j &lt; n} C[j]\n\\;\\overset{(\\star)}{=}\\; C[m] \\;=\\; C'[i],\\] and \\(C'[i-1] = C[i-1]\\), so \\(C'[i-1] \\le C'[i]\\) as required.\nWhen \\(i = 0\\) the range \\(C'[0..0]\\) is a single element and is sorted trivially.\n(c) The prefix stays below the suffix. We must show \\[\\max_{0 \\le k &lt; i+1} C'[k] \\;\\le\\; \\min_{i+1 \\le j &lt; n} C'[j].\\]\nBy part (b) just proved, \\(C'[0..i]\\) is sorted, so its maximum is its last entry: \\[\\max_{0 \\le k \\le i} C'[k] \\;=\\; C'[i] \\;=\\; C[m].\\]\nFor the right-hand side, compare the two suffixes as multisets. The swap moves \\(C[m]\\) to position \\(i\\) and \\(C[i]\\) to position \\(m\\), and both \\(i\\) and \\(m\\) lie in \\([i, n)\\), so \\[\\{\\, C'[j] : i+1 \\le j &lt; n \\,\\} \\;=\\; \\{\\, C[j] : i \\le j &lt; n \\,\\} \\setminus \\{ C[m] \\}.\\]\nEvery element of \\(\\{C[j] : i \\le j &lt; n\\}\\) is \\(\\ge C[m]\\) by \\((\\star)\\), since \\(C[m]\\) is the minimum of exactly that set. Removing one element cannot introduce anything smaller, so every remaining element is \\(\\ge C[m] = C'[i]\\), which is the claim.\nHence \\(P(i+1)\\). \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#c-termination",
+    "href": "lesson-plans/selection-sort-proof.html#c-termination",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "c) Termination",
+    "text": "c) Termination\nThe loop variable starts at \\(0\\), increases by exactly \\(1\\) per iteration, and is tested against the fixed bound \\(n\\). So after \\(n\\) iterations the guard fails and control leaves the loop with \\(i = n\\).\n\\(P(n)\\) therefore holds, and reading it off:\n\n\nC is a permutation of \\(C_0\\);\n\n\n\\(C[0] \\le C[1] \\le \\cdots \\le C[n-1]\\) — the whole array is sorted;\n\n\nvacuous.\n\n\nTogether, (a) and (b) are exactly the theorem. \\(\\qquad\\blacksquare\\)"
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "href": "lesson-plans/selection-sort-proof.html#remark-why-clause-c-is-there",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: why clause (c) is there",
+    "text": "Remark: why clause (c) is there\nDrop (c) and the proof fails at one specific line. In part (b) we needed \\(C'[i-1] \\le C'[i]\\), and the only thing that delivers it is knowing that everything already placed is no larger than anything still to come. Sortedness of the prefix alone says nothing about how the prefix compares to the rest, so the newly placed element could land below its predecessor.\nSo (c) is not part of what we set out to prove, and it is not used at termination — it retires there, vacuous. It exists solely so that the inductive step can be taken. That is strengthening the induction hypothesis: the statement you can prove is sometimes stronger than the one you want."
+  },
+  {
+    "objectID": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "href": "lesson-plans/selection-sort-proof.html#remark-the-last-iteration",
+    "title": "Selection sort — a formal proof of correctness",
+    "section": "Remark: the last iteration",
+    "text": "Remark: the last iteration\nThe loop runs to \\(i = n-1\\), where idxOfMin(C, n-1) must return \\(n-1\\) and the swap exchanges an element with itself. It is harmless, and the proof covers it without a special case, but the loop could equally run to \\(n-2\\). Worth a sentence if someone asks — it is the same observation as the final pass of a bubble sort doing nothing."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#today",
+    "href": "slides/lecture-20_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\nAnnouncements\n\nExamlet 5 is this week: tree definitions and traversals\nPA2 is due Monday 11/02\n\n\n\nToday:\n\nHow tall is a BST?\nWhich tree makes you happiest?\nKeeping a BST balanced: rotations, insert, remove"
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#recap",
+    "href": "slides/lecture-20_slides.html#recap",
+    "title": "CPSC 221",
+    "section": "Recap",
+    "text": "Recap\nA dictionary is a structure supporting insert, find, and remove.\nB_______ S_______ T_____ implementation of a dictionary incurs running time ________ for all of these.\n\n\ndict&lt;int&gt; myT;\nmyT.insert(2);\nmyT.insert(7);\nmyT.insert(15);\nmyT.insert(22);\nmyT.insert(28);\n\n\n            \n\nHow many “bad” \\(n\\)-item trees are there?\n\n\nBinary Search Tree … running time Θ(h).\nInserting keys in sorted order — 2, 7, 15, 22, 28 — builds a stick: every key goes right. (Monday’s list B.) Height \\(n - 1\\), so every operation is \\(\\Theta(n)\\). Our “fast” dictionary is a linked list.\n“Bad” trees: any shape where every node has at most one child, like the zig-zag. Each of the \\(n - 1\\) links below the root goes left or right: \\(2^{n-1}\\) of them."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#binary-search-tree-height",
+    "href": "slides/lecture-20_slides.html#binary-search-tree-height",
+    "title": "CPSC 221",
+    "section": "Binary search tree — height",
+    "text": "Binary search tree — height\n\n\n\n             38  13  51  10  25  40  84  12  37  66  89  95 \n\nReminder: height(T) is\n\n______ if T is empty\n1 + max(height(TL), height(TR)), otherwise\n\n\nThe algorithms on BST depend on the height (\\(h\\)) of the tree.\nThe analysis should be in terms of the amount of data (\\(n\\)).\nSo we need relationships between \\(h\\) and \\(n\\):\n\\(h \\ge f(n)\\)\n\\(h \\le g(n)\\)\n\n\nEmpty tree: height −1.\nWe know find/insert/remove cost \\(\\Theta(h)\\). To say anything in terms of \\(n\\), we need to pin \\(h\\) between two functions of \\(n\\) — that’s the next slide."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#binary-tree-theory-moments",
+    "href": "slides/lecture-20_slides.html#binary-tree-theory-moments",
+    "title": "CPSC 221",
+    "section": "Binary tree (theory moments)",
+    "text": "Binary tree (theory moments)\n\n\n#1\n\n                              \n\nWhat is the max number of nodes in a tree of height \\(h\\)?\nWhat is the min height (\\(h\\)) for a tree of \\(n\\) nodes?\n\n#2\n\n        \n\nWhat is the max height (\\(h\\)) for a tree of \\(n\\) nodes?\n\nThus: lower bound on height ______, upper bound on height ______ — good news or bad?\n\n#1: at most \\(2^{h+1} - 1\\) nodes (perfect tree), so \\(n \\le 2^{h+1} - 1\\) and \\(h \\ge \\log_2(n+1) - 1\\): \\(h = \\Omega(\\log n)\\).\n#2: a stick has height \\(n - 1\\): \\(h = O(n)\\).\nGood news or bad depends on the context. Lower bound \\(\\Omega(\\log n)\\), upper bound \\(O(n)\\). For a dictionary that’s bad news: the worst case is a linked list."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#your-turn",
+    "href": "slides/lecture-20_slides.html#your-turn",
+    "title": "CPSC 221",
+    "section": "Your Turn",
+    "text": "Your Turn\nThere are 7! = 5040 ways to insert the keys 1, 2, …, 7 into an empty BST.\n\n\nHow many of them build the perfect tree (height 2)?\nHow many build a stick (height 6)?\n \nGuess what fraction for each.\n\nPause the video and guess. Most people guess the perfect tree is common and sticks are rare. Then the next slide.\nAnswers: 80 perfect, 64 sticks. Sticks: each of the 2^(n−1) = 64 “bad” shapes from the recap is built by exactly one insertion order."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#all-5040",
+    "href": "slides/lecture-20_slides.html#all-5040",
+    "title": "CPSC 221",
+    "section": "All 5040",
+    "text": "All 5040\n\n\nPress Build the trees at n = 7: every insertion order, exactly.\n80 perfect, 64 sticks: both rare. Most land in the middle, height 3 or 4. Average 3.67.\nThen n = 100, 1,000, 10,000 (1,000 random orders each). The tallest possible height runs off the chart (99, 999, 9,999), but the trees pile up at a few times log n: around 12 for n = 100, 21 for 1,000, 30 for 10,000. Random BSTs are short. On average the height is Θ(log n).\nThe catch: the stick isn’t rare in real life. Sorted input, the most common input there is, builds it every time."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#average-case",
+    "href": "slides/lecture-20_slides.html#average-case",
+    "title": "CPSC 221",
+    "section": "Average case!",
+    "text": "Average case!\nThe height of a BST depends on the order in which the data is inserted into it.\n    ex.  1 3 2 4 5 7 6   vs.   4 2 3 6 7 1 5\nHow many different ways are there to insert \\(n\\) keys into a tree?\nAvg height, over all arrangements of \\(n\\) keys, is ________.\n\n\n\noperation\navg case\nworst case\nsorted array\nsorted list\n\n\n\n\nfind\n\n\n\\(\\log n\\)\n\\(\\log n\\)\n\n\ninsert\n\n\n\\(n\\)\n\\(n\\)\n\n\ndelete\n\n\n\\(n\\)\n\\(n\\)\n\n\ntraverse\n\n\n\\(n\\)\n\\(n\\)\n\n\n\n\n1 3 2 4 5 7 6 builds a tall, stringy tree (height 4); 4 2 3 6 7 1 5 builds a bushy one (height 2). Same keys, different order.\nThere are \\(n!\\) insertion orders. Averaged over all of them, the height is \\(\\Theta(\\log n)\\) (a classic result we won’t prove).\n\n\n\n\navg\nworst\nsorted array\nsorted list\n\n\n\n\nfind\nlog n\nn\nlog n\nn\n\n\ninsert\nlog n\nn\nn\nn\n\n\ndelete\nlog n\nn\nn\nn\n\n\ntraverse\nn\nn\nn\nn\n\n\n\nPlanted error: sorted list find is shown as \\(\\log n\\). It’s \\(n\\): no binary search without random access, so you walk the list. (Sorted array find really is \\(\\log n\\).) Ask: “one of these is wrong — which?”\nSo BSTs are great on average — but the worst case is exactly what sorted input produces. Can we make the worst case \\(\\log n\\) too?"
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#which-tree-makes-you-happiest",
+    "href": "slides/lecture-20_slides.html#which-tree-makes-you-happiest",
+    "title": "CPSC 221",
+    "section": "Which tree makes you happiest?",
+    "text": "Which tree makes you happiest?\n\n    50  70  90    70  50  90 \n\nIdea:   _____________________________________________________________\nThe “height balance” of a tree T is:    \\(b = \\text{height}(T_R) - \\text{height}(T_L)\\)\nA tree T is “height balanced” if:\n\n \n \n\n\nThe right one — same three keys, height 1 instead of 2.\nIdea line: change insert and remove so the tree on the left can never happen.\nA tree is height balanced if - it’s empty, or - \\(|b| \\le 1\\) at the root, and both subtrees are height balanced.\nThe recursion matters: the root being balanced isn’t enough. A BST that is height balanced everywhere is what the rest of today is about: how to keep it that way as keys come and go. (It gets a name once we’ve built it.)"
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#balanced-trees",
+    "href": "slides/lecture-20_slides.html#balanced-trees",
+    "title": "CPSC 221",
+    "section": "Balanced Trees",
+    "text": "Balanced Trees\nA tree is height balanced if every node has \\(b \\in \\{-1, 0, +1\\}\\).\n\n\nA\n\n             2  1  4  3  7  6  5  9  11  12  10  8 \n\n\nB\n\n           20  40  30  60  85  95  99  90  80  50 \n\n\nPause the video.   Label every node with its balance \\(b\\).   Which tree is height balanced?\n\nPause the video and label them. Remember \\(b\\) = height(right) − height(left), and an empty tree has height −1.\n\nA is height balanced: every node has \\(b \\in \\{-1, 0, +1\\}\\). The root is −1 (left height 3, right height 2).\nB is not: 80 has \\(b = +2\\) (left 60 has height 0, right 90 has height 2), and so does 50. B is what you get by inserting 95 into a balanced tree, which is where we go next.\n\nA looks lopsided (its leaves are at depths 2, 3 and 4), but the definition compares subtree heights at each node, not leaf depths.\nComing next time: every height-balanced tree with \\(n\\) nodes has height \\(O(\\log n)\\). So if we can keep the tree balanced through insert and remove, find is always fast."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#insert-95",
+    "href": "slides/lecture-20_slides.html#insert-95",
+    "title": "CPSC 221",
+    "section": "Insert 95",
+    "text": "Insert 95\n\n\nBefore: balanced\n\n          20  40  30  60  85  99  90  80  50 \n\n\nAfter: not\n\n           20  40  30  60  85  95  99  90  80 +2  50 +2 \n\n\nOnly nodes on the path from 95 up to the root can change balance. Fix the lowest one: 80.\n\nInsert 95 as in any BST: 50 → 80 → 90 → 99, left of 99.\nWhose balance changed? Only the ancestors of 95: 99, 90, 80, 50. Every other subtree is untouched. Two of them are now +2: 80 and 50.\nWe fix the lowest one, 80. Watch what happens to 50 when we do."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#left-rotation",
+    "href": "slides/lecture-20_slides.html#left-rotation",
+    "title": "CPSC 221",
+    "section": "Left rotation",
+    "text": "Left rotation\n\n\n\n       60  85  95  99  90  80 +2 \n\n\n\n\n\nA left rotation about 80: 80’s right child, 90, takes its place.\n\n80 becomes 90’s left child.\n90’s old left child, 85, becomes 80’s right child. It has to go somewhere, and it fits: 80 &lt; 85 &lt; 90.\n60, and 99 with 95, move along untouched.\n\nIn-order before and after: 60 80 85 90 95 99. Same order, so still a BST.\nThe subtree rooted here had height 2 before the insert, 3 after it, and 2 again after the rotation. So nothing above it changes: 50 goes from +2 back to +1. One rotation fixed the whole tree."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#left-rotation-in-general",
+    "href": "slides/lecture-20_slides.html#left-rotation-in-general",
+    "title": "CPSC 221",
+    "section": "Left rotation, in general",
+    "text": "Left rotation, in general\n\n\nBefore\n\n   s   t      T1  T2  T3  20  10 \n\nAfter\n\n   t   s      T1  T2  10  T3  20 \n\n\nvoid rotateLeft(Node *& t) {\n    Node * s = t-&gt;right;\n    t-&gt;right = _______;\n    s-&gt;left  = _______;\n    t        = _______;\n    updateHeight(t-&gt;left);\n    updateHeight(t);\n}\nint height(Node * t) {\n    return t == nullptr ? -1 : t-&gt;height;\n}\nvoid updateHeight(Node * t) {\n    t-&gt;height = 1 + max(height(t-&gt;left), height(t-&gt;right));\n}\n\n\nt-&gt;right = s-&gt;left;     // T2 moves across\ns-&gt;left  = t;           // 10 goes under 20\nt = s;                  // the pointer IN THE TREE now points at 20\nt and s are pointers, not nodes. t is the parent’s child pointer (or root), passed by reference: the same Node *& trick as remove. So t = s hangs the rotated subtree back in the tree.\nIt’s swap, generalized. Swap is tmp = a; a = b; b = tmp;: grab one value, then each line’s right side is the previous line’s left side. Here: s = t-&gt;right; t-&gt;right = s-&gt;left; s-&gt;left = t; t = s;, the same chain. Three pointer slots (the tree pointer, 10’s right, 20’s left) hold (10, 20, T2) before and (20, T2, 10) after: a 3-way rotation of values. Swap is the 2-way version.\n\nIn-order T1 10 T2 20 T3 is the same before and after: still a BST.\nLocal: T1, T2, T3 move as whole subtrees; nothing inside them changes.\nConstant time: three pointer assignments, two height updates.\nWhose heights change? Only 10 and 20. After t = s, t points at 20 and t-&gt;left at 10. Update 10 first (t-&gt;left): it’s now 20’s child, and 20’s height depends on it.\n\nThe nodes now store their height (int height in Node), so height() is O(1), not a traversal.\nA right rotation is the mirror image: swap every left and right."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#your-turn-1",
+    "href": "slides/lecture-20_slides.html#your-turn-1",
+    "title": "CPSC 221",
+    "section": "Your Turn",
+    "text": "Your Turn\nWe just inserted 60.\na) Where is the imbalance?\nb) What type of rotation should fix it?\nc) Perform that rotation.\n\n\nBefore\n\n       20  60  50  40  80  70 \n\n\nAfter\n\n\nPause the video and try it.\n\nThe imbalance is at 70: left height 2, right height 0, \\(b = -2\\). (40 is +1, fine.)\nThe tree leans left, so the natural answer is a right rotation about 70.\nDo it: 40 comes up, 70 goes down to its right, and 40’s right subtree (50, 60) moves across to become 70’s left. Result: 40(20, 70(50(·, 60), 80)). Now 40 is +2. We moved the problem to the other side.\n\nA single rotation turns a stick (left-left or right-right) into a mountain. This is a bent stick: left, then right."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#double-rotation",
+    "href": "slides/lecture-20_slides.html#double-rotation",
+    "title": "CPSC 221",
+    "section": "Double rotation",
+    "text": "Double rotation\n\n\n\n       20  60  50  40 +1  80  70 −2 \n\n\n\n       20  40  60  50  80  70 −2 \n\n\n\n       20  40  60  80  70  50 \n\n\nBent stick  →  rotateLeft about 40 straightens it  →  a stick  →  rotateRight about 70  →  a mountain\nA left-right rotation.\n\nStep 1: a left rotation about 40 (70’s left child) straightens the bent stick, 70 → 50 → 40. 60 changes parents.\nStep 2: a right rotation about 70 turns the stick into a mountain. 50 comes up.\nvoid rotateLeftRight(Node *& t) { rotateLeft(t-&gt;left);  rotateRight(t); }\nvoid rotateRightLeft(Node *& t) { rotateRight(t-&gt;right); rotateLeft(t);  }\nHeight back to 2, the same as before the insert."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#balanced-trees-summary",
+    "href": "slides/lecture-20_slides.html#balanced-trees-summary",
+    "title": "CPSC 221",
+    "section": "Balanced trees: summary",
+    "text": "Balanced trees: summary\nRotations:\n\nfour kinds: left, right, left-right, right-left (mirror images)\nlocal: whole subtrees move; nothing inside them changes\nconstant time: a few pointer changes and height updates\nthe BST property is kept: the in-order traversal doesn’t change\n\n\n\nGOAL: use rotations to keep a BST height balanced, on every insert and remove.\n\n\nHeight-balanced BSTs, kept that way by rotations, have a special name:   AVL trees\n\n\nStill to work out:   Which rotation?   Where in the code?\n\nNamed for Adelson-Velsky and Landis (1962).\nEach rotation is O(1) no matter how big the tree is: we never look inside the subtrees that move. Insert needs at most one rotation (single or double); remove can need one per level, \\(O(h)\\).\nThere are other balanced-tree schemes (red-black trees, for one): Monday’s intro."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#which-rotation",
+    "href": "slides/lecture-20_slides.html#which-rotation",
+    "title": "CPSC 221",
+    "section": "Which rotation?",
+    "text": "Which rotation?\n\n\n\n          T1  T2  T3  x  T4  T5  y  r  t \n\n\nAn insert into t’s right subtree made \\(b = +2\\) at t.\nIf it went into T4 or T5, a __________ rotation about t fixes it.\n    We can tell: balance at t-&gt;right is ____\nIf it went into T2 or T3, a __________ rotation about t fixes it.\n    We can tell: balance at t-&gt;right is ____\n\n\n\nT4 or T5, outside: a stick t → r → y. Single left rotation. Balance at t-&gt;right is +1 (r leans right).\nT2 or T3, inside: a bent stick t → r → x. Right-left double rotation. Balance at t-&gt;right is −1 (r leans left).\n\nSo we don’t need to remember where the key went: the child’s balance tells us. Mirror image for \\(b = -2\\): child −1 → right, child +1 → left-right.\n(After an insert the child is never 0. After a remove it can be, and then a single rotation is the right one. The code on the next slide handles it.)"
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#avl-insert",
+    "href": "slides/lecture-20_slides.html#avl-insert",
+    "title": "CPSC 221",
+    "section": "AVL insert",
+    "text": "AVL insert\n\n\nvoid insert(Node *& t, const K & key) {\n    if (t == nullptr)\n        t = new Node(key);\n    else if (key &lt; t-&gt;key)\n        insert(t-&gt;left, key);\n    else if (key &gt; t-&gt;key)\n        insert(t-&gt;right, key);\n    rebalance(t);\n}\nLecture 18’s insert, plus one line.\n\nvoid rebalance(Node *& t) {\n    int b = balance(t);\n    if (b == 2) {\n        if (balance(t-&gt;right) &gt;= 0)\n            rotate__________(t);\n        else\n            rotate__________(t);\n    }\n    else if (b == -2) {\n        if (balance(t-&gt;left) &lt;= 0)\n            rotate__________(t);\n        else\n            rotate__________(t);\n    }\n    else updateHeight(t);\n}\n\n\nb ==  2:  child &gt;= 0 → rotateLeft        else → rotateRightLeft\nb == -2:  child &lt;= 0 → rotateRight       else → rotateLeftRight\nwith int balance(Node * t) { return height(t-&gt;right) - height(t-&gt;left); }.\nWhere’s the “check every node on the path”? It’s the recursion: rebalance runs as each call returns, so it visits 95’s parent, then grandparent, and so on up to the root, bottom up. The first unbalanced node it meets is the lowest one, just like we did by hand.\nEvery node on the path gets its height updated: by updateHeight, or by the rotation.\n&gt;= 0, not == 1: after an insert it’s always ±1, but rebalance is also what remove will use, and there the child can be 0.\nRunning time: the path is \\(O(h)\\), and each step is \\(O(1)\\)."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#your-turn-2",
+    "href": "slides/lecture-20_slides.html#your-turn-2",
+    "title": "CPSC 221",
+    "section": "Your Turn",
+    "text": "Your Turn\nInsert 1, 2, 3, 4, 5, 6, 7, in that order, into an empty AVL tree.\n\n\nDraw the tree after each insert.\n\n\nWhat tree do you end up with?\n\nPause the video and draw.\n\n1, 2, 3: a right-leaning line. Left rotation about 1: 2(1, 3).\n4, 5: 5 unbalances 3. Left rotation about 3: 2(1, 4(3, 5)).\n6: unbalances the root, 2. Left rotation about 2: 4(2(1, 3), 5(·, 6)).\n7: unbalances 5. Left rotation about 5: 4(2(1, 3), 6(5, 7)).\n\nThe perfect tree. Sorted input, which built a stick in a plain BST, builds the best possible tree here. Four rotations, all single lefts."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#watch-it",
+    "href": "slides/lecture-20_slides.html#watch-it",
+    "title": "CPSC 221",
+    "section": "Watch it",
+    "text": "Watch it\n\n\nThe starting tree is “Insert 95”’s “before” tree. The number on each node is its balance, right minus left. Step mode is on: each press of Step runs one decision of the slide code (go left/right, then rebalance at each node on the way back up). Untick Step mode to let it play.\n\nInsert 95: watch the check travel up from 95, stop at 80 (+2), and the left rotation.\nClear, then insert 1 through 7: the Your Turn, animated.\nClear, insert 70, 40, 80, 20, 50, 60: the left-right rotation."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#avl-remove",
+    "href": "slides/lecture-20_slides.html#avl-remove",
+    "title": "CPSC 221",
+    "section": "AVL remove",
+    "text": "AVL remove\n\n             2  1  4  3  7  6  5  9  11  12  10  8 \n\nRemove as in a BST, then rebalance every node on the path back up to the root.\nT.remove(9);   What happens?\n\nPause the video and try it.\n\n9 is a leaf: it’s just removed. Now 10 has \\(b = +2\\) (left −1, right 12 has height 1). 10’s right child, 12, is −1: a bent stick, so a right-left rotation about 10. 11 comes up: 11(10, 12).\nThat subtree’s height dropped from 2 to 1, so its parent changes too: 8 now has \\(b = -2\\) (left height 3, right height 1). 8’s left child, 5, is −1: a right rotation about 8. 5 becomes the root.\n\nResult: 5(3(1(·, 2), 4), 8(6(·, 7), 11(10, 12))).\nTwo rotations. An insert rotation puts the subtree back at its old height, so it stops there. A remove rotation can leave the subtree shorter, and then the parent may need fixing too, all the way up: up to \\(O(h)\\) rotations.\nThe code: BST remove, written recursively, with rebalance(t) on the way back up, the same line we added to insert."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#watch-it-1",
+    "href": "slides/lecture-20_slides.html#watch-it-1",
+    "title": "CPSC 221",
+    "section": "Watch it",
+    "text": "Watch it\n\n\nThe tree from the last slide, Step mode on. Delete 9 and step: the right-left rotation at 10, then rebalance reaches 8 and finds −2. The log ends “Right-Left at 10, Right at 8”."
+  },
+  {
+    "objectID": "slides/lecture-20_slides.html#next-time",
+    "href": "slides/lecture-20_slides.html#next-time",
+    "title": "CPSC 221",
+    "section": "Next time",
+    "text": "Next time\nAVL analysis: why is the height of an AVL tree \\(O(\\log n)\\)?\n\n\n\n\n\noperation\nBST, worst case\nAVL tree\n\n\n\n\nfind\n\\(n\\)\n\n\n\ninsert\n\\(n\\)\n\n\n\nremove\n\\(n\\)\n\n\n\n\n\nAll three are \\(O(h)\\) for both. The question for next time is what \\(h\\) is for an AVL tree. (Answer: \\(O(\\log n)\\), so all three become \\(O(\\log n)\\).)"
   },
   {
     "objectID": "slides/lecture-04_slides.html#today",
@@ -1932,7 +2086,7 @@
     "href": "index.html#schedule",
     "title": "CPSC 221: Basic Algorithms and Data Structures",
     "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nLecture 20\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 21\n\n\n    Wed Nov  4\nLecture 22\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 25\n\n\n    Wed Nov 18\nLecture 26\n\n\n    Fri Nov 20\nLecture 27\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nLecture 20\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 21\n\n\n    Wed Nov  4\nLecture 22\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 25\n\n\n    Wed Nov 18\nLecture 26\n\n\n    Fri Nov 20\nLecture 27\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 21\n\n\n    Wed Nov  4\nLecture 22\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 25\n\n\n    Wed Nov 18\nLecture 26\n\n\n    Fri Nov 20\nLecture 27\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nLecture 21\n\n\n    Wed Nov  4\nLecture 22\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nLecture 25\n\n\n    Wed Nov 18\nLecture 26\n\n\n    Fri Nov 20\nLecture 27\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
     "crumbs": [
       "Course information",
       "Schedule"

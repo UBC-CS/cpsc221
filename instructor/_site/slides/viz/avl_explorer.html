@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVL Tree Explorer</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #fafafa;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin: 8px 0 6px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    input[type="number"] {
+      width: 80px;
+      padding: 8px 12px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      text-align: center;
+    }
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #4a90d9;
+    }
+    button {
+      padding: 10px 18px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .insert-btn { background: #5cb85c; color: white; }
+    .insert-btn:hover:not(:disabled) { background: #4cae4c; }
+    .find-btn { background: #4a90d9; color: white; }
+    .find-btn:hover:not(:disabled) { background: #3a7bc8; }
+    .delete-btn { background: #d9534f; color: white; }
+    .delete-btn:hover:not(:disabled) { background: #c9302c; }
+    .clear-btn { background: #f0ad4e; color: white; }
+    .clear-btn:hover:not(:disabled) { background: #ec971f; }
+    .random-btn { background: #9b59b6; color: white; }
+    .random-btn:hover:not(:disabled) { background: #8e44ad; }
+    .step-btn { background: #6c757d; color: white; }
+    .step-btn:hover:not(:disabled) { background: #5a6268; }
+    button:disabled { opacity: 0.4; cursor: default; }
+    .step-toggle { font-size: 14px; color: #444; display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; }
+    #canvas-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .info {
+      font-size: 15px;
+      color: #444;
+      text-align: center;
+      min-height: 22px;
+      margin-bottom: 2px;
+    }
+    .info.success { color: #3d8b3d; }
+    .info.error { color: #d9534f; }
+    .info.rotation { color: #9b59b6; font-weight: bold; }
+    .rotation-log {
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #555;
+      min-height: 18px;
+      margin-bottom: 6px;
+    }
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 13px;
+      color: #666;
+    }
+    .speed-control input[type="range"] {
+      width: 120px;
+      cursor: pointer;
+    }
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 4px;
+      font-size: 12px;
+      color: #666;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-color {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+    }
+    .balanced { background: linear-gradient(135deg, #64b5f6, #1976d2); }
+    .unbalanced { background: linear-gradient(135deg, #ef5350, #c62828); }
+    .rotation-nodes { background: linear-gradient(135deg, #ffb74d, #e65100); }
+    .here { border: 3px solid #ffc800; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <input type="number" id="valueInput" placeholder="Value" min="0" max="999">
+    <button class="insert-btn" id="insertBtn">Insert</button>
+    <button class="find-btn" id="findBtn">Find</button>
+    <button class="delete-btn" id="deleteBtn">Delete</button>
+    <button class="random-btn" id="randomBtn">Random Tree</button>
+    <button class="clear-btn" id="clearBtn">Clear</button>
+    <label class="step-toggle"><input type="checkbox" id="stepMode"> Step mode</label>
+    <button class="step-btn" id="stepBtn" disabled>Step &#9656;</button>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-color here"></div> the code is here</div>
+    <div class="legend-item"><div class="legend-color balanced"></div> |b| ≤ 1</div>
+    <div class="legend-item"><div class="legend-color unbalanced"></div> |b| = 2</div>
+    <div class="legend-item"><div class="legend-color rotation-nodes"></div> rotating</div>
+  </div>
+  <div class="info" id="info"></div>
+  <div class="rotation-log" id="rotationLog"></div>
+  <div id="canvas-container"></div>
+  <div class="speed-control">
+    <span>Speed:</span>
+    <input type="range" id="speedSlider" min="1" max="10" value="5">
+    <span id="speedLabel">5</span>
+    <span style="margin-left: 14px;">🔊 b = height(right) − height(left) shown on each node</span>
+  </div>
+
+  <!-- The tree code: plain JS, no drawing, so it can be tested on its own.
+       Every operation runs the lecture's code and records one step per
+       decision; the page then plays the steps back (or waits for Step). -->
+  <script id="avl-model">
+    // ============================================
+    // AVL TREE: the slide code, recorded step by step
+    // ============================================
+    // height(empty) = -1, b = height(right) - height(left), same as lecture.
+    // Child pointers are passed as refs ({get, set}), the JS stand-in for
+    // Node *&, so the whole tree is consistent at every recorded step.
+    // Wrapped in a closure: p5 owns the globals height() and remove().
+    const AVL = (() => {
+    let nextId = 1;
+
+    class Node {
+      constructor(key) {
+        this.key = key;
+        this.left = null;
+        this.right = null;
+        this.height = 0;
+        this.id = nextId++;
+      }
+    }
+
+    function height(t) { return t === null ? -1 : t.height; }
+    function updateHeight(t) { t.height = 1 + Math.max(height(t.left), height(t.right)); }
+    function balance(t) { return height(t.right) - height(t.left); }
+
+    function leftRef(t) { return { get: () => t.left, set: v => { t.left = v; } }; }
+    function rightRef(t) { return { get: () => t.right, set: v => { t.right = v; } }; }
+    function rootRef(tree) { return { get: () => tree.root, set: v => { tree.root = v; } }; }
+
+    function rotateLeft(ref) {
+      const t = ref.get();
+      const s = t.right;
+      t.right = s.left;
+      s.left = t;
+      ref.set(s);
+      updateHeight(s.left);
+      updateHeight(s);
+    }
+
+    function rotateRight(ref) {
+      const t = ref.get();
+      const s = t.left;
+      t.left = s.right;
+      s.right = t;
+      ref.set(s);
+      updateHeight(s.right);
+      updateHeight(s);
+    }
+
+    function fmt(b) { return b > 0 ? '+' + b : (b < 0 ? '−' + (-b) : '0'); }
+
+    // A snapshot is a plain copy of the tree: ids and keys only.
+    function clone(t) {
+      return t === null ? null : { id: t.id, key: t.key, left: clone(t.left), right: clone(t.right) };
+    }
+
+    // rec.emit(msg, opts) records the tree as it is right now.
+    // opts: ring (id the code is at), orange (ids rotating), kind (info style), sound
+    class Recorder {
+      constructor(tree, on) {
+        this.tree = tree;
+        this.on = on;
+        this.steps = [];
+        this.rotations = [];
+      }
+      emit(msg, opts = {}) {
+        if (!this.on) return;
+        this.steps.push({
+          tree: clone(this.tree.root),
+          msg,
+          ring: opts.ring === undefined ? null : opts.ring,
+          orange: opts.orange || [],
+          kind: opts.kind || '',
+          sound: opts.sound || null,
+          rotations: this.rotations.slice()
+        });
+      }
+    }
+
+    function contains(t, key) {
+      while (t !== null) {
+        if (key === t.key) return true;
+        t = key < t.key ? t.left : t.right;
+      }
+      return false;
+    }
+
+    function rebalance(rec, ref) {
+      const t = ref.get();
+      const b = balance(t);
+      if (b === 2) {
+        const r = t.right;
+        const c = balance(r);
+        if (c >= 0) {
+          rec.emit(`rebalance(${t.key}): b = +2. ${r.key} has b = ${fmt(c)} ≥ 0: a stick. rotateLeft(${t.key})`,
+                   { ring: t.id, orange: [t.id, r.id, r.right.id], kind: 'rotation', sound: 'alarm' });
+          const ids = [t.id, r.id, r.right.id];
+          rotateLeft(ref);
+          rec.rotations.push(`Left at ${t.key}`);
+          rec.emit(`rotateLeft(${t.key}): stick → mountain`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+        } else {
+          const x = r.left;
+          const ids = [t.id, r.id, x.id];
+          rec.emit(`rebalance(${t.key}): b = +2. ${r.key} has b = ${fmt(c)} < 0: a bent stick. rotateRightLeft(${t.key})`,
+                   { ring: t.id, orange: ids, kind: 'rotation', sound: 'alarm' });
+          rotateRight(rightRef(t));
+          rec.emit(`rotateRight(${r.key}) straightens the bent stick`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+          rotateLeft(ref);
+          rec.rotations.push(`Right-Left at ${t.key}`);
+          rec.emit(`rotateLeft(${t.key}): stick → mountain`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+        }
+      } else if (b === -2) {
+        const l = t.left;
+        const c = balance(l);
+        if (c <= 0) {
+          rec.emit(`rebalance(${t.key}): b = −2. ${l.key} has b = ${fmt(c)} ≤ 0: a stick. rotateRight(${t.key})`,
+                   { ring: t.id, orange: [t.id, l.id, l.left.id], kind: 'rotation', sound: 'alarm' });
+          const ids = [t.id, l.id, l.left.id];
+          rotateRight(ref);
+          rec.rotations.push(`Right at ${t.key}`);
+          rec.emit(`rotateRight(${t.key}): stick → mountain`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+        } else {
+          const x = l.right;
+          const ids = [t.id, l.id, x.id];
+          rec.emit(`rebalance(${t.key}): b = −2. ${l.key} has b = ${fmt(c)} > 0: a bent stick. rotateLeftRight(${t.key})`,
+                   { ring: t.id, orange: ids, kind: 'rotation', sound: 'alarm' });
+          rotateLeft(leftRef(t));
+          rec.emit(`rotateLeft(${l.key}) straightens the bent stick`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+          rotateRight(ref);
+          rec.rotations.push(`Left-Right at ${t.key}`);
+          rec.emit(`rotateRight(${t.key}): stick → mountain`, { orange: ids, kind: 'rotation', sound: 'rotate' });
+        }
+      } else {
+        updateHeight(t);
+        rec.emit(`rebalance(${t.key}): b = ${fmt(b)}, no rotation`, { ring: t.id, sound: 'check' });
+      }
+    }
+
+    function insert(rec, ref, key) {
+      const t = ref.get();
+      if (t === null) {
+        const n = new Node(key);
+        ref.set(n);
+        rec.emit(`${key} goes here`, { ring: n.id, sound: 'land' });
+      } else if (key < t.key) {
+        rec.emit(`${key} < ${t.key}: go left`, { ring: t.id, sound: 'boop' });
+        insert(rec, leftRef(t), key);
+      } else {
+        rec.emit(`${key} > ${t.key}: go right`, { ring: t.id, sound: 'boop' });
+        insert(rec, rightRef(t), key);
+      }
+      rebalance(rec, ref);
+    }
+
+    // Two-child case: walk to the in-order predecessor (rightmost in the
+    // left subtree), copy it up into `target`, splice it out, and rebalance
+    // every node on the way back up.
+    function removeMax(rec, ref, target) {
+      const t = ref.get();
+      if (t.right !== null) {
+        rec.emit(`${t.key}: go right`, { ring: t.id, sound: 'boop' });
+        removeMax(rec, rightRef(t), target);
+        rebalance(rec, ref);
+      } else {
+        rec.emit(`${t.key} has no right child: it is the in-order predecessor`, { ring: t.id, sound: 'boop' });
+        target.key = t.key;
+        rec.emit(`copy ${t.key} up`, { ring: target.id, sound: 'land' });
+        ref.set(t.left);
+        rec.emit(t.left === null ? `remove the old ${t.key} node: its pointer is now nullptr` : `remove the old ${t.key} node: its pointer now points to ${t.left.key}`,
+                 { ring: t.left === null ? null : t.left.id, sound: 'land' });
+      }
+    }
+
+    function remove(rec, ref, key) {
+      const t = ref.get();
+      if (key < t.key) {
+        rec.emit(`${key} < ${t.key}: go left`, { ring: t.id, sound: 'boop' });
+        remove(rec, leftRef(t), key);
+      } else if (key > t.key) {
+        rec.emit(`${key} > ${t.key}: go right`, { ring: t.id, sound: 'boop' });
+        remove(rec, rightRef(t), key);
+      } else if (t.left === null || t.right === null) {
+        const child = t.left !== null ? t.left : t.right;
+        rec.emit(`found ${key}: ${child === null ? 'no children' : 'one child'}`, { ring: t.id, sound: 'land' });
+        ref.set(child);
+        rec.emit(child === null ? `the pointer to ${key} is now nullptr` : `the pointer to ${key} now points to ${child.key}`,
+                 { ring: child === null ? null : child.id, sound: 'land' });
+        return;
+      } else {
+        rec.emit(`found ${key}: two children. Go left, then right as far as possible`, { ring: t.id, sound: 'land' });
+        removeMax(rec, leftRef(t), t);
+      }
+      rebalance(rec, ref);
+    }
+
+    function find(rec, tree, key) {
+      let t = tree.root;
+      while (t !== null) {
+        if (key === t.key) {
+          rec.emit(`found ${key}`, { ring: t.id, kind: 'success', sound: 'land' });
+          return true;
+        }
+        rec.emit(`${key} ${key < t.key ? '<' : '>'} ${t.key}: go ${key < t.key ? 'left' : 'right'}`, { ring: t.id, sound: 'boop' });
+        t = key < t.key ? t.left : t.right;
+      }
+      rec.emit(`${key} not found: fell off the tree`, { kind: 'error', sound: 'check' });
+      return false;
+    }
+
+    // Public operations. Each returns the recorded steps (empty if nothing to do).
+    function opInsert(tree, key, record = true) {
+      const rec = new Recorder(tree, record);
+      if (contains(tree.root, key)) return { steps: [], msg: `${key} is already in the tree` };
+      insert(rec, rootRef(tree), key);
+      const r = rec.rotations;
+      rec.emit(`inserted ${key}` + (r.length ? '' : ': no rotation needed'), { kind: 'success', sound: 'done' });
+      return { steps: rec.steps };
+    }
+
+    function opRemove(tree, key, record = true) {
+      const rec = new Recorder(tree, record);
+      if (!contains(tree.root, key)) return { steps: [], msg: `${key} not found` };
+      remove(rec, rootRef(tree), key);
+      const r = rec.rotations;
+      rec.emit(`removed ${key}` + (r.length ? '' : ': no rotation needed'), { kind: 'success', sound: 'done' });
+      return { steps: rec.steps };
+    }
+
+    function opFind(tree, key) {
+      const rec = new Recorder(tree, true);
+      find(rec, tree, key);
+      return { steps: rec.steps };
+    }
+
+    return { opInsert, opRemove, opFind, clone };
+    })();
+
+    if (typeof module !== 'undefined') module.exports = AVL;
+  </script>
+
+  <script>
+    // ============================================
+    // SOUND EFFECTS
+    // ============================================
+    let audioCtx = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playBoop(frequency = 440, duration = 0.08) {
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.value = frequency;
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) { }
+    }
+
+    function playLanding() {
+      try {
+        initAudio();
+        const gain = audioCtx.createGain();
+        gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+        for (const f of [800, 1200, 1800]) {
+          const osc = audioCtx.createOscillator();
+          osc.connect(gain);
+          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+          osc.type = 'sine';
+          osc.start(audioCtx.currentTime);
+          osc.stop(audioCtx.currentTime + 0.1);
+        }
+      } catch (e) { }
+    }
+
+    function playRotation() {
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.15);
+        osc.frequency.exponentialRampToValueAtTime(400, audioCtx.currentTime + 0.3);
+        osc.type = 'sine';
+        gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) { }
+    }
+
+    function playBalance() {
+      try {
+        initAudio();
+        const gain = audioCtx.createGain();
+        gain.connect(audioCtx.destination);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+        for (const f of [523, 659]) {
+          const osc = audioCtx.createOscillator();
+          osc.connect(gain);
+          osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+          osc.type = 'sine';
+          osc.start(audioCtx.currentTime);
+          osc.stop(audioCtx.currentTime + 0.25);
+        }
+      } catch (e) { }
+    }
+
+    function playSound(name) {
+      if (name === 'boop') playBoop(420, 0.06);
+      else if (name === 'check') playBoop(560, 0.05);
+      else if (name === 'land') playLanding();
+      else if (name === 'alarm') playBoop(200, 0.15);
+      else if (name === 'rotate') playRotation();
+      else if (name === 'done') playBalance();
+    }
+
+    // ============================================
+    // CONSTANTS
+    // ============================================
+    const CANVAS_WIDTH = 900;
+    const CANVAS_HEIGHT = 420;
+    const NODE_RADIUS = 24;
+    const VERTICAL_SPACING = 70;
+    const TOP_Y = 40;
+
+    // ============================================
+    // STATE
+    // ============================================
+    const tree = { root: null };
+    let shown = null;          // snapshot on screen
+    let shownStep = null;      // step being shown (null when idle)
+    let queue = [];            // steps still to play
+    let waiting = false;       // step mode: waiting for the Step button
+    const visuals = new Map(); // id -> {x, y, scale}
+
+    function stepMode() { return document.getElementById('stepMode').checked; }
+    function speed() { return parseInt(document.getElementById('speedSlider').value); }
+    function stepDelay() { return 2600 - 230 * speed(); }   // ms per step when playing on its own
+    function busy() { return shownStep !== null; }
+
+    // ============================================
+    // LAYOUT (of whatever snapshot is shown)
+    // ============================================
+    function depth(t) { return t === null ? 0 : 1 + Math.max(depth(t.left), depth(t.right)); }
+    function snapHeight(t) { return t === null ? -1 : 1 + Math.max(snapHeight(t.left), snapHeight(t.right)); }
+    function snapBalance(t) { return snapHeight(t.right) - snapHeight(t.left); }
+
+    function layout(snap) {
+      const targets = new Map();
+      if (snap === null) return targets;
+      const d = depth(snap);
+      const totalWidth = Math.min((NODE_RADIUS * 2 + 10) * Math.pow(2, d), CANVAS_WIDTH - 80);
+      (function place(t, x, y, level) {
+        if (t === null) return;
+        targets.set(t.id, { x, y });
+        const off = totalWidth / Math.pow(2, level + 2);
+        place(t.left, x - off, y + VERTICAL_SPACING, level + 1);
+        place(t.right, x + off, y + VERTICAL_SPACING, level + 1);
+      })(snap, CANVAS_WIDTH / 2, TOP_Y, 0);
+      return targets;
+    }
+
+    let targets = new Map();
+
+    function showSnapshot(snap, snapNow = false) {
+      shown = snap;
+      targets = layout(snap);
+      for (const [id, p] of targets) {
+        if (!visuals.has(id)) visuals.set(id, { x: p.x, y: p.y, scale: snapNow ? 1 : 0.3 });
+        else if (snapNow) { const v = visuals.get(id); v.x = p.x; v.y = p.y; v.scale = 1; }
+      }
+      for (const id of [...visuals.keys()]) if (!targets.has(id)) visuals.delete(id);
+    }
+
+    // ============================================
+    // PLAYBACK
+    // ============================================
+    function play(result) {
+      if (result.steps.length === 0) {
+        showInfo(result.msg || '', 'error');
+        return;
+      }
+      queue = result.steps.slice();
+      advance();
+    }
+
+    // Each recorded step stays on screen until the Step button (step mode)
+    // or a timer (otherwise) moves on. The last step is held for one delay,
+    // then the page goes idle showing the finished tree.
+    let timer = null;
+
+    function schedule() {
+      clearTimeout(timer);
+      timer = setTimeout(onTimer, stepDelay());
+    }
+
+    function goIdle() {
+      clearTimeout(timer);
+      timer = null;
+      waiting = false;
+      shownStep = null;
+      showSnapshot(AVL.clone(tree.root));
+      updateButtons();
+    }
+
+    function onTimer() {
+      timer = null;
+      if (shownStep === null) return;
+      if (queue.length === 0) goIdle();
+      else if (stepMode()) { waiting = true; updateButtons(); }
+      else advance();
+    }
+
+    function advance() {
+      clearTimeout(timer);
+      timer = null;
+      waiting = false;
+      if (queue.length === 0) { goIdle(); return; }
+      shownStep = queue.shift();
+      showSnapshot(shownStep.tree);
+      showInfo(shownStep.msg, shownStep.kind);
+      const r = shownStep.rotations;
+      document.getElementById('rotationLog').textContent = r.length ? 'Rotations: ' + r.join(', ') : '';
+      if (shownStep.sound) playSound(shownStep.sound);
+      if (queue.length === 0 && shownStep.ring === null && shownStep.orange.length === 0) { goIdle(); return; }
+      if (queue.length > 0 && stepMode()) waiting = true;
+      else schedule();
+      updateButtons();
+    }
+
+    function updateButtons() {
+      const b = busy();
+      for (const id of ['insertBtn', 'findBtn', 'deleteBtn', 'randomBtn', 'clearBtn']) {
+        document.getElementById(id).disabled = b;
+      }
+      document.getElementById('stepBtn').disabled = !(b && waiting);
+    }
+
+    // ============================================
+    // DRAWING
+    // ============================================
+    function draw3DNode(x, y, value, scale, baseColor, balanceFactor = null) {
+      push();
+      translate(x, y);
+      const r = NODE_RADIUS * scale;
+
+      noStroke();
+      for (let s = 4; s >= 0; s--) {
+        fill(0, 0, 0, 8);
+        ellipse(2 + s * 0.5, 4 + s * 0.5, r * 2.1 + s * 3, r * 1.9 + s * 2);
+      }
+
+      const brightR = Math.min(255, baseColor.r + 40);
+      const brightG = Math.min(255, baseColor.g + 40);
+      const brightB = Math.min(255, baseColor.b + 40);
+      const darkR = baseColor.r * 0.7;
+      const darkG = baseColor.g * 0.7;
+      const darkB = baseColor.b * 0.7;
+
+      for (let i = r; i > 0; i -= 1.5) {
+        const t = i / r;
+        const curve = t * t * t;
+        fill(lerp(brightR, darkR, curve), lerp(brightG, darkG, curve), lerp(brightB, darkB, curve));
+        noStroke();
+        ellipse(0, 0, i * 2);
+      }
+
+      fill(255, 255, 255, 60);
+      ellipse(-r * 0.25, -r * 0.25, r * 0.9, r * 0.7);
+      fill(255, 255, 255, 90);
+      ellipse(-r * 0.3, -r * 0.3, r * 0.5, r * 0.4);
+      fill(255, 255, 255, 130);
+      ellipse(-r * 0.35, -r * 0.35, r * 0.2, r * 0.15);
+
+      noFill();
+      stroke(darkR * 0.9, darkG * 0.9, darkB * 0.9, 180);
+      strokeWeight(1.5);
+      ellipse(0, 0, r * 2);
+
+      noStroke();
+      fill(255, 255, 255, 80);
+      textSize(15 * scale);
+      textStyle(BOLD);
+      text(value, 0.5, 0.5);
+      fill(40, 40, 50);
+      text(value, 0, 0);
+      textStyle(NORMAL);
+
+      if (balanceFactor !== null) {
+        const bfX = r * 0.9;
+        const bfY = -r * 0.9;
+        if (Math.abs(balanceFactor) > 1) fill(220, 50, 50);
+        else if (balanceFactor === 0) fill(80, 180, 80);
+        else fill(255, 180, 50);
+        noStroke();
+        ellipse(bfX, bfY, 20);
+        fill(255);
+        textSize(10);
+        textStyle(BOLD);
+        text(balanceFactor > 0 ? `+${balanceFactor}` : `${balanceFactor}`, bfX, bfY);
+        textStyle(NORMAL);
+      }
+      pop();
+    }
+
+    function drawRing(x, y) {
+      push();
+      noFill();
+      stroke(255, 200, 0, 220);
+      strokeWeight(4);
+      ellipse(x, y, NODE_RADIUS * 2.6);
+      pop();
+    }
+
+    function nodeColor(t, orange) {
+      if (orange.has(t.id)) return { r: 255, g: 165, b: 0 };
+      if (Math.abs(snapBalance(t)) > 1) return { r: 220, g: 80, b: 80 };
+      return { r: 100, g: 180, b: 255 };
+    }
+
+    function drawEdges(t) {
+      if (t === null) return;
+      const v = visuals.get(t.id);
+      stroke(120);
+      strokeWeight(2);
+      for (const c of [t.left, t.right]) {
+        if (c !== null) {
+          const w = visuals.get(c.id);
+          line(v.x, v.y, w.x, w.y);
+          drawEdges(c);
+        }
+      }
+    }
+
+    function drawNodes(t, orange) {
+      if (t === null) return;
+      const v = visuals.get(t.id);
+      draw3DNode(v.x, v.y, t.key, v.scale, nodeColor(t, orange), snapBalance(t));
+      drawNodes(t.left, orange);
+      drawNodes(t.right, orange);
+    }
+
+    function animate() {
+      // time-based, so the motion takes the same time at any frame rate
+      const k = 1 - Math.exp(-deltaTime / 1000 * (3 + speed() * 0.8));
+      for (const [id, p] of targets) {
+        const v = visuals.get(id);
+        v.x = lerp(v.x, p.x, k);
+        v.y = lerp(v.y, p.y, k);
+        v.scale = lerp(v.scale, 1, k);
+      }
+    }
+
+    // ============================================
+    // MAIN
+    // ============================================
+    function setup() {
+      const canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+      canvas.parent('canvas-container');
+      textAlign(CENTER, CENTER);
+      // URL parameters:
+      //   ?keys=50,30,80  build this tree first (AVL inserts, no animation)
+      //   &step=1         start with Step mode on
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('step') === '1') document.getElementById('stepMode').checked = true;
+      buildTree(params.get('keys'));
+    }
+
+    function draw() {
+      background(255);
+      animate();
+      if (shown !== null) {
+        drawEdges(shown);
+        if (shownStep && shownStep.ring !== null && visuals.has(shownStep.ring)) {
+          const v = visuals.get(shownStep.ring);
+          drawRing(v.x, v.y);
+        }
+        drawNodes(shown, new Set(shownStep ? shownStep.orange : []));
+      } else {
+        fill(150);
+        textSize(16);
+        noStroke();
+        text('Enter a value and click Insert to build an AVL tree', CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+      }
+    }
+
+    function buildTree(keyList) {
+      tree.root = null;
+      visuals.clear();
+      queue = [];
+      shownStep = null;
+      const given = (keyList || '').split(',').filter(t => t.trim() !== '').map(Number).filter(Number.isFinite);
+      const values = given.length > 0 ? given : [50, 30, 70, 20, 40, 60, 80];
+      for (const v of values) AVL.opInsert(tree, v, false);
+      showSnapshot(AVL.clone(tree.root), true);
+      showInfo(given.length > 0 ? '' : 'Try inserting 15, then 25, then 35');
+      document.getElementById('rotationLog').textContent = '';
+      updateButtons();
+    }
+
+    function createRandomTree() {
+      tree.root = null;
+      visuals.clear();
+      const count = Math.floor(Math.random() * 4) + 7;
+      const values = new Set();
+      while (values.size < count) values.add(Math.floor(Math.random() * 99) + 1);
+      for (const v of values) AVL.opInsert(tree, v, false);
+      showSnapshot(AVL.clone(tree.root), true);
+      showInfo(`Built an AVL tree with ${count} keys`);
+      document.getElementById('rotationLog').textContent = '';
+    }
+
+    function showInfo(msg, kind = '') {
+      const el = document.getElementById('info');
+      el.textContent = msg;
+      el.className = 'info ' + kind;
+    }
+
+    // ============================================
+    // EVENT HANDLERS
+    // ============================================
+    function readValue() {
+      const input = document.getElementById('valueInput');
+      const value = parseInt(input.value);
+      input.value = '';
+      input.focus();
+      if (isNaN(value)) { showInfo('Please enter a number', 'error'); return null; }
+      return value;
+    }
+
+    document.getElementById('insertBtn').addEventListener('click', () => {
+      if (busy()) return;
+      const v = readValue();
+      if (v !== null) play(AVL.opInsert(tree, v));
+    });
+
+    document.getElementById('findBtn').addEventListener('click', () => {
+      if (busy()) return;
+      const v = readValue();
+      if (v !== null) play(AVL.opFind(tree, v));
+    });
+
+    document.getElementById('deleteBtn').addEventListener('click', () => {
+      if (busy()) return;
+      const v = readValue();
+      if (v !== null) play(AVL.opRemove(tree, v));
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      if (busy()) return;
+      tree.root = null;
+      visuals.clear();
+      showSnapshot(null);
+      showInfo('Tree cleared');
+      document.getElementById('rotationLog').textContent = '';
+    });
+
+    document.getElementById('randomBtn').addEventListener('click', () => {
+      if (!busy()) createRandomTree();
+    });
+
+    document.getElementById('stepBtn').addEventListener('click', () => {
+      if (busy() && waiting) advance();
+    });
+
+    document.getElementById('stepMode').addEventListener('change', () => {
+      // Turning step mode off lets a paused operation carry on by itself.
+      if (!stepMode() && waiting) { waiting = false; schedule(); }
+      updateButtons();
+    });
+
+    document.getElementById('valueInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') document.getElementById('insertBtn').click();
+    });
+
+    document.getElementById('speedSlider').addEventListener('input', (e) => {
+      document.getElementById('speedLabel').textContent = e.target.value;
+    });
+  </script>
+</body>
+</html>
