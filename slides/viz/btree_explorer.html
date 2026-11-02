@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B-Tree Explorer</title>
+  <!-- Modelled on Kubo Kovac's Gnarley Trees B-tree (kubokovac.eu/gnarley-trees/Btree.html).
+       The whole page is a fixed 1000x520 stage scaled as one piece to fit its frame,
+       so resizing the iframe never reflows the controls or the tree.
+       URL options: ?order=5&keys=100,200,300&step=0 (step mode is on unless step=0) -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #fafafa;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    #stage {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 1000px;
+      height: 520px;
+      transform-origin: center center;
+    }
+    .controls {
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 1000px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+    }
+    input[type="number"] {
+      width: 70px;
+      padding: 7px 8px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      text-align: center;
+    }
+    input[type="number"]:focus { outline: none; border-color: #4a90d9; }
+    button {
+      padding: 9px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      color: white;
+    }
+    .insert-btn { background: #5cb85c; }
+    .insert-btn:hover { background: #4cae4c; }
+    .find-btn { background: #4a90d9; }
+    .find-btn:hover { background: #3a7bc8; }
+    .delete-btn { background: #d9534f; }
+    .delete-btn:hover { background: #c9302c; }
+    .random-btn { background: #9b59b6; }
+    .random-btn:hover { background: #8e44ad; }
+    .clear-btn { background: #f0ad4e; }
+    .clear-btn:hover { background: #ec971f; }
+    .step-btn { background: #6c757d; }
+    .step-btn:hover:not(:disabled) { background: #5a6268; }
+    .step-btn:disabled { opacity: 0.4; cursor: default; }
+    label { font-size: 14px; color: #444; display: inline-flex; align-items: center; gap: 4px; }
+    select { font-size: 14px; padding: 5px; border-radius: 6px; border: 2px solid #ddd; }
+    #view {
+      position: absolute;
+      left: 10px;
+      top: 60px;
+      width: 980px;
+      height: 400px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .bottom {
+      position: absolute;
+      left: 10px;
+      top: 466px;
+      width: 980px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    #info {
+      flex: 1;
+      font-size: 15px;
+      color: #333;
+      line-height: 1.25;
+    }
+    .speed { font-size: 13px; color: #666; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .speed input { width: 90px; }
+  </style>
+</head>
+<body>
+<div id="stage">
+  <div class="controls">
+    <input type="number" id="valueInput" placeholder="Key" min="0" max="999">
+    <button class="insert-btn" id="insertBtn">Insert</button>
+    <button class="find-btn" id="findBtn">Find</button>
+    <button class="delete-btn" id="deleteBtn">Delete</button>
+    <button class="random-btn" id="randomBtn">Random</button>
+    <button class="clear-btn" id="clearBtn">Clear</button>
+    <label>Order <select id="orderSel"></select></label>
+    <label><input type="checkbox" id="stepMode" checked> Step mode</label>
+    <button class="step-btn" id="stepBtn" disabled>Step &#9656;</button>
+  </div>
+  <svg id="view" viewBox="0 0 980 400"></svg>
+  <div class="bottom">
+    <div id="info"></div>
+    <div class="speed">Speed <input type="range" id="speedSlider" min="1" max="10" value="5"></div>
+  </div>
+</div>
+
+<!-- The tree code: plain JS, no drawing, so it can be tested on its own.
+     Every operation records one step per decision (a snapshot of the tree,
+     what to highlight, and a message); the page plays the steps back. -->
+<script id="btree-model">
+const BTree = (() => {
+  let nextId = 1;
+  const mk = (keys = [], children = []) => ({ id: nextId++, keys, children });
+  const isLeaf = n => n.children.length === 0;
+  // index of the first key >= k
+  const slot = (keys, k) => { let i = 0; while (i < keys.length && keys[i] < k) i++; return i; };
+
+  function where(keys, i, k) {
+    if (keys.length === 0) return '';
+    if (i === 0) return `${k} < ${keys[0]}`;
+    if (i === keys.length) return `${k} > ${keys[keys.length - 1]}`;
+    return `${keys[i - 1]} < ${k} < ${keys[i]}`;
+  }
+
+  class Tree {
+    constructor(m) { this.m = m; this.root = null; }
+    get maxKeys() { return this.m - 1; }
+    get minKeys() { return Math.ceil(this.m / 2) - 1; }
+
+    snap() {
+      const nodes = {};
+      (function walk(n) {
+        if (!n) return;
+        nodes[n.id] = { keys: n.keys.slice(), children: n.children.map(c => c.id) };
+        n.children.forEach(walk);
+      })(this.root);
+      return { root: this.root ? this.root.id : null, nodes };
+    }
+
+    keys() {
+      const out = [];
+      (function walk(n) {
+        if (!n) return;
+        n.keys.forEach((k, i) => { if (!isLeaf(n)) walk(n.children[i]); out.push(k); });
+        if (!isLeaf(n)) walk(n.children[n.keys.length]);
+      })(this.root);
+      return out;
+    }
+
+    // Walk down from the root toward k. Returns {node, i, path, found};
+    // path holds [parent, childIndex] for every pointer followed.
+    descend(k, rec, verb) {
+      const path = [];
+      let n = this.root;
+      rec({ hl: { id: n.id }, bubble: { key: k, id: n.id }, msg: `${verb} ${k}: start at the root.` });
+      while (true) {
+        const i = slot(n.keys, k);
+        if (n.keys[i] === k) return { node: n, i, path, found: true };
+        if (isLeaf(n)) return { node: n, i, path, found: false };
+        rec({ hl: { id: n.id }, edge: { id: n.id, idx: i }, bubble: { key: k, id: n.id },
+              msg: `${where(n.keys, i, k)}: follow that pointer down.` });
+        path.push([n, i]);
+        n = n.children[i];
+        rec({ hl: { id: n.id }, bubble: { key: k, id: n.id }, msg: `${verb} ${k}: look in this node.` });
+      }
+    }
+
+    insert(k, rec = () => {}) {
+      const S = extra => rec({ snap: this.snap(), ...extra });
+      if (!this.root) {
+        this.root = mk([k]);
+        S({ keyHl: { id: this.root.id, idx: 0, cls: 'new' }, msg: `The tree was empty: ${k} becomes the root.` });
+        return true;
+      }
+      let { node: n, i, path, found } = this.descend(k, S, 'Insert');
+      if (found) {
+        S({ keyHl: { id: n.id, idx: i, cls: 'found' }, msg: `${k} is already in the tree.` });
+        return false;
+      }
+      n.keys.splice(i, 0, k);
+      S({ hl: { id: n.id }, keyHl: { id: n.id, idx: i, cls: 'new' },
+          msg: `This is a leaf: put ${k} into it, in order.` });
+      while (n.keys.length > this.maxKeys) {
+        const mid = Math.floor((n.keys.length - 1) / 2), med = n.keys[mid];
+        S({ hl: { id: n.id, cls: 'over' }, bubble: { key: med, id: n.id, idx: mid },
+            msg: `${n.keys.length} keys, but order ${this.m} allows at most ${this.maxKeys}. Split the node; the middle key, ${med}, goes up.` });
+        const right = mk(n.keys.slice(mid + 1), n.children.slice(mid + 1));
+        n.keys = n.keys.slice(0, mid);
+        n.children = n.children.slice(0, isLeaf(n) ? 0 : mid + 1);
+        // Two steps per split: the circled median travels up into its new
+        // slot (drawn empty), then it lands there.
+        if (path.length === 0) {
+          this.root = mk([med], [n, right]);
+          S({ keyHide: { id: this.root.id, idx: 0 }, bubble: { key: med, id: this.root.id, idx: 0 },
+              msg: `The node splits in two. There is no parent, so ${med} goes up to start a new root.` });
+          S({ keyHl: { id: this.root.id, idx: 0, cls: 'median' },
+              msg: `${med} is the new root. The tree grows taller at the top.` });
+          return true;
+        }
+        const [p, j] = path.pop();
+        p.keys.splice(j, 0, med);
+        p.children.splice(j + 1, 0, right);
+        S({ keyHide: { id: p.id, idx: j }, bubble: { key: med, id: p.id, idx: j },
+            msg: `The node splits in two, and ${med} moves up into the parent.` });
+        n = p;
+        S({ keyHl: { id: p.id, idx: j, cls: 'median' }, msg: `${med} is now in the parent.` });
+      }
+      S({ msg: `Inserted ${k}.` });
+      return true;
+    }
+
+    find(k, rec = () => {}) {
+      const S = extra => rec({ snap: this.snap(), ...extra });
+      if (!this.root) { S({ msg: `The tree is empty: ${k} is not there.` }); return false; }
+      const { node: n, i, found } = this.descend(k, S, 'Find');
+      if (found) S({ keyHl: { id: n.id, idx: i, cls: 'found' }, msg: `Found ${k}.` });
+      else S({ hl: { id: n.id, cls: 'miss' }, msg: `This is a leaf and ${k} isn't here: ${k} is not in the tree.` });
+      return found;
+    }
+
+    remove(k, rec = () => {}) {
+      const S = extra => rec({ snap: this.snap(), ...extra });
+      if (!this.root) { S({ msg: `The tree is empty: ${k} is not there.` }); return false; }
+      let { node: n, i, path, found } = this.descend(k, S, 'Delete');
+      if (!found) {
+        S({ hl: { id: n.id, cls: 'miss' }, msg: `${k} is not in the tree.` });
+        return false;
+      }
+      S({ keyHl: { id: n.id, idx: i, cls: 'found' }, msg: `Found ${k}.` });
+      let leaf = n;
+      if (!isLeaf(n)) {
+        path.push([n, i]);
+        leaf = n.children[i];
+        while (!isLeaf(leaf)) { path.push([leaf, leaf.keys.length]); leaf = leaf.children[leaf.keys.length]; }
+        const pred = leaf.keys[leaf.keys.length - 1];
+        S({ keyHl: { id: leaf.id, idx: leaf.keys.length - 1, cls: 'median' },
+            msg: `${k} is not in a leaf. Its in-order predecessor, ${pred}, is: the largest key to its left.` });
+        n.keys[i] = pred;
+        leaf.keys.pop();
+        S({ keyHl: { id: n.id, idx: i, cls: 'new' }, msg: `${pred} replaces ${k}, and leaves its leaf.` });
+      } else {
+        leaf.keys.splice(i, 1);
+        S({ hl: { id: leaf.id }, msg: `Remove ${k} from the leaf.` });
+      }
+      n = leaf;
+      while (n !== this.root && n.keys.length < this.minKeys) {
+        const [p, j] = path.pop();
+        const left = p.children[j - 1], right = p.children[j + 1];
+        S({ hl: { id: n.id, cls: 'over' },
+            msg: `Only ${n.keys.length} key${n.keys.length === 1 ? '' : 's'} left, but every non-root node needs at least ${this.minKeys}.` });
+        if (left && left.keys.length > this.minKeys) {
+          const sep = p.keys[j - 1], up = left.keys[left.keys.length - 1];
+          n.keys.unshift(sep);
+          p.keys[j - 1] = left.keys.pop();
+          if (!isLeaf(left)) n.children.unshift(left.children.pop());
+          S({ keyHl: { id: p.id, idx: j - 1, cls: 'median' },
+              msg: `The left sibling can spare a key: ${sep} comes down from the parent, and ${up} goes up to replace it.` });
+          break;
+        }
+        if (right && right.keys.length > this.minKeys) {
+          const sep = p.keys[j], up = right.keys[0];
+          n.keys.push(sep);
+          p.keys[j] = right.keys.shift();
+          if (!isLeaf(right)) n.children.push(right.children.shift());
+          S({ keyHl: { id: p.id, idx: j, cls: 'median' },
+              msg: `The right sibling can spare a key: ${sep} comes down from the parent, and ${up} goes up to replace it.` });
+          break;
+        }
+        let merged, sep;
+        if (left) {
+          sep = p.keys[j - 1];
+          left.keys.push(sep, ...n.keys);
+          left.children.push(...n.children);
+          p.keys.splice(j - 1, 1);
+          p.children.splice(j, 1);
+          merged = left;
+        } else {
+          sep = p.keys[j];
+          n.keys.push(sep, ...right.keys);
+          n.children.push(...right.children);
+          p.keys.splice(j, 1);
+          p.children.splice(j + 1, 1);
+          merged = n;
+        }
+        S({ hl: { id: merged.id },
+            msg: `Neither sibling can spare a key. Merge with one, bringing ${sep} down from the parent.` });
+        n = p;
+      }
+      if (this.root.keys.length === 0) {
+        this.root = this.root.children[0] || null;
+        S({ msg: this.root ? 'The root is empty: its only child becomes the root. The tree gets shorter at the top.'
+                           : 'The tree is now empty.' });
+      } else {
+        S({ msg: `Deleted ${k}.` });
+      }
+      return true;
+    }
+  }
+  return { Tree };
+})();
+if (typeof module !== 'undefined') module.exports = BTree;
+</script>
+
+<script>
+// ============================================
+// Drawing and playback
+// ============================================
+const KW = 46, KH = 32, LEAF_GAP = 18, LEVEL_H = 85;
+const VIEW_W = 980, VIEW_H = 400, PAD = 24;
+const svg = document.getElementById('view');
+const info = document.getElementById('info');
+const input = document.getElementById('valueInput');
+const stepMode = document.getElementById('stepMode');
+const stepBtn = document.getElementById('stepBtn');
+const speed = document.getElementById('speedSlider');
+const orderSel = document.getElementById('orderSel');
+
+const COLORS = {
+  node:   { fill: '#ffffff', stroke: '#333333' },
+  hl:     { fill: '#fff3c4', stroke: '#e0a000' },
+  over:   { fill: '#fde2e1', stroke: '#d9534f' },
+  miss:   { fill: '#eeeeee', stroke: '#999999' },
+  new:    '#c9f0c9',
+  found:  '#a8e6a8',
+  median: '#ffd59e',
+};
+
+// Fit the fixed stage to the window, as one piece.
+function fitStage() {
+  const s = Math.min(window.innerWidth / 1000, window.innerHeight / 520);
+  document.getElementById('stage').style.transform = `translate(-50%, -50%) scale(${s})`;
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+
+function layout(snap) {
+  const pos = {};
+  let x = 0, depth = 0;
+  function place(id, d) {
+    const n = snap.nodes[id], w = n.keys.length * KW;
+    depth = Math.max(depth, d);
+    if (n.children.length === 0) {
+      pos[id] = { x, y: d * LEVEL_H, w };
+      x += w + LEAF_GAP;
+    } else {
+      n.children.forEach(c => place(c, d + 1));
+      const f = pos[n.children[0]], l = pos[n.children[n.children.length - 1]];
+      pos[id] = { x: (f.x + l.x + l.w) / 2 - w / 2, y: d * LEVEL_H, w };
+    }
+  }
+  if (snap.root !== null) place(snap.root, 0);
+  const W = Math.max(x - LEAF_GAP, 1), H = depth * LEVEL_H + KH;
+  const s = Math.min(1.4, (VIEW_W - 2 * PAD) / W, (VIEW_H - 2 * PAD - 40) / H);
+  const view = { s, tx: (VIEW_W - W * s) / 2, ty: PAD + 40 + Math.max(0, (VIEW_H - 2 * PAD - 40 - H * s) / 2) * 0.3 };
+  return { pos, view };
+}
+
+let shown = { pos: {}, view: { s: 1, tx: 0, ty: 0 }, bubble: null };
+let anim = null;
+
+const lerp = (a, b, t) => a + (b - a) * t;
+const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+function show(step, animate) {
+  const target = layout(step.snap);
+  let bubble = null;
+  if (step.bubble && target.pos[step.bubble.id]) {
+    const p = target.pos[step.bubble.id], b = step.bubble;
+    if (b.idx === undefined) bubble = { key: b.key, x: p.x + p.w / 2, y: p.y - 30 };
+    else {   // circled key, sitting on slot idx of the node
+      const kw = p.w / step.snap.nodes[b.id].keys.length;
+      bubble = { key: b.key, x: p.x + (b.idx + 0.5) * kw, y: p.y + KH / 2, ring: true };
+    }
+  }
+  const from = shown;
+  const to = { pos: target.pos, view: target.view, bubble };
+  if (anim) cancelAnimationFrame(anim);
+  info.textContent = step.msg || '';
+  const dur = animate ? Math.min(500, delay() * 0.6) : 0;
+  const t0 = performance.now();
+  function frame(now) {
+    const t = dur ? Math.min(1, (now - t0) / dur) : 1;
+    const e = ease(t);
+    const pos = {};
+    for (const id in to.pos) {
+      const a = from.pos[id], b = to.pos[id];
+      pos[id] = a ? { x: lerp(a.x, b.x, e), y: lerp(a.y, b.y, e), w: lerp(a.w, b.w, e), o: 1 }
+                  : { ...b, o: e };
+    }
+    const view = { s: lerp(from.view.s, to.view.s, e), tx: lerp(from.view.tx, to.view.tx, e), ty: lerp(from.view.ty, to.view.ty, e) };
+    let b = null;
+    if (to.bubble) {
+      const fb = from.bubble || to.bubble;
+      b = { key: to.bubble.key, ring: to.bubble.ring, x: lerp(fb.x, to.bubble.x, e), y: lerp(fb.y, to.bubble.y, e) };
+    }
+    draw(step, pos, view, b);
+    if (t < 1) anim = requestAnimationFrame(frame);
+    else { anim = null; shown = to; }
+  }
+  anim = requestAnimationFrame(frame);
+  shown = to;   // so an interrupted animation starts the next one from its target
+}
+
+function draw(step, pos, view, bubble) {
+  const out = [`<g transform="translate(${view.tx},${view.ty}) scale(${view.s})">`];
+  const snap = step.snap;
+  // edges first, under the nodes
+  for (const id in snap.nodes) {
+    const n = snap.nodes[id], p = pos[id];
+    n.children.forEach((c, i) => {
+      const q = pos[c];
+      if (!q) return;
+      const hot = step.edge && step.edge.id == id && step.edge.idx === i;
+      out.push(`<line x1="${p.x + i * (p.w / n.keys.length)}" y1="${p.y + KH}" x2="${q.x + q.w / 2}" y2="${q.y}"
+        stroke="${hot ? '#e0a000' : '#555'}" stroke-width="${hot ? 4 : 1.5}" opacity="${Math.min(p.o, q.o)}"/>`);
+    });
+  }
+  for (const id in snap.nodes) {
+    const n = snap.nodes[id], p = pos[id];
+    const style = step.hl && step.hl.id == id ? COLORS[step.hl.cls || 'hl'] : COLORS.node;
+    const kw = p.w / n.keys.length;
+    out.push(`<g opacity="${p.o}">`);
+    out.push(`<rect x="${p.x}" y="${p.y}" width="${p.w}" height="${KH}" rx="6" fill="${style.fill}" stroke="${style.stroke}" stroke-width="2"/>`);
+    n.keys.forEach((k, i) => {
+      if (step.keyHl && step.keyHl.id == id && step.keyHl.idx === i) {
+        out.push(`<rect x="${p.x + i * kw + 2}" y="${p.y + 2}" width="${kw - 4}" height="${KH - 4}" rx="4" fill="${COLORS[step.keyHl.cls]}"/>`);
+      }
+      if (i > 0) out.push(`<line x1="${p.x + i * kw}" y1="${p.y}" x2="${p.x + i * kw}" y2="${p.y + KH}" stroke="${style.stroke}" stroke-width="1"/>`);
+      const hidden = step.keyHide && step.keyHide.id == id && step.keyHide.idx === i;
+      if (!hidden) out.push(`<text x="${p.x + i * kw + kw / 2}" y="${p.y + KH / 2 + 5}" text-anchor="middle" font-size="14" fill="#222">${k}</text>`);
+    });
+    out.push('</g>');
+  }
+  if (bubble && bubble.ring) {
+    out.push(`<circle cx="${bubble.x}" cy="${bubble.y}" r="19" fill="${COLORS.median}" stroke="#e08a00" stroke-width="3"/>`);
+    out.push(`<text x="${bubble.x}" y="${bubble.y + 5}" text-anchor="middle" font-size="14" font-weight="600" fill="#222">${bubble.key}</text>`);
+  } else if (bubble) {
+    out.push(`<circle cx="${bubble.x}" cy="${bubble.y}" r="16" fill="#4a90d9"/>`);
+    out.push(`<text x="${bubble.x}" y="${bubble.y + 5}" text-anchor="middle" font-size="13" font-weight="600" fill="white">${bubble.key}</text>`);
+  }
+  out.push('</g>');
+  svg.innerHTML = out.join('\n');
+}
+
+// ---------- playback ----------
+let tree, history = [];      // history: keys in the tree, in insertion order
+let queue = [], timer = null;
+
+function delay() { return 2200 / speed.value; }
+
+function finishCurrent() {
+  clearTimeout(timer);
+  if (queue.length) { const last = queue[queue.length - 1]; queue = []; show(last, false); }
+  stepBtn.disabled = true;
+}
+
+function play(steps) {
+  finishCurrent();
+  queue = steps;
+  next();
+}
+
+function next() {
+  stepBtn.disabled = true;
+  if (!queue.length) return;
+  show(queue.shift(), true);
+  if (!queue.length) return;
+  if (stepMode.checked) stepBtn.disabled = false;
+  else timer = setTimeout(next, delay());
+}
+
+function run(op) {
+  const k = parseInt(input.value, 10);
+  if (isNaN(k)) { info.textContent = 'Type a key first.'; input.focus(); return; }
+  finishCurrent();
+  const steps = [];
+  const ok = tree[op](k, s => steps.push(s));
+  if (ok && op === 'insert') history.push(k);
+  if (ok && op === 'remove') history = history.filter(x => x !== k);
+  play(steps);
+  input.value = '';
+  input.focus();
+}
+
+function rebuild(keys, quiet = false) {
+  finishCurrent();
+  tree = new BTree.Tree(parseInt(orderSel.value, 10));
+  history = [];
+  keys.forEach(k => { if (tree.insert(k)) history.push(k); });
+  show({ snap: tree.snap(), msg: keys.length && !quiet ? `Order ${tree.m}: at most ${tree.maxKeys} keys in a node, at least ${tree.minKeys} in a non-root node.` : '' }, true);
+}
+
+for (let m = 3; m <= 9; m++) orderSel.insertAdjacentHTML('beforeend', `<option value="${m}">${m}</option>`);
+
+document.getElementById('insertBtn').onclick = () => run('insert');
+document.getElementById('findBtn').onclick = () => run('find');
+document.getElementById('deleteBtn').onclick = () => run('remove');
+document.getElementById('clearBtn').onclick = () => rebuild([]);
+document.getElementById('randomBtn').onclick = () => {
+  const keys = new Set();
+  // multiples of 10, so there is room to insert keys between them
+  while (keys.size < 14) keys.add(10 * (1 + Math.floor(Math.random() * 99)));
+  rebuild([...keys]);
+};
+orderSel.onchange = () => rebuild(history.slice());
+stepBtn.onclick = next;
+stepMode.onchange = () => { if (!stepMode.checked && queue.length) next(); };
+input.addEventListener('keydown', e => { if (e.key === 'Enter') run('insert'); });
+
+const params = new URLSearchParams(location.search);
+orderSel.value = params.get('order') || '5';
+stepMode.checked = params.get('step') !== '0';   // step mode is the default
+// quiet on load: the order rules would give away the definition
+rebuild((params.get('keys') || '').split(',').map(s => parseInt(s, 10)).filter(k => !isNaN(k)), true);
+</script>
+</body>
+</html>
