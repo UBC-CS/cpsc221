@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.20">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,18 +38,19 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5c5b2c2b5b013704e55447cc32bdc740.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a757c82a4843946d94a3b5dcc6044d2b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5c5b2c2b5b013704e55447cc32bdc740.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d625d5b42156ee9444ab1b217d0d823a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a9728c304f029a882273a40c04477b7d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d625d5b42156ee9444ab1b217d0d823a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-87bbf4cde4fdf2b8200c32130e04ed85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-9a8d9b2ee77875676bdcfd8b33ffb005.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-87bbf4cde4fdf2b8200c32130e04ed85.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-bbdf6eaa1852e017ab1ea81b746f7e16.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a484a237f7d89b9108580bbd8398c01e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-bbdf6eaa1852e017ab1ea81b746f7e16.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -88,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -111,6 +112,7 @@ ul.task-list li input[type="checkbox"] {
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
         if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
           if (alternate) {
             toggle.classList.add("alternate");
           } else {
@@ -140,13 +142,19 @@ ul.task-list li input[type="checkbox"] {
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
       setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
         manageTransitions("body", false);
-        window.scrollTo(0, 1);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
         setTimeout(() => {
-          window.scrollTo(0, 0);
+          window.scrollTo(0, scrollY);
           manageTransitions("body", true);
         }, 40);
       }
@@ -241,6 +249,7 @@ ul.task-list li input[type="checkbox"] {
       // Read the current dark / light value
       let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
@@ -250,6 +259,7 @@ ul.task-list li input[type="checkbox"] {
         return;
       const alternate = e.matches
       toggleColorMode(alternate);
+      refreshSafariScrollbar();
       localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
       toggleGiscusIfUsed(alternate, darkModeDefault);
     });
@@ -263,12 +273,12 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1 no-decor" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
           <h1 class="quarto-secondary-nav-title">CPSC 221: Basic Algorithms and Data Structures</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -280,12 +290,12 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">CPSC 221: Basic Algorithms and Data Structures—Instructor version</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
 </div>
     </div>
       </div>
@@ -298,13 +308,10 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Course information</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Course information</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./announcements.html" class="sidebar-item-text sidebar-link">
@@ -327,13 +334,10 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Resources</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Resources</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
@@ -390,7 +394,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -399,7 +403,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -441,28 +445,28 @@ ul.task-list li input[type="checkbox"] {
 <section id="schedule" class="level2">
 <h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">By week</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By unit</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">By week</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By unit</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
 <div class="cell-output-display light-content">
-<div id="xioclnijdr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xioclnijdr table {
+<div id="rabzppucoy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#rabzppucoy table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xioclnijdr thead, #xioclnijdr tbody, #xioclnijdr tfoot, #xioclnijdr tr, #xioclnijdr td, #xioclnijdr th {
+#rabzppucoy thead, #rabzppucoy tbody, #rabzppucoy tfoot, #rabzppucoy tr, #rabzppucoy td, #rabzppucoy th {
   border-style: none;
 }
 
-#xioclnijdr p {
+#rabzppucoy p {
   margin: 0;
   padding: 0;
 }
 
-#xioclnijdr .gt_table {
+#rabzppucoy .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -488,12 +492,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_caption {
+#rabzppucoy .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xioclnijdr .gt_title {
+#rabzppucoy .gt_title {
   color: #000000;
   font-size: 125%;
   font-weight: initial;
@@ -505,7 +509,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#xioclnijdr .gt_subtitle {
+#rabzppucoy .gt_subtitle {
   color: #000000;
   font-size: 85%;
   font-weight: initial;
@@ -517,7 +521,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#xioclnijdr .gt_heading {
+#rabzppucoy .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -529,13 +533,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_bottom_border {
+#rabzppucoy .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_col_headings {
+#rabzppucoy .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -550,7 +554,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_col_heading {
+#rabzppucoy .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -570,7 +574,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xioclnijdr .gt_column_spanner_outer {
+#rabzppucoy .gt_column_spanner_outer {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -582,15 +586,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#xioclnijdr .gt_column_spanner_outer:first-child {
+#rabzppucoy .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xioclnijdr .gt_column_spanner_outer:last-child {
+#rabzppucoy .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xioclnijdr .gt_column_spanner {
+#rabzppucoy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -602,11 +606,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#xioclnijdr .gt_spanner_row {
+#rabzppucoy .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xioclnijdr .gt_group_heading {
+#rabzppucoy .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -632,7 +636,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#xioclnijdr .gt_empty_group_heading {
+#rabzppucoy .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -647,15 +651,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#xioclnijdr .gt_from_md > :first-child {
+#rabzppucoy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xioclnijdr .gt_from_md > :last-child {
+#rabzppucoy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xioclnijdr .gt_row {
+#rabzppucoy .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -674,7 +678,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#xioclnijdr .gt_stub {
+#rabzppucoy .gt_stub {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -687,7 +691,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xioclnijdr .gt_stub_row_group {
+#rabzppucoy .gt_stub_row_group {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -701,15 +705,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#xioclnijdr .gt_row_group_first td {
+#rabzppucoy .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xioclnijdr .gt_row_group_first th {
+#rabzppucoy .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xioclnijdr .gt_summary_row {
+#rabzppucoy .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -719,16 +723,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xioclnijdr .gt_first_summary_row {
+#rabzppucoy .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_first_summary_row.thick {
+#rabzppucoy .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xioclnijdr .gt_last_summary_row {
+#rabzppucoy .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -738,7 +742,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_grand_summary_row {
+#rabzppucoy .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -748,7 +752,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xioclnijdr .gt_first_grand_summary_row {
+#rabzppucoy .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -758,7 +762,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_last_grand_summary_row_top {
+#rabzppucoy .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -768,11 +772,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_striped {
+#rabzppucoy .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xioclnijdr .gt_table_body {
+#rabzppucoy .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -781,7 +785,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_footnotes {
+#rabzppucoy .gt_footnotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -795,7 +799,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_footnote {
+#rabzppucoy .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -804,7 +808,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xioclnijdr .gt_sourcenotes {
+#rabzppucoy .gt_sourcenotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -818,7 +822,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#xioclnijdr .gt_sourcenote {
+#rabzppucoy .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -826,72 +830,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#xioclnijdr .gt_left {
+#rabzppucoy .gt_left {
   text-align: left;
 }
 
-#xioclnijdr .gt_center {
+#rabzppucoy .gt_center {
   text-align: center;
 }
 
-#xioclnijdr .gt_right {
+#rabzppucoy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xioclnijdr .gt_font_normal {
+#rabzppucoy .gt_font_normal {
   font-weight: normal;
 }
 
-#xioclnijdr .gt_font_bold {
+#rabzppucoy .gt_font_bold {
   font-weight: bold;
 }
 
-#xioclnijdr .gt_font_italic {
+#rabzppucoy .gt_font_italic {
   font-style: italic;
 }
 
-#xioclnijdr .gt_super {
+#rabzppucoy .gt_super {
   font-size: 65%;
 }
 
-#xioclnijdr .gt_footnote_marks {
+#rabzppucoy .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xioclnijdr .gt_asterisk {
+#rabzppucoy .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xioclnijdr .gt_indent_1 {
+#rabzppucoy .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xioclnijdr .gt_indent_2 {
+#rabzppucoy .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xioclnijdr .gt_indent_3 {
+#rabzppucoy .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xioclnijdr .gt_indent_4 {
+#rabzppucoy .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xioclnijdr .gt_indent_5 {
+#rabzppucoy .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xioclnijdr .katex-display {
+#rabzppucoy .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xioclnijdr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#rabzppucoy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1110,23 +1114,23 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="cell-output-display dark-content">
-<div id="aaaehwwsmd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aaaehwwsmd table {
+<div id="kgcbjqayyg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kgcbjqayyg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aaaehwwsmd thead, #aaaehwwsmd tbody, #aaaehwwsmd tfoot, #aaaehwwsmd tr, #aaaehwwsmd td, #aaaehwwsmd th {
+#kgcbjqayyg thead, #kgcbjqayyg tbody, #kgcbjqayyg tfoot, #kgcbjqayyg tr, #kgcbjqayyg td, #kgcbjqayyg th {
   border-style: none;
 }
 
-#aaaehwwsmd p {
+#kgcbjqayyg p {
   margin: 0;
   padding: 0;
 }
 
-#aaaehwwsmd .gt_table {
+#kgcbjqayyg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1152,12 +1156,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_caption {
+#kgcbjqayyg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aaaehwwsmd .gt_title {
+#kgcbjqayyg .gt_title {
   color: #FFFFFF;
   font-size: 125%;
   font-weight: initial;
@@ -1169,7 +1173,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#aaaehwwsmd .gt_subtitle {
+#kgcbjqayyg .gt_subtitle {
   color: #FFFFFF;
   font-size: 85%;
   font-weight: initial;
@@ -1181,7 +1185,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#aaaehwwsmd .gt_heading {
+#kgcbjqayyg .gt_heading {
   background-color: #222222;
   text-align: center;
   border-bottom-color: #222222;
@@ -1193,13 +1197,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_bottom_border {
+#kgcbjqayyg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_col_headings {
+#kgcbjqayyg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1214,7 +1218,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_col_heading {
+#kgcbjqayyg .gt_col_heading {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1234,7 +1238,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#aaaehwwsmd .gt_column_spanner_outer {
+#kgcbjqayyg .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1246,15 +1250,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#aaaehwwsmd .gt_column_spanner_outer:first-child {
+#kgcbjqayyg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aaaehwwsmd .gt_column_spanner_outer:last-child {
+#kgcbjqayyg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aaaehwwsmd .gt_column_spanner {
+#kgcbjqayyg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1266,11 +1270,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#aaaehwwsmd .gt_spanner_row {
+#kgcbjqayyg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aaaehwwsmd .gt_group_heading {
+#kgcbjqayyg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1296,7 +1300,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#aaaehwwsmd .gt_empty_group_heading {
+#kgcbjqayyg .gt_empty_group_heading {
   padding: 0.5px;
   color: #FFFFFF;
   background-color: #222222;
@@ -1311,15 +1315,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#aaaehwwsmd .gt_from_md > :first-child {
+#kgcbjqayyg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aaaehwwsmd .gt_from_md > :last-child {
+#kgcbjqayyg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aaaehwwsmd .gt_row {
+#kgcbjqayyg .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -1338,7 +1342,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#aaaehwwsmd .gt_stub {
+#kgcbjqayyg .gt_stub {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1351,7 +1355,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#aaaehwwsmd .gt_stub_row_group {
+#kgcbjqayyg .gt_stub_row_group {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1365,15 +1369,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#aaaehwwsmd .gt_row_group_first td {
+#kgcbjqayyg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aaaehwwsmd .gt_row_group_first th {
+#kgcbjqayyg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aaaehwwsmd .gt_summary_row {
+#kgcbjqayyg .gt_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -1383,16 +1387,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#aaaehwwsmd .gt_first_summary_row {
+#kgcbjqayyg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_first_summary_row.thick {
+#kgcbjqayyg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aaaehwwsmd .gt_last_summary_row {
+#kgcbjqayyg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,7 +1406,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_grand_summary_row {
+#kgcbjqayyg .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -1412,7 +1416,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#aaaehwwsmd .gt_first_grand_summary_row {
+#kgcbjqayyg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1422,7 +1426,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_last_grand_summary_row_top {
+#kgcbjqayyg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1432,11 +1436,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_striped {
+#kgcbjqayyg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aaaehwwsmd .gt_table_body {
+#kgcbjqayyg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1445,7 +1449,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_footnotes {
+#kgcbjqayyg .gt_footnotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -1459,7 +1463,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_footnote {
+#kgcbjqayyg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1468,7 +1472,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#aaaehwwsmd .gt_sourcenotes {
+#kgcbjqayyg .gt_sourcenotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -1482,7 +1486,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#aaaehwwsmd .gt_sourcenote {
+#kgcbjqayyg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1490,72 +1494,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#aaaehwwsmd .gt_left {
+#kgcbjqayyg .gt_left {
   text-align: left;
 }
 
-#aaaehwwsmd .gt_center {
+#kgcbjqayyg .gt_center {
   text-align: center;
 }
 
-#aaaehwwsmd .gt_right {
+#kgcbjqayyg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aaaehwwsmd .gt_font_normal {
+#kgcbjqayyg .gt_font_normal {
   font-weight: normal;
 }
 
-#aaaehwwsmd .gt_font_bold {
+#kgcbjqayyg .gt_font_bold {
   font-weight: bold;
 }
 
-#aaaehwwsmd .gt_font_italic {
+#kgcbjqayyg .gt_font_italic {
   font-style: italic;
 }
 
-#aaaehwwsmd .gt_super {
+#kgcbjqayyg .gt_super {
   font-size: 65%;
 }
 
-#aaaehwwsmd .gt_footnote_marks {
+#kgcbjqayyg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aaaehwwsmd .gt_asterisk {
+#kgcbjqayyg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aaaehwwsmd .gt_indent_1 {
+#kgcbjqayyg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aaaehwwsmd .gt_indent_2 {
+#kgcbjqayyg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aaaehwwsmd .gt_indent_3 {
+#kgcbjqayyg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aaaehwwsmd .gt_indent_4 {
+#kgcbjqayyg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aaaehwwsmd .gt_indent_5 {
+#kgcbjqayyg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#aaaehwwsmd .katex-display {
+#kgcbjqayyg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#aaaehwwsmd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kgcbjqayyg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1778,23 +1782,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
 <div class="cell-output-display light-content">
-<div id="dkjzwdspng" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dkjzwdspng table {
+<div id="xxskcckkxb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xxskcckkxb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dkjzwdspng thead, #dkjzwdspng tbody, #dkjzwdspng tfoot, #dkjzwdspng tr, #dkjzwdspng td, #dkjzwdspng th {
+#xxskcckkxb thead, #xxskcckkxb tbody, #xxskcckkxb tfoot, #xxskcckkxb tr, #xxskcckkxb td, #xxskcckkxb th {
   border-style: none;
 }
 
-#dkjzwdspng p {
+#xxskcckkxb p {
   margin: 0;
   padding: 0;
 }
 
-#dkjzwdspng .gt_table {
+#xxskcckkxb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1820,12 +1824,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_caption {
+#xxskcckkxb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dkjzwdspng .gt_title {
+#xxskcckkxb .gt_title {
   color: #000000;
   font-size: 125%;
   font-weight: initial;
@@ -1837,7 +1841,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#dkjzwdspng .gt_subtitle {
+#xxskcckkxb .gt_subtitle {
   color: #000000;
   font-size: 85%;
   font-weight: initial;
@@ -1849,7 +1853,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#dkjzwdspng .gt_heading {
+#xxskcckkxb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1861,13 +1865,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_bottom_border {
+#xxskcckkxb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_col_headings {
+#xxskcckkxb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1882,7 +1886,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_col_heading {
+#xxskcckkxb .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1902,7 +1906,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dkjzwdspng .gt_column_spanner_outer {
+#xxskcckkxb .gt_column_spanner_outer {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1914,15 +1918,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#dkjzwdspng .gt_column_spanner_outer:first-child {
+#xxskcckkxb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dkjzwdspng .gt_column_spanner_outer:last-child {
+#xxskcckkxb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dkjzwdspng .gt_column_spanner {
+#xxskcckkxb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1934,11 +1938,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#dkjzwdspng .gt_spanner_row {
+#xxskcckkxb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dkjzwdspng .gt_group_heading {
+#xxskcckkxb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1964,7 +1968,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#dkjzwdspng .gt_empty_group_heading {
+#xxskcckkxb .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1979,15 +1983,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#dkjzwdspng .gt_from_md > :first-child {
+#xxskcckkxb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dkjzwdspng .gt_from_md > :last-child {
+#xxskcckkxb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dkjzwdspng .gt_row {
+#xxskcckkxb .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -2006,7 +2010,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dkjzwdspng .gt_stub {
+#xxskcckkxb .gt_stub {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2019,7 +2023,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dkjzwdspng .gt_stub_row_group {
+#xxskcckkxb .gt_stub_row_group {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2033,15 +2037,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#dkjzwdspng .gt_row_group_first td {
+#xxskcckkxb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dkjzwdspng .gt_row_group_first th {
+#xxskcckkxb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dkjzwdspng .gt_summary_row {
+#xxskcckkxb .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2051,16 +2055,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dkjzwdspng .gt_first_summary_row {
+#xxskcckkxb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_first_summary_row.thick {
+#xxskcckkxb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dkjzwdspng .gt_last_summary_row {
+#xxskcckkxb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2070,7 +2074,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_grand_summary_row {
+#xxskcckkxb .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2080,7 +2084,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dkjzwdspng .gt_first_grand_summary_row {
+#xxskcckkxb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2090,7 +2094,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_last_grand_summary_row_top {
+#xxskcckkxb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2100,11 +2104,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_striped {
+#xxskcckkxb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dkjzwdspng .gt_table_body {
+#xxskcckkxb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2113,7 +2117,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_footnotes {
+#xxskcckkxb .gt_footnotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2127,7 +2131,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_footnote {
+#xxskcckkxb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2136,7 +2140,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dkjzwdspng .gt_sourcenotes {
+#xxskcckkxb .gt_sourcenotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2150,7 +2154,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dkjzwdspng .gt_sourcenote {
+#xxskcckkxb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2158,72 +2162,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dkjzwdspng .gt_left {
+#xxskcckkxb .gt_left {
   text-align: left;
 }
 
-#dkjzwdspng .gt_center {
+#xxskcckkxb .gt_center {
   text-align: center;
 }
 
-#dkjzwdspng .gt_right {
+#xxskcckkxb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dkjzwdspng .gt_font_normal {
+#xxskcckkxb .gt_font_normal {
   font-weight: normal;
 }
 
-#dkjzwdspng .gt_font_bold {
+#xxskcckkxb .gt_font_bold {
   font-weight: bold;
 }
 
-#dkjzwdspng .gt_font_italic {
+#xxskcckkxb .gt_font_italic {
   font-style: italic;
 }
 
-#dkjzwdspng .gt_super {
+#xxskcckkxb .gt_super {
   font-size: 65%;
 }
 
-#dkjzwdspng .gt_footnote_marks {
+#xxskcckkxb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dkjzwdspng .gt_asterisk {
+#xxskcckkxb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dkjzwdspng .gt_indent_1 {
+#xxskcckkxb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dkjzwdspng .gt_indent_2 {
+#xxskcckkxb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dkjzwdspng .gt_indent_3 {
+#xxskcckkxb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dkjzwdspng .gt_indent_4 {
+#xxskcckkxb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dkjzwdspng .gt_indent_5 {
+#xxskcckkxb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dkjzwdspng .katex-display {
+#xxskcckkxb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dkjzwdspng div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xxskcckkxb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2488,23 +2492,23 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="cell-output-display dark-content">
-<div id="eaugvfxoek" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#eaugvfxoek table {
+<div id="nycyqlqebr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nycyqlqebr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#eaugvfxoek thead, #eaugvfxoek tbody, #eaugvfxoek tfoot, #eaugvfxoek tr, #eaugvfxoek td, #eaugvfxoek th {
+#nycyqlqebr thead, #nycyqlqebr tbody, #nycyqlqebr tfoot, #nycyqlqebr tr, #nycyqlqebr td, #nycyqlqebr th {
   border-style: none;
 }
 
-#eaugvfxoek p {
+#nycyqlqebr p {
   margin: 0;
   padding: 0;
 }
 
-#eaugvfxoek .gt_table {
+#nycyqlqebr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2530,12 +2534,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_caption {
+#nycyqlqebr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#eaugvfxoek .gt_title {
+#nycyqlqebr .gt_title {
   color: #FFFFFF;
   font-size: 125%;
   font-weight: initial;
@@ -2547,7 +2551,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#eaugvfxoek .gt_subtitle {
+#nycyqlqebr .gt_subtitle {
   color: #FFFFFF;
   font-size: 85%;
   font-weight: initial;
@@ -2559,7 +2563,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#eaugvfxoek .gt_heading {
+#nycyqlqebr .gt_heading {
   background-color: #222222;
   text-align: center;
   border-bottom-color: #222222;
@@ -2571,13 +2575,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_bottom_border {
+#nycyqlqebr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_col_headings {
+#nycyqlqebr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2592,7 +2596,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_col_heading {
+#nycyqlqebr .gt_col_heading {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2612,7 +2616,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#eaugvfxoek .gt_column_spanner_outer {
+#nycyqlqebr .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2624,15 +2628,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#eaugvfxoek .gt_column_spanner_outer:first-child {
+#nycyqlqebr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#eaugvfxoek .gt_column_spanner_outer:last-child {
+#nycyqlqebr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#eaugvfxoek .gt_column_spanner {
+#nycyqlqebr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2644,11 +2648,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#eaugvfxoek .gt_spanner_row {
+#nycyqlqebr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#eaugvfxoek .gt_group_heading {
+#nycyqlqebr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2674,7 +2678,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#eaugvfxoek .gt_empty_group_heading {
+#nycyqlqebr .gt_empty_group_heading {
   padding: 0.5px;
   color: #FFFFFF;
   background-color: #222222;
@@ -2689,15 +2693,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#eaugvfxoek .gt_from_md > :first-child {
+#nycyqlqebr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#eaugvfxoek .gt_from_md > :last-child {
+#nycyqlqebr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#eaugvfxoek .gt_row {
+#nycyqlqebr .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -2716,7 +2720,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#eaugvfxoek .gt_stub {
+#nycyqlqebr .gt_stub {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2729,7 +2733,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#eaugvfxoek .gt_stub_row_group {
+#nycyqlqebr .gt_stub_row_group {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2743,15 +2747,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#eaugvfxoek .gt_row_group_first td {
+#nycyqlqebr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#eaugvfxoek .gt_row_group_first th {
+#nycyqlqebr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#eaugvfxoek .gt_summary_row {
+#nycyqlqebr .gt_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -2761,16 +2765,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#eaugvfxoek .gt_first_summary_row {
+#nycyqlqebr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_first_summary_row.thick {
+#nycyqlqebr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#eaugvfxoek .gt_last_summary_row {
+#nycyqlqebr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2780,7 +2784,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_grand_summary_row {
+#nycyqlqebr .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -2790,7 +2794,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#eaugvfxoek .gt_first_grand_summary_row {
+#nycyqlqebr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2800,7 +2804,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_last_grand_summary_row_top {
+#nycyqlqebr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2810,11 +2814,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_striped {
+#nycyqlqebr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#eaugvfxoek .gt_table_body {
+#nycyqlqebr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2823,7 +2827,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_footnotes {
+#nycyqlqebr .gt_footnotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -2837,7 +2841,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_footnote {
+#nycyqlqebr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2846,7 +2850,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#eaugvfxoek .gt_sourcenotes {
+#nycyqlqebr .gt_sourcenotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -2860,7 +2864,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#eaugvfxoek .gt_sourcenote {
+#nycyqlqebr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2868,72 +2872,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#eaugvfxoek .gt_left {
+#nycyqlqebr .gt_left {
   text-align: left;
 }
 
-#eaugvfxoek .gt_center {
+#nycyqlqebr .gt_center {
   text-align: center;
 }
 
-#eaugvfxoek .gt_right {
+#nycyqlqebr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#eaugvfxoek .gt_font_normal {
+#nycyqlqebr .gt_font_normal {
   font-weight: normal;
 }
 
-#eaugvfxoek .gt_font_bold {
+#nycyqlqebr .gt_font_bold {
   font-weight: bold;
 }
 
-#eaugvfxoek .gt_font_italic {
+#nycyqlqebr .gt_font_italic {
   font-style: italic;
 }
 
-#eaugvfxoek .gt_super {
+#nycyqlqebr .gt_super {
   font-size: 65%;
 }
 
-#eaugvfxoek .gt_footnote_marks {
+#nycyqlqebr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#eaugvfxoek .gt_asterisk {
+#nycyqlqebr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#eaugvfxoek .gt_indent_1 {
+#nycyqlqebr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#eaugvfxoek .gt_indent_2 {
+#nycyqlqebr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#eaugvfxoek .gt_indent_3 {
+#nycyqlqebr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#eaugvfxoek .gt_indent_4 {
+#nycyqlqebr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#eaugvfxoek .gt_indent_5 {
+#nycyqlqebr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#eaugvfxoek .katex-display {
+#nycyqlqebr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#eaugvfxoek div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nycyqlqebr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3214,15 +3218,50 @@ ul.task-list li input[type="checkbox"] {
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
       const i = window.document.createElement("i");
       i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
     }
     setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
@@ -3301,7 +3340,8 @@ ul.task-list li input[type="checkbox"] {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -3310,8 +3350,69 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -3325,6 +3426,7 @@ ul.task-list li input[type="checkbox"] {
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -3487,44 +3589,54 @@ ul.task-list li input[type="checkbox"] {
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -3622,6 +3734,9 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 <footer class="footer">

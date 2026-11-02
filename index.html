@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.20">
+<meta name="generator" content="quarto-1.11.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -38,18 +38,19 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5c5b2c2b5b013704e55447cc32bdc740.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a757c82a4843946d94a3b5dcc6044d2b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-5c5b2c2b5b013704e55447cc32bdc740.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d625d5b42156ee9444ab1b217d0d823a.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-a9728c304f029a882273a40c04477b7d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d625d5b42156ee9444ab1b217d0d823a.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-e351da5bfb3f8d1d031f0090e7359192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-6dee150b93baea4e15adb041011ce3e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-e351da5bfb3f8d1d031f0090e7359192.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1b4c4ab2e926926c22b055892a110ea7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-c8bb7923492a340a6ff468ae06d52092.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-1b4c4ab2e926926c22b055892a110ea7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
@@ -88,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -111,6 +112,7 @@ ul.task-list li input[type="checkbox"] {
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
         if (toggle) {
+          toggle.setAttribute("aria-checked", alternate ? "true" : "false");
           if (alternate) {
             toggle.classList.add("alternate");
           } else {
@@ -140,13 +142,19 @@ ul.task-list li input[type="checkbox"] {
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
       setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455).
+    // Not run on load: stylesheets are set before first paint there, and
+    // scrolling would undo the scroll to a URL fragment (#14973).
+    // The one pixel nudge keeps the reader where they were.
+    const refreshSafariScrollbar = () => {
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
         manageTransitions("body", false);
-        window.scrollTo(0, 1);
+        const scrollY = window.scrollY;
+        window.scrollTo(0, scrollY > 0 ? scrollY - 1 : 1);
         setTimeout(() => {
-          window.scrollTo(0, 0);
+          window.scrollTo(0, scrollY);
           manageTransitions("body", true);
         }, 40);
       }
@@ -241,6 +249,7 @@ ul.task-list li input[type="checkbox"] {
       // Read the current dark / light value
       let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
+      refreshSafariScrollbar();
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
       window.dispatchEvent(new Event('resize'));
@@ -250,6 +259,7 @@ ul.task-list li input[type="checkbox"] {
         return;
       const alternate = e.matches
       toggleColorMode(alternate);
+      refreshSafariScrollbar();
       localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
       toggleGiscusIfUsed(alternate, darkModeDefault);
     });
@@ -263,12 +273,12 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1 no-decor" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
           <h1 class="quarto-secondary-nav-title">CPSC 221: Basic Algorithms and Data Structures</h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -280,12 +290,12 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">CPSC 221: Basic Algorithms and Data Structures</a> 
         <div class="sidebar-tools-main">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+  <button type="button" role="switch" aria-checked="false" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode" aria-label="Toggle dark mode"><i class="bi"></i></button>
 </div>
     </div>
       </div>
@@ -298,13 +308,10 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Course information</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Course information</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./announcements.html" class="sidebar-item-text sidebar-link">
@@ -327,13 +334,10 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Resources</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-controls="quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-2-label">Resources</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-2" aria-labelledby="quarto-sidebar-section-2-label" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./getting-started.html" class="sidebar-item-text sidebar-link">
@@ -390,7 +394,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -399,7 +403,7 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content" id="quarto-document-content" tabindex="-1">
 
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -441,28 +445,28 @@ ul.task-list li input[type="checkbox"] {
 <section id="schedule" class="level2">
 <h2 class="anchored" data-anchor-id="schedule">Schedule</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="" aria-current="page">By week</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By unit</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">By week</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">By unit</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
 <div class="cell-output-display light-content">
-<div id="onzfuhgcbq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#onzfuhgcbq table {
+<div id="bdwymoigmn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#bdwymoigmn table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#onzfuhgcbq thead, #onzfuhgcbq tbody, #onzfuhgcbq tfoot, #onzfuhgcbq tr, #onzfuhgcbq td, #onzfuhgcbq th {
+#bdwymoigmn thead, #bdwymoigmn tbody, #bdwymoigmn tfoot, #bdwymoigmn tr, #bdwymoigmn td, #bdwymoigmn th {
   border-style: none;
 }
 
-#onzfuhgcbq p {
+#bdwymoigmn p {
   margin: 0;
   padding: 0;
 }
 
-#onzfuhgcbq .gt_table {
+#bdwymoigmn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -488,12 +492,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_caption {
+#bdwymoigmn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#onzfuhgcbq .gt_title {
+#bdwymoigmn .gt_title {
   color: #000000;
   font-size: 125%;
   font-weight: initial;
@@ -505,7 +509,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#onzfuhgcbq .gt_subtitle {
+#bdwymoigmn .gt_subtitle {
   color: #000000;
   font-size: 85%;
   font-weight: initial;
@@ -517,7 +521,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#onzfuhgcbq .gt_heading {
+#bdwymoigmn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -529,13 +533,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_bottom_border {
+#bdwymoigmn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_col_headings {
+#bdwymoigmn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -550,7 +554,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_col_heading {
+#bdwymoigmn .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -570,7 +574,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#onzfuhgcbq .gt_column_spanner_outer {
+#bdwymoigmn .gt_column_spanner_outer {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -582,15 +586,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#onzfuhgcbq .gt_column_spanner_outer:first-child {
+#bdwymoigmn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#onzfuhgcbq .gt_column_spanner_outer:last-child {
+#bdwymoigmn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#onzfuhgcbq .gt_column_spanner {
+#bdwymoigmn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -602,11 +606,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#onzfuhgcbq .gt_spanner_row {
+#bdwymoigmn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#onzfuhgcbq .gt_group_heading {
+#bdwymoigmn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -632,7 +636,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#onzfuhgcbq .gt_empty_group_heading {
+#bdwymoigmn .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -647,15 +651,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#onzfuhgcbq .gt_from_md > :first-child {
+#bdwymoigmn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#onzfuhgcbq .gt_from_md > :last-child {
+#bdwymoigmn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#onzfuhgcbq .gt_row {
+#bdwymoigmn .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -674,7 +678,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#onzfuhgcbq .gt_stub {
+#bdwymoigmn .gt_stub {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -687,7 +691,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#onzfuhgcbq .gt_stub_row_group {
+#bdwymoigmn .gt_stub_row_group {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -701,15 +705,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#onzfuhgcbq .gt_row_group_first td {
+#bdwymoigmn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#onzfuhgcbq .gt_row_group_first th {
+#bdwymoigmn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#onzfuhgcbq .gt_summary_row {
+#bdwymoigmn .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -719,16 +723,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#onzfuhgcbq .gt_first_summary_row {
+#bdwymoigmn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_first_summary_row.thick {
+#bdwymoigmn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#onzfuhgcbq .gt_last_summary_row {
+#bdwymoigmn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -738,7 +742,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_grand_summary_row {
+#bdwymoigmn .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -748,7 +752,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#onzfuhgcbq .gt_first_grand_summary_row {
+#bdwymoigmn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -758,7 +762,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_last_grand_summary_row_top {
+#bdwymoigmn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -768,11 +772,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_striped {
+#bdwymoigmn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#onzfuhgcbq .gt_table_body {
+#bdwymoigmn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -781,7 +785,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_footnotes {
+#bdwymoigmn .gt_footnotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -795,7 +799,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_footnote {
+#bdwymoigmn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -804,7 +808,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#onzfuhgcbq .gt_sourcenotes {
+#bdwymoigmn .gt_sourcenotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -818,7 +822,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#onzfuhgcbq .gt_sourcenote {
+#bdwymoigmn .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -826,72 +830,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#onzfuhgcbq .gt_left {
+#bdwymoigmn .gt_left {
   text-align: left;
 }
 
-#onzfuhgcbq .gt_center {
+#bdwymoigmn .gt_center {
   text-align: center;
 }
 
-#onzfuhgcbq .gt_right {
+#bdwymoigmn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#onzfuhgcbq .gt_font_normal {
+#bdwymoigmn .gt_font_normal {
   font-weight: normal;
 }
 
-#onzfuhgcbq .gt_font_bold {
+#bdwymoigmn .gt_font_bold {
   font-weight: bold;
 }
 
-#onzfuhgcbq .gt_font_italic {
+#bdwymoigmn .gt_font_italic {
   font-style: italic;
 }
 
-#onzfuhgcbq .gt_super {
+#bdwymoigmn .gt_super {
   font-size: 65%;
 }
 
-#onzfuhgcbq .gt_footnote_marks {
+#bdwymoigmn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#onzfuhgcbq .gt_asterisk {
+#bdwymoigmn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#onzfuhgcbq .gt_indent_1 {
+#bdwymoigmn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#onzfuhgcbq .gt_indent_2 {
+#bdwymoigmn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#onzfuhgcbq .gt_indent_3 {
+#bdwymoigmn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#onzfuhgcbq .gt_indent_4 {
+#bdwymoigmn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#onzfuhgcbq .gt_indent_5 {
+#bdwymoigmn .gt_indent_5 {
   text-indent: 25px;
 }
 
-#onzfuhgcbq .katex-display {
+#bdwymoigmn .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#onzfuhgcbq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#bdwymoigmn div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1110,23 +1114,23 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="cell-output-display dark-content">
-<div id="opnyxrwkmb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#opnyxrwkmb table {
+<div id="npubokfpcf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#npubokfpcf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#opnyxrwkmb thead, #opnyxrwkmb tbody, #opnyxrwkmb tfoot, #opnyxrwkmb tr, #opnyxrwkmb td, #opnyxrwkmb th {
+#npubokfpcf thead, #npubokfpcf tbody, #npubokfpcf tfoot, #npubokfpcf tr, #npubokfpcf td, #npubokfpcf th {
   border-style: none;
 }
 
-#opnyxrwkmb p {
+#npubokfpcf p {
   margin: 0;
   padding: 0;
 }
 
-#opnyxrwkmb .gt_table {
+#npubokfpcf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1152,12 +1156,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_caption {
+#npubokfpcf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#opnyxrwkmb .gt_title {
+#npubokfpcf .gt_title {
   color: #FFFFFF;
   font-size: 125%;
   font-weight: initial;
@@ -1169,7 +1173,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#opnyxrwkmb .gt_subtitle {
+#npubokfpcf .gt_subtitle {
   color: #FFFFFF;
   font-size: 85%;
   font-weight: initial;
@@ -1181,7 +1185,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#opnyxrwkmb .gt_heading {
+#npubokfpcf .gt_heading {
   background-color: #222222;
   text-align: center;
   border-bottom-color: #222222;
@@ -1193,13 +1197,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_bottom_border {
+#npubokfpcf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_col_headings {
+#npubokfpcf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1214,7 +1218,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_col_heading {
+#npubokfpcf .gt_col_heading {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1234,7 +1238,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#opnyxrwkmb .gt_column_spanner_outer {
+#npubokfpcf .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1246,15 +1250,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#opnyxrwkmb .gt_column_spanner_outer:first-child {
+#npubokfpcf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#opnyxrwkmb .gt_column_spanner_outer:last-child {
+#npubokfpcf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#opnyxrwkmb .gt_column_spanner {
+#npubokfpcf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1266,11 +1270,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#opnyxrwkmb .gt_spanner_row {
+#npubokfpcf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#opnyxrwkmb .gt_group_heading {
+#npubokfpcf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1296,7 +1300,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#opnyxrwkmb .gt_empty_group_heading {
+#npubokfpcf .gt_empty_group_heading {
   padding: 0.5px;
   color: #FFFFFF;
   background-color: #222222;
@@ -1311,15 +1315,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#opnyxrwkmb .gt_from_md > :first-child {
+#npubokfpcf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#opnyxrwkmb .gt_from_md > :last-child {
+#npubokfpcf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#opnyxrwkmb .gt_row {
+#npubokfpcf .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -1338,7 +1342,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#opnyxrwkmb .gt_stub {
+#npubokfpcf .gt_stub {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1351,7 +1355,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#opnyxrwkmb .gt_stub_row_group {
+#npubokfpcf .gt_stub_row_group {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -1365,15 +1369,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#opnyxrwkmb .gt_row_group_first td {
+#npubokfpcf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#opnyxrwkmb .gt_row_group_first th {
+#npubokfpcf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#opnyxrwkmb .gt_summary_row {
+#npubokfpcf .gt_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -1383,16 +1387,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#opnyxrwkmb .gt_first_summary_row {
+#npubokfpcf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_first_summary_row.thick {
+#npubokfpcf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#opnyxrwkmb .gt_last_summary_row {
+#npubokfpcf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1402,7 +1406,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_grand_summary_row {
+#npubokfpcf .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -1412,7 +1416,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#opnyxrwkmb .gt_first_grand_summary_row {
+#npubokfpcf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1422,7 +1426,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_last_grand_summary_row_top {
+#npubokfpcf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1432,11 +1436,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_striped {
+#npubokfpcf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#opnyxrwkmb .gt_table_body {
+#npubokfpcf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1445,7 +1449,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_footnotes {
+#npubokfpcf .gt_footnotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -1459,7 +1463,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_footnote {
+#npubokfpcf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1468,7 +1472,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#opnyxrwkmb .gt_sourcenotes {
+#npubokfpcf .gt_sourcenotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -1482,7 +1486,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#opnyxrwkmb .gt_sourcenote {
+#npubokfpcf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1490,72 +1494,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#opnyxrwkmb .gt_left {
+#npubokfpcf .gt_left {
   text-align: left;
 }
 
-#opnyxrwkmb .gt_center {
+#npubokfpcf .gt_center {
   text-align: center;
 }
 
-#opnyxrwkmb .gt_right {
+#npubokfpcf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#opnyxrwkmb .gt_font_normal {
+#npubokfpcf .gt_font_normal {
   font-weight: normal;
 }
 
-#opnyxrwkmb .gt_font_bold {
+#npubokfpcf .gt_font_bold {
   font-weight: bold;
 }
 
-#opnyxrwkmb .gt_font_italic {
+#npubokfpcf .gt_font_italic {
   font-style: italic;
 }
 
-#opnyxrwkmb .gt_super {
+#npubokfpcf .gt_super {
   font-size: 65%;
 }
 
-#opnyxrwkmb .gt_footnote_marks {
+#npubokfpcf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#opnyxrwkmb .gt_asterisk {
+#npubokfpcf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#opnyxrwkmb .gt_indent_1 {
+#npubokfpcf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#opnyxrwkmb .gt_indent_2 {
+#npubokfpcf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#opnyxrwkmb .gt_indent_3 {
+#npubokfpcf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#opnyxrwkmb .gt_indent_4 {
+#npubokfpcf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#opnyxrwkmb .gt_indent_5 {
+#npubokfpcf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#opnyxrwkmb .katex-display {
+#npubokfpcf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#opnyxrwkmb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#npubokfpcf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1778,23 +1782,23 @@ ul.task-list li input[type="checkbox"] {
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
 <div class="cell-output-display light-content">
-<div id="gaxtfudhoi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gaxtfudhoi table {
+<div id="ltuxwoyxkw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ltuxwoyxkw table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gaxtfudhoi thead, #gaxtfudhoi tbody, #gaxtfudhoi tfoot, #gaxtfudhoi tr, #gaxtfudhoi td, #gaxtfudhoi th {
+#ltuxwoyxkw thead, #ltuxwoyxkw tbody, #ltuxwoyxkw tfoot, #ltuxwoyxkw tr, #ltuxwoyxkw td, #ltuxwoyxkw th {
   border-style: none;
 }
 
-#gaxtfudhoi p {
+#ltuxwoyxkw p {
   margin: 0;
   padding: 0;
 }
 
-#gaxtfudhoi .gt_table {
+#ltuxwoyxkw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1820,12 +1824,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_caption {
+#ltuxwoyxkw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gaxtfudhoi .gt_title {
+#ltuxwoyxkw .gt_title {
   color: #000000;
   font-size: 125%;
   font-weight: initial;
@@ -1837,7 +1841,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#gaxtfudhoi .gt_subtitle {
+#ltuxwoyxkw .gt_subtitle {
   color: #000000;
   font-size: 85%;
   font-weight: initial;
@@ -1849,7 +1853,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#gaxtfudhoi .gt_heading {
+#ltuxwoyxkw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1861,13 +1865,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_bottom_border {
+#ltuxwoyxkw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_col_headings {
+#ltuxwoyxkw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1882,7 +1886,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_col_heading {
+#ltuxwoyxkw .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1902,7 +1906,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gaxtfudhoi .gt_column_spanner_outer {
+#ltuxwoyxkw .gt_column_spanner_outer {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1914,15 +1918,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#gaxtfudhoi .gt_column_spanner_outer:first-child {
+#ltuxwoyxkw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gaxtfudhoi .gt_column_spanner_outer:last-child {
+#ltuxwoyxkw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gaxtfudhoi .gt_column_spanner {
+#ltuxwoyxkw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1934,11 +1938,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#gaxtfudhoi .gt_spanner_row {
+#ltuxwoyxkw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gaxtfudhoi .gt_group_heading {
+#ltuxwoyxkw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1964,7 +1968,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#gaxtfudhoi .gt_empty_group_heading {
+#ltuxwoyxkw .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1979,15 +1983,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#gaxtfudhoi .gt_from_md > :first-child {
+#ltuxwoyxkw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gaxtfudhoi .gt_from_md > :last-child {
+#ltuxwoyxkw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gaxtfudhoi .gt_row {
+#ltuxwoyxkw .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -2006,7 +2010,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#gaxtfudhoi .gt_stub {
+#ltuxwoyxkw .gt_stub {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2019,7 +2023,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gaxtfudhoi .gt_stub_row_group {
+#ltuxwoyxkw .gt_stub_row_group {
   color: #000000;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2033,15 +2037,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#gaxtfudhoi .gt_row_group_first td {
+#ltuxwoyxkw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gaxtfudhoi .gt_row_group_first th {
+#ltuxwoyxkw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gaxtfudhoi .gt_summary_row {
+#ltuxwoyxkw .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2051,16 +2055,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gaxtfudhoi .gt_first_summary_row {
+#ltuxwoyxkw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_first_summary_row.thick {
+#ltuxwoyxkw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gaxtfudhoi .gt_last_summary_row {
+#ltuxwoyxkw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2070,7 +2074,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_grand_summary_row {
+#ltuxwoyxkw .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2080,7 +2084,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gaxtfudhoi .gt_first_grand_summary_row {
+#ltuxwoyxkw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2090,7 +2094,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_last_grand_summary_row_top {
+#ltuxwoyxkw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2100,11 +2104,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_striped {
+#ltuxwoyxkw .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gaxtfudhoi .gt_table_body {
+#ltuxwoyxkw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2113,7 +2117,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_footnotes {
+#ltuxwoyxkw .gt_footnotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2127,7 +2131,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_footnote {
+#ltuxwoyxkw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2136,7 +2140,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gaxtfudhoi .gt_sourcenotes {
+#ltuxwoyxkw .gt_sourcenotes {
   color: #000000;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2150,7 +2154,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#gaxtfudhoi .gt_sourcenote {
+#ltuxwoyxkw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2158,72 +2162,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#gaxtfudhoi .gt_left {
+#ltuxwoyxkw .gt_left {
   text-align: left;
 }
 
-#gaxtfudhoi .gt_center {
+#ltuxwoyxkw .gt_center {
   text-align: center;
 }
 
-#gaxtfudhoi .gt_right {
+#ltuxwoyxkw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gaxtfudhoi .gt_font_normal {
+#ltuxwoyxkw .gt_font_normal {
   font-weight: normal;
 }
 
-#gaxtfudhoi .gt_font_bold {
+#ltuxwoyxkw .gt_font_bold {
   font-weight: bold;
 }
 
-#gaxtfudhoi .gt_font_italic {
+#ltuxwoyxkw .gt_font_italic {
   font-style: italic;
 }
 
-#gaxtfudhoi .gt_super {
+#ltuxwoyxkw .gt_super {
   font-size: 65%;
 }
 
-#gaxtfudhoi .gt_footnote_marks {
+#ltuxwoyxkw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gaxtfudhoi .gt_asterisk {
+#ltuxwoyxkw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gaxtfudhoi .gt_indent_1 {
+#ltuxwoyxkw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gaxtfudhoi .gt_indent_2 {
+#ltuxwoyxkw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gaxtfudhoi .gt_indent_3 {
+#ltuxwoyxkw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gaxtfudhoi .gt_indent_4 {
+#ltuxwoyxkw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gaxtfudhoi .gt_indent_5 {
+#ltuxwoyxkw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gaxtfudhoi .katex-display {
+#ltuxwoyxkw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gaxtfudhoi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ltuxwoyxkw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2488,23 +2492,23 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 <div class="cell-output-display dark-content">
-<div id="dlahxehjfy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dlahxehjfy table {
+<div id="xklqrhvjcl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#xklqrhvjcl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dlahxehjfy thead, #dlahxehjfy tbody, #dlahxehjfy tfoot, #dlahxehjfy tr, #dlahxehjfy td, #dlahxehjfy th {
+#xklqrhvjcl thead, #xklqrhvjcl tbody, #xklqrhvjcl tfoot, #xklqrhvjcl tr, #xklqrhvjcl td, #xklqrhvjcl th {
   border-style: none;
 }
 
-#dlahxehjfy p {
+#xklqrhvjcl p {
   margin: 0;
   padding: 0;
 }
 
-#dlahxehjfy .gt_table {
+#xklqrhvjcl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2530,12 +2534,12 @@ ul.task-list li input[type="checkbox"] {
   border-left-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_caption {
+#xklqrhvjcl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dlahxehjfy .gt_title {
+#xklqrhvjcl .gt_title {
   color: #FFFFFF;
   font-size: 125%;
   font-weight: initial;
@@ -2547,7 +2551,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-width: 0;
 }
 
-#dlahxehjfy .gt_subtitle {
+#xklqrhvjcl .gt_subtitle {
   color: #FFFFFF;
   font-size: 85%;
   font-weight: initial;
@@ -2559,7 +2563,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-width: 0;
 }
 
-#dlahxehjfy .gt_heading {
+#xklqrhvjcl .gt_heading {
   background-color: #222222;
   text-align: center;
   border-bottom-color: #222222;
@@ -2571,13 +2575,13 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_bottom_border {
+#xklqrhvjcl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_col_headings {
+#xklqrhvjcl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2592,7 +2596,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_col_heading {
+#xklqrhvjcl .gt_col_heading {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2612,7 +2616,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dlahxehjfy .gt_column_spanner_outer {
+#xklqrhvjcl .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2624,15 +2628,15 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 4px;
 }
 
-#dlahxehjfy .gt_column_spanner_outer:first-child {
+#xklqrhvjcl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dlahxehjfy .gt_column_spanner_outer:last-child {
+#xklqrhvjcl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dlahxehjfy .gt_column_spanner {
+#xklqrhvjcl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2644,11 +2648,11 @@ ul.task-list li input[type="checkbox"] {
   width: 100%;
 }
 
-#dlahxehjfy .gt_spanner_row {
+#xklqrhvjcl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dlahxehjfy .gt_group_heading {
+#xklqrhvjcl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2674,7 +2678,7 @@ ul.task-list li input[type="checkbox"] {
   text-align: left;
 }
 
-#dlahxehjfy .gt_empty_group_heading {
+#xklqrhvjcl .gt_empty_group_heading {
   padding: 0.5px;
   color: #FFFFFF;
   background-color: #222222;
@@ -2689,15 +2693,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 
-#dlahxehjfy .gt_from_md > :first-child {
+#xklqrhvjcl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dlahxehjfy .gt_from_md > :last-child {
+#xklqrhvjcl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dlahxehjfy .gt_row {
+#xklqrhvjcl .gt_row {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
@@ -2716,7 +2720,7 @@ ul.task-list li input[type="checkbox"] {
   overflow-x: hidden;
 }
 
-#dlahxehjfy .gt_stub {
+#xklqrhvjcl .gt_stub {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2729,7 +2733,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dlahxehjfy .gt_stub_row_group {
+#xklqrhvjcl .gt_stub_row_group {
   color: #FFFFFF;
   background-color: #222222;
   font-size: 100%;
@@ -2743,15 +2747,15 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: top;
 }
 
-#dlahxehjfy .gt_row_group_first td {
+#xklqrhvjcl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dlahxehjfy .gt_row_group_first th {
+#xklqrhvjcl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dlahxehjfy .gt_summary_row {
+#xklqrhvjcl .gt_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -2761,16 +2765,16 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dlahxehjfy .gt_first_summary_row {
+#xklqrhvjcl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_first_summary_row.thick {
+#xklqrhvjcl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dlahxehjfy .gt_last_summary_row {
+#xklqrhvjcl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2780,7 +2784,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_grand_summary_row {
+#xklqrhvjcl .gt_grand_summary_row {
   color: #FFFFFF;
   background-color: #222222;
   text-transform: inherit;
@@ -2790,7 +2794,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dlahxehjfy .gt_first_grand_summary_row {
+#xklqrhvjcl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2800,7 +2804,7 @@ ul.task-list li input[type="checkbox"] {
   border-top-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_last_grand_summary_row_top {
+#xklqrhvjcl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2810,11 +2814,11 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_striped {
+#xklqrhvjcl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dlahxehjfy .gt_table_body {
+#xklqrhvjcl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2823,7 +2827,7 @@ ul.task-list li input[type="checkbox"] {
   border-bottom-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_footnotes {
+#xklqrhvjcl .gt_footnotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -2837,7 +2841,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_footnote {
+#xklqrhvjcl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2846,7 +2850,7 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dlahxehjfy .gt_sourcenotes {
+#xklqrhvjcl .gt_sourcenotes {
   color: #FFFFFF;
   background-color: #222222;
   border-bottom-style: none;
@@ -2860,7 +2864,7 @@ ul.task-list li input[type="checkbox"] {
   border-right-color: #D3D3D3;
 }
 
-#dlahxehjfy .gt_sourcenote {
+#xklqrhvjcl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2868,72 +2872,72 @@ ul.task-list li input[type="checkbox"] {
   padding-right: 5px;
 }
 
-#dlahxehjfy .gt_left {
+#xklqrhvjcl .gt_left {
   text-align: left;
 }
 
-#dlahxehjfy .gt_center {
+#xklqrhvjcl .gt_center {
   text-align: center;
 }
 
-#dlahxehjfy .gt_right {
+#xklqrhvjcl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dlahxehjfy .gt_font_normal {
+#xklqrhvjcl .gt_font_normal {
   font-weight: normal;
 }
 
-#dlahxehjfy .gt_font_bold {
+#xklqrhvjcl .gt_font_bold {
   font-weight: bold;
 }
 
-#dlahxehjfy .gt_font_italic {
+#xklqrhvjcl .gt_font_italic {
   font-style: italic;
 }
 
-#dlahxehjfy .gt_super {
+#xklqrhvjcl .gt_super {
   font-size: 65%;
 }
 
-#dlahxehjfy .gt_footnote_marks {
+#xklqrhvjcl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dlahxehjfy .gt_asterisk {
+#xklqrhvjcl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dlahxehjfy .gt_indent_1 {
+#xklqrhvjcl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dlahxehjfy .gt_indent_2 {
+#xklqrhvjcl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dlahxehjfy .gt_indent_3 {
+#xklqrhvjcl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dlahxehjfy .gt_indent_4 {
+#xklqrhvjcl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dlahxehjfy .gt_indent_5 {
+#xklqrhvjcl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dlahxehjfy .katex-display {
+#xklqrhvjcl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dlahxehjfy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#xklqrhvjcl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -3214,15 +3218,50 @@ ul.task-list li input[type="checkbox"] {
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
     if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const toggle = window.document.createElement('button');
+      toggle.type = "button";
+      toggle.setAttribute("role", "switch");
+      toggle.setAttribute("aria-checked", "false");
+      toggle.classList.add('top-right');
+      toggle.classList.add('quarto-color-scheme-toggle');
+      toggle.setAttribute("aria-label", "Toggle dark mode");
+      toggle.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
       const i = window.document.createElement("i");
       i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
+      toggle.appendChild(i);
+      // Put the toggle in a landmark of its own, so that landmark navigation
+      // can reach it.
+      //
+      // The container is always a fresh direct child of body, and the toggle is
+      // never moved into page furniture that the theme or the author controls.
+      // The toggle is positioned against the page, so any ancestor that
+      // establishes a containing block captures it: a positioned element or a
+      // grid for position: absolute, and transform, filter, will-change or
+      // contain for position: fixed. A direct child of body has none of these
+      // to inherit, and the shift when one appears is silent and visual.
+      //
+      // ARIA says a document should have at most one banner, and axe reports a
+      // duplicate whether or not the banners carry distinct labels. So use a
+      // header when the page has no banner yet, and a named region otherwise.
+      //
+      // A header is a banner wherever it sits, unless it is inside sectioning
+      // content, so this cannot just look at the children of body: a custom
+      // page layout wraps the title block header in a plain div. An explicit
+      // role="banner" always counts.
+      const sectioning = 'article, aside, main, nav, section, [role="article"], [role="complementary"], [role="main"], [role="navigation"], [role="region"]';
+      const hasBanner = Array.from(
+        window.document.querySelectorAll('header:not([role]), [role="banner"]')
+      ).some(function(el) {
+        return el.hasAttribute("role") || el.closest(sectioning) === null;
+      });
+      const container = window.document.createElement(hasBanner ? "div" : "header");
+      if (hasBanner) {
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Toggle dark mode");
+      }
+      container.classList.add('quarto-color-scheme-toggle-container');
+      container.appendChild(toggle);
+      window.document.body.appendChild(container);
     }
     setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
@@ -3301,7 +3340,8 @@ ul.task-list li input[type="checkbox"] {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
       // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
       for (var i=0; i<links.length; i++) {
         const link = links[i];
         if (!isInternal(link.href)) {
@@ -3310,8 +3350,69 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
+          if (!link.classList.contains('no-external-icon')) {
+          }
         }
       }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
       const config = {
         allowHTML: true,
@@ -3325,6 +3426,7 @@ ul.task-list li input[type="checkbox"] {
         interactiveBorder: 10,
         theme: 'quarto',
         placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
       };
       if (contentFn) {
         config.content = contentFn;
@@ -3487,44 +3589,54 @@ ul.task-list li input[type="checkbox"] {
           const lineIds = lines.map((line) => {
             return targetCell + "-" + line;
           })
-          let top = null;
-          let height = null;
-          let parent = null;
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
           if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
             }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
             }
+            placeBand(gutterDiv, el, lastEl);
             selectedAnnoteEl = annoteEl;
           }
         };
@@ -3622,6 +3734,9 @@ ul.task-list li input[type="checkbox"] {
       }
     }
   });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
   </script>
 </div> <!-- /content -->
 <footer class="footer">
