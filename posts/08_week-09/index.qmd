@@ -1,0 +1,35 @@
+---
+title: "Week 9 — Nov 2 to Nov 8"
+description: "PA2 due 11/02. PA3 out 11/02, due 11/23. Examlet 6 Thursday to Sunday: binary search trees. Lab AVL open."
+author: "{{< var instructor.name >}}"
+date: 2026-11-01
+categories:
+  - deadline
+  - examlet
+  - lab
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **11/02** | PA2 **due** · PA3 out |
+| **11/05 – 11/08** | **Examlet 6** — self-scheduled in PrairieTest |
+| **11/08** | Lab AVL due |
+| **11/23** | PA3 **due** |
+
+\
+
+**PA3** turns photographs into art, using a quadtree and a priority queue you
+build yourself. Plan for up to 20 hours, and start early.
+
+**Examlet 6** covers binary search trees (search, insert, remove, and what
+makes a BST go wrong), plus BST traversals and tree running times. **PEX6** is
+the practice for it, linked on the schedule.
+
+**Labs include office hours**, so bring your PA3 questions too.
+
+**Examlet 5:** the median was 77. Its questions become visible soon.
+
+**Next week is the quiet week:** no class meetings, no labs, no examlets. Just
+Friday's video lesson.

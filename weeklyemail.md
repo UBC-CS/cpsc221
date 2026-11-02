@@ -21,6 +21,47 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 9 — Mon Nov 2 to Sun Nov 8
+
+*Sent Sun 11/01, as below.*
+
+---
+
+Hi everyone,
+
+Welcome to week 9! Last week we kept our trees balanced; this week we make
+them **wide**: B-trees, Monday.
+
+The news:
+
+1. **PA2 is due tomorrow, Monday 11/02, 11:59p.** 
+
+2. **PA3 comes out Monday night, 11/02**, due **Monday 11/23, 11:59p**. Continuing the theme of the term, you'll turn photographs into art, using a
+   quadtree and a priority queue you build yourself. Plan for up to 20 hours,
+   and start early!
+
+3. **Examlet 6 is this week**, Thursday to Sunday, in PrairieTest. It covers
+   **binary search trees** (search, insert, remove, and what makes a BST go
+   wrong), plus BST traversals and tree running times. **PEX6** is the practice
+   for it, and it's linked on the schedule.
+
+4. **Lab AVL** is open now, due **Sunday 11/08**. Labs include office hours,
+   so bring your PA3 questions, too.
+
+5. **Examlet 5** median was 77. We'll make the questions visible to you as soon as we can.
+
+6. **Next week is the quiet week**: no class meetings, no labs, no
+   examlets. Just Friday's video lesson.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+After it goes out, the facts go up as `posts/08_week-09/`.
+
+---
+
 ## Week 8 — Mon Oct 26 to Sun Nov 1
 
 *Sent Mon 10/26, as below (two items numbered 4).*
