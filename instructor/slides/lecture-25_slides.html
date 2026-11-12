@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
+
+  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-57a7f2df006f4f26da405e0b8c3fa113.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta property="og:description" content="Priority Queues">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:description" content="Priority Queues">
+<meta name="twitter:card" content="summary">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">CPSC 221</h1>
+  <p class="subtitle">Priority Queues</p>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="today" class="slide level2 smaller">
+<h2>Today</h2>
+<p><strong>Announcements</strong></p>
+<ul>
+<li><strong>Examlet 7</strong> is this week: AVL trees, B-trees, hashing</li>
+<li><strong>PA3</strong> is due Monday 11/23</li>
+<li><strong>Lab Hash</strong> is due Sunday 11/22</li>
+</ul>
+<p><br>
+</p>
+<p><strong>Today:</strong></p>
+<ul>
+<li>Secret mystery ADT</li>
+<li>Basic implementations of secret mystery ADT</li>
+<li>A new kind of tree</li>
+</ul>
+</section>
+<section id="secret-mystery-adt" class="slide level2">
+<h2>Secret Mystery ADT</h2>
+<p>First, speculate on what type of data you can put into it!</p>
+<p><br>
+</p>
+<div class="columns">
+<div class="column" style="width:45%;">
+<p><u>YES          </u></p>
+</div><div class="column" style="width:45%;">
+<p><u>NO           </u></p>
+</div></div>
+<aside class="notes">
+<p>The bag. Students call out types; you say yes or no.</p>
+<p>YES: anything with comparable keys: ints, strings, dates, (priority, job) pairs, students ordered by student number.</p>
+<p>NO: things with no natural order: colours, sets, images, a <code>struct</code> without an <code>operator&lt;</code>.</p>
+<p>The rule they’re meant to infer: you have to be able to compare two keys.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="secret-mystery-adt-1" class="slide level2">
+<h2>Secret Mystery ADT</h2>
+<p><br>
+<br>
+<br>
+<br>
+<br>
+</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+
+</div><div class="column" style="width:40%;">
+<p>ADT: ________________</p>
+<p>insert</p>
+<p>remove</p>
+<p>getSize</p>
+</div></div>
+<aside class="notes">
+<p>Students name items to insert; draw them in the bag.</p>
+<p>Then ask for a remove. They want to say which one: they can’t. You tell them what comes out, the smallest key, each time.</p>
+<p>ADT: <strong>priority queue</strong>. <code>insert</code>, <code>removeMin</code>, <code>getSize</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="priority-queue-adt" class="slide level2 smaller">
+<h2>Priority Queue ADT</h2>
+<svg class="nodefig" width="1162" height="437" viewbox="0 0 1010 380" style="display:block; margin:0 auto;">
+<text x="30" y="30" font-size="24" fill="#1a1a1a">insert</text>
+<text x="190" y="30" font-size="24" fill="#1a1a1a">removeMin</text>
+<text x="380" y="30" font-size="24" fill="#1a1a1a">implementation</text>
+<line x1="10" y1="40" x2="1000" y2="40" stroke="#1a1a1a" stroke-width="1.5"></line>
+<defs><marker id="ah-pq" viewbox="0 0 10 10" refx="9" refy="5" markerwidth="7" markerheight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"></path></marker></defs>
+<rect x="380" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="444" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="508" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="572" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="636" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="700" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="764" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="828" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="400" y1="162" x2="452" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="455" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="499" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="521" y1="162" x2="588" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="590" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="634" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="656" y1="162" x2="723" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="725" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="769" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="791" y1="162" x2="858" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="860" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="904" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="904" y1="184" x2="948" y2="140" stroke="#1a1a1a" stroke-width="1.4"></line>
+<rect x="380" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="444" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="508" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="572" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="636" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="700" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="764" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="828" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="400" y1="330" x2="452" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="455" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="499" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="521" y1="330" x2="588" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="590" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="634" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="656" y1="330" x2="723" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="725" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="769" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="791" y1="330" x2="858" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"></line>
+<rect x="860" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="904" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<line x1="904" y1="352" x2="948" y2="308" stroke="#1a1a1a" stroke-width="1.4"></line>
+<text x="1000" y="200" font-size="20" text-anchor="end" fill="#1a1a1a" font-style="italic">unsorted</text>
+<text x="1000" y="372" font-size="20" text-anchor="end" fill="#1a1a1a" font-style="italic">sorted</text>
+<line x1="10" y1="214" x2="1000" y2="214" stroke="#9aa5ab" stroke-width="1" stroke-dasharray="5 5"></line>
+<line x1="30" y1="108" x2="140" y2="108" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="200" y1="108" x2="320" y2="108" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="30" y1="186" x2="140" y2="186" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="200" y1="186" x2="320" y2="186" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="30" y1="276" x2="140" y2="276" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="200" y1="276" x2="320" y2="276" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="30" y1="354" x2="140" y2="354" stroke="#9aa5ab" stroke-width="1.2"></line>
+<line x1="200" y1="354" x2="320" y2="354" stroke="#9aa5ab" stroke-width="1.2"></line>
+</svg>
+<aside class="notes">
+<p>Fill in each row’s insert and removeMin.</p>
+<ul>
+<li>Unsorted array: insert <span class="math inline">\(O(1)\)</span> (amortized: <span class="math inline">\(O(n)\)</span> when it has to grow), removeMin <span class="math inline">\(O(n)\)</span> to find the min and fill the hole.</li>
+<li>Unsorted list: insert <span class="math inline">\(O(1)\)</span> at the front, removeMin <span class="math inline">\(O(n)\)</span>.</li>
+<li>Sorted array: insert <span class="math inline">\(O(n)\)</span> (binary search finds the spot in <span class="math inline">\(O(\log n)\)</span>, but the shift is <span class="math inline">\(O(n)\)</span>), removeMin <span class="math inline">\(O(1)\)</span> if it’s sorted largest-first, so the min is at the end.</li>
+<li>Sorted list: insert <span class="math inline">\(O(n)\)</span> (no binary search on a list), removeMin <span class="math inline">\(O(1)\)</span> from the front.</li>
+</ul>
+<p>Every option is <span class="math inline">\(O(n)\)</span> somewhere. Can we get both down to <span class="math inline">\(O(\log n)\)</span>?</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="priority-queue-another-implementation-option" class="slide level2 smaller">
+<h2>Priority Queue: <span style="font-size:0.6em">another implementation option</span></h2>
+<p>Tell me everything you can about this structure:</p>
+<svg class="nodefig" width="864" height="378" viewbox="0 0 640 280" style="display:block; margin:0 auto;">
+<line x1="320.0" y1="26" x2="160.0" y2="102" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="26" x2="480.0" y2="102" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="102" x2="80.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="102" x2="240.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="102" x2="400.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="102" x2="560.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="80.0" y1="178" x2="40.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="80.0" y1="178" x2="120.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="178" x2="200.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="178" x2="280.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="400.0" y1="178" x2="360.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="320.0" cy="26" r="20" fill="#3ddc3d"></circle>
+<text x="320.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="160.0" cy="102" r="20" fill="#f7e600"></circle>
+<text x="160.0" y="108.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="480.0" cy="102" r="20" fill="#f7e600"></circle>
+<text x="480.0" y="108.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="80.0" cy="178" r="20" fill="#ffa726"></circle>
+<text x="80.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="240.0" cy="178" r="20" fill="#ffa726"></circle>
+<text x="240.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="400.0" cy="178" r="20" fill="#ffa726"></circle>
+<text x="400.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="560.0" cy="178" r="20" fill="#ffa726"></circle>
+<text x="560.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="40.0" cy="254" r="20" fill="#ff4b2b"></circle>
+<text x="40.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="120.0" cy="254" r="20" fill="#ff4b2b"></circle>
+<text x="120.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="200.0" cy="254" r="20" fill="#ff4b2b"></circle>
+<text x="200.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="280.0" cy="254" r="20" fill="#ff4b2b"></circle>
+<text x="280.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="360.0" cy="254" r="20" fill="#ff4b2b"></circle>
+<text x="360.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+</svg>
+<p>Describe its implementation…</p>
+<aside class="notes">
+<ul>
+<li>Binary tree, <strong>complete</strong>: every level full except possibly the last, which fills left to right.</li>
+<li><strong>Heap property</strong> (min-heap): every node’s key is <span class="math inline">\(\le\)</span> its children’s. So the min is at the root.</li>
+<li>No left/right order between siblings: this is not a BST.</li>
+<li>Height <span class="math inline">\(\lfloor \log_2 n \rfloor\)</span>, because it’s complete.</li>
+</ul>
+<p>Implementation: the colours are a hint. Complete means no gaps, so read it level by level into an array.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="minheap-implementation" class="slide level2 smaller">
+<h2>(min)Heap: implementation</h2>
+<svg class="nodefig" width="1120" height="512" viewbox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"></circle>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+<aside class="notes">
+<p>Root at index 1 (index 0 left empty).</p>
+<p>For the node at index <span class="math inline">\(i\)</span>:</p>
+<ul>
+<li>left child <span class="math inline">\(2i\)</span></li>
+<li>right child <span class="math inline">\(2i + 1\)</span></li>
+<li>parent <span class="math inline">\(\lfloor i/2 \rfloor\)</span></li>
+</ul>
+<p>No pointers at all: the shape is the arithmetic.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="minheap-insert" class="slide level2 smaller">
+<h2>(min)Heap: insert</h2>
+<svg class="nodefig" width="1120" height="512" viewbox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"></circle>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">8</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="25.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="50.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="75.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="100.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">8</text>
+<rect x="125.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="150.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="175.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="200.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="225.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="250.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="275.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="300.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="325.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="350.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="375.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="400.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="425.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="450.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="475.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="500.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="525.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="550.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="575.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="600.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+<rect x="625.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="675.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="725.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="25.0" y="318" width="600" height="44" fill="none" stroke="#1a1a1a" stroke-width="4"></rect>
+</svg>
+<aside class="notes">
+<p>The box is <code>size</code>; the three empty cells are spare capacity.</p>
+<p>Try insert(5): it goes in the next free slot, index 13 (right child of 7). Then swap upward while it’s smaller than its parent: past 7, past 6, and it stops under 4. Repeat with insert(3) to reach the root.</p>
+<p><span class="math inline">\(O(\log n)\)</span>: at most one swap per level.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="code" class="slide level2 smaller midcode">
+<h2>Code:</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> heap<span class="op">&lt;</span>T<span class="op">&gt;::</span>insert<span class="op">(</span><span class="at">const</span> T <span class="op">&amp;</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>size <span class="op">==</span> capacity<span class="op">)</span> growArray<span class="op">();</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    size<span class="op">++;</span></span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    items<span class="op">[</span>size<span class="op">]</span> <span class="op">=</span> key<span class="op">;</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    heapifyUp<span class="op">(</span>size<span class="op">);</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:40%;">
+<p>growArray()</p>
+<svg class="nodefig" width="440" height="270" viewbox="0 0 440 270" style="display:block; margin:0 auto;">
+<line x1="220.0" y1="16" x2="110.0" y2="74" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="220.0" y1="16" x2="330.0" y2="74" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="110.0" y1="74" x2="55.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="110.0" y1="74" x2="165.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="330.0" y1="74" x2="275.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="330.0" y1="74" x2="385.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="55.0" y1="132" x2="27.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="55.0" y1="132" x2="82.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="165.0" y1="132" x2="137.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="165.0" y1="132" x2="192.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="275.0" y1="132" x2="247.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="275.0" y1="132" x2="302.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="385.0" y1="132" x2="357.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="385.0" y1="132" x2="412.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="220.0" cy="16" r="13" fill="#3ddc3d"></circle>
+<circle cx="110.0" cy="74" r="13" fill="#f7e600"></circle>
+<circle cx="330.0" cy="74" r="13" fill="#f7e600"></circle>
+<circle cx="55.0" cy="132" r="13" fill="#ffa726"></circle>
+<circle cx="165.0" cy="132" r="13" fill="#ffa726"></circle>
+<circle cx="275.0" cy="132" r="13" fill="#ffa726"></circle>
+<circle cx="385.0" cy="132" r="13" fill="#ffa726"></circle>
+<circle cx="27.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="82.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="137.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="192.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="247.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="302.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="357.5" cy="190" r="13" fill="#ff4b2b"></circle>
+<circle cx="412.5" cy="190" r="13" fill="#ff4b2b"></circle>
+</svg>
+</div></div>
+<svg class="nodefig" width="1140" height="44" style="display:block; margin:2.2em 0 0 0;">
+<rect x="2" y="2" width="34" height="38" fill="white" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="36" y="2" width="34" height="38" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="70" y="2" width="34" height="38" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="104" y="2" width="34" height="38" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="138" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="172" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="206" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="240" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="274" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="308" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="342" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="376" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="410" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="444" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="478" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<rect x="512" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+</svg>
+<aside class="notes">
+<p>When the array is full: double the capacity and copy. The new last level needs as many slots as the whole tree so far. Doubling makes insert amortized <span class="math inline">\(O(1)\)</span> for the growing, plus <span class="math inline">\(O(\log n)\)</span> for heapifyUp.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="code-1" class="slide level2 smaller midcode">
+<h2>Code:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> heap<span class="op">&lt;</span>T<span class="op">&gt;::</span>insert<span class="op">(</span><span class="at">const</span> T <span class="op">&amp;</span> key<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>size <span class="op">==</span> capacity<span class="op">)</span> growArray<span class="op">();</span></span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a>    size<span class="op">++;</span></span>
+<span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>    items<span class="op">[</span>size<span class="op">]</span> <span class="op">=</span> key<span class="op">;</span></span>
+<span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a>    heapifyUp<span class="op">(</span>size<span class="op">);</span></span>
+<span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> heap<span class="op">&lt;</span>T<span class="op">&gt;::</span>heapifyUp<span class="op">(</span><span class="dt">int</span> cIndex<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>cIndex <span class="op">&gt;</span> _____<span class="op">)</span></span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>items<span class="op">[</span>cIndex<span class="op">]</span> ___ items<span class="op">[</span>parent<span class="op">(</span>cIndex<span class="op">)])</span> <span class="op">{</span></span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a>            swap<span class="op">(</span>__________<span class="op">,</span> __________<span class="op">);</span></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a>            heapifyUp<span class="op">(</span>__________<span class="op">);</span></span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb3-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<ul>
+<li><code>cIndex &gt; 1</code>: stop at the root</li>
+<li><code>items[cIndex] &lt; items[parent(cIndex)]</code></li>
+<li><code>swap(items[cIndex], items[parent(cIndex)])</code></li>
+<li><code>heapifyUp(parent(cIndex))</code></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="minheap-removemin" class="slide level2 smaller">
+<h2>(min)Heap: removeMin</h2>
+<svg class="nodefig" width="1120" height="512" viewbox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"></circle>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+<aside class="notes">
+<p>The min is the root. What fills the hole and keeps the tree complete? Only the last leaf can move without leaving a gap: 11 goes to the root.</p>
+<p>Then swap it downward with its <strong>smaller</strong> child while it’s bigger: 11 swaps with 5, then with 9, and stops: its new children, 14 and 12, are both bigger.</p>
+<p><span class="math inline">\(O(\log n)\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="minheap-removemin-1" class="slide level2 smaller">
+<h2>(min)Heap: removeMin</h2>
+<svg class="nodefig" width="1120" height="512" viewbox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"></line>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"></circle>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"></circle>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"></circle>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"></circle>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"></rect>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+<aside class="notes">
+<p>A clean copy for a second removeMin, or for a student to try.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="code-2" class="slide level2 smaller midcode">
+<h2>Code:</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>T heap<span class="op">&lt;</span>T<span class="op">&gt;::</span>removeMin<span class="op">()</span> <span class="op">{</span></span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>    T minVal <span class="op">=</span> items<span class="op">[</span><span class="dv">1</span><span class="op">];</span></span>
+<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>    items<span class="op">[</span><span class="dv">1</span><span class="op">]</span> <span class="op">=</span> items<span class="op">[</span>size<span class="op">];</span></span>
+<span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>    size<span class="op">--;</span></span>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>    heapifyDown<span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
+<span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> minVal<span class="op">;</span></span>
+<span id="cb4-7"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> heap<span class="op">&lt;</span>T<span class="op">&gt;::</span>heapifyDown<span class="op">(</span><span class="dt">int</span> cIndex<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>hasAChild<span class="op">(</span>cIndex<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>        minChildIndex <span class="op">=</span> minChild<span class="op">(</span>cIndex<span class="op">);</span></span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>items<span class="op">[</span>cIndex<span class="op">]</span> ___ items<span class="op">[</span>minChildIndex<span class="op">])</span> <span class="op">{</span></span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>            swap<span class="op">(</span>__________<span class="op">,</span> __________<span class="op">);</span></span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>            ___________________________</span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<aside class="notes">
+<ul>
+<li><code>items[cIndex] &gt; items[minChildIndex]</code></li>
+<li><code>swap(items[cIndex], items[minChildIndex])</code></li>
+<li><code>heapifyDown(minChildIndex);</code></li>
+</ul>
+<p>Why the min child? Swapping with the larger one would put it above the smaller one, breaking the heap property right there.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="heap-explorer" class="slide level2">
+<h2>Heap Explorer</h2>
+<iframe src="viz/heap_explorer.html" width="100%" height="580" style="border: none; border-radius: 8px;"></iframe>
+<aside class="notes">
+<p>Live demo (copied from DSCI 221’s heaps lesson). Random Heap, or insert a few values the room calls out, asking before each click where it will land. Then Remove Min a few times. The array under the tree updates with it; the root is at index 1, as on the slides. Speed slider bottom right.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-have-we-done" class="slide level2">
+<h2>What have we done?</h2>
+<svg class="nodefig" width="780" height="494" viewbox="0 0 600 380" style="display:block; margin:0 auto;">
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(3.0)" fill="none" stroke="#ff3b1f" stroke-width="1.00"></path>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(2.3)" fill="none" stroke="#8e3fb0" stroke-width="1.30"></path>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(1.65)" fill="none" stroke="#1f4fe0" stroke-width="1.82"></path>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(1.05)" fill="none" stroke="#1a9a2a" stroke-width="2.86"></path>
+</svg>
+<aside class="notes">
+<p>(2024’s closing picture, kept as it was.)</p>
+<p>insert and removeMin in <span class="math inline">\(O(\log n)\)</span>, beating every list and array option. Next time: building a heap from n keys all at once (buildHeap), and heapSort.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>CPSC 221</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\">\u003ckbd>b\u003c/kbd> Toggle Chalkboard\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"6\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\">\u003ckbd>c\u003c/kbd> Toggle Notes Canvas\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"7\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\">\u003ckbd>d\u003c/kbd> Download Drawings\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"8\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu"},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/ubc-cs\.github\.io\/cpsc221\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+              if (!link.classList.contains('no-external-icon')) {
+              }
+            }
+          }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
