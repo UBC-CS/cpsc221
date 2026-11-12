@@ -1,0 +1,708 @@
+---
+title: "{{< var course.code >}}"
+subtitle: "Priority Queues"
+
+# Monday 11/16, in class. Follows 2024's lec111824-PQ slide for slide.
+#
+# Hashing is finished: lecture 23 (Nathan's video) covered what hashing is,
+# and lecture 24 (Nathan's video) covers collision resolution. Neither has
+# slides here.
+#
+# The two "Secret Mystery ADT" slides are deliberately almost empty: Cinda
+# runs the reveal by talking. Don't say "priority queue" before slide 4.
+#
+# Array pictures follow 2024: the heap's root lives at index 1. Lab Heaps lets
+# students choose their own root index (heap::root()).
+#
+# Live piece: viz/heap_explorer.html (copied from dsci221), just before the
+# end. Ends at "What have we done?". buildHeap and heapSort (2024's
+# lec111924-buildHeap) are next time.
+---
+## Today {.smaller}
+
+**Announcements**
+
+- **Examlet 7** is this week: AVL trees, B-trees, hashing
+- **PA3** is due Monday 11/23
+- **Lab Hash** is due Sunday 11/22
+
+\
+
+**Today:**
+
+- Secret mystery ADT
+- Basic implementations of secret mystery ADT
+- A new kind of tree
+
+## Secret Mystery ADT
+
+First, speculate on what type of data you can put into it!
+
+\
+
+:::: {.columns}
+::: {.column width="45%"}
+<u>YES&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</u>
+:::
+::: {.column width="45%"}
+<u>NO&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</u>
+:::
+::::
+
+::: notes
+The bag. Students call out types; you say yes or no.
+
+YES: anything with comparable keys: ints, strings, dates, (priority, job)
+pairs, students ordered by student number.
+
+NO: things with no natural order: colours, sets, images, a `struct`
+without an `operator<`.
+
+The rule they're meant to infer: you have to be able to compare two keys.
+:::
+
+## Secret Mystery ADT
+
+\
+\
+\
+\
+\
+
+:::: {.columns}
+::: {.column width="60%"}
+:::
+::: {.column width="40%"}
+ADT: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+insert
+
+remove
+
+getSize
+:::
+::::
+
+::: notes
+Students name items to insert; draw them in the bag.
+
+Then ask for a remove. They want to say which one: they can't. You tell
+them what comes out, the smallest key, each time.
+
+ADT: **priority queue**. `insert`, `removeMin`, `getSize`.
+:::
+
+## Priority Queue ADT {.smaller}
+
+```{=html}
+<svg class="nodefig" width="1162" height="437" viewBox="0 0 1010 380" style="display:block; margin:0 auto;">
+<text x="30" y="30" font-size="24" fill="#1a1a1a">insert</text>
+<text x="190" y="30" font-size="24" fill="#1a1a1a">removeMin</text>
+<text x="380" y="30" font-size="24" fill="#1a1a1a">implementation</text>
+<line x1="10" y1="40" x2="1000" y2="40" stroke="#1a1a1a" stroke-width="1.5"/>
+<defs><marker id="ah-pq" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1a1a1a"/></marker></defs>
+<rect x="380" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="444" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="508" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="572" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="636" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="700" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="764" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="828" y="62" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="400" y1="162" x2="452" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="455" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="499" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="521" y1="162" x2="588" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="590" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="634" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="656" y1="162" x2="723" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="725" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="769" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="791" y1="162" x2="858" y2="162" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="860" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="904" y="140" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="904" y1="184" x2="948" y2="140" stroke="#1a1a1a" stroke-width="1.4"/>
+<rect x="380" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="444" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="508" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="572" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="636" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="700" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="764" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="828" y="230" width="64" height="56" fill="#bde7f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="400" y1="330" x2="452" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="455" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="499" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="521" y1="330" x2="588" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="590" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="634" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="656" y1="330" x2="723" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="725" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="769" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="791" y1="330" x2="858" y2="330" stroke="#1a1a1a" stroke-width="1.6" marker-end="url(#ah-pq)"/>
+<rect x="860" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="904" y="308" width="44" height="44" fill="#e7c6f7" stroke="#1a1a1a" stroke-width="1.5"/>
+<line x1="904" y1="352" x2="948" y2="308" stroke="#1a1a1a" stroke-width="1.4"/>
+<text x="1000" y="200" font-size="20" text-anchor="end" fill="#1a1a1a" font-style="italic">unsorted</text>
+<text x="1000" y="372" font-size="20" text-anchor="end" fill="#1a1a1a" font-style="italic">sorted</text>
+<line x1="10" y1="214" x2="1000" y2="214" stroke="#9aa5ab" stroke-width="1" stroke-dasharray="5 5"/>
+<line x1="30" y1="108" x2="140" y2="108" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="200" y1="108" x2="320" y2="108" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="30" y1="186" x2="140" y2="186" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="200" y1="186" x2="320" y2="186" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="30" y1="276" x2="140" y2="276" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="200" y1="276" x2="320" y2="276" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="30" y1="354" x2="140" y2="354" stroke="#9aa5ab" stroke-width="1.2"/>
+<line x1="200" y1="354" x2="320" y2="354" stroke="#9aa5ab" stroke-width="1.2"/>
+</svg>
+```
+
+::: notes
+Fill in each row's insert and removeMin.
+
+- Unsorted array: insert $O(1)$ (amortized: $O(n)$ when it has to grow),
+  removeMin $O(n)$ to find the min and fill the hole.
+- Unsorted list: insert $O(1)$ at the front, removeMin $O(n)$.
+- Sorted array: insert $O(n)$ (binary search finds the spot in $O(\log n)$,
+  but the shift is $O(n)$), removeMin $O(1)$ if it's sorted largest-first,
+  so the min is at the end.
+- Sorted list: insert $O(n)$ (no binary search on a list), removeMin $O(1)$
+  from the front.
+
+Every option is $O(n)$ somewhere. Can we get both down to $O(\log n)$?
+:::
+
+## Priority Queue: [another implementation option]{style="font-size:0.6em"} {.smaller}
+
+Tell me everything you can about this structure:
+
+```{=html}
+<svg class="nodefig" width="864" height="378" viewBox="0 0 640 280" style="display:block; margin:0 auto;">
+<line x1="320.0" y1="26" x2="160.0" y2="102" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="26" x2="480.0" y2="102" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="102" x2="80.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="102" x2="240.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="102" x2="400.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="102" x2="560.0" y2="178" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="80.0" y1="178" x2="40.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="80.0" y1="178" x2="120.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="178" x2="200.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="178" x2="280.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="400.0" y1="178" x2="360.0" y2="254" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="320.0" cy="26" r="20" fill="#3ddc3d"/>
+<text x="320.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="160.0" cy="102" r="20" fill="#f7e600"/>
+<text x="160.0" y="108.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="480.0" cy="102" r="20" fill="#f7e600"/>
+<text x="480.0" y="108.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="80.0" cy="178" r="20" fill="#ffa726"/>
+<text x="80.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="240.0" cy="178" r="20" fill="#ffa726"/>
+<text x="240.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="400.0" cy="178" r="20" fill="#ffa726"/>
+<text x="400.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="560.0" cy="178" r="20" fill="#ffa726"/>
+<text x="560.0" y="184.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="40.0" cy="254" r="20" fill="#ff4b2b"/>
+<text x="40.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="120.0" cy="254" r="20" fill="#ff4b2b"/>
+<text x="120.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="200.0" cy="254" r="20" fill="#ff4b2b"/>
+<text x="200.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="280.0" cy="254" r="20" fill="#ff4b2b"/>
+<text x="280.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="360.0" cy="254" r="20" fill="#ff4b2b"/>
+<text x="360.0" y="260.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+</svg>
+```
+
+Describe its implementation...
+
+::: notes
+- Binary tree, **complete**: every level full except possibly the last,
+  which fills left to right.
+- **Heap property** (min-heap): every node's key is $\le$ its children's.
+  So the min is at the root.
+- No left/right order between siblings: this is not a BST.
+- Height $\lfloor \log_2 n \rfloor$, because it's complete.
+
+Implementation: the colours are a hint. Complete means no gaps, so read it
+level by level into an array.
+:::
+
+## (min)Heap: implementation {.smaller}
+
+```{=html}
+<svg class="nodefig" width="1120" height="512" viewBox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"/>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"/>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"/>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"/>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"/>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"/>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"/>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+```
+
+::: notes
+Root at index 1 (index 0 left empty).
+
+For the node at index $i$:
+
+- left child $2i$
+- right child $2i + 1$
+- parent $\lfloor i/2 \rfloor$
+
+No pointers at all: the shape is the arithmetic.
+:::
+
+## (min)Heap: insert {.smaller}
+
+```{=html}
+<svg class="nodefig" width="1120" height="512" viewBox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"/>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"/>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">8</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"/>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"/>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"/>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"/>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"/>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="25.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="50.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="75.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="100.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">8</text>
+<rect x="125.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="150.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="175.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="200.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="225.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="250.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="275.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="300.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="325.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="350.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="375.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="400.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="425.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="450.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="475.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="500.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="525.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="550.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="575.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="600.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+<rect x="625.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="675.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="725.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="25.0" y="318" width="600" height="44" fill="none" stroke="#1a1a1a" stroke-width="4"/>
+</svg>
+```
+
+::: notes
+The box is `size`; the three empty cells are spare capacity.
+
+Try insert(5): it goes in the next free slot, index 13 (right child of 7).
+Then swap upward while it's smaller than its parent: past 7, past 6, and it
+stops under 4. Repeat with insert(3) to reach the root.
+
+$O(\log n)$: at most one swap per level.
+:::
+
+## Code: {.smaller .midcode}
+
+:::: {.columns}
+::: {.column width="60%"}
+```cpp
+void heap<T>::insert(const T & key) {
+    if (size == capacity) growArray();
+    size++;
+    items[size] = key;
+    heapifyUp(size);
+}
+```
+:::
+::: {.column width="40%"}
+growArray()
+
+```{=html}
+<svg class="nodefig" width="440" height="270" viewBox="0 0 440 270" style="display:block; margin:0 auto;">
+<line x1="220.0" y1="16" x2="110.0" y2="74" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="220.0" y1="16" x2="330.0" y2="74" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="110.0" y1="74" x2="55.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="110.0" y1="74" x2="165.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="330.0" y1="74" x2="275.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="330.0" y1="74" x2="385.0" y2="132" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="55.0" y1="132" x2="27.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="55.0" y1="132" x2="82.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="165.0" y1="132" x2="137.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="165.0" y1="132" x2="192.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="275.0" y1="132" x2="247.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="275.0" y1="132" x2="302.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="385.0" y1="132" x2="357.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="385.0" y1="132" x2="412.5" y2="190" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="220.0" cy="16" r="13" fill="#3ddc3d"/>
+<circle cx="110.0" cy="74" r="13" fill="#f7e600"/>
+<circle cx="330.0" cy="74" r="13" fill="#f7e600"/>
+<circle cx="55.0" cy="132" r="13" fill="#ffa726"/>
+<circle cx="165.0" cy="132" r="13" fill="#ffa726"/>
+<circle cx="275.0" cy="132" r="13" fill="#ffa726"/>
+<circle cx="385.0" cy="132" r="13" fill="#ffa726"/>
+<circle cx="27.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="82.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="137.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="192.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="247.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="302.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="357.5" cy="190" r="13" fill="#ff4b2b"/>
+<circle cx="412.5" cy="190" r="13" fill="#ff4b2b"/>
+</svg>
+```
+:::
+::::
+
+```{=html}
+<svg class="nodefig" width="1140" height="44" style="display:block; margin:2.2em 0 0 0;">
+<rect x="2" y="2" width="34" height="38" fill="white" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="36" y="2" width="34" height="38" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="70" y="2" width="34" height="38" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="104" y="2" width="34" height="38" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="138" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="172" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="206" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="240" y="2" width="34" height="38" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="274" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="308" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="342" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="376" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="410" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="444" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="478" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<rect x="512" y="2" width="34" height="38" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+</svg>
+```
+
+::: notes
+When the array is full: double the capacity and copy. The new last level
+needs as many slots as the whole tree so far. Doubling makes insert
+amortized $O(1)$ for the growing, plus $O(\log n)$ for heapifyUp.
+:::
+
+## Code: {.smaller .midcode}
+
+```cpp
+void heap<T>::insert(const T & key) {
+    if (size == capacity) growArray();
+    size++;
+    items[size] = key;
+    heapifyUp(size);
+}
+```
+
+```cpp
+void heap<T>::heapifyUp(int cIndex) {
+    if (cIndex > _____)
+        if (items[cIndex] ___ items[parent(cIndex)]) {
+            swap(__________, __________);
+            heapifyUp(__________);
+        }
+}
+```
+
+::: notes
+- `cIndex > 1`: stop at the root
+- `items[cIndex] < items[parent(cIndex)]`
+- `swap(items[cIndex], items[parent(cIndex)])`
+- `heapifyUp(parent(cIndex))`
+:::
+
+## (min)Heap: removeMin {.smaller}
+
+```{=html}
+<svg class="nodefig" width="1120" height="512" viewBox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"/>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"/>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"/>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"/>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"/>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"/>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"/>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+```
+
+::: notes
+The min is the root. What fills the hole and keeps the tree complete? Only
+the last leaf can move without leaving a gap: 11 goes to the root.
+
+Then swap it downward with its **smaller** child while it's bigger: 11
+swaps with 5, then with 9, and stops: its new children, 14 and 12, are
+both bigger.
+
+$O(\log n)$.
+:::
+
+## (min)Heap: removeMin {.smaller}
+
+```{=html}
+<svg class="nodefig" width="1120" height="512" viewBox="0 0 800 366" style="display:block; margin:0 auto;">
+<line x1="400.0" y1="26" x2="240.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="400.0" y1="26" x2="560.0" y2="112" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="160.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="240.0" y1="112" x2="320.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="480.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="560.0" y1="112" x2="640.0" y2="198" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="120.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="160.0" y1="198" x2="200.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="280.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="320.0" y1="198" x2="360.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<line x1="480.0" y1="198" x2="440.0" y2="284" stroke="#1a1a1a" stroke-width="2.4"/>
+<circle cx="400.0" cy="26" r="20" fill="#3ddc3d"/>
+<text x="400.0" y="32.1" text-anchor="middle" font-size="17" fill="#1a1a1a">4</text>
+<circle cx="240.0" cy="112" r="20" fill="#f7e600"/>
+<text x="240.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">5</text>
+<circle cx="560.0" cy="112" r="20" fill="#f7e600"/>
+<text x="560.0" y="118.1" text-anchor="middle" font-size="17" fill="#1a1a1a">6</text>
+<circle cx="160.0" cy="198" r="20" fill="#ffa726"/>
+<text x="160.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">15</text>
+<circle cx="320.0" cy="198" r="20" fill="#ffa726"/>
+<text x="320.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">9</text>
+<circle cx="480.0" cy="198" r="20" fill="#ffa726"/>
+<text x="480.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">7</text>
+<circle cx="640.0" cy="198" r="20" fill="#ffa726"/>
+<text x="640.0" y="204.1" text-anchor="middle" font-size="17" fill="#1a1a1a">20</text>
+<circle cx="120.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="120.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">16</text>
+<circle cx="200.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="200.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">25</text>
+<circle cx="280.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="280.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">14</text>
+<circle cx="360.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="360.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">12</text>
+<circle cx="440.0" cy="284" r="20" fill="#ff4b2b"/>
+<text x="440.0" y="290.1" text-anchor="middle" font-size="17" fill="#1a1a1a">11</text>
+<rect x="100.0" y="318" width="50" height="44" fill="#3ddc3d" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="125.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">4</text>
+<rect x="150.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="175.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">5</text>
+<rect x="200.0" y="318" width="50" height="44" fill="#f7e600" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="225.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">6</text>
+<rect x="250.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="275.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">15</text>
+<rect x="300.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="325.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">9</text>
+<rect x="350.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="375.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">7</text>
+<rect x="400.0" y="318" width="50" height="44" fill="#ffa726" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="425.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">20</text>
+<rect x="450.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="475.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">16</text>
+<rect x="500.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="525.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">25</text>
+<rect x="550.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="575.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">14</text>
+<rect x="600.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="625.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">12</text>
+<rect x="650.0" y="318" width="50" height="44" fill="#ff4b2b" stroke="#1a1a1a" stroke-width="1.5"/>
+<text x="675.0" y="346.8" text-anchor="middle" font-size="19" fill="#1a1a1a">11</text>
+</svg>
+```
+
+::: notes
+A clean copy for a second removeMin, or for a student to try.
+:::
+
+## Code: {.smaller .midcode}
+
+```cpp
+T heap<T>::removeMin() {
+    T minVal = items[1];
+    items[1] = items[size];
+    size--;
+    heapifyDown(1);
+    return minVal;
+}
+```
+
+```cpp
+void heap<T>::heapifyDown(int cIndex) {
+    if (hasAChild(cIndex)) {
+        minChildIndex = minChild(cIndex);
+        if (items[cIndex] ___ items[minChildIndex]) {
+            swap(__________, __________);
+            ___________________________
+        }
+    }
+}
+```
+
+::: notes
+- `items[cIndex] > items[minChildIndex]`
+- `swap(items[cIndex], items[minChildIndex])`
+- `heapifyDown(minChildIndex);`
+
+Why the min child? Swapping with the larger one would put it above the
+smaller one, breaking the heap property right there.
+:::
+
+## Heap Explorer
+
+```{=html}
+<iframe src="viz/heap_explorer.html" width="100%" height="580" style="border: none; border-radius: 8px;"></iframe>
+```
+
+::: notes
+Live demo (copied from DSCI 221's heaps lesson). Random Heap, or insert a
+few values the room calls out, asking before each click where it will
+land. Then Remove Min a few times. The array under the tree updates with
+it; the root is at index 1, as on the slides. Speed slider bottom right.
+:::
+
+## What have we done?
+
+```{=html}
+<svg class="nodefig" width="780" height="494" viewBox="0 0 600 380" style="display:block; margin:0 auto;">
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(3.0)" fill="none" stroke="#ff3b1f" stroke-width="1.00"/>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(2.3)" fill="none" stroke="#8e3fb0" stroke-width="1.30"/>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(1.65)" fill="none" stroke="#1f4fe0" stroke-width="1.82"/>
+<path d="M0,40 L-56,-18 C-74,-40 -60,-74 -30,-74 C-14,-74 -3,-64 0,-54 C3,-64 14,-74 30,-74 C60,-74 74,-40 56,-18 Z" transform="translate(300,250) scale(1.05)" fill="none" stroke="#1a9a2a" stroke-width="2.86"/>
+</svg>
+```
+
+::: notes
+(2024's closing picture, kept as it was.)
+
+insert and removeMin in $O(\log n)$, beating every list and array option.
+Next time: building a heap from n keys all at once (buildHeap), and
+heapSort.
+:::

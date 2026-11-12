@@ -162,6 +162,23 @@ $mem-heap:           #fbe0c9;
 // room for working. {.proof} on the heading turns this on. {.smallcode} is the
 // same shrink without the proof connotation -- for slides that are mostly
 // annotation space around a listing.
+// {.midcode}: between full size and .smallcode, for a slide holding two
+// code blocks that are a few lines too tall at full size.
+.reveal section.midcode {
+  div.sourceCode code.sourceCode {
+    font-size: calc(var(--r-main-font-size) * 0.64);
+  }
+
+  div.sourceCode code.sourceCode > span {
+    line-height: 1.3;
+    min-height: 1.3em;
+  }
+
+  div.sourceCode {
+    margin: 0.3em 0 0.4em 0;
+  }
+}
+
 .reveal section.proof,
 .reveal section.smallcode {
   div.sourceCode code.sourceCode {
