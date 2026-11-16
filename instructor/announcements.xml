@@ -11,7 +11,55 @@
 <description>Course website for {{&lt; var course.code &gt;}}
 </description>
 <generator>quarto-1.11.9</generator>
-<lastBuildDate>Sun, 01 Nov 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 15 Nov 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Week 11 — Nov 16 to Nov 22</title>
+  <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
+  <link>https://ubc-cs.github.io/cpsc221/posts/09_week-11/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>All times 11:59 pm unless noted.</p>
+<table class="caption-top table">
+<tbody>
+<tr class="odd">
+<td><strong>11/18</strong></td>
+<td>PEX8 out</td>
+</tr>
+<tr class="even">
+<td><strong>11/19 – 11/22</strong></td>
+<td><strong>Examlet 7</strong> — self-scheduled in PrairieTest</td>
+</tr>
+<tr class="odd">
+<td><strong>11/22</strong></td>
+<td>Lab Hash due</td>
+</tr>
+<tr class="even">
+<td><strong>11/23</strong></td>
+<td>PA3 <strong>due</strong></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+</p>
+<p><strong>Examlet 7</strong> does not include hashing, since we haven’t finished that material. There will be a coding question based on a recent lab. <strong>PEX7</strong> is the practice for it, linked on the schedule.</p>
+<p><strong>Hashing:</strong> the video for the second hashing lesson is delayed by the airline shutdown. It will be posted soon.</p>
+<p><strong>Labs include office hours</strong>, so bring your PA3 questions too.</p>
+<p><strong>Examlet 8</strong> is bookable now in PrairieTest, for next week.</p>
+<p><strong>Examlet 6:</strong> the average was 84%.</p>
+
+
+
+ ]]></description>
+  <category>deadline</category>
+  <category>examlet</category>
+  <category>lab</category>
+  <guid>https://ubc-cs.github.io/cpsc221/posts/09_week-11/</guid>
+  <pubDate>Sun, 15 Nov 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Week 9 — Nov 2 to Nov 8</title>
   <dc:creator>{{&lt; var instructor.name &gt;}}</dc:creator>
