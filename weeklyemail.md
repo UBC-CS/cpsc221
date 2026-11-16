@@ -21,6 +21,46 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 11 — Mon Nov 16 to Sun Nov 22
+
+*Sent Sun 11/15, as below.*
+
+---
+
+Hi everyone,
+
+Welcome to week 11! This marks the final push of the term. We're more than 2/3 done! Come 
+to class for a reunion of sorts tomorrow?? It feels like it's been a long time since we've seen you...
+
+The news:
+
+1. **Examlet 7 is this week**, Thursday to Sunday.  **PEX7** is the practice
+   for it. Coverage will not include hashing, since we haven't finished that material. There will be a coding question based on a recent lab.
+
+2. Speaking of **hashing**: We intended to shoot the video for the second hashing lesson
+but our intentions were thwarted by the airline shutdown. It will show up soon!! 
+
+3. **PA3 is due next Monday, 11/23, 11:59p.** If you haven't started yet, this is the week!
+
+4. **Lab Hash** is open now, due **Sunday 11/22**. Labs include office hours,
+   so bring your PA3 questions, too.
+
+5. **Examlet 8 is bookable now** in PrairieTest, for next week.
+   **PEX8** comes out Wednesday evening.
+
+6. **Examlet 6** looked really good -- the average was 84%.
+
+I think that's it! Let us know if you have questions...
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+After it goes out, the facts go up as `posts/09_week-11/`.
+
+---
+
 ## Week 9 — Mon Nov 2 to Sun Nov 8
 
 *Sent Sun 11/01, as below.*

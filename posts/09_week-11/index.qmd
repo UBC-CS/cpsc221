@@ -1,0 +1,34 @@
+---
+title: "Week 11 — Nov 16 to Nov 22"
+description: "Examlet 7 Thursday to Sunday: no hashing. Lab Hash due 11/22. PA3 due 11/23. Examlet 8 bookable now."
+author: "{{< var instructor.name >}}"
+date: 2026-11-15
+categories:
+  - deadline
+  - examlet
+  - lab
+---
+
+All times 11:59 pm unless noted.
+
+| | |
+|---|---|
+| **11/18** | PEX8 out |
+| **11/19 – 11/22** | **Examlet 7** — self-scheduled in PrairieTest |
+| **11/22** | Lab Hash due |
+| **11/23** | PA3 **due** |
+
+\
+
+**Examlet 7** does not include hashing, since we haven't finished that
+material. There will be a coding question based on a recent lab. **PEX7** is
+the practice for it, linked on the schedule.
+
+**Hashing:** the video for the second hashing lesson is delayed by the airline
+shutdown. It will be posted soon.
+
+**Labs include office hours**, so bring your PA3 questions too.
+
+**Examlet 8** is bookable now in PrairieTest, for next week.
+
+**Examlet 6:** the average was 84%.
