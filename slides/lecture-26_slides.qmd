@@ -511,8 +511,9 @@ height $h$:
 
 Induction: $2(2^h - (h-1) - 2) + h = 2^{h+1} - h - 2$.
 
-In terms of n: a perfect tree has $n = 2^{h+1} - 1$, so
-$S(h) = n - h - 1 \le n$. $O(n)$.
+In terms of n: we need an *upper* bound on the time, so we need a *lower*
+bound on n. A heap of height $h$ has at least $2^h$ nodes ($n \ge 2^h$), so
+$S(h) = 2^{h+1} - h - 2 \le 2^{h+1} = 2 \cdot 2^h \le 2n$. $O(n)$.
 :::
 
 ## (min)Heap: heapSort {.smaller}
