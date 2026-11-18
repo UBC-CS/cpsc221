@@ -723,7 +723,7 @@ with running times ______________________.</span></p>
 <li>Soln: <span class="math inline">\(S(h) = 2^{h+1} - h - 2\)</span></li>
 </ul>
 <p>Induction: <span class="math inline">\(2(2^h - (h-1) - 2) + h = 2^{h+1} - h - 2\)</span>.</p>
-<p>In terms of n: a perfect tree has <span class="math inline">\(n = 2^{h+1} - 1\)</span>, so <span class="math inline">\(S(h) = n - h - 1 \le n\)</span>. <span class="math inline">\(O(n)\)</span>.</p>
+<p>In terms of n: we need an <em>upper</em> bound on the time, so we need a <em>lower</em> bound on n.&nbsp;A heap of height <span class="math inline">\(h\)</span> has at least <span class="math inline">\(2^h\)</span> nodes (<span class="math inline">\(n \ge 2^h\)</span>), so <span class="math inline">\(S(h) = 2^{h+1} - h - 2 \le 2^{h+1} = 2 \cdot 2^h \le 2n\)</span>. <span class="math inline">\(O(n)\)</span>.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
