@@ -1153,154 +1153,130 @@
     "text": "Algorithmic analysis — running time\nint idxFirst (vector&lt;int&gt; arr, int q) {\n    for (int i = 0; i &lt; arr.size(); i++)\n        if (arr[i] == q)\n            return i;\n    return -1;\n}\nHow long does it take?\n\nThe blank is filled in now, with a name the room earned – worth a beat. “Find” was never enough: a function called find could return a bool, a value or an iterator. A precise description hands you idxFirst almost for free.\nTake answers. Somebody will say “it depends” – that is the slide after this."
   },
   {
-    "objectID": "setup.html",
-    "href": "setup.html",
-    "title": "Setup: Tech stack",
+    "objectID": "slides/draft-disjoint-sets_slides.html#today",
+    "href": "slides/draft-disjoint-sets_slides.html#today",
+    "title": "CPSC 221",
+    "section": "Today",
+    "text": "Today\n\nThe Disjoint Sets ADT\nA first (naive) data structure\nUpTrees\nSmart unions: by height, by size\nPath compression\n\n\nOne lesson, start to finish. Everything on PEX8’s disjoint-sets questions is here: union by size, with and without path compression, and the \\(O(m \\log^* n)\\) running time."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#a-disjoint-sets-example",
+    "href": "slides/draft-disjoint-sets_slides.html#a-disjoint-sets-example",
+    "title": "CPSC 221",
+    "section": "A Disjoint Sets example",
+    "text": "A Disjoint Sets example\nLet \\(R\\) be an equivalence relation on the students in this class, where \\((s,t) \\in R\\)\nif \\(s\\) and \\(t\\) have the same favorite among {AC, FN, FB, TR, CC, CR, PMC, ____}.\n\n\n\n2 5 9\n\n7\n\n0 1 4 8\n\n3 6\n\n\nOperations we’d like to facilitate:\n\nFind(4)\nFind(4) == Find(8)\nif (Find(7) != Find(2)) Union(Find(7), Find(2))\n\n\n(2024’s example. Each student is a number; each oval is one set of the partition, one per favorite.)\n\nWhich set is 4 in? Find returns that set’s representative, one member that names the set.\nAre 4 and 8 in the same set? Same representative.\nIf 7 and 2 are in different sets, merge the two sets."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#disjoint-sets-adt",
+    "href": "slides/draft-disjoint-sets_slides.html#disjoint-sets-adt",
+    "title": "CPSC 221",
+    "section": "Disjoint Sets ADT",
+    "text": "Disjoint Sets ADT\nWe will implement a data structure in support of “Disjoint Sets”:\n\nMaintains a collection \\(S = \\{s_0, s_1, \\ldots, s_k\\}\\) of disjoint sets\nEach set has a representative member\nSupports functions:\n\nvoid MakeSet(kType k);\nvoid Union(kType k1, kType k2);\nkType Find(kType k);\n\n\nMakeSet: a new set holding just k.\nUnion: merge the sets containing k1 and k2.\nFind: the representative of k’s set.\n\nFrom here on the keys are 0..n-1, so they can index an array."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#a-first-data-structure-for-disjoint-sets",
+    "href": "slides/draft-disjoint-sets_slides.html#a-first-data-structure-for-disjoint-sets",
+    "title": "CPSC 221",
+    "section": "A first data structure for Disjoint Sets",
+    "text": "A first data structure for Disjoint Sets\n\n\n\n\n\n0 1 4\n\n2 7\n\n3 5 6\n\n0\n\n0\n\n1\n\n0\n\n2\n\n2\n\n3\n\n3\n\n4\n\n0\n\n5\n\n3\n\n6\n\n3\n\n7\n\n2\n\n\n\n\nFind:\n\n\nUnion:\n\n\nEach cell holds its key’s representative.\n\nFind: \\(O(1)\\), one array lookup.\nUnion: \\(O(n)\\). Every member of one set has to be relabelled, and finding them means scanning the whole array.\n\nUnions are the common operation (Kruskal’s algorithm does one per edge it keeps), so we want something cheaper."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#a-better-data-structure-uptrees",
+    "href": "slides/draft-disjoint-sets_slides.html#a-better-data-structure-uptrees",
+    "title": "CPSC 221",
+    "section": "A better data structure: UpTrees",
+    "text": "A better data structure: UpTrees\n\nIf the array value is \\(-1\\), we’ve found a root; otherwise the value is the index of the parent.\n\\(x\\) and \\(y\\) are in the same tree if and only if they are in the same set.\n\n\n\nSketch:\n\n\n\n0\n\n\n\n1\n\n\n\n2\n\n\n\n3\nMemory:\n\n0\n\n-1\n\n1\n\n-1\n\n2\n\n-1\n\n3\n\n-1\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n\n\nStart: four singleton sets, every cell \\(-1\\).\nA sequence to draw (Union takes two roots; root2 goes under root1):\n\nUnion(2, 3): 3 points to 2. Array: \\(-1, -1, -1, 2\\)\nUnion(0, 1): 1 points to 0. Array: \\(-1, 0, -1, 2\\)\nUnion(0, 2): 2 points to 0. Array: \\(-1, 0, 0, 2\\)\n\nFind(3) now walks 3 → 2 → 0: the representative is the root."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#example-a-partition-into-disjoint-sets",
+    "href": "slides/draft-disjoint-sets_slides.html#example-a-partition-into-disjoint-sets",
+    "title": "CPSC 221",
+    "section": "Example: a partition into disjoint sets",
+    "text": "Example: a partition into disjoint sets\n\n\n\n2 5 9\n\n7\n\n0 1 4 8\n\n3 6\n\n\n\n\n\n\n\n9\n\n2\n\n5\n\n\n\n7\n\n\n\n\n\n\n\n\n\n0\n\n1\n\n8\n\n4\n\n\n\n\n\n6\n\n3\n\n0\n\n4\n\n1\n\n8\n\n2\n\n5\n\n3\n\n6\n\n4\n\n-1\n\n5\n\n-1\n\n6\n\n-1\n\n7\n\n-1\n\n8\n\n4\n\n9\n\n5\n\n\n\n(2024’s picture.) The array alone is the whole structure: each cell holds its parent’s index, and a root holds \\(-1\\).\nPlanted bug (deliberate, as in 2024): the picture and the array disagree on the last set. The picture has 6 pointing up to 3 (3 is the root), but the array has s[3] = 6 and s[6] = -1 (6 is the root). Ask viewers to pause and find it. Fix: s[3] = -1, s[6] = 3, or flip the picture."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#uptree-implementation-of-disjoint-sets-adt",
+    "href": "slides/draft-disjoint-sets_slides.html#uptree-implementation-of-disjoint-sets-adt",
+    "title": "CPSC 221",
+    "section": "UpTree implementation of Disjoint Sets ADT",
+    "text": "UpTree implementation of Disjoint Sets ADT\n\n\nint DS::Find(int i) {\n    if (s[i] &lt; 0) return i;\n    else return Find(s[i]);\n}\nRunning time depends on ________________.\nWorst case?\nWhat’s an ideal tree?\nvoid DS::Union(int root1, int root2) {\n    s[root2] = root1;\n}\n\n\n\n\n\n\n\n\n\n\n0\n\n\n\n\n\n\n\n6\n\n4\n\n1\n\n\n\n\n\nFind’s running time depends on the height of the tree (the depth of i).\nWorst case: \\(O(n)\\), a stick. The picture: Union(1, 0) would hang 0 under 1 and make the stick even longer for nothing, while Union(0, 1) hangs the stick under 0, making every node in it one step deeper.\nIdeal tree: every node points straight at the root (height 1), so Find is \\(O(1)\\).\n\nUnion itself is \\(O(1)\\), given two roots. The cost moved into Find."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#smart-unions",
+    "href": "slides/draft-disjoint-sets_slides.html#smart-unions",
+    "title": "CPSC 221",
+    "section": "Smart unions",
+    "text": "Smart unions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n\n1\n\n2\n\n6\n\n3\n\n8\n\n9\n\n7\n\n\n\n\n\n\n\n\n\n11\n\n5\n\n10\n\n4\nUnion by height:\nUnion by size:\n\n0\n\n6\n\n1\n\n6\n\n2\n\n6\n\n3\n\n8\n\n4\n\n\n5\n\n10\n\n6\n\n7\n\n7\n\n\n8\n\n7\n\n9\n\n7\n\n10\n\n4\n\n11\n\n5\n\n0\n\n6\n\n1\n\n6\n\n2\n\n6\n\n3\n\n8\n\n4\n\n\n5\n\n10\n\n6\n\n7\n\n7\n\n\n8\n\n7\n\n9\n\n7\n\n10\n\n4\n\n11\n\n5\nKeeps overall height oftree as small as possible.\nIncreases distance toroot for fewest nodes.\n\n\nBoth of these schemes for Union guarantee the height of the tree is ____________.\n\nA root’s cell is free to hold something useful, as long as it stays negative (that’s how Find recognizes a root):\n\nBy height: store \\(-(h+1)\\), so a lone node is still \\(-1\\). 7 holds \\(-3\\) (height 2) and 4 holds \\(-4\\) (height 3). Union hangs the shorter tree under the taller: 7 goes under 4, and the height stays 3.\nBy size: store \\(-(\\text{number of nodes})\\). 7 holds \\(-9\\), 4 holds \\(-4\\). The smaller tree goes under the bigger: 4 goes under 7. Height becomes 4, but only 4 nodes got one step deeper, instead of 9.\n\nEither way the height is \\(O(\\log n)\\): a node only gets deeper when its tree at least doubles in size, which can happen at most \\(\\log_2 n\\) times."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#smart-unions-1",
+    "href": "slides/draft-disjoint-sets_slides.html#smart-unions-1",
+    "title": "CPSC 221",
+    "section": "Smart unions",
+    "text": "Smart unions\nint DS::Find(int i) {\n    if (s[i] &lt; 0) return i;\n    else return __________ Find(s[i]);\n}\nvoid DS::UnionBySize(int root1, int root2) {\n    int newSize = s[root1] + s[root2];\n    if (isBigger(root1, root2)) {\n        s[root2] = root1;\n        s[root1] = newSize;\n    }\n    else {\n        s[root1] = root2;\n        s[root2] = newSize;\n    }\n}\n\nisBigger(root1, root2): root1’s tree is at least as big. Sizes are stored negative, so that’s s[root1] &lt;= s[root2]. Ties go to root1, the first argument, which is PEX8’s rule too.\nThe blank in Find: s[i] =, so line 3 reads else return s[i] = Find(s[i]);. That’s path compression, next slide.\n(2024’s listing returned int from UnionBySize and was missing a ) on the if; both fixed here.)"
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#path-compression",
+    "href": "slides/draft-disjoint-sets_slides.html#path-compression",
+    "title": "CPSC 221",
+    "section": "Path compression",
+    "text": "Path compression\nelse return s[i] = Find(s[i]);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n3\n\n5\n\n6\n\n4\n\n2\n\n8\n\n7\n\n9\n\n11\n\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n9\n\n8\n\n7\n\n3\n\n2\n\n6\n\n4\n\n5\n\n11\n\n10\nbefore Find(5)\nafter Find(5)\n\n\n\n\n\n\nOn the way back from the root,\nevery node on the path is\npointed straight at the root.\nNodes off the path (1, 8, 3, 6)\njust come along with their parents.\nThe next Find on any of them\nis one or two steps.\n\n\n(Cinda’s example, from DSCI 221.) Find(5) walks 5 → 4 → 2 → 7 → 9 → 10. On the way back, the assignment points each node on that path (yellow) straight at 10.\nOnly the path changes. 1, 8, 3 and 6 aren’t on it, so they stay with their parents and simply come along: 8 still hangs off 7, 3 off 2, 6 off 4. 11 doesn’t move at all. Every one of them is now closer to the root too.\nPath compression doesn’t change sizes, so union by size works with it unchanged. With union by height, the stored heights are no longer exact after compression (they’re upper bounds), and that’s fine."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#analysis",
+    "href": "slides/draft-disjoint-sets_slides.html#analysis",
+    "title": "CPSC 221",
+    "section": "Analysis",
+    "text": "Analysis\nSomething we’ll need — Iterated log:\n\\[\\log^* (n) = \\begin{cases} 0 & \\text{if } n \\leq 1 \\\\ 1 + \\log^*(\\log n) & \\text{if } n &gt; 1 \\end{cases}\\]\nExample: \\(\\log^* (2^{65536})\\)\nRelevant result: In an upTree implementation of Disjoint Sets using\nsmart Union and Find with path compression, any sequence of \\(m\\) Union\nand Find operations results in worst case running time of \\(O(\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_)\\),\nwhere \\(n\\) is the number of items.\nhttp://research.cs.vt.edu/AVresearch/UF/\n\n(Cinda’s slide, from DSCI 221.)\n\\(\\log^*(2^{65536})\\): \\(2^{65536} \\to 65536 \\to 16 \\to 4 \\to 2 \\to 1\\), five logs, so 5. \\(2^{65536}\\) has about 20,000 digits; nothing we will ever store comes close, so \\(\\log^* n \\le 5\\) in practice.\nThe blank: \\(O(m \\log^* n)\\). That’s essentially \\(O(m)\\), constant time per operation. PEX8 asks for exactly this.\nThe proof is beyond this course. (The tight bound is even smaller, inverse Ackermann, \\(O(m\\,\\alpha(n))\\).)"
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#your-turn",
+    "href": "slides/draft-disjoint-sets_slides.html#your-turn",
+    "title": "CPSC 221",
+    "section": "Your turn",
+    "text": "Your turn\n\n\nunion(1, 7)\nunion(0, 6)\nunion(2, 3)\nunion(6, 3)\nunion(3, 7)\nunion(7, 4)\n\nUnion by size; a tie goes to the first argument.\nunion(a, b) calls Find on both first.\n\n\n\n0\n\n-1\n\n1\n\n-1\n\n2\n\n-1\n\n3\n\n-1\n\n4\n\n-1\n\n5\n\n-1\n\n6\n\n-1\n\n7\n\n-1\n\n\nWhat is the array afterwards:\n\nwithout path compression?\nwith path compression?\n\n\n\nPause the video and try it; the answer is on the next slide. This is the format of PEX8’s union questions."
+  },
+  {
+    "objectID": "slides/draft-disjoint-sets_slides.html#your-turn-answer",
+    "href": "slides/draft-disjoint-sets_slides.html#your-turn-answer",
+    "title": "CPSC 221",
+    "section": "Your turn: answer",
+    "text": "Your turn: answer\n\n\nWithout path compression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n7\n\n1\n\n3\n\n2\n\n4\n\n6\n\n0\n\n\n\n5\n\n0\n\n-7\n\n1\n\n0\n\n2\n\n0\n\n3\n\n2\n\n4\n\n0\n\n5\n\n-1\n\n6\n\n0\n\n7\n\n1\nWith path compression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n2\n\n3\n\n4\n\n6\n\n7\n\n0\n\n\n\n5\n\n0\n\n-7\n\n1\n\n0\n\n2\n\n0\n\n3\n\n0\n\n4\n\n0\n\n5\n\n-1\n\n6\n\n0\n\n7\n\n0\n\n\n\n\nunion(1, 7): sizes 1 and 1, tie, so 7 goes under 1.\nunion(0, 6): 6 under 0. union(2, 3): 3 under 2.\nunion(6, 3): roots 0 and 2, both size 2, tie: 2 goes under 0.\nunion(3, 7): Find(3) walks 3 → 2 → 0. Root 0 (size 4) beats root 1 (size 2): 1 goes under 0. With compression, 3 now points at 0.\nunion(7, 4): Find(7) walks 7 → 1 → 0. 4 goes under 0. With compression, 7 now points at 0.\n\nHighlighted cells (3 and 7) are the only differences. The root holds \\(-7\\), its tree’s size; 5 was never touched."
+  },
+  {
+    "objectID": "posts/09_week-11/index.html",
+    "href": "posts/09_week-11/index.html",
+    "title": "Week 11 — Nov 16 to Nov 22",
     "section": "",
-    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
+    "text": "All times 11:59 pm unless noted.\n\n\n\n11/18\nPEX8 out\n\n\n11/19 – 11/22\nExamlet 7 — self-scheduled in PrairieTest\n\n\n11/22\nLab Hash due\n\n\n11/23\nPA3 due\n\n\n\n\n\nExamlet 7 does not include hashing, since we haven’t finished that material. There will be a coding question based on a recent lab. PEX7 is the practice for it, linked on the schedule.\nHashing: the video for the second hashing lesson is delayed by the airline shutdown. It will be posted soon.\nLabs include office hours, so bring your PA3 questions too.\nExamlet 8 is bookable now in PrairieTest, for next week.\nExamlet 6: the average was 84%."
   },
   {
-    "objectID": "setup.html#hardware",
-    "href": "setup.html#hardware",
-    "title": "Setup: Tech stack",
-    "section": "Hardware",
-    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
-  },
-  {
-    "objectID": "setup.html#computing-environment",
-    "href": "setup.html#computing-environment",
-    "title": "Setup: Tech stack",
-    "section": "Computing environment",
-    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
-  },
-  {
-    "objectID": "setup.html#attribution",
-    "href": "setup.html#attribution",
-    "title": "Setup: Tech stack",
-    "section": "Attribution",
-    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
-  },
-  {
-    "objectID": "posts/08_week-09/index.html",
-    "href": "posts/08_week-09/index.html",
-    "title": "Week 9 — Nov 2 to Nov 8",
+    "objectID": "posts/07_week-08/index.html",
+    "href": "posts/07_week-08/index.html",
+    "title": "Week 8 — Oct 26 to Nov 1",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n11/02\nPA2 due · PA3 out\n\n\n11/05 – 11/08\nExamlet 6 — self-scheduled in PrairieTest\n\n\n11/08\nLab AVL due\n\n\n11/23\nPA3 due\n\n\n\n\n\nPA3 turns photographs into art, using a quadtree and a priority queue you build yourself. Plan for up to 20 hours, and start early.\nExamlet 6 covers binary search trees (search, insert, remove, and what makes a BST go wrong), plus BST traversals and tree running times. PEX6 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA3 questions too.\nExamlet 5: the median was 77. Its questions become visible soon.\nNext week is the quiet week: no class meetings, no labs, no examlets. Just Friday’s video lesson."
+    "text": "All times 11:59 pm unless noted.\n\n\n\n10/26\nPA2 submissions open · Lab Dict open\n\n\n10/29 – 11/01\nExamlet 5 — self-scheduled in PrairieTest\n\n\n11/02\nPA2 due\n\n\n\n\n\nPA2 submissions are open. Upload your six files to PA2 on PrairieLearn and the autograder scores them in a few minutes. Submit as often as you like.\nExamlet 5 covers tree definitions and tree traversals. PEX5 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA2 questions too.\nExamlet 4: the median was 81."
   },
   {
-    "objectID": "posts/05_week-06/index.html",
-    "href": "posts/05_week-06/index.html",
-    "title": "Week 6 — Oct 12 to Oct 18",
+    "objectID": "posts/04_week-05/index.html",
+    "href": "posts/04_week-05/index.html",
+    "title": "Week 5 — Oct 5 to Oct 11",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/14\nVideo lesson · PEX4 released\n\n\n10/16\nVideo lesson\n\n\n10/19\nHomework Two due · PA2 released (due 11/02)\n\n\n10/22 – 10/25\nExamlet 4 — self-scheduled in PrairieTest\n\n\n\n\n\nA quiet week. No class meetings, no labs, no examlets — just two video lessons.\nLabs now include office hours. For the rest of the term, starting the week of 10/19, lab sections replace TA office hours. The TAs will still work through the lab exercise, and you’re welcome to bring any other questions too.\nPlan for PAs to take up to 20 hours. Start PA2 early."
+    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n10/05\nClass activity: The Witch’s Potion Pantry — bring a laptop · PA1 due · Homework Two released\n\n\n10/07\nExamlet 2 questions visible\n\n\n10/08 – 10/11\nExamlet 3 — self-scheduled in PrairieTest; covers everything through Friday 10/02’s lesson\n\n\n10/11\nLab Quacks due\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/19\nHomework Two due\n\n\n\n\n\nExamlet 2. The class average was 91%. One question (selection_sort_analysis) had errors in its answer key, so everyone has received full credit for it. Thank you to those who reported it.\nPEX3 is up, and now includes array resizing from Friday’s video.\nNext week is quiet. The week of 10/12 has no labs, no class meetings, no examlets, no homework and no programming assignments — just two video lessons to watch."
   },
   {
-    "objectID": "posts/03_week-04/index.html",
-    "href": "posts/03_week-04/index.html",
-    "title": "Week 4 — Sep 28 to Oct 4",
+    "objectID": "posts/02_week-03/index.html",
+    "href": "posts/02_week-03/index.html",
+    "title": "Week 3 — Sep 21 to Sep 27",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n09/30\nNo class — National Day for Truth and Reconciliation · PEX3 released\n\n\n10/01 – 10/04\nExamlet 2 — self-scheduled in ORCA\n\n\n10/04\nLab 3 (Linked Lists) due\n\n\n10/05\nPA1 due\n\n\n\n\n\nPEX2 has grown. It now includes pointer puzzles and new sorting questions, and most of them regenerate with New variant, so you can keep practising.\nPA1 Gallery. The zero-point Gallery question in the PA1 assessment is your chance to build a transformation of your own. There are prizes, and winners go up on this site."
+    "text": "All times 11:59 pm unless noted.\n\n\n\n09/21\nHW1 due · PA1 released, due 10/05\n\n\n09/23\nPEX2 released\n\n\n09/24 – 09/27\nExamlet 1 — self-scheduled in ORCA\n\n\n09/27\nLab Debug due\n\n\n\nExamlet 1 covers everything through week 2: asymptotics, running times, best and worst cases, and loop invariants. Check your ORCA reservation.\n\n\nOffice hours have changed. Cinda is now Tuesdays 10:30–11:30 am, ICCS 233. Nathan is unchanged, Mondays 4–5 pm, ICCS X465."
   },
   {
-    "objectID": "posts/01_week-02/index.html",
-    "href": "posts/01_week-02/index.html",
-    "title": "Week 2 — Sep 14 to Sep 20",
+    "objectID": "posts/00_welcome/index.html",
+    "href": "posts/00_welcome/index.html",
+    "title": "Welcome to CPSC 221",
     "section": "",
-    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "",
-    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "index.html#schedule",
-    "href": "index.html#schedule",
-    "title": "CPSC 221: Basic Algorithms and Data Structures",
-    "section": "Schedule",
-    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nBalanced Trees, and B-Trees\n\n\n    Wed Nov  4\nB-Trees, and Hashing\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nPriority Queues\n\n\n    Wed Nov 18\nPriority Queues, continued\n\n\n    Fri Nov 20\nDisjoint Sets\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nBalanced Trees, and B-Trees\n\n\n    Wed Nov  4\nB-Trees, and Hashing\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nPriority Queues\n\n\n    Wed Nov 18\nPriority Queues, continued\n\n\n    Fri Nov 20\nDisjoint Sets\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
-    "crumbs": [
-      "Course information",
-      "Schedule"
-    ]
-  },
-  {
-    "objectID": "formatting.html",
-    "href": "formatting.html",
-    "title": "Formatting",
-    "section": "",
-    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
-  },
-  {
-    "objectID": "cpp-short-course.html",
-    "href": "cpp-short-course.html",
-    "title": "C++ Short Course (optional)",
-    "section": "",
-    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
-  },
-  {
-    "objectID": "cpp-short-course.html#sessions",
-    "href": "cpp-short-course.html#sessions",
-    "title": "C++ Short Course (optional)",
-    "section": "Sessions",
-    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "about.html#contributors",
-    "href": "about.html#contributors",
-    "title": "About",
-    "section": "",
-    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
-    "crumbs": [
-      "About"
-    ]
-  },
-  {
-    "objectID": "announcements.html",
-    "href": "announcements.html",
-    "title": "Announcements",
-    "section": "",
-    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 11 — Nov 16 to Nov 22\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nExamlet 7 Thursday to Sunday: no hashing. Lab Hash due 11/22. PA3 due 11/23. Examlet 8 bookable now.\n\n\n\n\n\n\nNov 15, 2026\n\n\n\n\n\n\n\nWeek 9 — Nov 2 to Nov 8\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nPA2 due 11/02. PA3 out 11/02, due 11/23. Examlet 6 Thursday to Sunday: binary search trees. Lab AVL open.\n\n\n\n\n\n\nNov 1, 2026\n\n\n\n\n\n\n\nWeek 8 — Oct 26 to Nov 1\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nPA2 submissions open, due 11/02. Examlet 5 Thursday to Sunday: tree definitions and traversals. Lab Dict open.\n\n\n\n\n\n\nOct 26, 2026\n\n\n\n\n\n\n\nWeek 6 — Oct 12 to Oct 18\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nQuiet week: two video lessons. Labs now include office hours. HW2 due and PA2 out Monday 10/19.\n\n\n\n\n\n\nOct 13, 2026\n\n\n\n\n\n\n\nWeek 5 — Oct 5 to Oct 11\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 3 week. Potion Pantry in class Monday, PA1 due Monday, Homework Two out, Lab Quacks open. Thanksgiving next Monday.\n\n\n\n\n\n\nOct 5, 2026\n\n\n\n\n\n\n\nWeek 4 — Sep 28 to Oct 4\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 2 week. No class Wednesday. Lab 3 open, PEX3 Wednesday, PA1 due Monday.\n\n\n\n\n\n\nSep 28, 2026\n\n\n\n\n\n\n\nWeek 3 — Sep 21 to Sep 27\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 1 week. HW1 due, PA1 out, PEX2 Wednesday.\n\n\n\n\n\n\nSep 21, 2026\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
-    "crumbs": [
-      "Course information",
-      "Announcements"
-    ]
-  },
-  {
-    "objectID": "faq.html",
-    "href": "faq.html",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
-    "crumbs": [
-      "FAQ"
-    ]
-  },
-  {
-    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
-    "title": "FAQ",
-    "section": "",
-    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
-    "crumbs": [
-      "FAQ"
-    ]
+    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
   },
   {
     "objectID": "getting-started.html",
@@ -1358,39 +1334,154 @@
     ]
   },
   {
-    "objectID": "posts/00_welcome/index.html",
-    "href": "posts/00_welcome/index.html",
-    "title": "Welcome to CPSC 221",
+    "objectID": "faq.html",
+    "href": "faq.html",
+    "title": "FAQ",
     "section": "",
-    "text": "Everything for this course is on this site. The schedule is the landing page — slides, labs, assignments and examlets all hang off it as they go live. The syllabus has the grading scheme and course policies, including the one on generative AI.\nFirst things first:\n\nWork through Getting started and Setup to get your machine ready.\nEnrol in PrairieLearn, where all labs, homework, assignments and examlets live.\nLab Intro is open now."
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
   },
   {
-    "objectID": "posts/02_week-03/index.html",
-    "href": "posts/02_week-03/index.html",
-    "title": "Week 3 — Sep 21 to Sep 27",
+    "objectID": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "href": "faq.html#how-do-i-save-the-lecture-slides-as-a-pdf",
+    "title": "FAQ",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n09/21\nHW1 due · PA1 released, due 10/05\n\n\n09/23\nPEX2 released\n\n\n09/24 – 09/27\nExamlet 1 — self-scheduled in ORCA\n\n\n09/27\nLab Debug due\n\n\n\nExamlet 1 covers everything through week 2: asymptotics, running times, best and worst cases, and loop invariants. Check your ORCA reservation.\n\n\nOffice hours have changed. Cinda is now Tuesdays 10:30–11:30 am, ICCS 233. Nathan is unchanged, Mondays 4–5 pm, ICCS X465."
+    "text": "Open the slides, add ?print-pdf to the end of the address, and press Enter. The deck redraws as a flat page, one slide per sheet. Then print (Ctrl/Cmd + P) and choose Save as PDF.\nSo for lecture 6 you would visit:\n.../slides/lecture-06_slides.html?print-pdf\nTwo things to set in the print dialog:\n\nLayout: Landscape\nMargins: None, and switch on Background graphics — without it the code blocks print as white boxes.\n\nSpeaker notes are not included, and neither is anything written on a slide with the pen during class.",
+    "crumbs": [
+      "FAQ"
+    ]
   },
   {
-    "objectID": "posts/04_week-05/index.html",
-    "href": "posts/04_week-05/index.html",
-    "title": "Week 5 — Oct 5 to Oct 11",
+    "objectID": "announcements.html",
+    "href": "announcements.html",
+    "title": "Announcements",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n10/05\nClass activity: The Witch’s Potion Pantry — bring a laptop · PA1 due · Homework Two released\n\n\n10/07\nExamlet 2 questions visible\n\n\n10/08 – 10/11\nExamlet 3 — self-scheduled in PrairieTest; covers everything through Friday 10/02’s lesson\n\n\n10/11\nLab Quacks due\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/19\nHomework Two due\n\n\n\n\n\nExamlet 2. The class average was 91%. One question (selection_sort_analysis) had errors in its answer key, so everyone has received full credit for it. Thank you to those who reported it.\nPEX3 is up, and now includes array resizing from Friday’s video.\nNext week is quiet. The week of 10/12 has no labs, no class meetings, no examlets, no homework and no programming assignments — just two video lessons to watch."
+    "text": "Newest first. Anything time-sensitive also goes out by email.\n\n\n\n\n\n\n\n\n\n\n\n\nWeek 11 — Nov 16 to Nov 22\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nExamlet 7 Thursday to Sunday: no hashing. Lab Hash due 11/22. PA3 due 11/23. Examlet 8 bookable now.\n\n\n\n\n\n\nNov 15, 2026\n\n\n\n\n\n\n\nWeek 9 — Nov 2 to Nov 8\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nPA2 due 11/02. PA3 out 11/02, due 11/23. Examlet 6 Thursday to Sunday: binary search trees. Lab AVL open.\n\n\n\n\n\n\nNov 1, 2026\n\n\n\n\n\n\n\nWeek 8 — Oct 26 to Nov 1\n\n\n\ndeadline\n\nexamlet\n\nlab\n\n\n\n\nPA2 submissions open, due 11/02. Examlet 5 Thursday to Sunday: tree definitions and traversals. Lab Dict open.\n\n\n\n\n\n\nOct 26, 2026\n\n\n\n\n\n\n\nWeek 6 — Oct 12 to Oct 18\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nQuiet week: two video lessons. Labs now include office hours. HW2 due and PA2 out Monday 10/19.\n\n\n\n\n\n\nOct 13, 2026\n\n\n\n\n\n\n\nWeek 5 — Oct 5 to Oct 11\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 3 week. Potion Pantry in class Monday, PA1 due Monday, Homework Two out, Lab Quacks open. Thanksgiving next Monday.\n\n\n\n\n\n\nOct 5, 2026\n\n\n\n\n\n\n\nWeek 4 — Sep 28 to Oct 4\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 2 week. No class Wednesday. Lab 3 open, PEX3 Wednesday, PA1 due Monday.\n\n\n\n\n\n\nSep 28, 2026\n\n\n\n\n\n\n\nWeek 3 — Sep 21 to Sep 27\n\n\n\ndeadline\n\nexamlet\n\n\n\n\nExamlet 1 week. HW1 due, PA1 out, PEX2 Wednesday.\n\n\n\n\n\n\nSep 21, 2026\n\n\n\n\n\n\n\nWeek 2 — Sep 14 to Sep 20\n\n\n\ndeadline\n\n\n\n\nHW1 out, labs begin, PEX1 Wednesday.\n\n\n\n\n\n\nSep 14, 2026\n\n\n\n\n\n\n\nWelcome to CPSC 221\n\n\n\nlogistics\n\n\n\n\nWhere everything lives, and what to do first.\n\n\n\n\n\n\nSep 9, 2026\n\n\n\n\n\nNo matching items",
+    "crumbs": [
+      "Course information",
+      "Announcements"
+    ]
   },
   {
-    "objectID": "posts/07_week-08/index.html",
-    "href": "posts/07_week-08/index.html",
-    "title": "Week 8 — Oct 26 to Nov 1",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n10/26\nPA2 submissions open · Lab Dict open\n\n\n10/29 – 11/01\nExamlet 5 — self-scheduled in PrairieTest\n\n\n11/02\nPA2 due\n\n\n\n\n\nPA2 submissions are open. Upload your six files to PA2 on PrairieLearn and the autograder scores them in a few minutes. Submit as often as you like.\nExamlet 5 covers tree definitions and tree traversals. PEX5 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA2 questions too.\nExamlet 4: the median was 81."
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
   },
   {
-    "objectID": "posts/09_week-11/index.html",
-    "href": "posts/09_week-11/index.html",
-    "title": "Week 11 — Nov 16 to Nov 22",
+    "objectID": "about.html#contributors",
+    "href": "about.html#contributors",
+    "title": "About",
     "section": "",
-    "text": "All times 11:59 pm unless noted.\n\n\n\n11/18\nPEX8 out\n\n\n11/19 – 11/22\nExamlet 7 — self-scheduled in PrairieTest\n\n\n11/22\nLab Hash due\n\n\n11/23\nPA3 due\n\n\n\n\n\nExamlet 7 does not include hashing, since we haven’t finished that material. There will be a coding question based on a recent lab. PEX7 is the practice for it, linked on the schedule.\nHashing: the video for the second hashing lesson is delayed by the airline shutdown. It will be posted soon.\nLabs include office hours, so bring your PA3 questions too.\nExamlet 8 is bookable now in PrairieTest, for next week.\nExamlet 6: the average was 84%."
+    "text": "The website and slides templates were created in Quarto by Dr. Stephan Koenig.",
+    "crumbs": [
+      "About"
+    ]
+  },
+  {
+    "objectID": "cpp-short-course.html",
+    "href": "cpp-short-course.html",
+    "title": "C++ Short Course (optional)",
+    "section": "",
+    "text": "All programming assignments in this course use C++. You’ll set up your programming infrastructure and get a brief introduction to the language in your first lab, but if you’d like a more thorough, principled walkthrough of the language beforehand, this optional recorded tutorial series covers the parts of C++ this course actually uses — and the typical “gotchas” that trip people up. (Recommended playback speed: 1.5x.)\nIn this tutorial, we cover how C++ implements:"
+  },
+  {
+    "objectID": "cpp-short-course.html#sessions",
+    "href": "cpp-short-course.html#sessions",
+    "title": "C++ Short Course (optional)",
+    "section": "Sessions",
+    "text": "Sessions\n\n\n\nSession\nVideo\nSlides\n\n\n\n\nSession 1\nRecording — Passcode: q6jq#bWD\ncppShortCourse1.pdf\n\n\nSession 2\nRecording — Passcode: 6=w?=m3O\ncppShortCourse1.pdf\n\n\nSession 3 (starts at 30 min)\nRecording — Passcode: C0xX^exd\ncppShortCourse2.pdf"
+  },
+  {
+    "objectID": "formatting.html",
+    "href": "formatting.html",
+    "title": "Formatting",
+    "section": "",
+    "text": "In text paragraphs, code is always formatted with a monospace font and surrounded by a box like this. Longer examples of code will be in a separate box.\nFirst line of code\nSecond line of code\n...\nIn many cases, the output for code in these boxes will be below them.\nReplace any placeholder indicated by angular brackets &lt;placeholder&gt; with your own code.\nPressing a KeyKey on the keyboard is formatted like that."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "",
+    "text": "Instructors: Cinda Heeren (Section 101) · Nathan Harms (Section 102)",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "index.html#schedule",
+    "href": "index.html#schedule",
+    "title": "CPSC 221: Basic Algorithms and Data Structures",
+    "section": "Schedule",
+    "text": "Schedule\n\nBy weekBy unit\n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      Week\n      Mon\n      \n        M\n      \n      \n        W\n      \n      \n        F\n      \n      HW/PA\n      Lab\n      \n        EX\n      \n    \n    \n      \n      \n      \n      \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    1\nSep 7\n\n\n\n\n\n\n\n\n\n\n    2\nSep 14\n\n\n\n\n\n\n\n\n\n\n    \n      Part 2: Classic Data Structures\n    \n    3\nSep 21\n\n\n\n\n\n\nHW1\n\n\n\n    4\nSep 28\n\n\n\n\n\n \n\n\n\n\n    5\nOct 5\n\n\n\n\n\n\nPA1\n\n\n\n    6\nOct 12\n\n\n\n\n\n\n\n\n\n\n    7\nOct 19\n\n\n\n\n\n\nHW2\n\n\n\n    8\nOct 26\n\n\n\n\n\n\n\n\n\n\n    9\nNov 2\n\n\n\n\n\n\nPA2\n\n\n\n    10\nNov 9\n\n\n\n\n\n\n\n\n\n\n    \n      Part 3: Graph Algorithms\n    \n    11\nNov 16\n\n\n\n\n\n\n\n\n\n\n    12\nNov 23\n\n\n\n\n\n\nPA3\n\n\n\n    13\nNov 30\n\n\n\n\n\n\nHW3\n\n\n\n    14\nDec 7\n\n\n\n\n\n\n\n\n\n\n  \n  \n\n\n\n\n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nBalanced Trees, and B-Trees\n\n\n    Wed Nov  4\nB-Trees, and Hashing\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nPriority Queues\n\n\n    Wed Nov 18\nPriority Queues, continued\n\n\n    Fri Nov 20\nbuildHeap analysis, heapSort\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n  \n    \n      \n      \n      \n      \n    \n  \n  \n    \n      Part 1: Reasoning About Code\n    \n    Wed Sep  9\nIntroduction\n\n\n    Fri Sep 11\nReasoning About Algorithms\n\n\n    Mon Sep 14\nRunning Time\n\n\n    Wed Sep 16\nCorrectness\n\n\n    Fri Sep 18\nLoop Invariants\n\n\n    week 2\nLab 1\n\n\n    \n      Part 2: Classic Data Structures\n    \n    Mon Sep 21\nSelection Sort\n\n\n    Wed Sep 23\nInsertion Sort\n\n\n    Fri Sep 25\nLinked Memory\n\n\n    week 3\nLab 2\n\n\n    week 3\nHW1\n\n\n    week 3\nExamlet 1\n\n\n    Mon Sep 28\nLinked Lists\n\n\n    Fri Oct  2\nThe List ADT\n\n \n    week 4\nLab 3\n\n\n    week 4\nExamlet 2\n\n\n    Mon Oct  5\nStacks\n\n\n    Wed Oct  7\nQueues\n\n\n    Fri Oct  9\nMerge Sort\n\n\n    week 5\nLab 4\n\n\n    week 5\nPA1\n\n\n    week 5\nExamlet 3\n\n\n    Wed Oct 14\nSorting Complexity\n\n\n    Mon Oct 19\nTrees\n\n\n    Wed Oct 21\nTree Traversals\n\n\n    Fri Oct 23\nLevel Order, and Dictionaries\n\n\n    week 7\nLab 5\n\n\n    week 7\nHW2\n\n\n    week 7\nExamlet 4\n\n\n    Mon Oct 26\nBinary Search Trees\n\n\n    Wed Oct 28\nBST Removal, and Why Balance Matters\n\n\n    Fri Oct 30\nBalanced Trees\n\n\n    week 8\nLab 6\n\n\n    week 8\nExamlet 5\n\n\n    Mon Nov  2\nBalanced Trees, and B-Trees\n\n\n    Wed Nov  4\nB-Trees, and Hashing\n\n\n    Fri Nov  6\nLecture 23\n\n\n    week 9\nLab 7\n\n\n    week 9\nPA2\n\n\n    week 9\nExamlet 6\n\n\n    Fri Nov 13\nLecture 24\n\n\n    \n      Part 3: Graph Algorithms\n    \n    Mon Nov 16\nPriority Queues\n\n\n    Wed Nov 18\nPriority Queues, continued\n\n\n    Fri Nov 20\nbuildHeap analysis, heapSort\n\n\n    week 11\nLab 8\n\n\n    week 11\nExamlet 7\n\n\n    Mon Nov 23\nLecture 28\n\n\n    Wed Nov 25\nLecture 29\n\n\n    Fri Nov 27\nLecture 30\n\n\n    week 12\nLab 9\n\n\n    week 12\nPA3\n\n\n    week 12\nExamlet 8\n\n\n    Mon Nov 30\nLecture 31\n\n\n    Wed Dec  2\nLecture 32\n\n\n    Fri Dec  4\nLecture 33\n\n\n    week 13\nLab 10\n\n\n    week 13\nHW3\n\n\n    week 13\nExamlet 9\n\n\n    Mon Dec  7\nLecture 34\n\n\n  \n  \n\n\n\n\n\n\n\n\n slides    recording    lab (PrairieLearn)    book a seat (PrairieTest)    practice problems (PrairieLearn)\nFaded icons mark material that isn’t posted yet.",
+    "crumbs": [
+      "Course information",
+      "Schedule"
+    ]
+  },
+  {
+    "objectID": "posts/01_week-02/index.html",
+    "href": "posts/01_week-02/index.html",
+    "title": "Week 2 — Sep 14 to Sep 20",
+    "section": "",
+    "text": "All times 11:59 pm.\n\n\n\n09/14\nHW1 released — allow about 3 hours\n\n\n09/16\nPEX1 released — practice for Examlet 1\n\n\n09/18\nFriday class is an async video, posted Thursday morning\n\n\n09/20\nLab Intro due · Lab Debug released\n\n\n09/21\nHW1 due · PA1 released\n\n\n\nExamlet 1 is next week, self-scheduled in ORCA for a session between Thursday 09/24 and Sunday 09/27. It covers everything through week 2. Registration opens on PrairieTest — watch for the announcement."
+  },
+  {
+    "objectID": "posts/03_week-04/index.html",
+    "href": "posts/03_week-04/index.html",
+    "title": "Week 4 — Sep 28 to Oct 4",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n\n\n\n\n09/30\nNo class — National Day for Truth and Reconciliation · PEX3 released\n\n\n10/01 – 10/04\nExamlet 2 — self-scheduled in ORCA\n\n\n10/04\nLab 3 (Linked Lists) due\n\n\n10/05\nPA1 due\n\n\n\n\n\nPEX2 has grown. It now includes pointer puzzles and new sorting questions, and most of them regenerate with New variant, so you can keep practising.\nPA1 Gallery. The zero-point Gallery question in the PA1 assessment is your chance to build a transformation of your own. There are prizes, and winners go up on this site."
+  },
+  {
+    "objectID": "posts/05_week-06/index.html",
+    "href": "posts/05_week-06/index.html",
+    "title": "Week 6 — Oct 12 to Oct 18",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n10/12\nNo class — Thanksgiving\n\n\n10/14\nVideo lesson · PEX4 released\n\n\n10/16\nVideo lesson\n\n\n10/19\nHomework Two due · PA2 released (due 11/02)\n\n\n10/22 – 10/25\nExamlet 4 — self-scheduled in PrairieTest\n\n\n\n\n\nA quiet week. No class meetings, no labs, no examlets — just two video lessons.\nLabs now include office hours. For the rest of the term, starting the week of 10/19, lab sections replace TA office hours. The TAs will still work through the lab exercise, and you’re welcome to bring any other questions too.\nPlan for PAs to take up to 20 hours. Start PA2 early."
+  },
+  {
+    "objectID": "posts/08_week-09/index.html",
+    "href": "posts/08_week-09/index.html",
+    "title": "Week 9 — Nov 2 to Nov 8",
+    "section": "",
+    "text": "All times 11:59 pm unless noted.\n\n\n\n11/02\nPA2 due · PA3 out\n\n\n11/05 – 11/08\nExamlet 6 — self-scheduled in PrairieTest\n\n\n11/08\nLab AVL due\n\n\n11/23\nPA3 due\n\n\n\n\n\nPA3 turns photographs into art, using a quadtree and a priority queue you build yourself. Plan for up to 20 hours, and start early.\nExamlet 6 covers binary search trees (search, insert, remove, and what makes a BST go wrong), plus BST traversals and tree running times. PEX6 is the practice for it, linked on the schedule.\nLabs include office hours, so bring your PA3 questions too.\nExamlet 5: the median was 77. Its questions become visible soon.\nNext week is the quiet week: no class meetings, no labs, no examlets. Just Friday’s video lesson."
+  },
+  {
+    "objectID": "setup.html",
+    "href": "setup.html",
+    "title": "Setup: Tech stack",
+    "section": "",
+    "text": "As with any computer science course, CPSC 221 needs a few tools set up before you can start on labs and assignments. Below is the tech stack for this course — the tools and environment you’ll use to write, compile, and submit C++ code."
+  },
+  {
+    "objectID": "setup.html#hardware",
+    "href": "setup.html#hardware",
+    "title": "Setup: Tech stack",
+    "section": "Hardware",
+    "text": "Hardware\nBefore starting, ensure that your laptop meets the minimum requirements:\n\nCan connect to networks via a wireless connection.\nHas at least 25 GB disk space available.\nHas at least 4 GB of RAM (more is recommended).\nUses a 64-bit CPU.\nIs at most 6 years old at the start of the course (4 years old or newer is recommended).\nStudent user has full administrative access to the computer.\n\n\n\n\n\n\n\nImportant\n\n\n\nIf your computer does not meet any of the requirements above, please don’t just drop the course!! Let me know first and we can discuss alternate possibilities so you can still take the course."
+  },
+  {
+    "objectID": "setup.html#computing-environment",
+    "href": "setup.html#computing-environment",
+    "title": "Setup: Tech stack",
+    "section": "Computing environment",
+    "text": "Computing environment\nAll programming assignments and labs in this course use C++, compiled with clang. You submit your .h/.cpp files directly to PrairieLearn, which compiles and tests them for you — but you’ll want a working local (or remote) build to develop and debug against before you submit.\n\nConnect to the department’s remote server\nThe department provides a shared Linux server for coursework: remote.students.cs.ubc.ca, accessible via SSH with your CWL ID and password (not a separate CS account).\nRecommended: VS Code + Remote-SSH\n\nDownload VS Code.\nInstall the Remote - SSH extension (search “SSH - Remote” in the Extensions panel).\nClick the new remote-connection icon in the bottom-left corner, choose Add New SSH Host, and enter your-CWL-id@remote.students.cs.ubc.ca.\nIf prompted for a platform, choose Linux (the remote servers run Linux, regardless of your own OS).\nConnect, enter your CWL password, then use the Files Explorer to open a folder — this becomes your working directory on the server.\n\nTo skip re-entering your password every time, generate an SSH key and copy it to the server:\nssh-keygen\nssh-copy-id your-CWL-id@remote.students.cs.ubc.ca   # macOS/Linux\n(On Windows, use type path\\to\\id_rsa.pub | ssh your-CWL-id@remote.students.cs.ubc.ca \"cat &gt;&gt; .ssh/authorized_keys\" instead of ssh-copy-id.)\n\n\nThe command line\nYou’ll be working at a Linux shell on the remote server. If you’re new to it:\npwd            # print working directory\nls             # list files in the current folder\ncd FOLDER      # change into FOLDER; cd .. goes up, cd (no args) goes home\nmkdir FOLDER   # create a folder\nrm FILE        # delete FILE; rm -r FOLDER deletes a folder and its contents\nmv SRC DEST    # move/rename\ncp SRC DEST    # copy\nmake PROGRAM   # build PROGRAM using the rules in a Makefile\n\n\nGetting lab/assignment files onto the server\nEach lab/PA is distributed as a .zip from PrairieLearn. Get it onto the server with either:\n\nVS Code: drag and drop the unzipped folder into the Files Explorer once connected, or\nCommand line (macOS/Linux): scp your-file.zip your-CWL-id@remote.students.cs.ubc.ca:path/to/folder, then ssh in and unzip your-file.zip.\n\n\n\nCompiling and testing\nMost labs/PAs include a Makefile. To build:\nmake\nIf make fails, read the error message — clang is generally good about pointing at what’s wrong and suggesting a fix. If it succeeds, run the resulting executable directly (e.g. ./lab_intro) to test your work before submitting.\nSubmission is separate from compiling locally: you upload your source files to the PrairieLearn question, which compiles and grades them independently. A clean local build is a good sign, but the PrairieLearn autograder result is what counts.\n\n\nC++ references\n\ncplusplus.com and cppreference.com — language/standard library references\nUnix and make/Makefile tutorials — the lab starter code builds with make, so a basic understanding of Makefiles will help\nIf you’re coming from Java: search for “C++ for Java programmers” guides to map concepts you already know onto C++ syntax\n\n\n\nC++ short course (optional)\nA past offering of this course recorded an optional video series introducing C++ specifically for this course’s needs (classes, pointers, arrays, parameter passing, the “Big 3,” operator overloading). See the C++ Short Course page for the recordings and slides.\n\n\nMore tips and optional readings\nThe older Computing Environment page has additional background on the department’s servers (it predates the current remote.students.cs.ubc.ca hostname, but the general concepts still apply)."
+  },
+  {
+    "objectID": "setup.html#attribution",
+    "href": "setup.html#attribution",
+    "title": "Setup: Tech stack",
+    "section": "Attribution",
+    "text": "Attribution\nThe computing-environment instructions above are adapted from the current PrairieLearn “Lab Intro” question’s setup walkthrough. The general tech-stack framing (hardware requirements, etc.) is adapted from the UBC-Vancouver MDS Install stack under a CC-BY-SA 4.0 license, originally written by Anmol Jawandha and updated by Stephan Koenig, Firas Moosvi, Joel Ostblom, Tomas Beuzen, Rodolfo Lourenzutti, Tiffany Timbers, and others."
   },
   {
     "objectID": "slides/lecture-01_slides.html#introductions",
@@ -2317,95 +2408,25 @@
     "text": "What have we done?\n\n\n\n\n\n\n\n(2024’s closing picture, kept as it was.)\ninsert and removeMin in \\(O(\\log n)\\), beating every list and array option. Next time: building a heap from n keys all at once (buildHeap), and heapSort."
   },
   {
-    "objectID": "slides/lecture-27_slides.html#today",
-    "href": "slides/lecture-27_slides.html#today",
+    "objectID": "slides/lecture-27_slides.html#minheap-buildheap",
+    "href": "slides/lecture-27_slides.html#minheap-buildheap",
     "title": "CPSC 221",
-    "section": "Today",
-    "text": "Today\n\nThe Disjoint Sets ADT\nA first (naive) data structure\nUpTrees\nSmart unions: by height, by size\nPath compression\n\n\nOne lesson, start to finish. Everything on PEX8’s disjoint-sets questions is here: union by size, with and without path compression, and the \\(O(m \\log^* n)\\) running time."
+    "section": "(min)Heap: buildHeap",
+    "text": "(min)Heap: buildHeap\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA\n\nB\n\nE\n\nL\n\nD\n\nH\n\nI\n\nU\n\nP\n\nN\n\nO\n\nW\n\nA\n\nB\n\nE\n\nL\n\nD\n\nH\n\nI\n\nU\n\nP\n\nN\n\nO\n\nW\n\nProof of solution to the recurrence:\n\nThm: buildHeap on an array of size \\(n\\)runs in time ________.\nTime is proportional to the sum of theheights of all the nodes. Call it \\(S(h)\\).\n\\(S(h) =\\)\n\\(S(0) =\\)\nSoln \\(S(h) =\\)\n\nBut running times are reported in terms of \\(n\\), the number of nodes…\n\nThm: \\(O(n)\\).\nEach heapifyDown at a node costs at most its height. For a perfect tree of height \\(h\\):\n\n\\(S(h) = 2S(h-1) + h\\)\n\\(S(0) = 0\\)\nSoln: \\(S(h) = 2^{h+1} - h - 2\\)\n\nInduction: \\(2(2^h - (h-1) - 2) + h = 2^{h+1} - h - 2\\).\nIn terms of n: we need an upper bound on the time, so we need a lower bound on n. A heap of height \\(h\\) has at least \\(2^h\\) nodes (\\(n \\ge 2^h\\)), so \\(S(h) = 2^{h+1} - h - 2 \\le 2^{h+1} = 2 \\cdot 2^h \\le 2n\\). \\(O(n)\\)."
   },
   {
-    "objectID": "slides/lecture-27_slides.html#a-disjoint-sets-example",
-    "href": "slides/lecture-27_slides.html#a-disjoint-sets-example",
+    "objectID": "slides/lecture-27_slides.html#minheap-heapsort",
+    "href": "slides/lecture-27_slides.html#minheap-heapsort",
     "title": "CPSC 221",
-    "section": "A Disjoint Sets example",
-    "text": "A Disjoint Sets example\nLet \\(R\\) be an equivalence relation on the students in this class, where \\((s,t) \\in R\\)\nif \\(s\\) and \\(t\\) have the same favorite among {AC, FN, FB, TR, CC, CR, PMC, ____}.\n\n\n\n2 5 9\n\n7\n\n0 1 4 8\n\n3 6\n\n\nOperations we’d like to facilitate:\n\nFind(4)\nFind(4) == Find(8)\nif (Find(7) != Find(2)) Union(Find(7), Find(2))\n\n\n(2024’s example. Each student is a number; each oval is one set of the partition, one per favorite.)\n\nWhich set is 4 in? Find returns that set’s representative, one member that names the set.\nAre 4 and 8 in the same set? Same representative.\nIf 7 and 2 are in different sets, merge the two sets."
+    "section": "(min)Heap: heapSort",
+    "text": "(min)Heap: heapSort\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nA\n\nB\n\nE\n\nL\n\nD\n\nH\n\nI\n\nU\n\nP\n\nN\n\nO\n\nW\n\nA\n\nB\n\nE\n\nL\n\nD\n\nH\n\nI\n\nU\n\nP\n\nN\n\nO\n\nW\n\n\n1\n\n\n2\n\n\n3\n\n\n\nRunning time?\n\nWhy do we need another sorting algorithm?\n\n\n\n\n\n\n(The answers below are a reconstruction: 2024’s slide is blank here.)\n\nbuildHeap: \\(O(n)\\)\nremoveMin \\(n\\) times, each removed key going into the cell the heap just gave up at the end: \\(O(n \\log n)\\)\nThe array now runs largest to smallest (it’s a min-heap): reverse it, \\(O(n)\\). Or use a max-heap and skip this step.\n\nRunning time: \\(O(n \\log n)\\).\nWhy another sort?\n\nIn place: \\(O(1)\\) extra memory (merge sort needs \\(O(n)\\))\n\\(O(n \\log n)\\) in the worst case (quicksort can hit \\(O(n^2)\\))"
   },
   {
-    "objectID": "slides/lecture-27_slides.html#disjoint-sets-adt",
-    "href": "slides/lecture-27_slides.html#disjoint-sets-adt",
+    "objectID": "slides/lecture-27_slides.html#heapsort-explorer",
+    "href": "slides/lecture-27_slides.html#heapsort-explorer",
     "title": "CPSC 221",
-    "section": "Disjoint Sets ADT",
-    "text": "Disjoint Sets ADT\nWe will implement a data structure in support of “Disjoint Sets”:\n\nMaintains a collection \\(S = \\{s_0, s_1, \\ldots, s_k\\}\\) of disjoint sets\nEach set has a representative member\nSupports functions:\n\nvoid MakeSet(kType k);\nvoid Union(kType k1, kType k2);\nkType Find(kType k);\n\n\nMakeSet: a new set holding just k.\nUnion: merge the sets containing k1 and k2.\nFind: the representative of k’s set.\n\nFrom here on the keys are 0..n-1, so they can index an array."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#a-first-data-structure-for-disjoint-sets",
-    "href": "slides/lecture-27_slides.html#a-first-data-structure-for-disjoint-sets",
-    "title": "CPSC 221",
-    "section": "A first data structure for Disjoint Sets",
-    "text": "A first data structure for Disjoint Sets\n\n\n\n\n\n0 1 4\n\n2 7\n\n3 5 6\n\n0\n\n0\n\n1\n\n0\n\n2\n\n2\n\n3\n\n3\n\n4\n\n0\n\n5\n\n3\n\n6\n\n3\n\n7\n\n2\n\n\n\n\nFind:\n\n\nUnion:\n\n\nEach cell holds its key’s representative.\n\nFind: \\(O(1)\\), one array lookup.\nUnion: \\(O(n)\\). Every member of one set has to be relabelled, and finding them means scanning the whole array.\n\nUnions are the common operation (Kruskal’s algorithm does one per edge it keeps), so we want something cheaper."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#a-better-data-structure-uptrees",
-    "href": "slides/lecture-27_slides.html#a-better-data-structure-uptrees",
-    "title": "CPSC 221",
-    "section": "A better data structure: UpTrees",
-    "text": "A better data structure: UpTrees\n\nIf the array value is \\(-1\\), we’ve found a root; otherwise the value is the index of the parent.\n\\(x\\) and \\(y\\) are in the same tree if and only if they are in the same set.\n\n\n\nSketch:\n\n\n\n0\n\n\n\n1\n\n\n\n2\n\n\n\n3\nMemory:\n\n0\n\n-1\n\n1\n\n-1\n\n2\n\n-1\n\n3\n\n-1\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n0\n\n\n1\n\n\n2\n\n\n3\n\n\n\n\nStart: four singleton sets, every cell \\(-1\\).\nA sequence to draw (Union takes two roots; root2 goes under root1):\n\nUnion(2, 3): 3 points to 2. Array: \\(-1, -1, -1, 2\\)\nUnion(0, 1): 1 points to 0. Array: \\(-1, 0, -1, 2\\)\nUnion(0, 2): 2 points to 0. Array: \\(-1, 0, 0, 2\\)\n\nFind(3) now walks 3 → 2 → 0: the representative is the root."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#example-a-partition-into-disjoint-sets",
-    "href": "slides/lecture-27_slides.html#example-a-partition-into-disjoint-sets",
-    "title": "CPSC 221",
-    "section": "Example: a partition into disjoint sets",
-    "text": "Example: a partition into disjoint sets\n\n\n\n2 5 9\n\n7\n\n0 1 4 8\n\n3 6\n\n\n\n\n\n\n\n9\n\n2\n\n5\n\n\n\n7\n\n\n\n\n\n\n\n\n\n0\n\n1\n\n8\n\n4\n\n\n\n\n\n6\n\n3\n\n0\n\n4\n\n1\n\n8\n\n2\n\n5\n\n3\n\n6\n\n4\n\n-1\n\n5\n\n-1\n\n6\n\n-1\n\n7\n\n-1\n\n8\n\n4\n\n9\n\n5\n\n\n\n(2024’s picture.) The array alone is the whole structure: each cell holds its parent’s index, and a root holds \\(-1\\).\nPlanted bug (deliberate, as in 2024): the picture and the array disagree on the last set. The picture has 6 pointing up to 3 (3 is the root), but the array has s[3] = 6 and s[6] = -1 (6 is the root). Ask viewers to pause and find it. Fix: s[3] = -1, s[6] = 3, or flip the picture."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#uptree-implementation-of-disjoint-sets-adt",
-    "href": "slides/lecture-27_slides.html#uptree-implementation-of-disjoint-sets-adt",
-    "title": "CPSC 221",
-    "section": "UpTree implementation of Disjoint Sets ADT",
-    "text": "UpTree implementation of Disjoint Sets ADT\n\n\nint DS::Find(int i) {\n    if (s[i] &lt; 0) return i;\n    else return Find(s[i]);\n}\nRunning time depends on ________________.\nWorst case?\nWhat’s an ideal tree?\nvoid DS::Union(int root1, int root2) {\n    s[root2] = root1;\n}\n\n\n\n\n\n\n\n\n\n\n0\n\n\n\n\n\n\n\n6\n\n4\n\n1\n\n\n\n\n\nFind’s running time depends on the height of the tree (the depth of i).\nWorst case: \\(O(n)\\), a stick. The picture: Union(1, 0) would hang 0 under 1 and make the stick even longer for nothing, while Union(0, 1) hangs the stick under 0, making every node in it one step deeper.\nIdeal tree: every node points straight at the root (height 1), so Find is \\(O(1)\\).\n\nUnion itself is \\(O(1)\\), given two roots. The cost moved into Find."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#smart-unions",
-    "href": "slides/lecture-27_slides.html#smart-unions",
-    "title": "CPSC 221",
-    "section": "Smart unions",
-    "text": "Smart unions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n0\n\n1\n\n2\n\n6\n\n3\n\n8\n\n9\n\n7\n\n\n\n\n\n\n\n\n\n11\n\n5\n\n10\n\n4\nUnion by height:\nUnion by size:\n\n0\n\n6\n\n1\n\n6\n\n2\n\n6\n\n3\n\n8\n\n4\n\n\n5\n\n10\n\n6\n\n7\n\n7\n\n\n8\n\n7\n\n9\n\n7\n\n10\n\n4\n\n11\n\n5\n\n0\n\n6\n\n1\n\n6\n\n2\n\n6\n\n3\n\n8\n\n4\n\n\n5\n\n10\n\n6\n\n7\n\n7\n\n\n8\n\n7\n\n9\n\n7\n\n10\n\n4\n\n11\n\n5\nKeeps overall height oftree as small as possible.\nIncreases distance toroot for fewest nodes.\n\n\nBoth of these schemes for Union guarantee the height of the tree is ____________.\n\nA root’s cell is free to hold something useful, as long as it stays negative (that’s how Find recognizes a root):\n\nBy height: store \\(-(h+1)\\), so a lone node is still \\(-1\\). 7 holds \\(-3\\) (height 2) and 4 holds \\(-4\\) (height 3). Union hangs the shorter tree under the taller: 7 goes under 4, and the height stays 3.\nBy size: store \\(-(\\text{number of nodes})\\). 7 holds \\(-9\\), 4 holds \\(-4\\). The smaller tree goes under the bigger: 4 goes under 7. Height becomes 4, but only 4 nodes got one step deeper, instead of 9.\n\nEither way the height is \\(O(\\log n)\\): a node only gets deeper when its tree at least doubles in size, which can happen at most \\(\\log_2 n\\) times."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#smart-unions-1",
-    "href": "slides/lecture-27_slides.html#smart-unions-1",
-    "title": "CPSC 221",
-    "section": "Smart unions",
-    "text": "Smart unions\nint DS::Find(int i) {\n    if (s[i] &lt; 0) return i;\n    else return __________ Find(s[i]);\n}\nvoid DS::UnionBySize(int root1, int root2) {\n    int newSize = s[root1] + s[root2];\n    if (isBigger(root1, root2)) {\n        s[root2] = root1;\n        s[root1] = newSize;\n    }\n    else {\n        s[root1] = root2;\n        s[root2] = newSize;\n    }\n}\n\nisBigger(root1, root2): root1’s tree is at least as big. Sizes are stored negative, so that’s s[root1] &lt;= s[root2]. Ties go to root1, the first argument, which is PEX8’s rule too.\nThe blank in Find: s[i] =, so line 3 reads else return s[i] = Find(s[i]);. That’s path compression, next slide.\n(2024’s listing returned int from UnionBySize and was missing a ) on the if; both fixed here.)"
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#path-compression",
-    "href": "slides/lecture-27_slides.html#path-compression",
-    "title": "CPSC 221",
-    "section": "Path compression",
-    "text": "Path compression\nelse return s[i] = Find(s[i]);\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n3\n\n5\n\n6\n\n4\n\n2\n\n8\n\n7\n\n9\n\n11\n\n10\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n9\n\n8\n\n7\n\n3\n\n2\n\n6\n\n4\n\n5\n\n11\n\n10\nbefore Find(5)\nafter Find(5)\n\n\n\n\n\n\nOn the way back from the root,\nevery node on the path is\npointed straight at the root.\nNodes off the path (1, 8, 3, 6)\njust come along with their parents.\nThe next Find on any of them\nis one or two steps.\n\n\n(Cinda’s example, from DSCI 221.) Find(5) walks 5 → 4 → 2 → 7 → 9 → 10. On the way back, the assignment points each node on that path (yellow) straight at 10.\nOnly the path changes. 1, 8, 3 and 6 aren’t on it, so they stay with their parents and simply come along: 8 still hangs off 7, 3 off 2, 6 off 4. 11 doesn’t move at all. Every one of them is now closer to the root too.\nPath compression doesn’t change sizes, so union by size works with it unchanged. With union by height, the stored heights are no longer exact after compression (they’re upper bounds), and that’s fine."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#analysis",
-    "href": "slides/lecture-27_slides.html#analysis",
-    "title": "CPSC 221",
-    "section": "Analysis",
-    "text": "Analysis\nSomething we’ll need — Iterated log:\n\\[\\log^* (n) = \\begin{cases} 0 & \\text{if } n \\leq 1 \\\\ 1 + \\log^*(\\log n) & \\text{if } n &gt; 1 \\end{cases}\\]\nExample: \\(\\log^* (2^{65536})\\)\nRelevant result: In an upTree implementation of Disjoint Sets using\nsmart Union and Find with path compression, any sequence of \\(m\\) Union\nand Find operations results in worst case running time of \\(O(\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_)\\),\nwhere \\(n\\) is the number of items.\nhttp://research.cs.vt.edu/AVresearch/UF/\n\n(Cinda’s slide, from DSCI 221.)\n\\(\\log^*(2^{65536})\\): \\(2^{65536} \\to 65536 \\to 16 \\to 4 \\to 2 \\to 1\\), five logs, so 5. \\(2^{65536}\\) has about 20,000 digits; nothing we will ever store comes close, so \\(\\log^* n \\le 5\\) in practice.\nThe blank: \\(O(m \\log^* n)\\). That’s essentially \\(O(m)\\), constant time per operation. PEX8 asks for exactly this.\nThe proof is beyond this course. (The tight bound is even smaller, inverse Ackermann, \\(O(m\\,\\alpha(n))\\).)"
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#your-turn",
-    "href": "slides/lecture-27_slides.html#your-turn",
-    "title": "CPSC 221",
-    "section": "Your turn",
-    "text": "Your turn\n\n\nunion(1, 7)\nunion(0, 6)\nunion(2, 3)\nunion(6, 3)\nunion(3, 7)\nunion(7, 4)\n\nUnion by size; a tie goes to the first argument.\nunion(a, b) calls Find on both first.\n\n\n\n0\n\n-1\n\n1\n\n-1\n\n2\n\n-1\n\n3\n\n-1\n\n4\n\n-1\n\n5\n\n-1\n\n6\n\n-1\n\n7\n\n-1\n\n\nWhat is the array afterwards:\n\nwithout path compression?\nwith path compression?\n\n\n\nPause the video and try it; the answer is on the next slide. This is the format of PEX8’s union questions."
-  },
-  {
-    "objectID": "slides/lecture-27_slides.html#your-turn-answer",
-    "href": "slides/lecture-27_slides.html#your-turn-answer",
-    "title": "CPSC 221",
-    "section": "Your turn: answer",
-    "text": "Your turn: answer\n\n\nWithout path compression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n7\n\n1\n\n3\n\n2\n\n4\n\n6\n\n0\n\n\n\n5\n\n0\n\n-7\n\n1\n\n0\n\n2\n\n0\n\n3\n\n2\n\n4\n\n0\n\n5\n\n-1\n\n6\n\n0\n\n7\n\n1\nWith path compression\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n1\n\n2\n\n3\n\n4\n\n6\n\n7\n\n0\n\n\n\n5\n\n0\n\n-7\n\n1\n\n0\n\n2\n\n0\n\n3\n\n0\n\n4\n\n0\n\n5\n\n-1\n\n6\n\n0\n\n7\n\n0\n\n\n\n\nunion(1, 7): sizes 1 and 1, tie, so 7 goes under 1.\nunion(0, 6): 6 under 0. union(2, 3): 3 under 2.\nunion(6, 3): roots 0 and 2, both size 2, tie: 2 goes under 0.\nunion(3, 7): Find(3) walks 3 → 2 → 0. Root 0 (size 4) beats root 1 (size 2): 1 goes under 0. With compression, 3 now points at 0.\nunion(7, 4): Find(7) walks 7 → 1 → 0. 4 goes under 0. With compression, 7 now points at 0.\n\nHighlighted cells (3 and 7) are the only differences. The root holds \\(-7\\), its tree’s size; 5 was never touched."
+    "section": "heapSort Explorer",
+    "text": "heapSort Explorer\n\n\nStarts from the heapSort slide’s heap, ABELDHIUPNOW. Remove Min: the min drops into the cell the heap just gave up at the end of the array (grey, “removed”), and the last key goes to the root and heapifies down. Sort All runs it to the end: the array reads WUPONLIHEDBA, largest to smallest, which is why step 3 reverses it (or uses a max-heap)."
   },
   {
     "objectID": "summaries/lecture-01_summary.html",
