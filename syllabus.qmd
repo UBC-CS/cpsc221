@@ -43,9 +43,8 @@ A rough list of topics covered, by week:
 | 7 | Binary search trees |
 | 8 | B-trees |
 | 9 | Hashing |
-| 10 | Priority queues, heaps, heapsort |
-| 11 | Disjoint sets, graph definitions |
-| 12 | Graph implementation and traversal |
+| 10–11 | Priority queues, heaps, heapsort |
+| 12 | Graph definitions, implementation, and traversal; disjoint sets |
 | 13–14 | Minimum spanning trees, shortest path |
 
 ## Deliverables and Grading Scheme

@@ -21,6 +21,62 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ---
 
+## Week 12 — Mon Nov 23 to Sun Nov 29
+
+*Draft for Sun 11/22.*
+
+---
+
+Hi everyone,
+
+Welcome to week 12! Tomorrow we start **graphs**, the last big topic of the
+term.
+
+The news:
+
+1. **PA3 is due tomorrow, Monday 11/23, 11:59p.**
+
+2. **Examlet 8 is this week**, Thursday to Sunday, in PrairieTest. It covers
+   **hashing, priority queues and heaps**. **PEX8** is the practice for it,
+   and it's open now.
+
+3. **Disjoint sets is Friday's video.** It's not on Examlet 8; it will be
+   on **Examlet 9**, and **PEX9** (out Wednesday evening) has practice for it.
+
+4. **HW3 comes out Monday night**, due **Monday 12/07, 11:59p** (the last
+   day of class).
+
+5. **Lab Heaps** is open now, due **Sunday 11/29**.
+
+6. **Examlet 7**: the average was 71. I was especially disappointed by the
+   **BST bounds** question. It was a repeat from Examlet 6, and it's one I care
+   about, because it brings together so many of the skills we want you to
+   leave this course with:
+
+   - **Reading carefully.** Is the height *at most* something, or *at least*
+     something? Are you giving an upper bound or a lower bound? Until you have
+     a clear picture of which trees fit the description, and of the claim
+     you're trying to make about them, you can't get the answer.
+   - **Analyzing a scenario you haven't seen before.** There's nothing to
+     memorize here, just the reasoning we do in class all the time: what does
+     a worst-case `find` cost, and how tall or short could this tree be?
+
+   The Examlet 7 questions become visible on **Wednesday 11/25**. Please go
+   back to that one, and if the answers don't make sense to you, bring it to
+   office hours or Piazza.
+
+7. **Want more practice?** HW1, HW2 and every past lab are open for
+   submission (for 0 credit) through the end of term.
+
+All the best!
+Cinda and Nathan and the CPSC221 teaching team
+
+---
+
+After it goes out, the facts go up as `posts/10_week-12/`.
+
+---
+
 ## Week 11 — Mon Nov 16 to Sun Nov 22
 
 *Sent Sun 11/15, as below.*
