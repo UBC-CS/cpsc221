@@ -10,7 +10,7 @@
 <script src="../site_libs/quarto-contrib/iconify-3.0.0/iconify-icon.min.js"></script><meta charset="utf-8">
   <meta name="generator" content="quarto-1.11.9">
 
-  <title>{{&lt; var course.full-title &gt;}} – CPSC 221</title>
+  <title>{{&lt; var course.full-title &gt;}}---Instructor version – CPSC 221</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -195,10 +195,10 @@
       margin-right: 0; 
     }
   </style>
-<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta property="og:description" content="Disjoint Sets">
-<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures">
-<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures">
+<meta property="og:site_name" content="CPSC 221: Basic Algorithms and Data Structures—Instructor version">
+<meta name="twitter:title" content="CPSC 221 – CPSC 221: Basic Algorithms and Data Structures—Instructor version">
 <meta name="twitter:description" content="Disjoint Sets">
 <meta name="twitter:card" content="summary">
 </head>
@@ -224,7 +224,7 @@
 <li>Path compression</li>
 </ul>
 <aside class="notes">
-<p>One lesson, start to finish. Everything on PEX8’s disjoint-sets questions is here: union by size, with and without path compression, and the <span class="math inline">\(O(m \log^* n)\)</span> running time.</p>
+<p>One lesson, start to finish. Everything on PEX9’s disjoint-sets questions is here: union by size, with and without path compression, and the <span class="math inline">\(O(m \log^* n)\)</span> running time.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -837,7 +837,7 @@ Find:</p>
 <span id="cb5-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb5-11"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
-<p><code>isBigger(root1, root2)</code>: root1’s tree is at least as big. Sizes are stored negative, so that’s <code>s[root1] &lt;= s[root2]</code>. Ties go to root1, the first argument, which is PEX8’s rule too.</p>
+<p><code>isBigger(root1, root2)</code>: root1’s tree is at least as big. Sizes are stored negative, so that’s <code>s[root1] &lt;= s[root2]</code>. Ties go to root1, the first argument, which is PEX9’s rule too.</p>
 <p>The blank in Find: <code>s[i] =</code>, so line 3 reads <code>else return s[i] = Find(s[i]);</code>. That’s path compression, next slide.</p>
 <p>(2024’s listing returned <code>int</code> from UnionBySize and was missing a <code>)</code> on the <code>if</code>; both fixed here.)</p>
 <style type="text/css">
@@ -992,7 +992,7 @@ where <span class="math inline">\(n\)</span> is the number of items.</p>
 <aside class="notes">
 <p>(Cinda’s slide, from DSCI 221.)</p>
 <p><span class="math inline">\(\log^*(2^{65536})\)</span>: <span class="math inline">\(2^{65536} \to 65536 \to 16 \to 4 \to 2 \to 1\)</span>, five logs, so <strong>5</strong>. <span class="math inline">\(2^{65536}\)</span> has about 20,000 digits; nothing we will ever store comes close, so <span class="math inline">\(\log^* n \le 5\)</span> in practice.</p>
-<p>The blank: <span class="math inline">\(O(m \log^* n)\)</span>. That’s essentially <span class="math inline">\(O(m)\)</span>, constant time per operation. PEX8 asks for exactly this.</p>
+<p>The blank: <span class="math inline">\(O(m \log^* n)\)</span>. That’s essentially <span class="math inline">\(O(m)\)</span>, constant time per operation. PEX9 asks for exactly this.</p>
 <p>The proof is beyond this course. (The tight bound is even smaller, inverse Ackermann, <span class="math inline">\(O(m\,\alpha(n))\)</span>.)</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1062,7 +1062,7 @@ where <span class="math inline">\(n\)</span> is the number of items.</p>
 </ol>
 </div></div>
 <aside class="notes">
-<p>Pause the video and try it; the answer is on the next slide. This is the format of PEX8’s union questions.</p>
+<p>Pause the video and try it; the answer is on the next slide. This is the format of PEX9’s union questions.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
