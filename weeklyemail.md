@@ -36,38 +36,18 @@ The news:
 
 1. **PA3 is due tonight, Monday 11/23, 11:59p.**
 
-2. **Examlet 8 is this week**, Thursday to Sunday, in PrairieTest. It covers
-   **hashing, priority queues and heaps**. **PEX8** is the practice for it,
-   and it's linked on the schedule. Heap questions will say whether the
-   array is 0-based or 1-based, so be ready for either!
+2. **Examlet 8 is this week**, Thursday to Sunday. Make sure you're registered via
+   PrairieTest. It covers **hashing, priority queues and heaps**. **PEX8** is available.
 
-3. **Disjoint sets is Friday's video.** It's not on Examlet 8; it will be
-   on **Examlet 9**, and **PEX9** (out Wednesday evening) has practice for it.
-
-4. **HW3 comes out tonight**, due **Monday 12/07, 11:59p** (the last
-   day of class).
+3. **HW3 comes out tonight**, due **Monday 12/07, 11:59p** (the last day of class). 
+   Note the TWO week window.
 
 5. **Lab Heaps** is open now, due **Sunday 11/29**.
 
-6. **Examlet 7**: the average was 71. I was especially disappointed by the
-   **BST bounds** question. It was a repeat from Examlet 6, and it's one I care
-   about, because it brings together so many of the skills we want you to
-   leave this course with:
+6. **Examlet 7**: the average was 68. oof. I'll have some things to say about it 
+   after the overrides are completed later this week. 
 
-   - **Reading carefully.** Is the height *at most* something, or *at least*
-     something? Are you giving an upper bound or a lower bound? Until you have
-     a clear picture of which trees fit the description, and of the claim
-     you're trying to make about them, you can't get the answer.
-   - **Analyzing a scenario you haven't seen before.** There's nothing to
-     memorize here, just the reasoning we do in class all the time: what does
-     a worst-case `find` cost, and how tall or short could this tree be?
-
-   The Examlet 7 questions become visible on **Wednesday 11/25**. Please go
-   back to that one, and if the answers don't make sense to you, bring it to
-   office hours or Piazza.
-
-7. **Want more practice?** HW1, HW2 and every past lab are open for
-   submission (for 0 credit) through the end of term.
+I think that's it for tonight. See you in class tomorrow?? 
 
 All the best!
 Cinda and Nathan and the CPSC221 teaching team
