@@ -23,27 +23,28 @@ post under `posts/` — the website keeps the list, the email keeps the warmth.
 
 ## Week 12 — Mon Nov 23 to Sun Nov 29
 
-*Draft for Sun 11/22.*
+*Draft for Mon 11/23.*
 
 ---
 
 Hi everyone,
 
-Welcome to week 12! Tomorrow we start **graphs**, the last big topic of the
+Welcome to week 12! Today we start **graphs**, the last big topic of the
 term.
 
 The news:
 
-1. **PA3 is due tomorrow, Monday 11/23, 11:59p.**
+1. **PA3 is due tonight, Monday 11/23, 11:59p.**
 
 2. **Examlet 8 is this week**, Thursday to Sunday, in PrairieTest. It covers
    **hashing, priority queues and heaps**. **PEX8** is the practice for it,
-   and it's open now.
+   and it's linked on the schedule. Heap questions will say whether the
+   array is 0-based or 1-based, so be ready for either!
 
 3. **Disjoint sets is Friday's video.** It's not on Examlet 8; it will be
    on **Examlet 9**, and **PEX9** (out Wednesday evening) has practice for it.
 
-4. **HW3 comes out Monday night**, due **Monday 12/07, 11:59p** (the last
+4. **HW3 comes out tonight**, due **Monday 12/07, 11:59p** (the last
    day of class).
 
 5. **Lab Heaps** is open now, due **Sunday 11/29**.
