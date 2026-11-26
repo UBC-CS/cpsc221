@@ -838,7 +838,7 @@ Find:</p>
 <span id="cb5-11"><a aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <aside class="notes">
 <p><code>isBigger(root1, root2)</code>: root1’s tree is at least as big. Sizes are stored negative, so that’s <code>s[root1] &lt;= s[root2]</code>. Ties go to root1, the first argument, which is PEX9’s rule too.</p>
-<p>The blank in Find: <code>s[i] =</code>, so line 3 reads <code>else return s[i] = Find(s[i]);</code>. That’s path compression, next slide.</p>
+<p>The blank in Find: <code>s[i] =</code>, so line 3 reads <code>else return s[i] = Find(s[i]);</code>. Annotate it here; that’s path compression, next slide.</p>
 <p>(2024’s listing returned <code>int</code> from UnionBySize and was missing a <code>)</code> on the <code>if</code>; both fixed here.)</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -854,7 +854,6 @@ Find:</p>
 </section>
 <section id="path-compression" class="slide level2 smaller">
 <h2>Path compression</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="cf">else</span> <span class="cf">return</span> s<span class="op">[</span>i<span class="op">]</span> <span class="op">=</span> Find<span class="op">(</span>s<span class="op">[</span>i<span class="op">]);</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="columns">
 <div class="column" style="width:64%;">
 <svg class="nodefig" width="800" height="450" style="display:block;">
@@ -1010,12 +1009,12 @@ where <span class="math inline">\(n\)</span> is the number of items.</p>
 <h2>Your turn</h2>
 <div class="columns">
 <div class="column" style="width:35%;">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">7</span><span class="op">)</span></span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span></span>
-<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
-<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">6</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
-<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">7</span><span class="op">)</span></span>
-<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">7</span><span class="op">,</span> <span class="dv">4</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode cpp code-with-copy"><code class="sourceCode cpp"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">1</span><span class="op">,</span> <span class="dv">7</span><span class="op">)</span></span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">6</span><span class="op">)</span></span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">6</span><span class="op">,</span> <span class="dv">3</span><span class="op">)</span></span>
+<span id="cb6-5"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">3</span><span class="op">,</span> <span class="dv">7</span><span class="op">)</span></span>
+<span id="cb6-6"><a aria-hidden="true" tabindex="-1"></a><span class="kw">union</span><span class="op">(</span><span class="dv">7</span><span class="op">,</span> <span class="dv">4</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:65%;">
 <p>Union <strong>by size</strong>; a tie goes to the <strong>first</strong> argument.<br>
 <code>union(a, b)</code> calls <code>Find</code> on both first.</p>
