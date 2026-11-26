@@ -620,17 +620,14 @@ stored negative, so that's `s[root1] <= s[root2]`. Ties go to root1, the
 first argument, which is PEX9's rule too.
 
 The blank in Find: `s[i] =`, so line 3 reads
-`else return s[i] = Find(s[i]);`. That's path compression, next slide.
+`else return s[i] = Find(s[i]);`. Annotate it here; that's path
+compression, next slide.
 
 (2024's listing returned `int` from UnionBySize and was missing a `)` on
 the `if`; both fixed here.)
 :::
 
 ## Path compression {.smaller}
-
-```cpp
-else return s[i] = Find(s[i]);
-```
 
 :::: {.columns}
 ::: {.column width="64%"}
